@@ -37,7 +37,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 
 
-import RNTesseractOcr from 'react-native-tesseract-ocr';
+// import RNTesseractOcr from 'react-native-tesseract-ocr';
 // Our custom files and classes import
 import Text from '../component/Text';
 import Navbar from '../component/Navbar';
