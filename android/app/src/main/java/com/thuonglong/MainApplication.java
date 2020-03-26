@@ -1,4 +1,4 @@
-package com.plasma;
+package com.thuonglong;
 
 import android.app.Application;
 
@@ -6,7 +6,7 @@ import com.facebook.react.ReactApplication;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.reactlibrary.RNTesseractOcrPackage;
+//import com.reactlibrary.RNTesseractOcrPackage;
 import org.reactnative.camera.RNCameraPackage;
 import cl.json.RNSharePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
@@ -36,7 +36,6 @@ public class MainApplication extends Application implements ReactApplication {
             new ImageResizerPackage(),
             new RNGestureHandlerPackage(),
             new ImagePickerPackage(),
-            new RNTesseractOcrPackage(),
                       new RNSharePackage(),
                       new RNFetchBlobPackage(),
                       new RNFSPackage(),

@@ -4,7 +4,7 @@ const Config = {
   navbarBackgroundColor: '#2c3e50',
   statusBarColor: '#233240',
   vnd: '\u20AB',
-  title: 'PLASMA',
+  title: 'ThuongLong',
   // mainColor: '#c40521',
   mainColor: '#164687',
   // mainColor: '#235c8e',
@@ -26,7 +26,7 @@ const Config = {
   bankName: 'Vietcombank',
   bankDepartment: 'Đống Đa',
 
-  titleCompany : 'Plasma',
+  titleCompany : 'ThuongLong',
   titleCompanySub : 'MED',
   mngtDevicesTitle : 'Quản lý thiết bị',
 

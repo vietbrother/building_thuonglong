@@ -156,7 +156,7 @@ export default class SideMenu extends Component {
                             textAlign: 'center',
                             width: '100%',
                             color: Config.colorBold
-                        }}>Plasma<Text style={{fontWeight: '200', color: Config.colorThin}}>MED</Text> </Text>
+                        }}>{Config.titleCompany}<Text style={{fontWeight: '200', color: Config.colorThin}}>{Config.titleCompanySub}</Text> </Text>
                         {/*<Text style={{fontSize: 12, textAlign: 'left', width: '100%', color: '#687373'}}>Thực phẩm sạch Nhật Bản </Text>*/}
                     </View>
                     <View style={{paddingRight: 15}}>

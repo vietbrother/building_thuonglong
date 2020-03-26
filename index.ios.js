@@ -6,4 +6,4 @@
 import { AppRegistry } from 'react-native';
 import Main from './src/Main';
 
-AppRegistry.registerComponent('Plasma', () => Main);
+AppRegistry.registerComponent('ThuongLong', () => Main);
