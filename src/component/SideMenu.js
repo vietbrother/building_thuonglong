@@ -142,7 +142,7 @@ export default class SideMenu extends Component {
                     {/*</Item>*/}
                     {/*</View>*/}
                     <View style={{marginTop: 15, marginBottom: 15, width: '100%', alignItems: 'center'}}>
-                        <Image style={{height: 100, width: 100}} source={require('../images/logo_plasma.png')}/>
+                        <Image style={{height: 100, width: 100}} source={require('../images/logo_menu.png')}/>
                         {/*<Text style={{*/}
                         {/*fontSize: 18,*/}
                         {/*fontWeight: 'bold',*/}

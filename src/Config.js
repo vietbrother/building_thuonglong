@@ -43,8 +43,8 @@ const Config = {
   odooPass: '1@',
 
   //title
-  titleCompany : 'Plasma',
-  titleCompanySub : 'MED',
+  titleCompany : 'THƯỢNG',
+  titleCompanySub : 'LONG',
   titleHome : 'Màn hình chính',
   titleMngtDevices : 'Quản lý thiết bị',
   titleMngtOrders : 'Đơn hàng',
@@ -53,7 +53,7 @@ const Config = {
   titleMngtProfile : 'Tài khoản',
   titleHotline: 'Hotline :',
 
-  titleCopyRight: 'Plasma © 2019',
+  titleCopyRight: 'Thượng Long © 2020',
   required: 'Cần nhập ',
 
   //button

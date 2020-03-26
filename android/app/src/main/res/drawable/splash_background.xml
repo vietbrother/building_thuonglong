@@ -10,7 +10,7 @@
     <!-- Your splash image -->
     <item>
         <bitmap
-                android:src="@drawable/plasma2019"
+                android:src="@drawable/thuonglong2020"
                 android:gravity="center"/>
 
     </item>
