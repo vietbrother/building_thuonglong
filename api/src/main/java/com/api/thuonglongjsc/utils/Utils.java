@@ -35,5 +35,13 @@ public class Utils {
         }
         return digest;
     }
+    
+	public static boolean isNullOrEmpty(String str) {
+		return (str == null || str.toString().isEmpty());
+	}
+	public static boolean isNullOrEmptyString(String str) {
+		return (str == null || str.isEmpty());
+	}
+	
    
 }
