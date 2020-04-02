@@ -1,9 +1,12 @@
 package com.api.thuonglongjsc.dto;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 public class LichXuatBeTong {
 	private String ID;
-	private String NgayThang;
-	private String GioXuat;
+	private Timestamp NgayThang;
+	private Time GioXuat;
 	private String TenChiNhanh;
 	private String TenCongTrinh;
 	private String TenNhaCungCap;
@@ -12,20 +15,20 @@ public class LichXuatBeTong {
 	private String TenDoSut;
 	private String TenYCDB;
 	private String TenHinhThucBom;
-	private String KLThucXuat;
-	private String KLKhachHang;
+	private Double KLThucXuat;
+	private Double KLKhachHang;
 	private String TrangThaiText;
 	private String NguoiTao;
-	private String NgayTao;
+	private Timestamp NgayTao;
 
 	public LichXuatBeTong() {
 		super();
 	}
 
-	public LichXuatBeTong(String iD, String ngayThang, String gioXuat, String tenChiNhanh, String tenCongTrinh,
+	public LichXuatBeTong(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
 			String tenNhaCungCap, String tenMacBeTong, String tenLoaiDa, String tenDoSut, String tenYCDB,
-			String tenHinhThucBom, String kLThucXuat, String kLKhachHang, String trangThaiText, String nguoiTao,
-			String ngayTao) {
+			String tenHinhThucBom, Double kLThucXuat, Double kLKhachHang, String trangThaiText, String nguoiTao,
+			Timestamp ngayTao) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -53,19 +56,19 @@ public class LichXuatBeTong {
 		ID = iD;
 	}
 
-	public String getNgayThang() {
+	public Timestamp getNgayThang() {
 		return NgayThang;
 	}
 
-	public void setNgayThang(String ngayThang) {
+	public void setNgayThang(Timestamp ngayThang) {
 		NgayThang = ngayThang;
 	}
 
-	public String getGioXuat() {
+	public Time getGioXuat() {
 		return GioXuat;
 	}
 
-	public void setGioXuat(String gioXuat) {
+	public void setGioXuat(Time gioXuat) {
 		GioXuat = gioXuat;
 	}
 
@@ -133,19 +136,19 @@ public class LichXuatBeTong {
 		TenHinhThucBom = tenHinhThucBom;
 	}
 
-	public String getKLThucXuat() {
+	public Double getKLThucXuat() {
 		return KLThucXuat;
 	}
 
-	public void setKLThucXuat(String kLThucXuat) {
+	public void setKLThucXuat(Double kLThucXuat) {
 		KLThucXuat = kLThucXuat;
 	}
 
-	public String getKLKhachHang() {
+	public Double getKLKhachHang() {
 		return KLKhachHang;
 	}
 
-	public void setKLKhachHang(String kLKhachHang) {
+	public void setKLKhachHang(Double kLKhachHang) {
 		KLKhachHang = kLKhachHang;
 	}
 
@@ -165,11 +168,11 @@ public class LichXuatBeTong {
 		NguoiTao = nguoiTao;
 	}
 
-	public String getNgayTao() {
+	public Timestamp getNgayTao() {
 		return NgayTao;
 	}
 
-	public void setNgayTao(String ngayTao) {
+	public void setNgayTao(Timestamp ngayTao) {
 		NgayTao = ngayTao;
 	}
 

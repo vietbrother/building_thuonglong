@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.thuonglongjsc.exception.ResourceNotFoundException;
-import com.api.thuonglongjsc.model.Sp_LoadChiNhanhDaiLy;
+import com.api.thuonglongjsc.model.TblChiNhanh;
 import com.api.thuonglongjsc.repository.ChiNhanhRepository;
 
 @RestController
@@ -34,13 +34,13 @@ public class CategoryController {
 	private ChiNhanhRepository chiNhanhRepository;
 
 	@GetMapping("/chinhanh")
-	public List<Sp_LoadChiNhanhDaiLy> getAllEmployees() {
-		List<Sp_LoadChiNhanhDaiLy> res = chiNhanhRepository.findAll();
+	public List<TblChiNhanh> getAllEmployees() {
+		List<TblChiNhanh> res = chiNhanhRepository.findAll();
 		if (res != null && res.size() > 0) {
-			Collections.sort(res, new Comparator<Sp_LoadChiNhanhDaiLy>() {
+			Collections.sort(res, new Comparator<TblChiNhanh>() {
 				@Override
-				public int compare(final Sp_LoadChiNhanhDaiLy object1, final Sp_LoadChiNhanhDaiLy object2) {
-					return object1.getTen().compareTo(object2.getTen());
+				public int compare(final TblChiNhanh object1, final TblChiNhanh object2) {
+					return object1.getTenChiNhanh().compareTo(object2.getTenChiNhanh());
 				}
 			});
 		}

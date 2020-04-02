@@ -31,20 +31,18 @@ import com.api.thuonglongjsc.repository.UserRepository;
 public class MainController {
 	@Autowired
 	private UserRepository userRepository;
-	
-	
-
 
 	@PostMapping("/v1/login")
 	public ResultDTO login(@Valid @RequestBody TblUserAccount user) {
 		ResultDTO res = userRepository.login(user.getUserName(), user.getPassword());
 		return res;
 	}
+
 	@PostMapping("/v1/hopdongbetong")
 	public List<HopDongBeTong> getListHopDongBeTong(@RequestBody HopDongBeTongSearch entity) {
 		return userRepository.getListHopDongBeTong(entity);
 	}
-	
+
 	@PostMapping("/v1/lichxuatbetong")
 	public List<LichXuatBeTong> getListLichXuatBeTong(@RequestBody LichXuatBeTongSearch entity) {
 		return userRepository.getListLichXuatBeTong(entity);

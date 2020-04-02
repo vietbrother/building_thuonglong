@@ -1,6 +1,12 @@
 package com.api.thuonglongjsc.dto;
 
-public class HopDongBeTong {
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javax.persistence.Entity;
+
+
+public class HopDongBeTong{
 	private String ID;
 	private String TenChiNhanh;
 	private String TenCongTrinh;
@@ -9,21 +15,21 @@ public class HopDongBeTong {
 	private String TenLoaiDa;
 	private String TenDoSut;
 	private String TenYCDB;
-	private String DonGiaHoaDon;
-	private String DonGiaThanhToan;
-	private String TuNgay;
-	private String DenNgay;
+	private BigDecimal DonGiaHoaDon;
+	private BigDecimal DonGiaThanhToan;
+	private Timestamp TuNgay;
+	private Timestamp DenNgay;
 	private String TrangThaiText;
 	private String NguoiTao;
-	private String NgayTao;
+	private Timestamp NgayTao;
 
 	public HopDongBeTong() {
 		super();
 	}
 
 	public HopDongBeTong(String iD, String tenChiNhanh, String tenCongTrinh, String tenNhaCungCap, String tenMacBeTong,
-			String tenLoaiDa, String tenDoSut, String tenYCDB, String donGiaHoaDon, String donGiaThanhToan,
-			String tuNgay, String denNgay, String trangThaiText, String nguoiTao, String ngayTao) {
+			String tenLoaiDa, String tenDoSut, String tenYCDB, BigDecimal donGiaHoaDon, BigDecimal donGiaThanhToan,
+			Timestamp tuNgay, Timestamp denNgay, String trangThaiText, String nguoiTao, Timestamp ngayTao) {
 		super();
 		ID = iD;
 		TenChiNhanh = tenChiNhanh;
@@ -106,35 +112,35 @@ public class HopDongBeTong {
 		TenYCDB = tenYCDB;
 	}
 
-	public String getDonGiaHoaDon() {
+	public BigDecimal getDonGiaHoaDon() {
 		return DonGiaHoaDon;
 	}
 
-	public void setDonGiaHoaDon(String donGiaHoaDon) {
+	public void setDonGiaHoaDon(BigDecimal donGiaHoaDon) {
 		DonGiaHoaDon = donGiaHoaDon;
 	}
 
-	public String getDonGiaThanhToan() {
+	public BigDecimal getDonGiaThanhToan() {
 		return DonGiaThanhToan;
 	}
 
-	public void setDonGiaThanhToan(String donGiaThanhToan) {
+	public void setDonGiaThanhToan(BigDecimal donGiaThanhToan) {
 		DonGiaThanhToan = donGiaThanhToan;
 	}
 
-	public String getTuNgay() {
+	public Timestamp getTuNgay() {
 		return TuNgay;
 	}
 
-	public void setTuNgay(String tuNgay) {
+	public void setTuNgay(Timestamp tuNgay) {
 		TuNgay = tuNgay;
 	}
 
-	public String getDenNgay() {
+	public Timestamp getDenNgay() {
 		return DenNgay;
 	}
 
-	public void setDenNgay(String denNgay) {
+	public void setDenNgay(Timestamp denNgay) {
 		DenNgay = denNgay;
 	}
 
@@ -154,11 +160,11 @@ public class HopDongBeTong {
 		NguoiTao = nguoiTao;
 	}
 
-	public String getNgayTao() {
+	public Timestamp getNgayTao() {
 		return NgayTao;
 	}
 
-	public void setNgayTao(String ngayTao) {
+	public void setNgayTao(Timestamp ngayTao) {
 		NgayTao = ngayTao;
 	}
 

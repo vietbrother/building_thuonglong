@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,8 +188,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 "
 				+ " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
 		try {
-			Query query = entityManager.createNativeQuery(queryStr, HopDongBeTong.class);
-			res = query.getResultList();
+			Query query = entityManager.createNativeQuery(queryStr);
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(HopDongBeTong.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);
@@ -200,18 +202,19 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public List<LichXuatBeTong> getListLichXuatBeTong(LichXuatBeTongSearch entity) {
 		List<LichXuatBeTong> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID, a.NgayThang, a.GioXuat, i.TenChiNhanh, h.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, \r\n"
-				+ "	e.TenDoSut, f.TenYCDB, g.TenHinhThucBom, a.KLThucXuat, +\r\n"
-				+ "	a.KLKhachHang, a.TrangThaiText, a.NguoiTao, a.NgayTao \r\n" + "FROM tblLichXuatBeTong AS a \r\n"
-				+ "JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID +\r\n" + "JOIN tblDoSut AS e ON a.DoSut = e.ID \r\n"
-				+ "JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" + "JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
-				+ "JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
-				+ "JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + "WHERE 1 = 1 "
+				+ "	e.TenDoSut, f.TenYCDB, g.TenHinhThucBom, a.KLThucXuat, \r\n"
+				+ "	a.KLKhachHang, a.TrangThaiText, a.NguoiTao, a.NgayTao \r\n"
+				+ "FROM tblLichXuatBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
+				+ " JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
+				+ " JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID \r\n" + "JOIN tblDoSut AS e ON a.DoSut = e.ID \r\n"
+				+ " JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" + "JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
+				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
+				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 "
 				+ " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
 		try {
-			Query query = entityManager.createNativeQuery(queryStr, LichXuatBeTong.class);
-			res = query.getResultList();
+			Query query = entityManager.createNativeQuery(queryStr);
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(LichXuatBeTong.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);
@@ -225,17 +228,18 @@ public class CustomRepositoryImpl implements CustomRepository {
 		try {
 			String message = "";
 			if (Utils.isNullOrEmpty(username) || Utils.isNullOrEmpty(password)) {
-				message = "Username or password empty";
-			}
+				message = "Cần nhập tên đăng nhập và mật khẩu";
+				res.setMessage(message);
+				return res;
+			} 
 
 			Query query = entityManager.createNativeQuery(
-					"from p in db.tblUserAccounts\r\n" + "where p.UserName == ? && p.Password == ?",
-					TblUserAccount.class);
+					"select * from tblUserAccount p where p.UserName = ? and p.Password = ?", TblUserAccount.class);
 			query.setParameter(1, username.toLowerCase().trim()).setParameter(2,
 					Utils.md5Genarate(password.toLowerCase().trim()));
 			List<TblUserAccount> users = query.getResultList();
 			if (users == null || users.isEmpty() || users.size() == 0) {
-				message = "Tài khoản không tồn tại";
+				message = "Tên đăng nhập hoặc mật khẩu không đúng";
 			} else if (users.size() > 1) {
 				message = "Tài khoản bị trùng";
 			} else {
