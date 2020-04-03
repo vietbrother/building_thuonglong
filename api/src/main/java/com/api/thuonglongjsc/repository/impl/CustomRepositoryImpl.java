@@ -185,8 +185,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
 				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
 				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
-				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 "
-				+ " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
+				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			res = query.unwrap(org.hibernate.query.Query.class)
@@ -209,8 +209,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ " JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID \r\n" + "JOIN tblDoSut AS e ON a.DoSut = e.ID \r\n"
 				+ " JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" + "JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
 				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
-				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 "
-				+ " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 ";
+		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			res = query.unwrap(org.hibernate.query.Query.class)
@@ -231,7 +231,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				message = "Cần nhập tên đăng nhập và mật khẩu";
 				res.setMessage(message);
 				return res;
-			} 
+			}
 
 			Query query = entityManager.createNativeQuery(
 					"select * from tblUserAccount p where p.UserName = ? and p.Password = ?", TblUserAccount.class);
