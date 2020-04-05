@@ -16,6 +16,7 @@ import Navbar from '../component/Navbar';
 import {StyleSheet, Image, AsyncStorage, ScrollView, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Odoo from "../Odoo";
+import Api from "../services/ApiWorker"
 
 export default class Login extends Component {
     constructor(props) {
@@ -163,16 +164,6 @@ export default class Login extends Component {
         try {
             this.setState({isLoading: true});
 
-            var odooClient = new Odoo({
-                host: Config.odooUrl,
-                port: Config.odooPort,
-                database: Config.odooDb,
-                username: user,
-                password: pass
-            });
-
-            // Connect to Odoo
-            odooClient.connect(this._getResLogin.bind(this));
             // await fetch(Config.url + '/api/user/generate_auth_cookie/?username=' + user + '&password=' + pass + '&insecure=cool')
             //     .then((response) => response.json())
             //     .then((responseJson) => {
@@ -196,6 +187,23 @@ export default class Login extends Component {
             //         console.error(error);
             //     });
             // console.log(statusLogin);
+            var param = {
+                userName: user,
+                password: pass
+            };
+            // var res = Api.login(param);
+            // this._getResLogin(res);
+
+            let response = await fetch(Config.api.url + Config.api.apiLogin, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            this._getResLogin(responseObj);
         } catch (error) {
             console.error(error);
             this.setState({isLoading: false});
@@ -203,28 +211,19 @@ export default class Login extends Component {
         }
     }
 
-    _getResLogin(err, data) {
+    _getResLogin(res) {
         this.setState({isLoading: false});
-        if (err) {
+        console.log(res);
+        console.log('__________________________');
+        if (res == null) {
             this.setState({hasError: true, errorText: Config.err_connect});
-            console.log(err);
             return;
         }
-        console.log(data);
-        console.log('__________________________');
-        if (data.username == false) {
-            this.setState({hasError: true, errorText: Config.err_login});
+        if (res.code != '0') {
+            this.setState({hasError: true, errorText: res.message});
         } else {
-            AsyncStorage.setItem('userId', data.username);
-
-            global.odooAPI = new Odoo({
-                host: Config.odooUrl,
-                port: Config.odooPort,
-                database: Config.odooDb,
-                username: Config.odooUser,
-                password: Config.odooPass
-            });
-            Actions.home({sessionLoginKey: '123'});
+            AsyncStorage.setItem('userId', res.data.userName);
+            Actions.contractConcretes({sessionLoginKey: '123'});
         }
 
     }

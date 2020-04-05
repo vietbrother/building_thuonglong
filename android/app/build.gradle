@@ -172,6 +172,11 @@ dependencies {
 	compile "com.android.support:appcompat-v7:28.0.0"
     compile "com.facebook.react:react-native:+"  // From node_modules
 
+    // Firebase dependencies
+    compile "com.google.android.gms:play-services-base:16.1.0"
+    compile "com.google.firebase:firebase-core:16.0.9"
+    compile "com.google.firebase:firebase-messaging:18.0.0"
+    //compile 'me.leolin:ShortcutBadger:1.1.21@aar'
     compile(project(':react-native-firebase')) {
          transitive = false
     }

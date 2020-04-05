@@ -5,5 +5,7 @@
 
 import { AppRegistry } from 'react-native';
 import Main from './src/Main';
+import BackgroundMessageFirebase from './src/services/BackgroundMessageFirebase';
 
 AppRegistry.registerComponent('ThuongLongJSC', () => Main);
+AppRegistry.registerHeadlessTask('RNFirebaseBackgroundMessage', () => BackgroundMessageFirebase);

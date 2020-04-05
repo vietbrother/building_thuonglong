@@ -161,20 +161,22 @@ export default class SideMenu extends Component {
                     </View>
                     <View style={{paddingRight: 15}}>
                         <List>
-                            <ListItem
-                                icon
-                                key={0}
-                                button={true}
-                                onPress={() => this._gotoHomepage(0)}
+                            {/*Homepage*/}
+                            {/*<ListItem*/}
+                                {/*icon*/}
+                                {/*key={0}*/}
+                                {/*button={true}*/}
+                                {/*onPress={() => this._gotoHomepage(0)}*/}
 
-                            >
-                                <Body>
-                                <Text style={{color: Colors.navbarBackgroundColor}}>{Config.titleHome}</Text>
-                                </Body>
-                                {/*<Right>*/}
-                                {/*<Icon name="ios-arrow-forward"/>*/}
-                                {/*</Right>*/}
-                            </ListItem>
+                            {/*>*/}
+                                {/*<Body>*/}
+                                {/*<Text style={{color: Colors.navbarBackgroundColor}}>{Config.titleHome}</Text>*/}
+                                {/*</Body>*/}
+                                {/*/!*<Right>*!/*/}
+                                {/*/!*<Icon name="ios-arrow-forward"/>*!/*/}
+                                {/*/!*</Right>*!/*/}
+                            {/*</ListItem>*/}
+
                             {this.renderMenuItems()}
                         </List>
                     </View>
@@ -418,55 +420,35 @@ var menuItems = [
 
 
 const menusSecondaryItems = [
-    // {
-    //     id: 19,
-    //     title: 'Danh sách yêu thích',
-    //     icon: 'heart',
-    //     key: 'wishlist'
-    // },
-
-    // {
-    //   id: 20,
-    //   title: 'Địa chỉ cửa hàng',
-    //   icon: 'ios-pin',
-    //   key: 'map'
-    // },
-    // {
-    //     id: 21,
-    //     title: 'Liên hệ',
-    //     icon: 'md-phone-portrait',
-    //     key: 'contact'
-    // },
     {
         id: 11,
-        title: Config.titleMngtDevices,
-        icon: 'md-pint',
-        key: 'devices'
+        title: Config.titleHopDongBeTong,
+        icon: 'ios-paper',
+        key: 'contractConcretes'
     },
     {
         id: 12,
-        title: Config.titleMngtCustomers,
-        icon: 'ios-people',
-        key: 'customers'
+        title: Config.titleLichXuatBeTong,
+        icon: 'md-calendar',
+        key: 'calendarConcretes'
     },
     {
         id: 13,
-        title: Config.titleMngtOrders,
-        icon: 'ios-paper',
-        key: 'orders'
+        title: Config.titleHopDongBanNVL,
+        icon: 'ios-cube',
+        key: 'contractMaterials'
     },
-
+    {
+        id: 15,
+        title: Config.titleHopDongBanGach,
+        icon: 'ios-grid',
+        key: 'contractBricks'
+    },
     {
         id: 14,
         title: Config.titleMngtStatistics,
         icon: 'ios-podium',
         key: 'statistic'
-    },
-    {
-        id: 15,
-        title: Config.titleMngtProfile,
-        icon: 'ios-contact',
-        key: 'profile'
     },
     {
         id: 16,

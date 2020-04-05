@@ -250,10 +250,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 					message = "Đăng nhập thành công";
 					res.setId(String.valueOf(System.currentTimeMillis()));
 					res.setData(userInfo);
+					res.setCode(Constants.ERROR_CODE.SUCCESS);
 				}
 			}
 
-			res.setCode(Constants.ERROR_CODE.SUCCESS);
 			res.setMessage(message);
 		} catch (Exception e) {
 			// TODO: handle exception

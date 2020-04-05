@@ -1,13 +1,13 @@
 /**
-* This is the Main file
-* This file contains the routes of all the pages
-**/
+ * This is the Main file
+ * This file contains the routes of all the pages
+ **/
 
 // React native and others libraries imports
-import React, { Component } from 'react';
-import { BackHandler } from 'react-native';
-import { Root } from 'native-base';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import React, {Component} from 'react';
+import {BackHandler} from 'react-native';
+import {Root} from 'native-base';
+import {Scene, Router, Actions} from 'react-native-router-flux';
 
 
 // Our custom files and classes import
@@ -57,104 +57,211 @@ import StockInList from "./component/Stock/StockInList";
 import StockInOutList from "./component/Stock/StockInOutList";
 import BillList from "./component/Bill/BillList";
 
+import firebase from 'react-native-firebase';
+import ContractConcreteDetail from "./component/ContractConcrete/ContractConcreteDetail";
+import ContractConcretes from "./component/ContractConcrete/ContractConcretes";
+import CalendarConcretes from "./component/CalendarConcrete/CalendarConcretes";
+import CalendarConcreteDetail from "./component/CalendarConcrete/CalendarConcreteDetail";
+
 export default class Main extends Component {
 
-  constructor(){
-    super();
-    // global.WooCommerceAPI = new WooCommerceAPI({
-    //   url: 'http://103.94.18.249/jstore', // Your store URL
-    //   ssl: false,
-    //   consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503', // Your consumer secret
-    //   consumerSecret: 'cs_9fb0b186ea0024bd6d9d497715e88e43b1bf2b6e', // Your consumer secret
-    //   //consumerKey: 'ck_29b281d2af61df58dadbeead327b06dd9a53f1be', // Your consumer secret
-    //   //consumerSecret: 'cs_a6d53b6572240d483749ee0123d48c76332c0e0d', // Your consumer secret
-    //   wpAPI: true, // Enable the WP REST API integration
-    //   version: 'wc/v3', // WooCommerce WP REST API version
-    //   queryStringAuth: true
-    // });
-    global.WooCommerceAPI = new WooCommerceAPI({
-      // url: 'http://103.94.18.249/jstore', // Your store URL
-      //consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503', // Your consumer secret
-      //consumerSecret: 'cs_9fb0b186ea0024bd6d9d497715e88e43b1bf2b6e', // Your consumer secret
-      url: Config.url, // Your store URL
-      consumerKey: Config.consumerKey, // Your consumer secret
-      consumerSecret: Config.consumerSecret, // Your consumer secret
-      // ssl: false,
-      //consumerKey: 'ck_29b281d2af61df58dadbeead327b06dd9a53f1be', // Your consumer secret
-      //consumerSecret: 'cs_a6d53b6572240d483749ee0123d48c76332c0e0d', // Your consumer secret
-      wpAPI: true, // Enable the WP REST API integration
-      version: 'wc/v3', // WooCommerce WP REST API version
-      queryStringAuth: true
-    });
+    constructor() {
+        super();
+        // global.WooCommerceAPI = new WooCommerceAPI({
+        //   url: 'http://103.94.18.249/jstore', // Your store URL
+        //   ssl: false,
+        //   consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503', // Your consumer secret
+        //   consumerSecret: 'cs_9fb0b186ea0024bd6d9d497715e88e43b1bf2b6e', // Your consumer secret
+        //   //consumerKey: 'ck_29b281d2af61df58dadbeead327b06dd9a53f1be', // Your consumer secret
+        //   //consumerSecret: 'cs_a6d53b6572240d483749ee0123d48c76332c0e0d', // Your consumer secret
+        //   wpAPI: true, // Enable the WP REST API integration
+        //   version: 'wc/v3', // WooCommerce WP REST API version
+        //   queryStringAuth: true
+        // });
+        global.WooCommerceAPI = new WooCommerceAPI({
+            // url: 'http://103.94.18.249/jstore', // Your store URL
+            //consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503', // Your consumer secret
+            //consumerSecret: 'cs_9fb0b186ea0024bd6d9d497715e88e43b1bf2b6e', // Your consumer secret
+            url: Config.url, // Your store URL
+            consumerKey: Config.consumerKey, // Your consumer secret
+            consumerSecret: Config.consumerSecret, // Your consumer secret
+            // ssl: false,
+            //consumerKey: 'ck_29b281d2af61df58dadbeead327b06dd9a53f1be', // Your consumer secret
+            //consumerSecret: 'cs_a6d53b6572240d483749ee0123d48c76332c0e0d', // Your consumer secret
+            wpAPI: true, // Enable the WP REST API integration
+            version: 'wc/v3', // WooCommerce WP REST API version
+            queryStringAuth: true
+        });
 
-    // global.odooAPI = new Odoo({
-    //   host: Config.odooUrl,
-    //   port: Config.odooPort,
-    //   database: Config.odooDb,
-    //   username: Config.odooUser,
-    //   password: Config.odooPass
-    // });
-  }
+        // global.odooAPI = new Odoo({
+        //   host: Config.odooUrl,
+        //   port: Config.odooPort,
+        //   database: Config.odooDb,
+        //   username: Config.odooUser,
+        //   password: Config.odooPass
+        // });
+    }
 
-  componentWillMount = () => {
-    BackHandler.addEventListener('hardwareBackPress', () => Actions.pop());
-  };
+    componentWillMount = () => {
+        BackHandler.addEventListener('hardwareBackPress', () => Actions.pop());
+    };
 
-  render() {
-    console.disableYellowBox = true;
-    return(
-      <Root>
-        <Router>
-          <Scene key="root">
-            <Scene key="home" component={Home} hideNavBar />
-            {/*<Scene key="homepage" component={Homepage} hideNavBar />*/}
-            <Scene key="search" component={Search} modal hideNavBar />
-            <Scene key="cart" component={Cart} modal hideNavBar />
-            <Scene key="wishlist" component={WishList} modal hideNavBar />
-            {/*<Scene key="map" component={Map} modal hideNavBar />*/}
-            <Scene key="contact" component={Contact} modal hideNavBar />
-            <Scene key="newsletter" component={Newsletter} modal hideNavBar />
-            <Scene key="category" component={Category} hideNavBar />
-            <Scene key="product" component={Product} hideNavBar />
-            <Scene key="imageGallery" component={ImageGallery} modal hideNavBar />
-            <Scene initial key="login" component={Login} hideNavBar />
-            <Scene key="signup" component={Signup} hideNavBar />
-            <Scene key="checkout" component={Checkout} hideNavBar />
-            {/*<Scene key="orders" component={Orders} hideNavBar />*/}
-            {/*<Scene key="orderItem" component={OrderItem} hideNavBar />*/}
-            <Scene key="profile" component={Profile} hideNavBar />
+    async componentDidMount() {
+        this.checkPermission();
+        this.createNotificationListeners(); //add this line
+    }
 
-            <Scene key="camera" component={Camera} hideNavBar />
-            <Scene key="verify" component={Verify} hideNavBar />
-            <Scene key="cameraScanner" component={CameraScanner} hideNavBar />
-            <Scene key="cameraScannerList" component={CameraScannerList} hideNavBar />
-            <Scene key="stockAdd" component={StockAdd} hideNavBar />
-            <Scene key="flowItem" component={FlowItem} hideNavBar />
-            <Scene key="stockOut" component={StockOut} hideNavBar />
-            <Scene key="stockOutMultiple" component={StockOutMultiple} hideNavBar />
-            <Scene key="stockOutMultipleManual" component={StockOutMultipleManual} hideNavBar />
+    //1
+    async checkPermission() {
+        const enabled = await firebase.messaging().hasPermission();
+        console.log("=======================================================================================");
+        console.log(enabled);
+        if (enabled) {
+            this.getToken();
+        } else {
+            this.requestPermission();
+        }
+    }
 
-            <Scene key="customers" component={Customers} hideNavBar />
-            <Scene key="customerAdd" component={CustomerAdd} hideNavBar />
-            <Scene key="customerDetail" component={CustomerDetail} hideNavBar />
+    //3
+    async getToken() {
+        let fcmToken = await AsyncStorage.getItem('fcmToken');
+        if (!fcmToken) {
+            fcmToken = await firebase.messaging().getToken();
+            if (fcmToken) {
+                // user has a device token
+                await AsyncStorage.setItem('fcmToken', fcmToken);
+            }
+        }
+    }
 
-            <Scene key="devices" component={Devices} hideNavBar />
-            <Scene key="deviceDetail" component={DeviceDetail} hideNavBar />
+    //2
+    async requestPermission() {
+        try {
+            await firebase.messaging().requestPermission();
+            // User has authorised
+            this.getToken();
+        } catch (error) {
+            // User has rejected permissions
+            console.log('permission rejected');
+        }
+    }
 
-            <Scene key="orders" component={OrderList} hideNavBar />
-            <Scene key="orderDetail" component={OrderDetail} hideNavBar />
+////////////////////// Add these methods //////////////////////
 
-            <Scene key="bill" component={Bill} modal hideNavBar />
-            <Scene key="statistic" component={Statistic} modal hideNavBar />
+    //Remove listeners allocated in createNotificationListeners()
+    componentWillUnmount() {
+        this.notificationListener();
+        this.notificationOpenedListener();
+    }
 
-            <Scene key="manualScannerList" component={ManualScannerList} hideNavBar />
-            <Scene key="stockInList" component={StockInList} hideNavBar />
-            <Scene key="stockInOutList" component={StockInOutList} hideNavBar />
-            <Scene key="billList" component={BillList} hideNavBar />
-          </Scene>
-        </Router>
-      </Root>
-    );
-  }
+    async createNotificationListeners() {
+        /*
+        * Triggered when a particular notification has been received in foreground
+        * */
+        this.notificationListener = firebase.notifications().onNotification((notification) => {
+            const {title, body} = notification;
+            this.showAlert(title, body);
+        });
+
+        /*
+        * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+        * */
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+            const {title, body} = notificationOpen.notification;
+            this.showAlert(title, body);
+        });
+
+        /*
+        * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+        * */
+        const notificationOpen = await firebase.notifications().getInitialNotification();
+        if (notificationOpen) {
+            const {title, body} = notificationOpen.notification;
+            this.showAlert(title, body);
+        }
+        /*
+        * Triggered for data only payload in foreground
+        * */
+        this.messageListener = firebase.messaging().onMessage((message) => {
+            //process data message
+            console.log(JSON.stringify(message));
+        });
+    }
+
+    showAlert(title, body) {
+        Alert.alert(
+            title, body,
+            [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+        );
+    }
+
+
+    render() {
+        console.disableYellowBox = true;
+        return (
+            <Root>
+                <Router>
+                    <Scene key="root">
+                        <Scene key="home" component={Home} hideNavBar/>
+                        {/*<Scene key="homepage" component={Homepage} hideNavBar />*/}
+                        <Scene key="search" component={Search} modal hideNavBar/>
+                        <Scene key="cart" component={Cart} modal hideNavBar/>
+                        <Scene key="wishlist" component={WishList} modal hideNavBar/>
+                        {/*<Scene key="map" component={Map} modal hideNavBar />*/}
+                        <Scene key="contact" component={Contact} modal hideNavBar/>
+                        <Scene key="newsletter" component={Newsletter} modal hideNavBar/>
+                        <Scene key="category" component={Category} hideNavBar/>
+                        <Scene key="product" component={Product} hideNavBar/>
+                        <Scene key="imageGallery" component={ImageGallery} modal hideNavBar/>
+                        <Scene initial key="login" component={Login} hideNavBar/>
+                        <Scene key="signup" component={Signup} hideNavBar/>
+                        <Scene key="checkout" component={Checkout} hideNavBar/>
+                        {/*<Scene key="orders" component={Orders} hideNavBar />*/}
+                        {/*<Scene key="orderItem" component={OrderItem} hideNavBar />*/}
+                        <Scene key="profile" component={Profile} hideNavBar/>
+
+                        <Scene key="camera" component={Camera} hideNavBar/>
+                        <Scene key="verify" component={Verify} hideNavBar/>
+                        <Scene key="cameraScanner" component={CameraScanner} hideNavBar/>
+                        <Scene key="cameraScannerList" component={CameraScannerList} hideNavBar/>
+                        <Scene key="stockAdd" component={StockAdd} hideNavBar/>
+                        <Scene key="flowItem" component={FlowItem} hideNavBar/>
+                        <Scene key="stockOut" component={StockOut} hideNavBar/>
+                        <Scene key="stockOutMultiple" component={StockOutMultiple} hideNavBar/>
+                        <Scene key="stockOutMultipleManual" component={StockOutMultipleManual} hideNavBar/>
+
+                        <Scene key="customers" component={Customers} hideNavBar/>
+                        <Scene key="customerAdd" component={CustomerAdd} hideNavBar/>
+                        <Scene key="customerDetail" component={CustomerDetail} hideNavBar/>
+
+                        <Scene key="devices" component={Devices} hideNavBar/>
+                        <Scene key="deviceDetail" component={DeviceDetail} hideNavBar/>
+
+                        <Scene key="orders" component={OrderList} hideNavBar/>
+                        <Scene key="orderDetail" component={OrderDetail} hideNavBar/>
+
+                        <Scene key="bill" component={Bill} modal hideNavBar/>
+                        <Scene key="statistic" component={Statistic} modal hideNavBar/>
+
+                        <Scene key="manualScannerList" component={ManualScannerList} hideNavBar/>
+                        <Scene key="stockInList" component={StockInList} hideNavBar/>
+                        <Scene key="stockInOutList" component={StockInOutList} hideNavBar/>
+                        <Scene key="billList" component={BillList} hideNavBar/>
+
+
+                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
+                        <Scene key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
+                        <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>
+
+                    </Scene>
+                </Router>
+            </Root>
+        );
+    }
 
 }
