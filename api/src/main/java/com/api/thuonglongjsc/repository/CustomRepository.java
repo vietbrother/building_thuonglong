@@ -15,5 +15,5 @@ public interface CustomRepository {
 
 	public List<LichXuatBeTong> getListLichXuatBeTong(LichXuatBeTongSearch entity);
 	
-	public ResultDTO duyetHopDong(String idHopDong);
+	public ResultDTO approveContract(String contractId, String username, String approveType);
 }

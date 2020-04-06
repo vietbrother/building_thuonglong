@@ -10,6 +10,8 @@ public class HopDongBeTongSearch {
 	private String YCDB;
 	private String TuNgay;
 	private String DenNgay;
+	private String idHopDong;
+	private String idTrangThai;
 
 	public HopDongBeTongSearch() {
 		super();
@@ -100,12 +102,32 @@ public class HopDongBeTongSearch {
 	public void setDenNgay(String denNgay) {
 		DenNgay = denNgay;
 	}
+	
+	
+
+	public String getIdHopDong() {
+		return idHopDong;
+	}
+
+	public void setIdHopDong(String idHopDong) {
+		this.idHopDong = idHopDong;
+	}
+
+	public String getIdTrangThai() {
+		return idTrangThai;
+	}
+
+	public void setIdTrangThai(String idTrangThai) {
+		this.idTrangThai = idTrangThai;
+	}
 
 	@Override
 	public String toString() {
 		return "HopDongBeTongSearch [IDChiNhanh=" + IDChiNhanh + ", IDNhaCungCap=" + IDNhaCungCap + ", IDCongTrinh="
 				+ IDCongTrinh + ", MacBeTong=" + MacBeTong + ", LoaiDa=" + LoaiDa + ", DoSut=" + DoSut + ", YCDB="
-				+ YCDB + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay + "]";
+				+ YCDB + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay + ", idHopDong=" + idHopDong + ", idTrangThai="
+				+ idTrangThai + "]";
 	}
+
 
 }

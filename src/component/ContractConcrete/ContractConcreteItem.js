@@ -70,29 +70,36 @@ export default class ContractConcreteItem extends Component {
 
     render() {
         return (
-            <View style={{
-                // flex: 1,
-                width: '100%', color: Config.mainColor, fontSize: 16,
-                // borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 1,
-                // paddingLeft: 10,
-                // paddingTop: 20, paddingBottom: 20
-            }}>
-                <Spinner
-                    //visibility of Overlay Loading Spinner
-                    visible={this.state.isLoading}
-                    //Text with the Spinner
-                    //textContent={'Đang đăng nhập ...'}
-                    //Text style of the Spinner Text
-                    textStyle={styles.spinnerTextStyle}
-                />
+            // <View style={{
+            //     // flex: 1,
+            //     width: '100%', color: Config.mainColor, fontSize: 16,
+            //     // borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 1,
+            //     // paddingLeft: 10,
+            //     // paddingTop: 20, paddingBottom: 20
+            // }}>
+            //     <Spinner
+            //         //visibility of Overlay Loading Spinner
+            //         visible={this.state.isLoading}
+            //         //Text with the Spinner
+            //         //textContent={'Đang đăng nhập ...'}
+            //         //Text style of the Spinner Text
+            //         textStyle={styles.spinnerTextStyle}
+            //     />
+            // </View>
+            <Card style={{flex: 1}}>
                 {this._renderMainContent()}
-            </View>
+            </Card>
         );
     }
 
     _renderDateFormat(date) {
         if (date != null && date != undefined) {
-            return new Date(date.toString()).toLocaleDateString();
+            var dateStr = date.substring(0, 10);
+            console.log(date);
+            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
+                return d + '/' + m + '/' + y;
+            });
+            return dateStr;
         } else {
             return '';
         }
@@ -104,37 +111,68 @@ export default class ContractConcreteItem extends Component {
                 onPress={() => Actions.contractConcreteDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
-                <CardItem>
-                    <Text>
-                        <Icon style={styles.icon} active name="ios-time-outline"/>
-                        {this.state.contract.tuNgay}
-                    </Text>
-                    <Text>{' đến '}</Text>
-                    <Text>
-                        <Icon style={styles.icon} active name="ios-time-outline"/>
-                        {this.state.contract.denNgay}
-                    </Text>
-                </CardItem>
-                <CardItem>
-                    <Text>{this.state.contract.tenChiNhanh}</Text>
-                </CardItem>
-                <CardItem>
-                    <Text style={styles.subTitle}>{'NCC'} : </Text>
-                    <Text>
-                        {this.state.contract.tenNhaCungCap}
-                    </Text>
-                </CardItem>
-                <CardItem>
-                    <Text style={styles.subTitle}>{Config.contractConcrete.projectName} : </Text>
-                    <Right>
-                        <Text>
-                            {this.state.contract.tenCongTrinh}
+                <CardItem header>
+                    <Left>
+                        <Text style={styles.titleBranch}>
+                            <Icon active name="cube"
+                                  style={styles.titleBranch}/> {this.state.contract.tenChiNhanh}
                         </Text>
-                    </Right>
-                </CardItem>
-                <CardItem>
+                    </Left>
                     <Right>
                         {this._renderStatus(this.state.contract.trangThaiText)}
+                    </Right>
+                </CardItem>
+                <CardItem bordered>
+                    <Left>
+                        <Text note><Icon note name="md-person"
+                                         style={styles.icon}/> {Config.contractConcrete.providerName} : </Text>
+                    </Left>
+                    <Right>
+                        <Text>{this.state.contract.tenNhaCungCap}</Text>
+                    </Right>
+                </CardItem>
+                <CardItem bordered>
+                    <Left>
+                        <Text note><Icon note name="md-business"
+                                         style={styles.icon}/> {Config.contractConcrete.projectName} : </Text>
+                    </Left>
+                    <Right>
+                        <Text>{this.state.contract.tenCongTrinh}</Text>
+                    </Right>
+                </CardItem>
+                {/*<CardItem bordered>*/}
+                {/*    <Left>*/}
+                {/*        <Body>*/}
+                {/*            <Text note><Icon note name="md-person" style={{fontSize: 16}}/> Nha cung cap : </Text>*/}
+                {/*            <Text>{this.state.contract.tenNhaCungCap}</Text>*/}
+                {/*        </Body>*/}
+                {/*    </Left>*/}
+                {/*    <Right>*/}
+                {/*        <Body>*/}
+                {/*            <Text note><Icon note name="md-business" style={{fontSize: 16}}/> Cong trinh : </Text>*/}
+                {/*            <Text>San van dong </Text>*/}
+                {/*        </Body>*/}
+                {/*    </Right>*/}
+                {/*</CardItem>*/}
+
+                <CardItem>
+                    <Left>
+                        <Body>
+                            <Text note>{Config.common.fromDate}</Text>
+                            <Button transparent>
+                                <Icon name="md-calendar" style={{marginLeft: 0}}/>
+                                <Text style={{marginLeft: -20}}>20/10/2020</Text>
+                            </Button>
+                        </Body>
+                    </Left>
+                    <Right>
+                        <Body>
+                            <Text note>{Config.common.fromDate}</Text>
+                            <Button transparent>
+                                <Icon name="md-calendar" style={{}}/>
+                                <Text style={{marginLeft: -20}}>20/10/2020</Text>
+                            </Button>
+                        </Body>
                     </Right>
                 </CardItem>
 
@@ -148,55 +186,24 @@ export default class ContractConcreteItem extends Component {
     _renderStatus(status) {
         if (status == Config.state.wait) {
             return (
-                <Button iconLeft transparent primary>
-                    <Icon style={styles.icon} name='ios-flag'/>
-                    <Text>{Config.state.wait}</Text>
-                </Button>
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-hourglass" style={styles.statusRed}/> {Config.state.wait}
+                </Text>
             );
         } else if (status == Config.state.approved) {
             return (
-                <Button iconLeft transparent success>
-                    <Icon style={styles.icon} name='ios-checkmark-circle-outline'/>
-                    <Text>{Config.state.approved}</Text>
-                </Button>
+                <Text style={styles.statusSuccess}>
+                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved}
+                </Text>
             );
         } else {
             return (
-                <Button iconLeft transparent primary>
-                    <Icon style={styles.icon} name='beer'/>
-                    <Text>{status}</Text>
-                </Button>
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-hourglass" style={styles.statusRed}/> {status}
+                </Text>
             );
         }
 
-        // if (status == '0') {
-        //     return (<Text style={{color: '#ffa505'}}>
-        //         <Icon name="ios-help-circle-outline"
-        //               style={{fontSize: 13, color: '#ffa505'}}/>
-        //         {Config.stageName0KhongXacDinh}</Text>);
-        // } else if (status == '4') {
-        //     return (<Text style={{color: '#44bc37'}}>
-        //         <Icon name="ios-checkmark-circle"
-        //               style={{fontSize: 13, color: '#44bc37'}}/>
-        //         {Config.stageName4BinhDangSuDung} </Text>);
-        // } else if (status == '1') {
-        //     return (<Text style={{color: Config.colorThin}}>
-        //         <Icon name="ios-battery-dead"
-        //               style={{fontSize: 13, color: Config.colorThin}}/>
-        //         {Config.stageName0KhongXacDinh} </Text>);
-        // } else if (status == '2') {
-        //     return (<Text style={{color: '#ff00ff'}}>
-        //         <Icon name="ios-refresh-circle"
-        //               style={{fontSize: 13, color: '#ff00ff'}}/>
-        //         {Config.stageName2TaiNap} </Text>);
-        // } else if (status == '3') {
-        //     return (<Text style={{color: '#c40521'}}>
-        //         <Icon name="ios-warning"
-        //               style={{fontSize: 13, color: '#c40521'}}/>
-        //         {Config.stageName3BinhTon} </Text>);
-        // } else {
-        //     return (<Text style={{color: '#26619c'}}>{status}</Text>);
-        // }
     }
 
 }
@@ -258,12 +265,24 @@ const styles = StyleSheet.create({
         fontWeight: '200',
     },
     icon: {
-        fontSize: 14
+        fontSize: 16
     },
     buttonChangeState: {
         backgroundColor: 'white',
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: Config.mainColor
+    },
+
+    statusRed: {
+        color: 'red',
+        fontSize: 16
+    },
+    statusSuccess: {
+        color: 'green',
+        fontSize: 16
+    },
+    titleBranch: {
+        color: 'dodgerblue', fontSize: 18, marginLeft: 0
     }
 });

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.thuonglongjsc.dto.ApproveInputDTO;
 import com.api.thuonglongjsc.dto.HopDongBeTong;
 import com.api.thuonglongjsc.dto.HopDongBeTongSearch;
 import com.api.thuonglongjsc.dto.LichXuatBeTong;
@@ -46,5 +47,11 @@ public class MainController {
 	@PostMapping("/v1/lichxuatbetong")
 	public List<LichXuatBeTong> getListLichXuatBeTong(@RequestBody LichXuatBeTongSearch entity) {
 		return userRepository.getListLichXuatBeTong(entity);
+	}
+
+	@PostMapping("/v1/approve")
+	public ResultDTO approve(@Valid @RequestBody ApproveInputDTO param) {
+		ResultDTO res = userRepository.approveContract(param.getContractId(), param.getUsername(), param.getType());
+		return res;
 	}
 }
