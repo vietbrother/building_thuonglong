@@ -63,9 +63,6 @@ export default class ContractConcreteItem extends Component {
     componentDidMount(): void {
         this.setState({contract: this.props.contract});
         console.log(this.props.contract);
-        console.log(this.props.contract.tuNgay);
-        console.log(this.props.contract.denNgay);
-        console.log(new Date('2020-03-30T17:00:00.000+0000'.toString()).toLocaleDateString());
     }
 
     render() {
@@ -133,7 +130,7 @@ export default class ContractConcreteItem extends Component {
                 </CardItem>
                 <CardItem bordered>
                     <Left>
-                        <Text note><Icon note name="md-business"
+                        <Text note><Icon note name="briefcase"
                                          style={styles.icon}/> {Config.contractConcrete.projectName} : </Text>
                     </Left>
                     <Right>
@@ -158,19 +155,19 @@ export default class ContractConcreteItem extends Component {
                 <CardItem>
                     <Left>
                         <Body>
-                            <Text note>{Config.common.fromDate}</Text>
+                            <Text style={styles.muted}>{Config.common.fromDate}</Text>
                             <Button transparent>
                                 <Icon name="md-calendar" style={{marginLeft: 0}}/>
-                                <Text style={{marginLeft: -20}}>20/10/2020</Text>
+                                <Text style={{marginLeft: -10}}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>
                             </Button>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text note>{Config.common.fromDate}</Text>
+                            <Text style={styles.muted}>{Config.common.toDate}</Text>
                             <Button transparent>
                                 <Icon name="md-calendar" style={{}}/>
-                                <Text style={{marginLeft: -20}}>20/10/2020</Text>
+                                <Text style={{marginLeft: -10}}>{this._renderDateFormat(this.state.contract.denNgay)}</Text>
                             </Button>
                         </Body>
                     </Right>
@@ -187,7 +184,7 @@ export default class ContractConcreteItem extends Component {
         if (status == Config.state.wait) {
             return (
                 <Text style={styles.statusRed}>
-                    <Icon active name="md-hourglass" style={styles.statusRed}/> {Config.state.wait}
+                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait}
                 </Text>
             );
         } else if (status == Config.state.approved) {
@@ -199,7 +196,7 @@ export default class ContractConcreteItem extends Component {
         } else {
             return (
                 <Text style={styles.statusRed}>
-                    <Icon active name="md-hourglass" style={styles.statusRed}/> {status}
+                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
                 </Text>
             );
         }
@@ -284,5 +281,8 @@ const styles = StyleSheet.create({
     },
     titleBranch: {
         color: 'dodgerblue', fontSize: 18, marginLeft: 0
+    },
+    muted: {
+        color: '#849192'
     }
 });
