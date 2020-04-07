@@ -42,7 +42,7 @@ gradlew assembleRelease
 https://github.com/Michaelvilleneuve/react-native-document-scanner
 https://github.com/kevin3274/react-native-odoo
 https://www.odoo.com/documentation/9.0/reference/orm.html#openerp.models.Model.search
-
+https://snack.expo.io/@rafah-mehfooz/network-requests-with-fetch
 ## Documentation
 
 Updating the codebase will require changes to the `.js` files in the [src/](./src/) folder. Individual pages can be edited by editing the `.js` files in [src/page/](./src/page/). Re-usable components can be edited by editing the `.js` files in [src/component/](./src/component/).

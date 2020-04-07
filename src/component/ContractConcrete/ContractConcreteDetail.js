@@ -34,6 +34,8 @@ import Navbar from '../../component/Navbar';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 
+import styles from './Styles';
+
 export default class ContractConcreteDetail extends Component {
 
     constructor(props) {
@@ -90,6 +92,30 @@ export default class ContractConcreteDetail extends Component {
 
     }
 
+    _renderStatus(status) {
+        if (status == Config.state.wait) {
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
+                </Text>
+            );
+        } else if (status == Config.state.approved) {
+            return (
+                <Text style={styles.statusSuccess}>
+                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                </Text>
+            );
+        } else {
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
+                </Text>
+            );
+        }
+
+    }
+
+
     render() {
         var left = (
             <Left style={{flex: 1}}>
@@ -129,28 +155,35 @@ export default class ContractConcreteDetail extends Component {
                         </CardItem>
 
                         <CardItem>
+                            <Left></Left>
+                            <Right>
+                                {this._renderStatus(this.state.contract.trangThaiText)}
+                            </Right>
+                        </CardItem>
+                        <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-cube"
+                                <Text style={styles.titleMuted}><Icon note name="md-cube"
                                                                  style={styles.icon}/> {Config.contractConcrete.branch} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenChiNhanh}</Text>
+                                <Text style={styles.titleBranch}>{this.state.contract.tenChiNhanh}</Text>
                             </Right>
                         </CardItem>
+
                         <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-person"
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
                                                                  style={styles.icon}/> {Config.contractConcrete.providerName} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenNhaCungCap}</Text>
+                                <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="briefcase"
+                                <Text style={styles.titleMuted}><Icon note name="briefcase"
                                                                  style={styles.icon}/> {Config.contractConcrete.projectName} :
                                 </Text>
                             </Left>
@@ -160,53 +193,53 @@ export default class ContractConcreteDetail extends Component {
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-pricetag"
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
                                                                  style={styles.icon}/> {Config.contractConcrete.concreteType} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenMacBeTong}</Text>
+                                <Text style={styles.title}>{this.state.contract.tenMacBeTong}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-grid"
+                                <Text style={styles.titleMuted}><Icon note name="md-grid"
                                                                  style={styles.icon}/> {Config.contractConcrete.stoneType} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenLoaiDa}</Text>
+                                <Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="ios-bookmark"
+                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
                                                                  style={styles.icon}/> {Config.contractConcrete.subsidence} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenDoSut}</Text>
+                                <Text style={styles.title}>{this.state.contract.tenDoSut}</Text>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-star-outline"
+                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
                                                                  style={styles.icon}/> {Config.contractConcrete.specialRequire} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenYCDB}</Text>
+                                <Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>
                             </Right>
                         </CardItem>
 
                         <CardItem>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-cash"
+                                <Text style={styles.titleMuted}><Icon note name="md-cash"
                                                                  style={styles.icon}/> {Config.contractConcrete.price} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>
+                                <Text style={styles.statusRed}>
                                     {parseInt(this.state.contract.donGiaThanhToan).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                                 </Text>
                             </Right>
@@ -214,12 +247,12 @@ export default class ContractConcreteDetail extends Component {
 
                         <CardItem bordered>
                             <Left>
-                                <Text style={styles.title}><Icon note name="md-cash"
+                                <Text style={styles.titleMuted}><Icon note name="md-cash"
                                                                  style={styles.icon}/> {Config.contractConcrete.priceBill} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>
+                                <Text style={styles.statusRed}>
                                     {parseInt(this.state.contract.donGiaHoaDon).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                                 </Text>
                             </Right>
@@ -229,19 +262,19 @@ export default class ContractConcreteDetail extends Component {
                         <CardItem>
                             <Left>
                                 <Body>
-                                <Text note>{Config.common.fromDate}</Text>
+                                <Text style={styles.muted}>{Config.common.fromDate}</Text>
                                 <Button transparent>
                                     <Icon name="md-calendar" style={{marginLeft: 0}}/>
-                                    <Text style={{marginLeft: -10}}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>
+                                    <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>
                                 </Button>
                                 </Body>
                             </Left>
                             <Right>
                                 <Body>
-                                <Text note>{Config.common.toDate}</Text>
+                                <Text style={styles.muted}>{Config.common.toDate}</Text>
                                 <Button transparent>
                                     <Icon name="md-calendar" style={{}}/>
-                                    <Text style={{marginLeft: -10}}>{this._renderDateFormat(this.state.contract.denNgay)}</Text>
+                                    <Text style={styles.date}>{this._renderDateFormat(this.state.contract.denNgay)}</Text>
                                 </Button>
                                 </Body>
                             </Right>
@@ -256,12 +289,12 @@ export default class ContractConcreteDetail extends Component {
                             </Left>
                             <Body>
                             <Button active onPress={() => Actions.pop()} transparent>
-                                <Text><Icon name='ios-arrow-back'/> {Config.btnClose}</Text>
+                                <Text style={styles.title}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
                             </Button>
                             </Body>
                             <Right>
-                                <Button active onPress={() => this._preApprove()}>
-                                    <Text><Icon name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
+                                <Button transparent info onPress={() => this._preApprove()}>
+                                    <Text style={styles.titleBold}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
                                 </Button>
                             </Right>
                         </CardItem>
@@ -276,17 +309,3 @@ export default class ContractConcreteDetail extends Component {
 
 
 }
-
-const styles = {
-    spinnerTextStyle: {
-        color: '#FFF',
-        fontWeight: 'bold'
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-    icon: {
-        fontSize: 16
-    },
-};

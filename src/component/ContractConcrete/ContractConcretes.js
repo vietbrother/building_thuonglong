@@ -78,14 +78,14 @@ export default class ContractConcretes extends Component {
         console.log(item);
         var key = new Date().valueOf();
         return (
-            <View style={{
+/*            <View style={{
                 flex: 1,
                 width: '100%', color: Config.mainColor, fontSize: 16,
                 borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
                 padding: 5
-            }}>
+            }}>*/
                 <ContractConcretesItem key={key} contract={item}></ContractConcretesItem>
-            </View>
+            /*</View>*/
         );
     }
 
@@ -145,8 +145,8 @@ export default class ContractConcretes extends Component {
                             flex: 1,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            paddingLeft: 10,
-                            paddingRight: 10
+                            // paddingLeft: 10,
+                            // paddingRight: 10
                         }}>
                             <Item>
                                 <Input
@@ -253,30 +253,4 @@ const styles = StyleSheet.create({
         color: '#44bc37'
     },
 });
-
-const _styles = {
-    font: {
-        fontFamily: 'Roboto',
-        color: Colors.navbarBackgroundColor
-    },
-    icon: {
-        fontSize: 13
-    },
-    stage0: {
-        color: '#ffa505'
-    },
-    stage1: {
-        color: Config.colorThin
-    },
-    stage2: {
-        color: '#ff00ff'
-    },
-    stage3: {
-        color: '#c40521'
-    },
-    stage4: {
-        color: '#44bc37'
-    },
-
-};
 
