@@ -289,12 +289,12 @@ export default class ContractConcreteDetail extends Component {
                             </Left>
                             <Body>
                             <Button active onPress={() => Actions.pop()} transparent>
-                                <Text style={styles.title}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                                <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
                             </Button>
                             </Body>
                             <Right>
-                                <Button transparent info onPress={() => this._preApprove()}>
-                                    <Text style={styles.titleBold}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
+                                <Button style={styles.btnApprove} onPress={() => this._preApprove()}>
+                                    <Text style={styles.titleApprove}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
                                 </Button>
                             </Right>
                         </CardItem>

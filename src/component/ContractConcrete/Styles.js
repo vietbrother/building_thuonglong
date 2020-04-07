@@ -93,5 +93,27 @@ export default StyleSheet.create({
         marginLeft: -10
     },
 
+    btnApprove: {
+        borderBottomColor: Config.mainColor,
+        borderBottomWidth: 0.5,
+        borderTopColor: Config.mainColor,
+        borderTopWidth: 0.5,
+        borderLeftColor: Config.mainColor,
+        borderLeftWidth: 0.5,
+        borderRightColor: Config.mainColor,
+        borderRightWidth: 0.5,
+        borderRadius: 5,
+        backgroundColor: 'white'
+    },
+    titleApprove: {
+        padding: 10,
+        fontWeight: 'bold',
+        color: Config.mainColor,
+        fontSize: 18
+    },
+    btnCancel: {
+        padding: 10,
+        color: '#849192',
+    }
 
 });
