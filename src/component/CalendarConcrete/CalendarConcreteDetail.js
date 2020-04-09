@@ -22,7 +22,7 @@ import {
     List, ListItem,
     Card, CardItem,
     DatePicker,
-    Body, Input
+    Body, Input, H3
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
@@ -33,6 +33,8 @@ import Text from '../../component/Text';
 import Navbar from '../../component/Navbar';
 import Spinner from 'react-native-loading-spinner-overlay';
 
+
+import styles from '../../styles/ContractStyles';
 
 export default class CalendarConcreteDetail extends Component {
 
@@ -45,6 +47,7 @@ export default class CalendarConcreteDetail extends Component {
             contract: {}
         };
     }
+    //E:\MyWorks\Project\20200303_stock_app\github\building_thuonglong\node_modules\native-base\src\basic\Icon\NBIcons.json
 
     componentWillMount() {
     }
@@ -56,6 +59,18 @@ export default class CalendarConcreteDetail extends Component {
         console.log(this.props.contract);
     }
 
+    _renderDateFormat(date) {
+        if (date != null && date != undefined) {
+            var dateStr = date.substring(0, 10);
+            console.log(date);
+            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
+                return d + '/' + m + '/' + y;
+            });
+            return dateStr;
+        } else {
+            return '';
+        }
+    }
 
     _preApprove() {
         Alert.alert(
@@ -76,6 +91,30 @@ export default class CalendarConcreteDetail extends Component {
     _actionApprove() {
 
     }
+
+    _renderStatus(status) {
+        if (status == Config.state.wait) {
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
+                </Text>
+            );
+        } else if (status == Config.state.approved) {
+            return (
+                <Text style={styles.statusSuccess}>
+                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                </Text>
+            );
+        } else {
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
+                </Text>
+            );
+        }
+
+    }
+
 
     render() {
         var left = (
@@ -105,95 +144,147 @@ export default class CalendarConcreteDetail extends Component {
                     //Text style of the Spinner Text
                     textStyle={styles.spinnerTextStyle}
                 />
-                <Navbar left={left} right={right} title={Config.contractConcrete.detail}/>
+                <Navbar left={left} right={right} title={Config.calendarConcrete.detail}/>
                 <Content contentContainerStyle={{
                     paddingHorizontal: 10,
                     backgroundColor: '#f3f9ff'
                 }}>
                     <Card transparent>
                         <CardItem header bordered>
-                            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{Config.deviceDetail}</Text>
+                            <H3>{Config.calendarConcrete.title}</H3>
                         </CardItem>
 
                         <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.branch} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenChiNhanh}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.providerName} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenNhaCungCap}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.projectName} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenCongTrinh}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.concreteType} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenMacBeTong}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.stoneType} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenLoaiDa}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.subsidence} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenDoSut}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.specialRequire} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {this.state.contract.tenYCDB}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.price} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {parseInt(this.state.contract.donGiaThanhToan).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                            </Text>
-                            </Body>
-                        </CardItem>
-                        <CardItem>
-                            <Body>
-                            <Text style={styles.title}>{Config.contractConcrete.priceBill} : </Text>
-                            <Text style={{textAlign: 'left'}}>
-                                {parseInt(this.state.contract.donGiaHoaDon).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                            </Text>
-                            </Body>
-                        </CardItem>
-
-                        <CardItem>
-                            <Icon active name="ios-time"/>
-                            <Text>{Config.common.fromDate} {new Date(this.state.contract.tuNgay).toLocaleDateString()}</Text>
+                            <Left></Left>
                             <Right>
-                                <Icon active name="ios-time"/>
-                                <Text>{Config.common.toDate} {new Date(this.state.contract.denNgay).toLocaleDateString()}</Text>
+                                {this._renderStatus(this.state.contract.trangThaiText)}
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-cube"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.branch} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.titleBranch}>{this.state.contract.tenChiNhanh}</Text>
+                            </Right>
+                        </CardItem>
+
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.providerName} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="briefcase"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.projectName} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text>{this.state.contract.tenCongTrinh}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.concreteType} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenMacBeTong}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-grid"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.stoneType} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.subsidence} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenDoSut}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem bordered>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.specialRequire} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>
+                            </Right>
+                        </CardItem>
+
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.pumpType} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenHinhThucBom}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-cash"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.exportReal} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>
+                                    {parseInt(this.state.contract.klthucXuat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                </Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem bordered>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-cash"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.exportPlan} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>
+                                    {parseInt(this.state.contract.klkhachHang).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                </Text>
+                            </Right>
+                        </CardItem>
+
+                        <CardItem>
+                            <Left>
+                                {/*<Body>*/}
+                                {/*    <Text style={styles.muted}>{Config.common.fromDate}</Text>*/}
+                                {/*    <Button transparent>*/}
+                                {/*        <Icon name="md-calendar" style={{marginLeft: 0}}/>*/}
+                                {/*        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>*/}
+                                {/*    </Button>*/}
+                                {/*</Body>*/}
+                            </Left>
+                            <Right>
+                                <Body>
+                                    <Text style={styles.muted}>{Config.calendarConcrete.calendarConcrete}</Text>
+                                    <Button transparent>
+                                        <Icon name="md-calendar" style={{}}/>
+                                        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
+                                    </Button>
+                                </Body>
                             </Right>
                         </CardItem>
 
@@ -205,13 +296,13 @@ export default class CalendarConcreteDetail extends Component {
                                 {/*</Button>*/}
                             </Left>
                             <Body>
-                            <Button active onPress={() => Actions.pop()} transparent>
-                                <Text><Icon name='ios-arrow-back'/> {Config.btnClose}</Text>
-                            </Button>
+                                <Button active onPress={() => Actions.pop()} transparent>
+                                    <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                                </Button>
                             </Body>
                             <Right>
-                                <Button active onPress={() => this._preApprove()} transparent>
-                                    <Text><Icon name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
+                                <Button style={styles.btnApprove} onPress={() => this._preApprove()}>
+                                    <Text style={styles.titleApprove}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
                                 </Button>
                             </Right>
                         </CardItem>
@@ -226,14 +317,3 @@ export default class CalendarConcreteDetail extends Component {
 
 
 }
-
-const styles = {
-    spinnerTextStyle: {
-        color: '#FFF',
-        fontWeight: 'bold'
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    }
-};

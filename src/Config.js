@@ -19,6 +19,7 @@ const Config = {
         apiLogin: '/api/main/v1/login',
         apiHopDongBeTong: '/api/main/v1/hopdongbetong',
         apiLichXuatBeTong: '/api/main/v1/lichxuatbetong',
+        apiApprove: '/api/main/v1/approve'
     },
     url: 'http://103.94.18.249/jstore',
     ssl: false,
@@ -59,6 +60,13 @@ const Config = {
     titleHopDongBanNVL: 'Hợp đồng bán NVL',
     titleHopDongBanGach: 'Hợp đồng bán gạch',
 
+    APPROVE_TYPE: {
+        CONTRACT_CONCRETE: '1',//duyet hop dong be tong,
+        CALENDAR_CONCRETE: '2',//duyet lich tron be tong
+        CONTRACT_MATERIAL: '3',//duyet hop dong vat lieu
+        CONTRACT_BRICK: '4',//duyet hop dong gach
+    },
+
     contractConcrete: {
         title: 'Hợp đồng bê tông',
         detail: 'Thông tin chi tiết',
@@ -86,6 +94,7 @@ const Config = {
         pumpType: 'Hình thức bơm',
         exportReal: 'Khối lượng thực xuất',
         exportPlan: 'Khối lượng khách hàng',
+        exportDate: 'Ngày xuất',
     },
 
     common: {

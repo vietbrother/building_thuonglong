@@ -44,7 +44,7 @@ import SideMenuDrawer from '../../component/SideMenuDrawer';
 import Colors from "../../Colors";
 import Config from "../../Config";
 import HTML from 'react-native-render-html';
-import ContractConcretesItem from "../../component/ContractConcrete/ContractConcreteItem";
+import ContractConcretesItem from "./ContractConcreteItem";
 
 
 export default class ContractConcretes extends Component {
@@ -180,77 +180,4 @@ export default class ContractConcretes extends Component {
 
 
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 10,
-    },
-    scrollContainer: {
-        // height: 150,
-        marginTop: 5,
-        paddingRight: 5,
-        paddingLeft: 5,
-        paddingBottom: 20
-    },
-    image: {
-        width: 120,
-        height: 120,
-        borderRadius: 10,
-        marginRight: 5,
-        borderColor: '#dfe3ee',
-        borderWidth: 0.5
-    },
-    capturePhoto: {
-        width: 120,
-        height: 120,
-        borderRadius: 10,
-        // marginRight: 5,
-        borderColor: '#dfe3ee',
-        borderWidth: 0.5
-    },
-
-    line: {
-        width: '47%',
-        height: 3,
-        backgroundColor: '#7f8c8d',
-        position: 'absolute',
-        bottom: '0%',
-        marginLeft: 5
-    },
-    titleView: {
-        flex: 1, width: '97%',
-        backgroundColor: Config.mainColor,
-        borderRadius: 5,
-        borderWidth: 0.5,
-        margin: 5,
-    },
-    title: {
-        fontSize: 16, fontFamily: 'Roboto',
-        fontWeight: '200',
-        color: 'white',
-        margin: 10,
-    },
-    icon: {
-        fontSize: 13
-    },
-    stage0: {
-        color: '#ffa505'
-    },
-    stage1: {
-        color: Config.colorThin
-    },
-    stage2: {
-        color: '#ff00ff'
-    },
-    stage3: {
-        color: '#c40521'
-    },
-    stage4: {
-        color: '#44bc37'
-    },
-});
 

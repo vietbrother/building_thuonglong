@@ -4,16 +4,18 @@ public class ApproveInputDTO {
 	private String contractId;
 	private String username;
 	private String type;
+	private String approveStateId;
 
 	public ApproveInputDTO() {
 		super();
 	}
 
-	public ApproveInputDTO(String contractId, String username, String type) {
+	public ApproveInputDTO(String contractId, String username, String type, String approveStateId) {
 		super();
 		this.contractId = contractId;
 		this.username = username;
 		this.type = type;
+		this.approveStateId = approveStateId;
 	}
 
 	public String getContractId() {
@@ -40,9 +42,18 @@ public class ApproveInputDTO {
 		this.type = type;
 	}
 
+	public String getApproveStateId() {
+		return approveStateId;
+	}
+
+	public void setApproveStateId(String approveStateId) {
+		this.approveStateId = approveStateId;
+	}
+
 	@Override
 	public String toString() {
-		return "ApproveInputDTO [contractId=" + contractId + ", username=" + username + ", type=" + type + "]";
+		return "ApproveInputDTO [contractId=" + contractId + ", username=" + username + ", type=" + type
+				+ ", approveStateId=" + approveStateId + "]";
 	}
 
 }

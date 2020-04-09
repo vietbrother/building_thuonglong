@@ -20,6 +20,8 @@ public class LichXuatBeTong {
 	private String TrangThaiText;
 	private String NguoiTao;
 	private Timestamp NgayTao;
+	private String IDChiNhanh;
+	private Integer TrangThai;
 
 	public LichXuatBeTong() {
 		super();
@@ -28,7 +30,7 @@ public class LichXuatBeTong {
 	public LichXuatBeTong(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
 			String tenNhaCungCap, String tenMacBeTong, String tenLoaiDa, String tenDoSut, String tenYCDB,
 			String tenHinhThucBom, Double kLThucXuat, Double kLKhachHang, String trangThaiText, String nguoiTao,
-			Timestamp ngayTao) {
+			Timestamp ngayTao, String iDChiNhanh, Integer trangThai) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -46,6 +48,8 @@ public class LichXuatBeTong {
 		TrangThaiText = trangThaiText;
 		NguoiTao = nguoiTao;
 		NgayTao = ngayTao;
+		IDChiNhanh = iDChiNhanh;
+		TrangThai = trangThai;
 	}
 
 	public String getID() {
@@ -176,6 +180,22 @@ public class LichXuatBeTong {
 		NgayTao = ngayTao;
 	}
 
+	public String getIDChiNhanh() {
+		return IDChiNhanh;
+	}
+
+	public void setIDChiNhanh(String iDChiNhanh) {
+		IDChiNhanh = iDChiNhanh;
+	}
+
+	public Integer getTrangThai() {
+		return TrangThai;
+	}
+
+	public void setTrangThai(Integer trangThai) {
+		TrangThai = trangThai;
+	}
+
 	@Override
 	public String toString() {
 		return "LichXuatBeTong [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
@@ -183,7 +203,7 @@ public class LichXuatBeTong {
 				+ ", TenMacBeTong=" + TenMacBeTong + ", TenLoaiDa=" + TenLoaiDa + ", TenDoSut=" + TenDoSut
 				+ ", TenYCDB=" + TenYCDB + ", TenHinhThucBom=" + TenHinhThucBom + ", KLThucXuat=" + KLThucXuat
 				+ ", KLKhachHang=" + KLKhachHang + ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao
-				+ ", NgayTao=" + NgayTao + "]";
+				+ ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
 	}
 
 }

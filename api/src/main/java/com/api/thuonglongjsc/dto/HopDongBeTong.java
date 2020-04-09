@@ -5,8 +5,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 
-
-public class HopDongBeTong{
+public class HopDongBeTong {
 	private String ID;
 	private String TenChiNhanh;
 	private String TenCongTrinh;
@@ -22,6 +21,8 @@ public class HopDongBeTong{
 	private String TrangThaiText;
 	private String NguoiTao;
 	private Timestamp NgayTao;
+	private String IDChiNhanh;
+	private Integer TrangThai;
 
 	public HopDongBeTong() {
 		super();
@@ -29,7 +30,8 @@ public class HopDongBeTong{
 
 	public HopDongBeTong(String iD, String tenChiNhanh, String tenCongTrinh, String tenNhaCungCap, String tenMacBeTong,
 			String tenLoaiDa, String tenDoSut, String tenYCDB, BigDecimal donGiaHoaDon, BigDecimal donGiaThanhToan,
-			Timestamp tuNgay, Timestamp denNgay, String trangThaiText, String nguoiTao, Timestamp ngayTao) {
+			Timestamp tuNgay, Timestamp denNgay, String trangThaiText, String nguoiTao, Timestamp ngayTao,
+			String iDChiNhanh, Integer trangThai) {
 		super();
 		ID = iD;
 		TenChiNhanh = tenChiNhanh;
@@ -46,6 +48,8 @@ public class HopDongBeTong{
 		TrangThaiText = trangThaiText;
 		NguoiTao = nguoiTao;
 		NgayTao = ngayTao;
+		IDChiNhanh = iDChiNhanh;
+		TrangThai = trangThai;
 	}
 
 	public String getID() {
@@ -168,12 +172,29 @@ public class HopDongBeTong{
 		NgayTao = ngayTao;
 	}
 
+	public String getIDChiNhanh() {
+		return IDChiNhanh;
+	}
+
+	public void setIDChiNhanh(String iDChiNhanh) {
+		IDChiNhanh = iDChiNhanh;
+	}
+
+	public Integer getTrangThai() {
+		return TrangThai;
+	}
+
+	public void setTrangThai(Integer trangThai) {
+		TrangThai = trangThai;
+	}
+
 	@Override
 	public String toString() {
 		return "HopDongBeTong [ID=" + ID + ", TenChiNhanh=" + TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh
 				+ ", TenNhaCungCap=" + TenNhaCungCap + ", TenMacBeTong=" + TenMacBeTong + ", TenLoaiDa=" + TenLoaiDa
 				+ ", TenDoSut=" + TenDoSut + ", TenYCDB=" + TenYCDB + ", DonGiaHoaDon=" + DonGiaHoaDon
 				+ ", DonGiaThanhToan=" + DonGiaThanhToan + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay
-				+ ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao + "]";
+				+ ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao
+				+ ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
 	}
 }

@@ -42,7 +42,7 @@ import Config from "../../Config";
 import HTML from 'react-native-render-html';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-import styles from './Styles';
+import styles from '../../styles/ContractStyles';
 
 export default class ContractConcreteItem extends Component {
     constructor(props) {

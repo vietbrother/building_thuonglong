@@ -28,7 +28,7 @@ import {
     Grid,
     Col,
     Item,
-    Input, List, ListItem,
+    Input, List, ListItem, Body,
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -41,6 +41,8 @@ import Colors from "../../Colors";
 import Config from "../../Config";
 import HTML from 'react-native-render-html';
 import Spinner from 'react-native-loading-spinner-overlay';
+
+import styles from '../../styles/ContractStyles';
 
 export default class CalendarConcreteItem extends Component {
     constructor(props) {
@@ -56,91 +58,125 @@ export default class CalendarConcreteItem extends Component {
 
             extractedText: "",
             searchText: '',
-            device: {}
+            contract: {}
         };
     }
 
     componentDidMount(): void {
-        this.setState({device: this.props.device});
-        // console.log(this.props.device);
+        this.setState({contract: this.props.contract});
+        console.log(this.props.contract);
     }
 
     render() {
         return (
-            <View style={{
-                // flex: 1,
-                width: '100%', color: Config.mainColor, fontSize: 16,
-                // borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 1,
-                // paddingLeft: 10,
-                // paddingTop: 20, paddingBottom: 20
-            }}>
-                <Spinner
-                    //visibility of Overlay Loading Spinner
-                    visible={this.state.isLoading}
-                    //Text with the Spinner
-                    //textContent={'Đang đăng nhập ...'}
-                    //Text style of the Spinner Text
-                    textStyle={styles.spinnerTextStyle}
-                />
+            // <View style={{
+            //     // flex: 1,
+            //     width: '100%', color: Config.mainColor, fontSize: 16,
+            //     // borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 1,
+            //     // paddingLeft: 10,
+            //     // paddingTop: 20, paddingBottom: 20
+            // }}>
+            //     <Spinner
+            //         //visibility of Overlay Loading Spinner
+            //         visible={this.state.isLoading}
+            //         //Text with the Spinner
+            //         //textContent={'Đang đăng nhập ...'}
+            //         //Text style of the Spinner Text
+            //         textStyle={styles.spinnerTextStyle}
+            //     />
+            // </View>
+            <Card style={{flex: 1}}>
                 {this._renderMainContent()}
-            </View>
+            </Card>
         );
+    }
+
+    _renderDateFormat(date) {
+        if (date != null && date != undefined) {
+            var dateStr = date.substring(0, 10);
+            console.log(date);
+            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
+                return d + '/' + m + '/' + y;
+            });
+            return dateStr;
+        } else {
+            return '';
+        }
     }
 
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.deviceDetail({device: this.props.device})}
+                onPress={() => Actions.CalendarConcreteDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
-                <Grid>
-                    <Col size={2}>
-                        <Text style={{fontWeight: 'bold', fontSize: 16}}><Icon name="ios-pricetag"
-                                                                               style={styles.icon}/> Mã bình
-                            :</Text>
-                    </Col>
-                    <Col size={3}>
-                        <Text style={{textAlign: 'center'}}>
-                            {this._renderStatus(this.props.device.code)}
+                <CardItem header>
+                    <Left>
+                        <Text style={styles.titleBranch}>
+                            <Icon active name="cube"
+                                  style={styles.titleBranch}/> {this.state.contract.tenChiNhanh}
                         </Text>
-                    </Col>
-                </Grid>
-                <Grid>
-                    <Col size={2}>
-                        <Text style={{fontWeight: 'bold'}}><Icon name="ios-time" style={styles.icon}/> Trạng thái
-                            :</Text>
-                    </Col>
-                    <Col size={3}>
-                        <Text style={{textAlign: 'center'}}>
-                            {this._renderStatus(this.props.device.stage)}
+                    </Left>
+                    <Right>
+                        {this._renderStatus(this.state.contract.trangThaiText)}
+                    </Right>
+                </CardItem>
+                <CardItem bordered>
+                    <Left>
+                        <Text style={styles.muted}><Icon note name="md-person"
+                                                         style={styles.icon}/> {Config.CalendarConcrete.providerName} :
                         </Text>
-                    </Col>
-                </Grid>
-                <Grid>
-                    <Col size={2}>
-                        <Text style={{fontWeight: 'bold'}}><Icon name="md-locate" style={styles.icon}/> Kho :</Text>
-                    </Col>
-                    <Col size={3}>
-                        <Text style={{textAlign: 'center'}}>
-                            {this._renderWarehouse(this.props.device.warehouse)}
+                    </Left>
+                    <Right>
+                        <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                    </Right>
+                </CardItem>
+                <CardItem bordered>
+                    <Left>
+                        <Text style={styles.muted}><Icon note name="briefcase"
+                                                         style={styles.icon}/> {Config.CalendarConcrete.projectName} :
                         </Text>
-                    </Col>
-                </Grid>
+                    </Left>
+                    <Right>
+                        <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                    </Right>
+                </CardItem>
+                {/*<CardItem bordered>*/}
+                {/*    <Left>*/}
+                {/*        <Body>*/}
+                {/*            <Text note><Icon note name="md-person" style={{fontSize: 16}}/> Nha cung cap : </Text>*/}
+                {/*            <Text>{this.state.contract.tenNhaCungCap}</Text>*/}
+                {/*        </Body>*/}
+                {/*    </Left>*/}
+                {/*    <Right>*/}
+                {/*        <Body>*/}
+                {/*            <Text note><Icon note name="md-business" style={{fontSize: 16}}/> Cong trinh : </Text>*/}
+                {/*            <Text>San van dong </Text>*/}
+                {/*        </Body>*/}
+                {/*    </Right>*/}
+                {/*</CardItem>*/}
 
-                <Grid>
-                    <Col size={2}>
-                        <Text style={{fontWeight: 'bold'}}><Icon name="ios-contact" style={styles.icon}/> Khách hàng
-                            :</Text>
-                    </Col>
-                    <Col size={3}>
-                        <Text style={{textAlign: 'center'}}>
-                            {this.props.device.p_customer == null
-                            || this.props.device.p_customer == false
-                            || this.props.device.p_customer.length < 2 ? 'Chưa có' : this.props.device.p_customer[1]}
-                        </Text>
-                    </Col>
+                <CardItem>
+                    <Left>
+                        {/*<Body>*/}
+                        {/*    <Text style={styles.muted}>{Config.common.fromDate}</Text>*/}
+                        {/*    <Button transparent>*/}
+                        {/*        <Icon name="md-calendar" style={{marginLeft: 0}}/>*/}
+                        {/*        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>*/}
+                        {/*    </Button>*/}
+                        {/*</Body>*/}
+                    </Left>
+                    <Right>
+                        <Body>
+                            <Text style={styles.muted}>{Config.calendarConcrete.calendarConcrete}</Text>
+                            <Button transparent>
+                                <Icon name="md-calendar" style={{}}/>
+                                <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
+                            </Button>
+                        </Body>
+                    </Right>
+                </CardItem>
 
-                </Grid>
             </TouchableOpacity>
         );
 
@@ -149,110 +185,25 @@ export default class CalendarConcreteItem extends Component {
 
 
     _renderStatus(status) {
-        if (status == '0') {
-            return (<Text style={{color: '#ffa505'}}>
-                <Icon name="ios-help-circle-outline"
-                      style={{fontSize: 13, color: '#ffa505'}}/>
-                {Config.stageName0KhongXacDinh}</Text>);
-        } else if (status == '4') {
-            return (<Text style={{color: '#44bc37'}}>
-                <Icon name="ios-checkmark-circle"
-                      style={{fontSize: 13, color: '#44bc37'}}/>
-                {Config.stageName4BinhDangSuDung} </Text>);
-        } else if (status == '1') {
-            return (<Text style={{color: Config.colorThin}}>
-                <Icon name="ios-battery-dead"
-                      style={{fontSize: 13, color: Config.colorThin}}/>
-                {Config.stageName0KhongXacDinh} </Text>);
-        } else if (status == '2') {
-            return (<Text style={{color: '#ff00ff'}}>
-                <Icon name="ios-refresh-circle"
-                      style={{fontSize: 13, color: '#ff00ff'}}/>
-                {Config.stageName2TaiNap} </Text>);
-        } else if (status == '3') {
-            return (<Text style={{color: '#c40521'}}>
-                <Icon name="ios-warning"
-                      style={{fontSize: 13, color: '#c40521'}}/>
-                {Config.stageName3BinhTon} </Text>);
+        if (status == Config.state.wait) {
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
+                </Text>
+            );
+        } else if (status == Config.state.approved) {
+            return (
+                <Text style={styles.statusSuccess}>
+                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                </Text>
+            );
         } else {
-            return (<Text style={{color: '#26619c'}}>{status}</Text>);
-        }
-    }
-
-    _renderWarehouse(warehouse) {
-        if (warehouse == '0') {
-            return (<Text style={{color: Config.mainColor}}> Không xác định</Text>);
-        } else if (warehouse == '1') {
-            return (<Text style={{color: Config.mainColor}}> Kho công ty</Text>);
-        } else if (warehouse == '2') {
-            return (<Text style={{color: Config.mainColor}}> Kho nhà máy</Text>);
-        } else if (warehouse == '3') {
-            return (<Text style={{color: Config.mainColor}}> Kho khách hàng</Text>);
-        } else {
-            return (<Text style={{color: Config.mainColor}}>{warehouse}</Text>);
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
+                </Text>
+            );
         }
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 10,
-    },
-    scrollContainer: {
-        // height: 150,
-        marginTop: 5,
-        paddingRight: 5,
-        paddingLeft: 5,
-        paddingBottom: 20
-    },
-    image: {
-        width: 160,
-        height: 160,
-        borderRadius: 10,
-        marginRight: 5,
-        borderColor: '#dfe3ee',
-        borderWidth: 0.5
-    },
-    capturePhoto: {
-        width: 180,
-        height: 180,
-        borderRadius: 10,
-        // marginRight: 5,
-        borderColor: '#dfe3ee',
-        borderWidth: 0.5
-    },
-
-    line: {
-        width: '47%',
-        height: 3,
-        backgroundColor: '#7f8c8d',
-        position: 'absolute',
-        bottom: '0%',
-        marginLeft: 5
-    },
-    titleView: {
-        flex: 1, width: '97%',
-        backgroundColor: Config.mainColor,
-        borderRadius: 5,
-        borderWidth: 0.5,
-        margin: 5,
-    },
-    title: {
-        fontSize: 16, fontFamily: 'Roboto',
-        fontWeight: '200',
-        color: 'white',
-        margin: 10,
-    },
-    icon: {
-        fontSize: 13
-    },
-    buttonChangeState: {
-        backgroundColor: 'white',
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: Config.mainColor
-    }
-});

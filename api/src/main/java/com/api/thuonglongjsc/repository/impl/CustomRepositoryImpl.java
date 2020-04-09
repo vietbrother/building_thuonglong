@@ -18,6 +18,8 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.thuonglongjsc.dto.GiaBanVatLieu;
+import com.api.thuonglongjsc.dto.GiaBanVatLieuSearch;
 import com.api.thuonglongjsc.dto.HopDongBeTong;
 import com.api.thuonglongjsc.dto.HopDongBeTongSearch;
 import com.api.thuonglongjsc.dto.LichXuatBeTong;
@@ -95,15 +97,25 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public List<HopDongBeTong> getListHopDongBeTong(HopDongBeTongSearch entity) {
 		// TODO Auto-generated method stub
 		List<HopDongBeTong> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, e.TenDoSut, f.TenYCDB, a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
+		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, e.TenDoSut, f.TenYCDB, "
+				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
+				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
 				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
 				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
 				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
 				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
 				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
 		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
 			res = query.unwrap(org.hibernate.query.Query.class)
 					.setResultTransformer(Transformers.aliasToBean(HopDongBeTong.class)).getResultList();
 		} catch (Exception e) {
@@ -117,7 +129,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public List<LichXuatBeTong> getListLichXuatBeTong(LichXuatBeTongSearch entity) {
 		List<LichXuatBeTong> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID, a.NgayThang, a.GioXuat, i.TenChiNhanh, h.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, \r\n"
-				+ "	e.TenDoSut, f.TenYCDB, g.TenHinhThucBom, a.KLThucXuat, \r\n"
+				+ "	e.TenDoSut, f.TenYCDB, g.TenHinhThucBom, a.KLThucXuat, a.TrangThai, a.IDChiNhanh, \r\n"
 				+ "	a.KLKhachHang, a.TrangThaiText, a.NguoiTao, a.NgayTao \r\n"
 				+ "FROM tblLichXuatBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
 				+ " JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
@@ -125,9 +137,17 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ " JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" + "JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
 				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
 				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 ";
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
 		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
 			res = query.unwrap(org.hibernate.query.Query.class)
 					.setResultTransformer(Transformers.aliasToBean(LichXuatBeTong.class)).getResultList();
 		} catch (Exception e) {
@@ -138,38 +158,90 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public ResultDTO approveContract(String contractId, String username, String approveType) {
+	@Transactional
+	public ResultDTO approveContract(String contractId, String username, String approveType, String stateId) {
 		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
 		try {
 			String message = "";
-			if(Utils.isNullOrEmpty(contractId) || Utils.isNullOrEmpty(username) || Utils.isNullOrEmpty(type)) {
+			if (Utils.isNullOrEmpty(contractId) || Utils.isNullOrEmpty(username) || Utils.isNullOrEmpty(approveType)
+					|| Utils.isNullOrEmpty(stateId)) {
 				message = "Input empty";
 				res.setMessage(message);
 				return res;
 			}
-			
-			String queryStr = "";
-			if(Constants.APPOVE_TYPE.CONTRACT_CONCRETE.equals(approveType)) {
-				
-			} else if(Constants.APPOVE_TYPE.CALENDAR_CONCRETE.equals(approveType)) {
-				
-			} else if(Constants.APPOVE_TYPE.CONTRACT_MATERIAL.equals(approveType)) {
-				
-			} else if(Constants.APPOVE_TYPE.CONTRACT_BRICK.equals(approveType)) {
-				
+
+			String queryStr = "update ";
+			List<String> lstParams = new ArrayList<>();
+			ResultDTO newState = Utils.switchApproveState(stateId);
+			if (Constants.APPROVE_TYPE.CONTRACT_CONCRETE.equals(approveType)) {
+				queryStr += " tblGiaBanBeTong set TrangThai = ?, TrangThaiText = ? , NguoiTao = ?, NgayTao = GETDATE() where id = ?";
+				lstParams.add(newState.getCode());
+				lstParams.add(newState.getMessage());
+				lstParams.add(username);
+				lstParams.add(contractId);
+
+				Query query = entityManager.createNativeQuery(queryStr);
+				for (int i = 0; i < lstParams.size(); i++) {
+					query.setParameter(i + 1, lstParams.get(i));
+				}
+				int resUpdate = query.executeUpdate();// executeUpdate();
+				logger.info("update result :  " + resUpdate);
+                if(resUpdate == 1){
+                    message = Constants.ERROR_CODE.SUCCESS;
+                }
+
+
+				res.setId(String.valueOf(System.currentTimeMillis()));
+				res.setCode(String.valueOf(resUpdate));
+			} else if (Constants.APPROVE_TYPE.CALENDAR_CONCRETE.equals(approveType)) {
+
+			} else if (Constants.APPROVE_TYPE.CONTRACT_MATERIAL.equals(approveType)) {
+
+			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK.equals(approveType)) {
+
 			} else {
 				message = "Invalid Approve Type";
 				res.setMessage(message);
 				return res;
 			}
-			
-			message = Constants.ERROR_CODE.SUCCESS;
-			res.setId(String.valueOf(System.currentTimeMillis()));
-			res.setCode(Constants.ERROR_CODE.SUCCESS);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);
 			res.setMessage(e.getMessage());
+		}
+		return res;
+	}
+
+	@Override
+	public List<GiaBanVatLieu> getListGiaBanVatLieu(GiaBanVatLieuSearch entity) {
+		List<GiaBanVatLieu> res = new ArrayList<>();
+		String queryStr = "SELECT a.ID, a.NgayThang, g.TenChiNhanh, b.TenNhaCungCap, d.TenNhomVatLieu, "
+				+ "e.TenLoaiVatLieu, f.TenDonViTinh, a.TLTong, a.TLBi, a.TLHang, a.TyLeQuyDoi, "
+				+ "a.SoPhieuCan, a.KLQuanCan, a.KLBan, a.KLXuatKho, a.TenBienSoXe, a.TenLaiXe, a.DonGiaCoThue, a.DonGiaKhongThue, "
+				+ "a.ThanhTienCoThue, a.ThanhTienKhongThue, a.TrangThaiText, a.TrangThai, a.IDChiNhanh, "
+				+ "a.TrangThaiChot, a.NguoiDuyet, a.NguoiDuyetChot, a.NgayTao, a.NguoiTao "
+				+ " FROM tblBanVatLieu AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID "
+				+ "JOIN tblNhomVatLieu AS d ON a.IDNhomVatLieu = d.ID "
+				+ "JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID "
+				+ "JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID " + "JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  "
+				+ " WHERE 1 = 1 ";
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
+		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
 		}
 		return res;
 	}

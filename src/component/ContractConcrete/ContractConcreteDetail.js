@@ -34,7 +34,7 @@ import Navbar from '../../component/Navbar';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 
-import styles from './Styles';
+import styles from '../../styles/ContractStyles';
 
 export default class ContractConcreteDetail extends Component {
 
@@ -44,7 +44,8 @@ export default class ContractConcreteDetail extends Component {
             hasError: false,
             errorText: '',
             isLoading: false,
-            contract: {}
+            contract: {},
+            username: '',
         };
     }
     //E:\MyWorks\Project\20200303_stock_app\github\building_thuonglong\node_modules\native-base\src\basic\Icon\NBIcons.json
@@ -52,11 +53,15 @@ export default class ContractConcreteDetail extends Component {
     componentWillMount() {
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({
             contract: this.props.contract,
         });
         console.log(this.props.contract);
+        let username = await AsyncStorage.getItem('userId');
+        this.setState({
+            username: username,
+        });
     }
 
     _renderDateFormat(date) {
@@ -71,7 +76,50 @@ export default class ContractConcreteDetail extends Component {
             return '';
         }
     }
+    _renderApproveButton(status) {
+        if (status == Config.stateCode.wait) {
+            return (
+                <CardItem>
+                    <Left>
+                        {/*<Button bordered onPress={() => this.add()}>*/}
+                        {/*<Text style={{color: '#fdfdfd'}}> {Config.customerAddTitle} </Text>*/}
+                        {/*</Button>*/}
+                    </Left>
+                    <Body>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                        </Button>
+                    </Body>
+                    <Right>
+                        <Button style={styles.btnApprove} onPress={() => this._preApprove()}>
+                            <Text style={styles.titleApprove}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
+                        </Button>
+                    </Right>
+                </CardItem>
+            );
+        } else if (status == Config.stateCode.approved) {
+            return (
+                <CardItem>
+                    <Body>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                        </Button>
+                    </Body>
+                </CardItem>
+            );
+        } else {
+            return (
+                <CardItem>
+                    <Body>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                        </Button>
+                    </Body>
+                </CardItem>
+            );
+        }
 
+    }
     _preApprove() {
         Alert.alert(
             '',
@@ -88,8 +136,33 @@ export default class ContractConcreteDetail extends Component {
         );
     }
 
-    _actionApprove() {
+    async _actionApprove() {
+        try {
+            this.setState({isLoading: true});
 
+            var param = {
+                approveStateId: this.state.contract.trangthai,
+                contractId: this.state.contract.id,
+                type: Config.APPROVE_TYPE.CONTRACT_CONCRETE,
+                username: this.state.username
+            };
+            // var res = Api.login(param);
+            // this._getResLogin(res);
+
+            let response = await fetch(Config.api.url + Config.api.apiApprove, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            alert(response.message);
+        } catch (error) {
+            console.error(error);
+            this.setState({isLoading: false});
+        }
     }
 
     _renderStatus(status) {
@@ -281,23 +354,7 @@ export default class ContractConcreteDetail extends Component {
                         </CardItem>
 
 
-                        <CardItem>
-                            <Left>
-                                {/*<Button bordered onPress={() => this.add()}>*/}
-                                {/*<Text style={{color: '#fdfdfd'}}> {Config.customerAddTitle} </Text>*/}
-                                {/*</Button>*/}
-                            </Left>
-                            <Body>
-                            <Button active onPress={() => Actions.pop()} transparent>
-                                <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
-                            </Button>
-                            </Body>
-                            <Right>
-                                <Button style={styles.btnApprove} onPress={() => this._preApprove()}>
-                                    <Text style={styles.titleApprove}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
-                                </Button>
-                            </Right>
-                        </CardItem>
+                        {this._renderApproveButton(this.state.contract.trangThai)}
 
                     </Card>
 
