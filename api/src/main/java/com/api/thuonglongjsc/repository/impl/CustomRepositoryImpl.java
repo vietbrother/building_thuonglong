@@ -105,6 +105,33 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
 				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
 				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		/* SELECT a.ID, 
+               h.TenChiNhanh, 
+               g.TenCongTrinh, 
+               b.TenNhaCungCap, 
+               TenMacBeTong = c.TenLoaiVatLieu, 
+               TenLoaiDa = d.TenLoaiVatLieu, 
+               e.TenDoSut, 
+               f.TenYCDB, 
+               a.DonGiaHoaDon, 
+               a.DonGiaThanhToan, 
+               a.TuNgay, 
+               a.DenNgay, 
+               a.TrangThaiText, 
+               a.NguoiTao, 
+               a.NgayTao
+        FROM tblGiaBanBeTong AS a
+             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID
+             JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID
+             JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID
+             JOIN tblDoSut AS e ON a.DoSut = e.ID
+             JOIN tblYCDB AS f ON a.YCDB = f.ID
+             JOIN tblCongTrinhNhaCungCap AS g ON a.IDCongTrinh = g.ID
+             JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID
+        WHERE a.IDChiNhanh = @IDChiNhanh
+		and a.TrangThai != 2
+        ORDER BY a.TrangThaiText, 
+                 a.TuNgay */
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
@@ -143,6 +170,35 @@ public class CustomRepositoryImpl implements CustomRepository {
 			lstParams.add(entity.getIDChiNhanh());
 		}
 		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+		/*SELECT a.ID, 
+               a.NgayThang, 
+               a.GioXuat, 
+               i.TenChiNhanh, 
+               h.TenCongTrinh, 
+               b.TenNhaCungCap, 
+               TenMacBeTong = c.TenLoaiVatLieu, 
+               TenLoaiDa = d.TenLoaiVatLieu, 
+               e.TenDoSut, 
+               f.TenYCDB, 
+               g.TenHinhThucBom, 
+               a.KLThucXuat, 
+               a.KLKhachHang, 
+               a.TrangThaiText, 
+               a.NguoiTao, 
+               a.NgayTao
+        FROM tblLichXuatBeTong AS a
+             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID
+             JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID
+             JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID
+             JOIN tblDoSut AS e ON a.DoSut = e.ID
+             JOIN tblYCDB AS f ON a.YCDB = f.ID
+             JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID
+             JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID
+             JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID
+        WHERE a.IDChiNhanh = @IDChiNhanh
+              AND a.TrangThai != 2
+        ORDER BY a.TrangThaiText, 
+                 a.NgayThang*/
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -226,6 +282,29 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ "JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID "
 				+ "JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID " + "JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  "
 				+ " WHERE 1 = 1 ";
+		/*SELECT a.ID,     
+               g.TenChiNhanh,     
+			   a.CongTrinh,     
+               b.TenNhaCungCap AS NhaCungCap,     
+               d.TenNhomVatLIeu AS NhomVatLieu,     
+               e.TenLoaiVatLieu AS LoaiVatLieu,     
+               f.TenDonViTinh AS DonViTinh,     
+               a.DonGiaCoThue,     
+               a.DonGiaKhongThue,     
+               a.TuNgay,     
+               a.DenNgay,     
+               a.TrangThaiText,     
+               a.NguoiTao,     
+               a.NgayTao    
+        FROM tblGiaBanVatLieu AS a    
+             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID    
+             JOIN tblNhomVatLieu AS d ON a.IDNhomVatLieu = d.ID    
+             JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID    
+             JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID    
+             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID    
+        --WHERE a.TrangThai != 2  
+        ORDER BY a.TrangThaiText,     
+                 a.TuNgay DESC    */
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";

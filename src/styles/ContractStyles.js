@@ -1,6 +1,6 @@
 'use strict';
 import {StyleSheet} from 'react-native';
-import Config from "../../Config";
+import Config from "../Config";
 
 export default StyleSheet.create({
     container: {
@@ -82,7 +82,7 @@ export default StyleSheet.create({
         fontSize: 16,
     },
     titleBranch: {
-        color: 'dodgerblue', fontSize: 20, marginLeft: 0
+        color: 'dodgerblue', fontSize: 20, marginLeft: 0, fontWeight: 'bold'
     },
     muted: {
         color: '#849192',

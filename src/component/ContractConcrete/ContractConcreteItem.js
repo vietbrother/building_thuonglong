@@ -123,22 +123,30 @@ export default class ContractConcreteItem extends Component {
                 </CardItem>
                 <CardItem bordered>
                     <Left>
+                        <Body>
                         <Text style={styles.muted}><Icon note name="md-person"
                                                          style={styles.icon}/> {Config.contractConcrete.providerName} :
                         </Text>
+                        </Body>
                     </Left>
                     <Right>
+                        <Body>
                         <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                        </Body>
                     </Right>
                 </CardItem>
                 <CardItem bordered>
                     <Left>
+                        <Body>
                         <Text style={styles.muted}><Icon note name="briefcase"
                                                          style={styles.icon}/> {Config.contractConcrete.projectName} :
                         </Text>
+                        </Body>
                     </Left>
                     <Right>
+                        <Body>
                         <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                        </Body>
                     </Right>
                 </CardItem>
                 {/*<CardItem bordered>*/}
@@ -194,7 +202,8 @@ export default class ContractConcreteItem extends Component {
         } else if (status == Config.state.approved) {
             return (
                 <Text style={styles.statusSuccess}>
-                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                    <Icon active name="md-checkmark"
+                          style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
                 </Text>
             );
         } else {

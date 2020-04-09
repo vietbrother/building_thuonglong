@@ -148,17 +148,17 @@ export default class ContractConcretes extends Component {
                             // paddingLeft: 10,
                             // paddingRight: 10
                         }}>
-                            <Item>
-                                <Input
-                                    placeholder="Tìm kiếm bình..."
-                                    // value={this.state.searchText}
-                                    onChangeText={(text) => this.setState({searchText: text})}
-                                    onSubmitEditing={() => this.search(this.state.searchText)}
-                                    // style={{marginTop: 9}}
-                                />
-                                <Icon name="ios-search" style={Config.mainColor}
-                                      onPress={() => this.search(this.state.searchText)}/>
-                            </Item>
+                            {/*<Item>*/}
+                                {/*<Input*/}
+                                    {/*placeholder="Tìm kiếm bình..."*/}
+                                    {/*// value={this.state.searchText}*/}
+                                    {/*onChangeText={(text) => this.setState({searchText: text})}*/}
+                                    {/*onSubmitEditing={() => this.search(this.state.searchText)}*/}
+                                    {/*// style={{marginTop: 9}}*/}
+                                {/*/>*/}
+                                {/*<Icon name="ios-search" style={Config.mainColor}*/}
+                                      {/*onPress={() => this.search(this.state.searchText)}/>*/}
+                            {/*</Item>*/}
                             <ActivityIndicator
                                 animating={this.state.isSearching}
                                 color={Config.mainColor}
