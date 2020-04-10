@@ -1,12 +1,15 @@
 package com.api.thuonglongjsc.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.api.thuonglongjsc.dto.GiaBanVatLieu;
 import com.api.thuonglongjsc.dto.ResultDTO;
 
 public class Utils {
@@ -57,6 +60,22 @@ public class Utils {
 
 		}
 		return newState;
+	}
+
+	public static Object cashObject(Object object, Object[] data) {
+		Field[] attributes = object.getClass().getDeclaredFields();
+		for (int i = 0; i < attributes.length; i++) {
+			try {
+				Field field = attributes[i];
+				field.setAccessible(true);
+				field.set(object, data[i]);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+
+		return object;
 	}
 
 }
