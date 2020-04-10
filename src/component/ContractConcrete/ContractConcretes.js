@@ -159,11 +159,14 @@ export default class ContractConcretes extends Component {
                                 {/*<Icon name="ios-search" style={Config.mainColor}*/}
                                       {/*onPress={() => this.search(this.state.searchText)}/>*/}
                             {/*</Item>*/}
-                            <ActivityIndicator
-                                animating={this.state.isSearching}
-                                color={Config.mainColor}
-                                size="large"
-                            />
+                            {this.state.isSearching ?
+                                <ActivityIndicator
+                                    animating={this.state.isSearching}
+                                    color={Config.mainColor}
+                                    size="large"
+                                />
+                                : ''}
+
                             {/*{this._renderResult()}*/}
 
                             <FlatList
