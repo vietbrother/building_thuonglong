@@ -44,7 +44,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
 
-export default class CalendarConcreteItem extends Component {
+export default class ContractMaterialItem extends Component {
     constructor(props) {
         super(props);
 
@@ -107,7 +107,7 @@ export default class CalendarConcreteItem extends Component {
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.CalendarConcreteDetail({contract: this.props.contract})}
+                onPress={() => Actions.contractMaterialDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
                 <CardItem header>
@@ -124,28 +124,28 @@ export default class CalendarConcreteItem extends Component {
                 <CardItem bordered>
                     <Left>
                         <Body>
-                            <Text style={styles.muted}><Icon note name="md-person"
-                                                             style={styles.icon}/> {Config.calendarConcrete.providerName} :
-                            </Text>
+                        <Text style={styles.muted}><Icon note name="md-person"
+                                                         style={styles.icon}/> {Config.contractMaterial.providerName} :
+                        </Text>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                        <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
                         </Body>
                     </Right>
                 </CardItem>
                 <CardItem bordered>
                     <Left>
                         <Body>
-                            <Text style={styles.muted}><Icon note name="briefcase"
-                                                             style={styles.icon}/> {Config.calendarConcrete.projectName} :
-                            </Text>
+                        <Text style={styles.muted}><Icon note name="briefcase"
+                                                         style={styles.icon}/> {Config.contractMaterial.projectName} :
+                        </Text>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                        <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -166,21 +166,21 @@ export default class CalendarConcreteItem extends Component {
 
                 <CardItem>
                     <Left>
-                        {/*<Body>*/}
-                        {/*    <Text style={styles.muted}>{Config.common.fromDate}</Text>*/}
-                        {/*    <Button transparent>*/}
-                        {/*        <Icon name="md-calendar" style={{marginLeft: 0}}/>*/}
-                        {/*        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>*/}
-                        {/*    </Button>*/}
-                        {/*</Body>*/}
+                        <Body>
+                        <Text style={styles.muted}>{Config.common.fromDate}</Text>
+                        <Button transparent>
+                            <Icon name="md-calendar" style={{marginLeft: 0}}/>
+                            <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>
+                        </Button>
+                        </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.muted}>{Config.calendarConcrete.calendarConcrete}</Text>
-                            <Button transparent>
-                                <Icon name="md-calendar" style={{}}/>
-                                <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
-                            </Button>
+                        <Text style={styles.muted}>{Config.common.toDate}</Text>
+                        <Button transparent>
+                            <Icon name="md-calendar" style={{}}/>
+                            <Text style={styles.date}>{this._renderDateFormat(this.state.contract.denNgay)}</Text>
+                        </Button>
                         </Body>
                     </Right>
                 </CardItem>
@@ -202,7 +202,8 @@ export default class CalendarConcreteItem extends Component {
         } else if (status == Config.state.approved) {
             return (
                 <Text style={styles.statusSuccess}>
-                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                    <Icon active name="md-checkmark"
+                          style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
                 </Text>
             );
         } else {
@@ -212,6 +213,8 @@ export default class CalendarConcreteItem extends Component {
                 </Text>
             );
         }
+
     }
+
 }
 

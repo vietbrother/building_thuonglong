@@ -97,6 +97,22 @@ const Config = {
         exportDate: 'Ngày xuất',
     },
 
+    contractMaterial: {
+        title: 'Giá bán vật liệu',
+        detail: 'Thông tin chi tiết',
+        branch: 'Chi nhánh',
+        providerName: 'Nhà cung cấp',
+        projectName: 'Công trình',
+        stoneType: 'Loại đá',
+        subsidence: 'Độ sụt lún',
+        specialRequire: 'Yêu cầu đặc biệt',
+        concreteType: 'Mác bê tông',
+        pumpType: 'Hình thức bơm',
+        exportReal: 'Khối lượng thực xuất',
+        exportPlan: 'Khối lượng khách hàng',
+        exportDate: 'Ngày xuất',
+    },
+
     common: {
         fromDate: 'Từ ngày',
         toDate: 'Đến ngày',
