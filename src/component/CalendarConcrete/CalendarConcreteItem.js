@@ -107,7 +107,7 @@ export default class CalendarConcreteItem extends Component {
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.CalendarConcreteDetail({contract: this.props.contract})}
+                onPress={() => Actions.calendarConcreteDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
                 <CardItem header>
@@ -176,7 +176,7 @@ export default class CalendarConcreteItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.muted}>{Config.calendarConcrete.calendarConcrete}</Text>
+                            <Text style={styles.muted}>{Config.calendarConcrete.exportDate}</Text>
                             <Button transparent>
                                 <Icon name="md-calendar" style={{}}/>
                                 <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
@@ -202,16 +202,25 @@ export default class CalendarConcreteItem extends Component {
         } else if (status == Config.state.approved) {
             return (
                 <Text style={styles.statusSuccess}>
-                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                    <Icon active name="md-checkmark"
+                          style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+                </Text>
+            );
+        } else if (status == Config.state.approve_delete) {
+            return (
+                <Text style={styles.statusOther}>
+                    <Icon active name="md-trash"
+                          style={styles.statusOther}/> {Config.state.approve_delete.toUpperCase()}
                 </Text>
             );
         } else {
             return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
+                <Text style={styles.statusOther}>
+                    <Icon active name="md-trash" style={styles.statusOther}/> {status}
                 </Text>
             );
         }
+
     }
 }
 

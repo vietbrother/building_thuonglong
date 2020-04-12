@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.api.thuonglongjsc.model.TblChiNhanh;
 
 @Repository
-public interface ChiNhanhRepository extends JpaRepository<TblChiNhanh, Long> {
+public interface ChiNhanhRepository extends JpaRepository<TblChiNhanh, Long>, CustomRepository {
 
 }

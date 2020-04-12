@@ -131,7 +131,7 @@ export default class ContractMaterialItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                        <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                        <Text style={styles.title}>{this.state.contract.nhaCungCap}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -145,7 +145,7 @@ export default class ContractMaterialItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                        <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                        <Text style={styles.title}>{this.state.contract.congTrinh}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -193,6 +193,7 @@ export default class ContractMaterialItem extends Component {
 
 
     _renderStatus(status) {
+        console.log(status);
         if (status == Config.state.wait) {
             return (
                 <Text style={styles.statusRed}>
@@ -206,10 +207,17 @@ export default class ContractMaterialItem extends Component {
                           style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
                 </Text>
             );
+        } else if (status == Config.state.approve_delete) {
+            return (
+                <Text style={styles.statusOther}>
+                    <Icon active name="md-trash"
+                          style={styles.statusOther}/> {Config.state.approve_delete.toUpperCase()}
+                </Text>
+            );
         } else {
             return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
+                <Text style={styles.statusOther}>
+                    <Icon active name="md-trash" style={styles.statusOther}/> {status}
                 </Text>
             );
         }

@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, {Component} from 'react';
-import {Image, Dimensions, TouchableWithoutFeedback, AsyncStorage, Alert} from 'react-native';
+import {Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage, Alert} from 'react-native';
 import {
     View,
     Container,
@@ -35,6 +35,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 
 import styles from '../../styles/ContractStyles';
+import Utils from "../../utils/Utils";
 
 export default class CalendarConcreteDetail extends Component {
 
@@ -44,32 +45,120 @@ export default class CalendarConcreteDetail extends Component {
             hasError: false,
             errorText: '',
             isLoading: false,
-            contract: {}
+            contract: {},
+            username: '',
         };
     }
+
     //E:\MyWorks\Project\20200303_stock_app\github\building_thuonglong\node_modules\native-base\src\basic\Icon\NBIcons.json
 
     componentWillMount() {
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({
             contract: this.props.contract,
         });
         console.log(this.props.contract);
+        let username = await AsyncStorage.getItem('userId');
+        this.setState({
+            username: username,
+        });
+        console.log(this.state.username);
     }
 
-    _renderDateFormat(date) {
-        if (date != null && date != undefined) {
-            var dateStr = date.substring(0, 10);
-            console.log(date);
-            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
-                return d + '/' + m + '/' + y;
-            });
-            return dateStr;
+    // _renderDateFormat(date) {
+    //     if (date != null && date != undefined) {
+    //         var dateStr = date.substring(0, 10);
+    //         console.log(date);
+    //         dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
+    //             return d + '/' + m + '/' + y;
+    //         });
+    //         return dateStr;
+    //     } else {
+    //         return '';
+    //     }
+    // }
+    //
+    // _renderStatus(status) {
+    //     console.log(status);
+    //     if (status == Config.state.wait) {
+    //         return (
+    //             <Text style={styles.statusRed}>
+    //                 <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else if (status == Config.state.approved) {
+    //         return (
+    //             <Text style={styles.statusSuccess}>
+    //                 <Icon active name="md-checkmark"
+    //                       style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else if (status == Config.state.approve_delete) {
+    //         return (
+    //             <Text style={styles.statusOther}>
+    //                 <Icon active name="md-trash"
+    //                       style={styles.statusOther}/> {Config.state.approve_delete.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else {
+    //         return (
+    //             <Text style={styles.statusOther}>
+    //                 <Icon active name="md-trash" style={styles.statusOther}/> {status}
+    //             </Text>
+    //         );
+    //     }
+    //
+    // }
+
+    _renderApproveButton(status) {
+        if (status == Config.state.wait) {
+            return (
+                <CardItem>
+                    <Left>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            </Text>
+                        </Button>
+                    </Left>
+                    <Right>
+                        <TouchableOpacity
+                            style={styles.btnApprove}
+                            onPress={() => this._preApprove()}
+                            activeOpacity={0.9}
+                        >
+                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                    name='md-checkmark'/> {Config.btnApprove}
+                            </Text>
+                        </TouchableOpacity>
+                    </Right>
+                </CardItem>
+            );
+        } else if (status == Config.state.approved) {
+            return (
+                <CardItem>
+                    <Body>
+                    <Button active onPress={() => Actions.pop()} transparent>
+                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        </Text>
+                    </Button>
+                    </Body>
+                </CardItem>
+            );
         } else {
-            return '';
+            return (
+                <CardItem>
+                    <Body>
+                    <Button active onPress={() => Actions.pop()} transparent>
+                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        </Text>
+                    </Button>
+                    </Body>
+                </CardItem>
+            );
         }
+
     }
 
     _preApprove() {
@@ -88,31 +177,40 @@ export default class CalendarConcreteDetail extends Component {
         );
     }
 
-    _actionApprove() {
+    async _actionApprove() {
+        try {
+            this.setState({isLoading: true});
 
-    }
+            var param = {
+                approveStateId: Utils._getStatusCode(this.state.contract.trangThaiText),
+                contractId: this.state.contract.id,
+                type: Config.APPROVE_TYPE.CALENDAR_CONCRETE,
+                username: this.state.username
+            };
+            // var res = Api.login(param);
+            // this._getResLogin(res);
 
-    _renderStatus(status) {
-        if (status == Config.state.wait) {
-            return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
-                </Text>
-            );
-        } else if (status == Config.state.approved) {
-            return (
-                <Text style={styles.statusSuccess}>
-                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
-                </Text>
-            );
-        } else {
-            return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
-                </Text>
-            );
+            let response = await fetch(Config.api.url + Config.api.apiApprove, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            this.setState({isLoading: false});
+            console.log(responseObj);
+            if (responseObj != null && responseObj.code == Config.resCode.success) {
+                alert(Config.successApprove);
+                Actions.calendarConcretes({sessionLoginKey: '123'});
+            } else {
+                alert(Config.err_approve + " : " + responseObj.message);
+            }
+        } catch (error) {
+            console.error(error);
+            this.setState({isLoading: false});
         }
-
     }
 
 
@@ -157,7 +255,7 @@ export default class CalendarConcreteDetail extends Component {
                         <CardItem>
                             <Left></Left>
                             <Right>
-                                {this._renderStatus(this.state.contract.trangThaiText)}
+                                {Utils._renderStatus(this.state.contract.trangThaiText)}
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -250,7 +348,7 @@ export default class CalendarConcreteDetail extends Component {
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {parseInt(this.state.contract.klthucXuat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                    {Utils._renderPriceFormat(this.state.contract.klthucXuat)}
                                 </Text>
                             </Right>
                         </CardItem>
@@ -262,7 +360,7 @@ export default class CalendarConcreteDetail extends Component {
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {parseInt(this.state.contract.klkhachHang).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                    {Utils._renderPriceFormat(this.state.contract.klkhachHang)}
                                 </Text>
                             </Right>
                         </CardItem>
@@ -279,33 +377,18 @@ export default class CalendarConcreteDetail extends Component {
                             </Left>
                             <Right>
                                 <Body>
-                                    <Text style={styles.muted}>{Config.calendarConcrete.calendarConcrete}</Text>
-                                    <Button transparent>
-                                        <Icon name="md-calendar" style={{}}/>
-                                        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
-                                    </Button>
+                                <Text style={styles.muted}>{Config.calendarConcrete.exportDate}</Text>
+                                <Button transparent>
+                                    <Icon name="md-calendar" style={{}}/>
+                                    <Text
+                                        style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
+                                </Button>
                                 </Body>
                             </Right>
                         </CardItem>
 
 
-                        <CardItem>
-                            <Left>
-                                {/*<Button bordered onPress={() => this.add()}>*/}
-                                {/*<Text style={{color: '#fdfdfd'}}> {Config.customerAddTitle} </Text>*/}
-                                {/*</Button>*/}
-                            </Left>
-                            <Body>
-                                <Button active onPress={() => Actions.pop()} transparent>
-                                    <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
-                                </Button>
-                            </Body>
-                            <Right>
-                                <Button style={styles.btnApprove} onPress={() => this._preApprove()}>
-                                    <Text style={styles.titleApprove}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
-                                </Button>
-                            </Right>
-                        </CardItem>
+                        {this._renderApproveButton(this.state.contract.trangThaiText)}
 
                     </Card>
 

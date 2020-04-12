@@ -34,17 +34,18 @@ public class CategoryController {
 	private ChiNhanhRepository chiNhanhRepository;
 
 	@GetMapping("/chinhanh")
-	public List<TblChiNhanh> getAllEmployees() {
-		List<TblChiNhanh> res = chiNhanhRepository.findAll();
-		if (res != null && res.size() > 0) {
-			Collections.sort(res, new Comparator<TblChiNhanh>() {
-				@Override
-				public int compare(final TblChiNhanh object1, final TblChiNhanh object2) {
-					return object1.getTenChiNhanh().compareTo(object2.getTenChiNhanh());
-				}
-			});
-		}
-		return res;
+	public List<TblChiNhanh> getBranch() {
+//		List<TblChiNhanh> res = chiNhanhRepository.findAll().;
+//		if (res != null && res.size() > 0) {
+//			Collections.sort(res, new Comparator<TblChiNhanh>() {
+//				@Override
+//				public int compare(final TblChiNhanh object1, final TblChiNhanh object2) {
+//					return object1.getTenChiNhanh().compareTo(object2.getTenChiNhanh());
+//				}
+//			});
+//		}
+//		return res;
+		return chiNhanhRepository.getListChiNhanh();
 	}
 
 }

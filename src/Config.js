@@ -17,8 +17,10 @@ const Config = {
     api: {
         url: 'http://27.71.225.139:8080',
         apiLogin: '/api/main/v1/login',
+        apiListBranch: '/api/cat/v1/chinhanh',
         apiHopDongBeTong: '/api/main/v1/hopdongbetong',
         apiLichXuatBeTong: '/api/main/v1/lichxuatbetong',
+        apiGiaBanVatLieu: '/api/main/v1/giabanvatlieu',
         apiApprove: '/api/main/v1/approve'
     },
     url: 'http://103.94.18.249/jstore',
@@ -98,34 +100,41 @@ const Config = {
     },
 
     contractMaterial: {
-        title: 'Giá bán vật liệu',
+        title: 'HĐ giá bán vật liệu',
         detail: 'Thông tin chi tiết',
         branch: 'Chi nhánh',
         providerName: 'Nhà cung cấp',
         projectName: 'Công trình',
-        stoneType: 'Loại đá',
-        subsidence: 'Độ sụt lún',
-        specialRequire: 'Yêu cầu đặc biệt',
-        concreteType: 'Mác bê tông',
-        pumpType: 'Hình thức bơm',
-        exportReal: 'Khối lượng thực xuất',
-        exportPlan: 'Khối lượng khách hàng',
-        exportDate: 'Ngày xuất',
+        materialGroup: 'Nhóm vật liệu',
+        materialType: 'Loại vật liệu',
+        unit: 'Đơn vị tính',
+        price: 'Đơn giá không thuế',
+        priceBill: 'Đơn giá có thuế',
+        userCreate: 'Người tạo',
     },
 
     common: {
         fromDate: 'Từ ngày',
         toDate: 'Đến ngày',
+        createDate: 'Ngày tạo'
     },
     state: {
         name: 'Trạng thái',
         wait: 'Chờ duyệt',
         approved: 'Đã duyệt',
+        approve_delete: 'Chờ duyệt xóa',
     },
     stateCode: {
         wait: '1',
         approved: '2',
+        approve_delete: '3',
     },
+    resCode: {
+        success: '0',
+        false: '1',
+    },
+
+
     titleMngtDevices: 'Quản lý thiết bị',
     titleMngtOrders: 'Đơn hàng',
     titleMngtCustomers: 'Khách hàng',
@@ -155,6 +164,7 @@ const Config = {
 
     //success
     success: 'Thành công',
+    successApprove: 'Phê duyệt thành công',
 
     //error
     err_login: 'Tên đăng nhập hoặc mật khẩu không đúng',
@@ -167,6 +177,7 @@ const Config = {
     err_device_code_required: 'Chưa nhập mã bình',
     err_device_code_not_valid: 'Mã bình phải có 6 hoặc 7 ký tự',
     err_device_code_exist: 'Mã bình đã được nhập',
+    err_approve: 'Phê duyệt thất bại',
 
     //stage
     stage0KhongXacDinh: '0',

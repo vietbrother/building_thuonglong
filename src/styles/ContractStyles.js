@@ -81,6 +81,10 @@ export default StyleSheet.create({
         color: 'green',
         fontSize: 16,
     },
+    statusOther: {
+        color: Config.colorThin,
+        fontSize: 16,
+    },
     titleBranch: {
         color: 'dodgerblue', fontSize: 20, marginLeft: 0, fontWeight: 'bold'
     },
@@ -103,10 +107,10 @@ export default StyleSheet.create({
         borderRightColor: Config.mainColor,
         borderRightWidth: 0.5,
         borderRadius: 5,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        padding: 10,
     },
     titleApprove: {
-        padding: 10,
         fontWeight: 'bold',
         color: Config.mainColor,
         fontSize: 18
@@ -114,6 +118,24 @@ export default StyleSheet.create({
     btnCancel: {
         padding: 10,
         color: '#849192',
-    }
+    },
+    branchPicker : {
+        width : '100%',
+        height: 50,
+        padding: 10,
+        borderWidth : 0.5,
+        borderBottomColor: Config.mainColor,
+        borderTopColor: Config.mainColor,
+        borderLeftColor: Config.mainColor,
+        borderRightColor: Config.mainColor,
+    },
+    branchPickerItem : {
+        borderWidth : 0.5,
+        borderBottomColor: Config.mainColor,
+        borderTopColor: Config.mainColor,
+        borderLeftColor: Config.mainColor,
+        borderRightColor: Config.mainColor,
+        color: Config.mainColor
+    },
 
 });

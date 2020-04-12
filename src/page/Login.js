@@ -223,6 +223,7 @@ export default class Login extends Component {
             this.setState({hasError: true, errorText: res.message});
         } else {
             AsyncStorage.setItem('userId', res.data.userName);
+            console.log(res.data.userName);
             Actions.contractConcretes({sessionLoginKey: '123'});
         }
 

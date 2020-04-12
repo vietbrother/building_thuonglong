@@ -43,6 +43,7 @@ import HTML from 'react-native-render-html';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
+import Utils from "../../utils/Utils";
 
 export default class ContractConcreteItem extends Component {
     constructor(props) {
@@ -63,8 +64,8 @@ export default class ContractConcreteItem extends Component {
     }
 
     componentDidMount(): void {
-        this.setState({contract: this.props.contract});
-        console.log(this.props.contract);
+        this.setState({contract: this.props.contract, sessionKey: this.props.sessionKey});
+        console.log(this.props.sessionKey);
     }
 
     render() {
@@ -91,23 +92,23 @@ export default class ContractConcreteItem extends Component {
         );
     }
 
-    _renderDateFormat(date) {
-        if (date != null && date != undefined) {
-            var dateStr = date.substring(0, 10);
-            console.log(date);
-            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
-                return d + '/' + m + '/' + y;
-            });
-            return dateStr;
-        } else {
-            return '';
-        }
-    }
+    // _renderDateFormat(date) {
+    //     if (date != null && date != undefined) {
+    //         var dateStr = date.substring(0, 10);
+    //         console.log(date);
+    //         dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
+    //             return d + '/' + m + '/' + y;
+    //         });
+    //         return dateStr;
+    //     } else {
+    //         return '';
+    //     }
+    // }
 
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.contractConcreteDetail({contract: this.props.contract})}
+                onPress={() => Actions.contractConcreteDetail({contract: this.props.contract, sessionKey: this.props.sessionKey})}
                 activeOpacity={0.9}
             >
                 <CardItem header>
@@ -118,7 +119,7 @@ export default class ContractConcreteItem extends Component {
                         </Text>
                     </Left>
                     <Right>
-                        {this._renderStatus(this.state.contract.trangThaiText)}
+                        {Utils._renderStatus(this.state.contract.trangThaiText)}
                     </Right>
                 </CardItem>
                 <CardItem bordered>
@@ -170,7 +171,7 @@ export default class ContractConcreteItem extends Component {
                         <Text style={styles.muted}>{Config.common.fromDate}</Text>
                         <Button transparent>
                             <Icon name="md-calendar" style={{marginLeft: 0}}/>
-                            <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>
+                            <Text style={styles.date}>{Utils._renderDateFormat(this.state.contract.tuNgay)}</Text>
                         </Button>
                         </Body>
                     </Left>
@@ -179,7 +180,7 @@ export default class ContractConcreteItem extends Component {
                         <Text style={styles.muted}>{Config.common.toDate}</Text>
                         <Button transparent>
                             <Icon name="md-calendar" style={{}}/>
-                            <Text style={styles.date}>{this._renderDateFormat(this.state.contract.denNgay)}</Text>
+                            <Text style={styles.date}>{Utils._renderDateFormat(this.state.contract.denNgay)}</Text>
                         </Button>
                         </Body>
                     </Right>
@@ -192,29 +193,36 @@ export default class ContractConcreteItem extends Component {
     }
 
 
-    _renderStatus(status) {
-        if (status == Config.state.wait) {
-            return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
-                </Text>
-            );
-        } else if (status == Config.state.approved) {
-            return (
-                <Text style={styles.statusSuccess}>
-                    <Icon active name="md-checkmark"
-                          style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
-                </Text>
-            );
-        } else {
-            return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
-                </Text>
-            );
-        }
-
-    }
+    // _renderStatus(status) {
+    //     if (status == Config.state.wait) {
+    //         return (
+    //             <Text style={styles.statusRed}>
+    //                 <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else if (status == Config.state.approved) {
+    //         return (
+    //             <Text style={styles.statusSuccess}>
+    //                 <Icon active name="md-checkmark"
+    //                       style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else if (status == Config.state.approve_delete) {
+    //         return (
+    //             <Text style={styles.statusOther}>
+    //                 <Icon active name="md-trash"
+    //                       style={styles.statusOther}/> {Config.state.approve_delete.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else {
+    //         return (
+    //             <Text style={styles.statusOther}>
+    //                 <Icon active name="md-trash" style={styles.statusOther}/> {status}
+    //             </Text>
+    //         );
+    //     }
+    //
+    // }
 
 }
 

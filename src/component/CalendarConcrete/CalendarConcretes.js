@@ -14,7 +14,7 @@ import {
     NativeModules,
     Dimensions,
     Alert,
-    FlatList
+    FlatList, Picker
 } from 'react-native';
 import {
     Container,
@@ -44,7 +44,8 @@ import SideMenuDrawer from '../../component/SideMenuDrawer';
 import Colors from "../../Colors";
 import Config from "../../Config";
 import HTML from 'react-native-render-html';
-import CalendarConcretesItem from "../../component/CalendarConcrete/CalendarConcreteItem";
+import CalendarConcretesItem from "./CalendarConcreteItem";
+import styles from "../../styles/ContractStyles";
 
 
 export default class CalendarConcretes extends Component {
@@ -54,6 +55,7 @@ export default class CalendarConcretes extends Component {
 
         this.state = {
             contracts: [],
+            branchs: [],
             // isLoading: true,
             isSearching: false,
             error: null,
@@ -61,18 +63,52 @@ export default class CalendarConcretes extends Component {
 
             extractedText: "",
             searchText: '',
-            CalendarConcretesSelected: {},
+            branchSelected: '',
             componentKey: new Date()
         };
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
         this.setState({componentKey: new Date(), searchText: ''});
+        this._loadBranchData();
     }
 
     componentDidMount() {
-        this.search();
+        this._loadBranchData();
     }
+
+    async _loadBranchData() {
+        this.setState({isSearching: true});
+        try {
+            var param = {};
+            let response = await fetch(Config.api.url + Config.api.apiListBranch, {
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*'
+                }
+            });
+            var responseObj = await response.json();
+            this.setState({isSearching: false});
+            this.setState({branchs: responseObj});
+            if (responseObj != null && responseObj.length > 0) {
+                this.setState({branchSelected: responseObj[0].id});
+            }
+            this.search();
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearching: false});
+        }
+    }
+
+    _renderBranch() {
+        var items = [];
+        for (var i = 0; i < this.state.branchs.length; i++) {
+            var branchItem = this.state.branchs[i];
+            items.push(<Picker.Item label={branchItem.tenChiNhanh} value={branchItem.id}/>);
+        }
+        return items;
+    }
+
 
     _renderItemResult(item) {
         console.log(item);
@@ -89,13 +125,20 @@ export default class CalendarConcretes extends Component {
         );
     }
 
+    _actionSelectBranch(itemValue) {
+        console.log("+++++++++++++++++++++++ " + itemValue);
+        this.setState({branchSelected: itemValue});
+        this.search();
+    }
+
+
     async search() {
         console.log('CalendarConcretess-----------------search');
         this.setState({isSearching: true});
         let items = [];
         try {
             var param = {};
-            let response = await fetch(Config.api.url + Config.api.apiHopDongBeTong, {
+            let response = await fetch(Config.api.url + Config.api.apiLichXuatBeTong, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -139,7 +182,7 @@ export default class CalendarConcretes extends Component {
                 // sessionLoginKey={this.props.sessionLoginKey}
             >
                 <Container>
-                    <Navbar left={left} right={right} title={Config.CalendarConcrete.title}/>
+                    <Navbar left={left} right={right} title={Config.calendarConcrete.title}/>
                     <Content>
                         <View style={{
                             flex: 1,
@@ -159,12 +202,24 @@ export default class CalendarConcretes extends Component {
                             {/*    <Icon name="ios-search" style={Config.mainColor}*/}
                             {/*          onPress={() => this.search(this.state.searchText)}/>*/}
                             {/*</Item>*/}
-                            <ActivityIndicator
-                                animating={this.state.isSearching}
-                                color={Config.mainColor}
-                                size="large"
-                            />
-                            {/*{this._renderResult()}*/}
+                            <Card>
+                                <CardItem>
+                                    <Picker
+                                        style={styles.branchPicker}
+                                        itemStyle={styles.branchPickerItem}
+                                        selectedValue={this.state.branchSelected}
+                                        onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
+                                        {this._renderBranch()}
+                                    </Picker>
+                                </CardItem>
+                            </Card>
+                            {this.state.isSearching ?
+                                <ActivityIndicator
+                                    animating={this.state.isSearching}
+                                    color={Config.mainColor}
+                                    size="large"
+                                />
+                                : <Text></Text>}
 
                             <FlatList
                                 style={{width: '100%'}}

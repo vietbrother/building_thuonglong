@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, {Component} from 'react';
-import {Image, Dimensions, TouchableWithoutFeedback, AsyncStorage, Alert} from 'react-native';
+import {Image, Dimensions, TouchableWithoutFeedback, AsyncStorage, Alert, TouchableOpacity} from 'react-native';
 import {
     View,
     Container,
@@ -35,6 +35,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 
 import styles from '../../styles/ContractStyles';
+import Utils from "../../utils/Utils";
 
 export default class ContractMaterialDetail extends Component {
 
@@ -48,6 +49,7 @@ export default class ContractMaterialDetail extends Component {
             username: '',
         };
     }
+
     //E:\MyWorks\Project\20200303_stock_app\github\building_thuonglong\node_modules\native-base\src\basic\Icon\NBIcons.json
 
     componentWillMount() {
@@ -64,46 +66,82 @@ export default class ContractMaterialDetail extends Component {
         });
     }
 
-    _renderDateFormat(date) {
-        if (date != null && date != undefined) {
-            var dateStr = date.substring(0, 10);
-            console.log(date);
-            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
-                return d + '/' + m + '/' + y;
-            });
-            return dateStr;
-        } else {
-            return '';
-        }
-    }
+    // _renderDateFormat(date) {
+    //     if (date != null && date != undefined) {
+    //         var dateStr = date.substring(0, 10);
+    //         console.log(date);
+    //         dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
+    //             return d + '/' + m + '/' + y;
+    //         });
+    //         return dateStr;
+    //     } else {
+    //         return '';
+    //     }
+    // }
+    //
+    // _renderStatus(status) {
+    //     console.log(status);
+    //     if (status == Config.state.wait) {
+    //         return (
+    //             <Text style={styles.statusRed}>
+    //                 <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else if (status == Config.state.approved) {
+    //         return (
+    //             <Text style={styles.statusSuccess}>
+    //                 <Icon active name="md-checkmark"
+    //                       style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else if (status == Config.state.approve_delete) {
+    //         return (
+    //             <Text style={styles.statusOther}>
+    //                 <Icon active name="md-trash"
+    //                       style={styles.statusOther}/> {Config.state.approve_delete.toUpperCase()}
+    //             </Text>
+    //         );
+    //     } else {
+    //         return (
+    //             <Text style={styles.statusOther}>
+    //                 <Icon active name="md-trash" style={styles.statusOther}/> {status}
+    //             </Text>
+    //         );
+    //     }
+    //
+    // }
+
     _renderApproveButton(status) {
-        if (status == Config.stateCode.wait) {
+        if (status == Config.state.wait) {
             return (
                 <CardItem>
                     <Left>
-                        {/*<Button bordered onPress={() => this.add()}>*/}
-                        {/*<Text style={{color: '#fdfdfd'}}> {Config.customerAddTitle} </Text>*/}
-                        {/*</Button>*/}
-                    </Left>
-                    <Body>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            </Text>
                         </Button>
-                    </Body>
+                    </Left>
                     <Right>
-                        <Button style={styles.btnApprove} onPress={() => this._preApprove()}>
-                            <Text style={styles.titleApprove}><Icon style={styles.icon} name='ios-checkmark-circle'/> {Config.btnApprove}</Text>
-                        </Button>
+                        <TouchableOpacity
+                            style={styles.btnApprove}
+                            onPress={() => this._preApprove()}
+                            activeOpacity={0.9}
+                        >
+                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                    name='md-checkmark'/> {Config.btnApprove}
+                            </Text>
+                        </TouchableOpacity>
                     </Right>
                 </CardItem>
             );
-        } else if (status == Config.stateCode.approved) {
+        } else if (status == Config.state.approved) {
             return (
                 <CardItem>
                     <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
-                        </Button>
+                    <Button active onPress={() => Actions.pop()} transparent>
+                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        </Text>
+                    </Button>
                     </Body>
                 </CardItem>
             );
@@ -111,15 +149,17 @@ export default class ContractMaterialDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
-                        </Button>
+                    <Button active onPress={() => Actions.pop()} transparent>
+                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        </Text>
+                    </Button>
                     </Body>
                 </CardItem>
             );
         }
 
     }
+
     _preApprove() {
         Alert.alert(
             '',
@@ -141,13 +181,12 @@ export default class ContractMaterialDetail extends Component {
             this.setState({isLoading: true});
 
             var param = {
-                approveStateId: this.state.contract.trangthai,
+                approveStateId: Utils._getStatusCode(this.state.contract.trangThaiText),
                 contractId: this.state.contract.id,
-                type: Config.APPROVE_TYPE.CONTRACT_CONCRETE,
+                type: Config.APPROVE_TYPE.CONTRACT_MATERIAL,
                 username: this.state.username
             };
-            // var res = Api.login(param);
-            // this._getResLogin(res);
+            console.log(param)
 
             let response = await fetch(Config.api.url + Config.api.apiApprove, {
                 method: 'POST',
@@ -158,34 +197,18 @@ export default class ContractMaterialDetail extends Component {
                 body: JSON.stringify(param)
             });
             var responseObj = await response.json();
-            alert(response.message);
+            this.setState({isLoading: false});
+            console.log(responseObj);
+            if (responseObj != null && responseObj.code == Config.resCode.success) {
+                alert(Config.successApprove);
+                Actions.contractMaterials({sessionLoginKey: '123'});
+            } else {
+                alert(Config.err_approve + " : " + responseObj.message);
+            }
         } catch (error) {
             console.error(error);
             this.setState({isLoading: false});
         }
-    }
-
-    _renderStatus(status) {
-        if (status == Config.state.wait) {
-            return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
-                </Text>
-            );
-        } else if (status == Config.state.approved) {
-            return (
-                <Text style={styles.statusSuccess}>
-                    <Icon active name="md-checkmark" style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
-                </Text>
-            );
-        } else {
-            return (
-                <Text style={styles.statusRed}>
-                    <Icon active name="md-lock-closed-outline" style={styles.statusRed}/> {status}
-                </Text>
-            );
-        }
-
     }
 
 
@@ -230,13 +253,13 @@ export default class ContractMaterialDetail extends Component {
                         <CardItem>
                             <Left></Left>
                             <Right>
-                                {this._renderStatus(this.state.contract.trangThaiText)}
+                                {Utils._renderStatus(this.state.contract.trangThaiText)}
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cube"
-                                                                 style={styles.icon}/> {Config.contractMaterial.branch} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.branch} :
                                 </Text>
                             </Left>
                             <Right>
@@ -247,73 +270,63 @@ export default class ContractMaterialDetail extends Component {
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-person"
-                                                                 style={styles.icon}/> {Config.contractMaterial.providerName} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.providerName} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                                <Text style={styles.title}>{this.state.contract.nhaCungCap}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="briefcase"
-                                                                 style={styles.icon}/> {Config.contractMaterial.projectName} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.projectName} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenCongTrinh}</Text>
+                                <Text>{this.state.contract.congTrinh}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-pricetag"
-                                                                 style={styles.icon}/> {Config.contractMaterial.concreteType} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.materialGroup} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.tenMacBeTong}</Text>
+                                <Text style={styles.title}>{this.state.contract.nhomVatLieu}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                 style={styles.icon}/> {Config.contractMaterial.stoneType} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.materialType} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                 style={styles.icon}/> {Config.contractMaterial.subsidence} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.tenDoSut}</Text>
+                                <Text style={styles.title}>{this.state.contract.loaiVatLieu}</Text>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-star-outline"
-                                                                 style={styles.icon}/> {Config.contractMaterial.specialRequire} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.unit} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>
+                                <Text style={styles.statusRed}>{this.state.contract.donViTinh}</Text>
                             </Right>
                         </CardItem>
 
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cash"
-                                                                 style={styles.icon}/> {Config.contractMaterial.price} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.price} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {parseInt(this.state.contract.donGiaThanhToan).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                    {Utils._renderPriceFormat(this.state.contract.donGiaKhongThue)}
                                 </Text>
                             </Right>
                         </CardItem>
@@ -321,12 +334,12 @@ export default class ContractMaterialDetail extends Component {
                         <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cash"
-                                                                 style={styles.icon}/> {Config.contractMaterial.priceBill} :
+                                                                      style={styles.icon}/> {Config.contractMaterial.priceBill} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {parseInt(this.state.contract.donGiaHoaDon).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                    {Utils._renderPriceFormat(this.state.contract.donGiaCoThue)}
                                 </Text>
                             </Right>
                         </CardItem>
@@ -338,7 +351,8 @@ export default class ContractMaterialDetail extends Component {
                                 <Text style={styles.muted}>{Config.common.fromDate}</Text>
                                 <Button transparent>
                                     <Icon name="md-calendar" style={{marginLeft: 0}}/>
-                                    <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>
+                                    <Text
+                                        style={styles.date}>{Utils._renderDateFormat(this.state.contract.tuNgay)}</Text>
                                 </Button>
                                 </Body>
                             </Left>
@@ -347,14 +361,15 @@ export default class ContractMaterialDetail extends Component {
                                 <Text style={styles.muted}>{Config.common.toDate}</Text>
                                 <Button transparent>
                                     <Icon name="md-calendar" style={{}}/>
-                                    <Text style={styles.date}>{this._renderDateFormat(this.state.contract.denNgay)}</Text>
+                                    <Text
+                                        style={styles.date}>{Utils._renderDateFormat(this.state.contract.denNgay)}</Text>
                                 </Button>
                                 </Body>
                             </Right>
                         </CardItem>
 
 
-                        {this._renderApproveButton(this.state.contract.trangThai)}
+                        {this._renderApproveButton(this.state.contract.trangThaiText)}
 
                     </Card>
 

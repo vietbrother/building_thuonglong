@@ -3,9 +3,11 @@ package com.api.thuonglongjsc.repository;
 import java.util.List;
 
 import com.api.thuonglongjsc.dto.*;
+import com.api.thuonglongjsc.model.TblChiNhanh;
 
 public interface CustomRepository {
 	public ResultDTO login(String username, String password);
+	public List<TblChiNhanh> getListChiNhanh();
 	
 	public List<HopDongBeTong> getListHopDongBeTong(HopDongBeTongSearch entity);
 

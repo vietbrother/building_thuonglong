@@ -56,7 +56,7 @@ public class Utils {
 		} else if (Constants.APPROVE_STATE.APPROVED.equals(stateId)) {
 			newState.setCode(Constants.APPROVE_STATE.NONE);
 			newState.setMessage(Constants.APPROVE_STATE_NAME.NONE);
-		} else if (Constants.APPROVE_STATE.NONE.equals(stateId)) {
+		} else if (Constants.APPROVE_STATE.APPROVE_DELETE.equals(stateId)) {
 
 		}
 		return newState;

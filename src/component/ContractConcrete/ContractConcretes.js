@@ -14,7 +14,7 @@ import {
     NativeModules,
     Dimensions,
     Alert,
-    FlatList
+    FlatList, Picker
 } from 'react-native';
 import {
     Container,
@@ -45,6 +45,7 @@ import Colors from "../../Colors";
 import Config from "../../Config";
 import HTML from 'react-native-render-html';
 import ContractConcretesItem from "./ContractConcreteItem";
+import styles from "../../styles/ContractStyles";
 
 
 export default class ContractConcretes extends Component {
@@ -54,6 +55,7 @@ export default class ContractConcretes extends Component {
 
         this.state = {
             contracts: [],
+            branchs: [],
             // isLoading: true,
             isSearching: false,
             error: null,
@@ -61,40 +63,94 @@ export default class ContractConcretes extends Component {
 
             extractedText: "",
             searchText: '',
-            ContractConcretesSelected: {},
+            branchSelected: '',
             componentKey: new Date()
         };
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
         this.setState({componentKey: new Date(), searchText: ''});
+        this._loadBranchData();
     }
 
     componentDidMount() {
-        this.search();
+        this.getSessionKey();
+        this._loadBranchData();
     }
 
+    async getSessionKey() {
+        try {
+            let userSessionKeyLogin = await AsyncStorage.getItem('userId');
+            console.log("========================= session key " + userSessionKeyLogin);
+            this.setState({sessionKey: userSessionKeyLogin});
+            console.log("========================= session key " + this.state.sessionKey);
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+        }
+    }
+
+    async _loadBranchData() {
+        this.setState({isSearching: true});
+        this.setState({contracts: []});
+        try {
+            var param = {};
+            let response = await fetch(Config.api.url + Config.api.apiListBranch, {
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*'
+                }
+            });
+            var responseObj = await response.json();
+            this.setState({isSearching: false});
+            this.setState({branchs: responseObj});
+            if (responseObj != null && responseObj.length > 0) {
+                this.setState({branchSelected: responseObj[0].id});
+            }
+            this.search(responseObj[0].id);
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearching: false});
+        }
+    }
+
+    _renderBranch() {
+        var items = [];
+        for (var i = 0; i < this.state.branchs.length; i++) {
+            var branchItem = this.state.branchs[i];
+            items.push(<Picker.Item key={new Date().valueOf()} label={branchItem.tenChiNhanh} value={branchItem.id}/>);
+        }
+        return items;
+    }
+
+
     _renderItemResult(item) {
-        console.log(item);
         var key = new Date().valueOf();
         return (
-/*            <View style={{
-                flex: 1,
-                width: '100%', color: Config.mainColor, fontSize: 16,
-                borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
-                padding: 5
-            }}>*/
-                <ContractConcretesItem key={key} contract={item}></ContractConcretesItem>
+            /*            <View style={{
+                            flex: 1,
+                            width: '100%', color: Config.mainColor, fontSize: 16,
+                            borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
+                            padding: 5
+                        }}>*/
+            <ContractConcretesItem key={key} contract={item} sessionKey={this.state.sessionKey}></ContractConcretesItem>
             /*</View>*/
         );
     }
 
-    async search() {
-        console.log('ContractConcretess-----------------search');
+    _actionSelectBranch(itemValue) {
+        console.log("+++++++++++++++++++++++ " + itemValue);
+        this.setState({branchSelected: itemValue});
+        console.log(this.state.branchSelected);
+        this.search(itemValue);
+    }
+
+    async search(branchId) {
+        console.log('ContractConcretess-----------------search ' + this.state.branchSelected);
         this.setState({isSearching: true});
-        let items = [];
+        this.setState({contracts: []});
         try {
-            var param = {};
+            var param = {idchiNhanh: branchId};
             let response = await fetch(Config.api.url + Config.api.apiHopDongBeTong, {
                 method: 'POST',
                 headers: {
@@ -149,23 +205,34 @@ export default class ContractConcretes extends Component {
                             // paddingRight: 10
                         }}>
                             {/*<Item>*/}
-                                {/*<Input*/}
-                                    {/*placeholder="Tìm kiếm bình..."*/}
-                                    {/*// value={this.state.searchText}*/}
-                                    {/*onChangeText={(text) => this.setState({searchText: text})}*/}
-                                    {/*onSubmitEditing={() => this.search(this.state.searchText)}*/}
-                                    {/*// style={{marginTop: 9}}*/}
-                                {/*/>*/}
-                                {/*<Icon name="ios-search" style={Config.mainColor}*/}
-                                      {/*onPress={() => this.search(this.state.searchText)}/>*/}
+                            {/*<Input*/}
+                            {/*placeholder="Tìm kiếm bình..."*/}
+                            {/*// value={this.state.searchText}*/}
+                            {/*onChangeText={(text) => this.setState({searchText: text})}*/}
+                            {/*onSubmitEditing={() => this.search(this.state.searchText)}*/}
+                            {/*// style={{marginTop: 9}}*/}
+                            {/*/>*/}
+                            {/*<Icon name="ios-search" style={Config.mainColor}*/}
+                            {/*onPress={() => this.search(this.state.searchText)}/>*/}
                             {/*</Item>*/}
+                            <Card>
+                                <CardItem>
+                                    <Picker
+                                        style={styles.branchPicker}
+                                        itemStyle={styles.branchPickerItem}
+                                        selectedValue={this.state.branchSelected}
+                                        onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
+                                        {this._renderBranch()}
+                                    </Picker>
+                                </CardItem>
+                            </Card>
                             {this.state.isSearching ?
                                 <ActivityIndicator
                                     animating={this.state.isSearching}
                                     color={Config.mainColor}
                                     size="large"
                                 />
-                                : ''}
+                                : <Text></Text>}
 
                             {/*{this._renderResult()}*/}
 

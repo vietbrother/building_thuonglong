@@ -62,6 +62,8 @@ import ContractConcreteDetail from "./component/ContractConcrete/ContractConcret
 import ContractConcretes from "./component/ContractConcrete/ContractConcretes";
 import CalendarConcretes from "./component/CalendarConcrete/CalendarConcretes";
 import CalendarConcreteDetail from "./component/CalendarConcrete/CalendarConcreteDetail";
+import ContractMaterials from "./component/ContractMaterial/ContractMaterials";
+import ContractMaterialDetail from "./component/ContractMaterial/ContractMaterialDetail";
 
 export default class Main extends Component {
 
@@ -217,7 +219,7 @@ export default class Main extends Component {
                         <Scene key="category" component={Category} hideNavBar/>
                         <Scene key="product" component={Product} hideNavBar/>
                         <Scene key="imageGallery" component={ImageGallery} modal hideNavBar/>
-                        <Scene key="login" component={Login} hideNavBar/>
+                        <Scene initial key="login" component={Login} hideNavBar/>
                         <Scene key="signup" component={Signup} hideNavBar/>
                         <Scene key="checkout" component={Checkout} hideNavBar/>
                         {/*<Scene key="orders" component={Orders} hideNavBar />*/}
@@ -253,10 +255,12 @@ export default class Main extends Component {
                         <Scene key="billList" component={BillList} hideNavBar/>
 
 
-                        <Scene initial key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>
+                        <Scene key="contractMaterials" component={ContractMaterials} hideNavBar/>
+                        <Scene key="contractMaterialDetail" component={ContractMaterialDetail} hideNavBar/>
 
                     </Scene>
                 </Router>

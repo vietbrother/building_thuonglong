@@ -26,6 +26,7 @@ import com.api.thuonglongjsc.dto.HopDongBeTongSearch;
 import com.api.thuonglongjsc.dto.LichXuatBeTong;
 import com.api.thuonglongjsc.dto.LichXuatBeTongSearch;
 import com.api.thuonglongjsc.dto.ResultDTO;
+import com.api.thuonglongjsc.model.TblChiNhanh;
 import com.api.thuonglongjsc.model.TblUserAccount;
 import com.api.thuonglongjsc.repository.CustomRepository;
 import com.api.thuonglongjsc.utils.Constants;
@@ -93,6 +94,22 @@ public class CustomRepositoryImpl implements CustomRepository {
 			// TODO: handle exception
 			logger.error("error ", e);
 			res.setMessage(e.getMessage());
+		}
+		return res;
+	}
+	
+	@Override
+	public List<TblChiNhanh> getListChiNhanh() {
+		// TODO Auto-generated method stub
+		List<TblChiNhanh> res = new ArrayList<>();
+		String queryStr = "SELECT * from tblChiNhanh where TrangThai = '1' order by TenChiNhanh asc";
+		
+		try {
+			Query query = entityManager.createNativeQuery(queryStr, TblChiNhanh.class);
+			res = query.getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
 		}
 		return res;
 	}
@@ -203,28 +220,12 @@ public class CustomRepositoryImpl implements CustomRepository {
 			List<String> lstParams = new ArrayList<>();
 			ResultDTO newState = Utils.switchApproveState(stateId);
 			if (Constants.APPROVE_TYPE.CONTRACT_CONCRETE.equals(approveType)) {
-				queryStr += " tblGiaBanBeTong set TrangThai = ?, TrangThaiText = ? , NguoiTao = ?, NgayTao = GETDATE() where id = ?";
-				lstParams.add(newState.getCode());
-				lstParams.add(newState.getMessage());
-				lstParams.add(username);
-				lstParams.add(contractId);
-
-				Query query = entityManager.createNativeQuery(queryStr);
-				for (int i = 0; i < lstParams.size(); i++) {
-					query.setParameter(i + 1, lstParams.get(i));
-				}
-				int resUpdate = query.executeUpdate();// executeUpdate();
-				logger.info("update result :  " + resUpdate);
-				if (resUpdate == 1) {
-					message = Constants.ERROR_CODE.SUCCESS;
-				}
-
-				res.setId(String.valueOf(System.currentTimeMillis()));
-				res.setCode(String.valueOf(resUpdate));
+				// NgayTao = GETDATE()
+				queryStr += " tblGiaBanBeTong ";
 			} else if (Constants.APPROVE_TYPE.CALENDAR_CONCRETE.equals(approveType)) {
-
+				queryStr += " tblLichXuatBeTong ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_MATERIAL.equals(approveType)) {
-
+				queryStr += " tblGiaBanVatLieu ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK.equals(approveType)) {
 
 			} else {
@@ -232,6 +233,28 @@ public class CustomRepositoryImpl implements CustomRepository {
 				res.setMessage(message);
 				return res;
 			}
+
+			queryStr += " set TrangThai = ?, TrangThaiText = ? , NguoiDuyet = ?  where id = ?";
+			
+			lstParams.add(newState.getCode());
+			lstParams.add(newState.getMessage());
+			lstParams.add(username);
+			lstParams.add(contractId);
+
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			int resUpdate = query.executeUpdate();// executeUpdate();
+			logger.info("update result :  " + resUpdate);
+			if (resUpdate == 1) {
+				message = Constants.ERROR_CODE.SUCCESS;
+				res.setCode(Constants.ERROR_CODE.SUCCESS);
+			} else {
+				res.setCode(String.valueOf(resUpdate));
+			}
+
+			res.setId(String.valueOf(System.currentTimeMillis()));
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -305,9 +328,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 //			res = storedProcedure.unwrap(org.hibernate.query.Query.class)
 //					.setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).getResultList();
-	        // Load all fields in the class (private included)
+			// Load all fields in the class (private included)
 			List<Object[]> lst = storedProcedure.getResultList();
-			for(Object[] data : lst) {
+			for (Object[] data : lst) {
 				GiaBanVatLieu item = (GiaBanVatLieu) Utils.cashObject(new GiaBanVatLieu(), data);
 				res.add(item);
 			}
