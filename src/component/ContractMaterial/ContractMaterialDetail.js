@@ -163,7 +163,7 @@ export default class ContractMaterialDetail extends Component {
     _preApprove() {
         Alert.alert(
             '',
-            'Bạn có chắc chắn phê duyệt hợp đồng này?', // <- this part is optional, you can pass an empty string
+            Config.confirm_approve, // <- this part is optional, you can pass an empty string
             [
                 {text: 'Đồng ý', onPress: () => this._actionApprove()},
                 {

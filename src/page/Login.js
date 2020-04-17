@@ -31,9 +31,21 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-        this.removeSessionKey();
+        this.checkLogin();
     }
-
+    async checkLogin() {
+        try {
+            let userSessionKeyLogin = await AsyncStorage.getItem('userId');
+            if (userSessionKeyLogin !== null) {
+                // We have data!!
+                console.log(userSessionKeyLogin);
+                Actions.contractConcretes({sessionLoginKey: '123'});
+            }
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+        }
+    }
     async removeSessionKey() {
         try {
             let userSessionKeyLogin = await AsyncStorage.getItem('cookieUserFromApi');
@@ -163,6 +175,7 @@ export default class Login extends Component {
         }
         try {
             this.setState({isLoading: true});
+            this.setState({hasError: false, errorText: ''});
 
             // await fetch(Config.url + '/api/user/generate_auth_cookie/?username=' + user + '&password=' + pass + '&insecure=cool')
             //     .then((response) => response.json())

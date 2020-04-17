@@ -161,6 +161,7 @@ const Config = {
     btnSave: 'Lưu',
     btnClose: 'Đóng',
     btnApprove: 'Phê duyệt',
+    btnReject: 'Từ chối',
 
     //success
     success: 'Thành công',
@@ -178,6 +179,9 @@ const Config = {
     err_device_code_not_valid: 'Mã bình phải có 6 hoặc 7 ký tự',
     err_device_code_exist: 'Mã bình đã được nhập',
     err_approve: 'Phê duyệt thất bại',
+
+    //confirm
+    confirm_approve: 'Bạn có chắc chắn phê duyệt hợp đồng này?',
 
     //stage
     stage0KhongXacDinh: '0',

@@ -73,7 +73,7 @@ export default class ContractConcreteDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
                             </Text>
                         </Button>
                     </Left>
@@ -95,7 +95,7 @@ export default class ContractConcreteDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
                         </Text>
                     </Button>
                     </Body>
@@ -106,7 +106,7 @@ export default class ContractConcreteDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
                         </Text>
                     </Button>
                     </Body>
@@ -119,7 +119,7 @@ export default class ContractConcreteDetail extends Component {
     _preApprove() {
         Alert.alert(
             '',
-            'Bạn có chắc chắn phê duyệt hợp đồng này?', // <- this part is optional, you can pass an empty string
+            Config.confirm_approve, // <- this part is optional, you can pass an empty string
             [
                 {text: 'Đồng ý', onPress: () => this._actionApprove()},
                 {
@@ -263,26 +263,26 @@ export default class ContractConcreteDetail extends Component {
                                 <Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>
                             </Right>
                         </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.contractConcrete.subsidence} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.tenDoSut}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem bordered>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
-                                                                      style={styles.icon}/> {Config.contractConcrete.specialRequire} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>
-                            </Right>
-                        </CardItem>
+                        {/*<CardItem>*/}
+                        {/*    <Left>*/}
+                        {/*        <Text style={styles.titleMuted}><Icon note name="ios-bookmark"*/}
+                        {/*                                              style={styles.icon}/> {Config.contractConcrete.subsidence} :*/}
+                        {/*        </Text>*/}
+                        {/*    </Left>*/}
+                        {/*    <Right>*/}
+                        {/*        <Text style={styles.title}>{this.state.contract.tenDoSut}</Text>*/}
+                        {/*    </Right>*/}
+                        {/*</CardItem>*/}
+                        {/*<CardItem bordered>*/}
+                        {/*    <Left>*/}
+                        {/*        <Text style={styles.titleMuted}><Icon note name="md-star-outline"*/}
+                        {/*                                              style={styles.icon}/> {Config.contractConcrete.specialRequire} :*/}
+                        {/*        </Text>*/}
+                        {/*    </Left>*/}
+                        {/*    <Right>*/}
+                        {/*        <Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>*/}
+                        {/*    </Right>*/}
+                        {/*</CardItem>*/}
 
                         <CardItem>
                             <Left>
