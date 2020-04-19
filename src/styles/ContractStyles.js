@@ -113,21 +113,22 @@ export default StyleSheet.create({
     },
     btnReject: {
         borderBottomColor: Config.warning,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
         borderTopColor: Config.warning,
-        borderTopWidth: 0.5,
+        borderTopWidth: 1,
         borderLeftColor: Config.warning,
-        borderLeftWidth: 0.5,
+        borderLeftWidth: 1,
         borderRightColor: Config.warning,
-        borderRightWidth: 0.5,
+        borderRightWidth: 1,
         borderRadius: 5,
         backgroundColor: 'white',
         color: 'red',
         padding: 10,
+        fontSize: 18
     },
     titleApprove: {
         fontWeight: 'bold',
-        color: Config.mainColor,
+        color: 'white',
         fontSize: 18
     },
     btnCancel: {

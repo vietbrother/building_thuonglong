@@ -374,8 +374,8 @@ export default class CalendarConcreteDetail extends Component {
                                 {/*        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>*/}
                                 {/*    </Button>*/}
                                 {/*</Body>*/}
-                            </Left>
-                            <Right>
+
+                                {/*<Right>*/}
                                 <Body>
                                 <Text style={styles.muted}>{Config.calendarConcrete.exportDate}</Text>
                                 <Button transparent>
@@ -384,7 +384,8 @@ export default class CalendarConcreteDetail extends Component {
                                         style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                                 </Button>
                                 </Body>
-                            </Right>
+                                {/*</Right>*/}
+                            </Left>
                         </CardItem>
 
 
