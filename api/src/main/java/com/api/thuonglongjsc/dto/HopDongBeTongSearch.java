@@ -12,6 +12,7 @@ public class HopDongBeTongSearch {
 	private String DenNgay;
 	private String idHopDong;
 	private String idTrangThai;
+	private String TrangThaiText;
 
 	public HopDongBeTongSearch() {
 		super();
@@ -121,12 +122,20 @@ public class HopDongBeTongSearch {
 		this.idTrangThai = idTrangThai;
 	}
 
+	public String getTrangThaiText() {
+		return TrangThaiText;
+	}
+
+	public void setTrangThaiText(String trangThaiText) {
+		TrangThaiText = trangThaiText;
+	}
+
 	@Override
 	public String toString() {
 		return "HopDongBeTongSearch [IDChiNhanh=" + IDChiNhanh + ", IDNhaCungCap=" + IDNhaCungCap + ", IDCongTrinh="
 				+ IDCongTrinh + ", MacBeTong=" + MacBeTong + ", LoaiDa=" + LoaiDa + ", DoSut=" + DoSut + ", YCDB="
 				+ YCDB + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay + ", idHopDong=" + idHopDong + ", idTrangThai="
-				+ idTrangThai + "]";
+				+ idTrangThai + ", TrangThaiText=" + TrangThaiText + "]";
 	}
 
 

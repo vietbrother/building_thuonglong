@@ -12,13 +12,17 @@ public class GiaBanVatLieuSearch {
 	private String DenNgay;
 	private String idHopDong;
 	private String idTrangThai;
+	private String TrangThaiText;
 
 	public GiaBanVatLieuSearch() {
 		super();
 	}
 
+
+
 	public GiaBanVatLieuSearch(String iDChiNhanh, String iDNhaCungCap, String iDCongTrinh, String macBeTong,
-			String loaiDa, String doSut, String yCDB, String tuNgay, String denNgay) {
+			String loaiDa, String doSut, String yCDB, String tuNgay, String denNgay, String idHopDong,
+			String idTrangThai, String trangThaiText) {
 		super();
 		IDChiNhanh = iDChiNhanh;
 		IDNhaCungCap = iDNhaCungCap;
@@ -29,7 +33,12 @@ public class GiaBanVatLieuSearch {
 		YCDB = yCDB;
 		TuNgay = tuNgay;
 		DenNgay = denNgay;
+		this.idHopDong = idHopDong;
+		this.idTrangThai = idTrangThai;
+		TrangThaiText = trangThaiText;
 	}
+
+
 
 	public String getIDChiNhanh() {
 		return IDChiNhanh;
@@ -121,12 +130,24 @@ public class GiaBanVatLieuSearch {
 		this.idTrangThai = idTrangThai;
 	}
 
+	public String getTrangThaiText() {
+		return TrangThaiText;
+	}
+
+
+
+	public void setTrangThaiText(String trangThaiText) {
+		TrangThaiText = trangThaiText;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "HopDongBeTongSearch [IDChiNhanh=" + IDChiNhanh + ", IDNhaCungCap=" + IDNhaCungCap + ", IDCongTrinh="
+		return "GiaBanVatLieuSearch [IDChiNhanh=" + IDChiNhanh + ", IDNhaCungCap=" + IDNhaCungCap + ", IDCongTrinh="
 				+ IDCongTrinh + ", MacBeTong=" + MacBeTong + ", LoaiDa=" + LoaiDa + ", DoSut=" + DoSut + ", YCDB="
 				+ YCDB + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay + ", idHopDong=" + idHopDong + ", idTrangThai="
-				+ idTrangThai + "]";
+				+ idTrangThai + ", TrangThaiText=" + TrangThaiText + "]";
 	}
 
 

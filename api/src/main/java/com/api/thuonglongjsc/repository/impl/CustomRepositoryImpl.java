@@ -118,13 +118,14 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public List<HopDongBeTong> getListHopDongBeTong(HopDongBeTongSearch entity) {
 		// TODO Auto-generated method stub
 		List<HopDongBeTong> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, e.TenDoSut, f.TenYCDB, "
+		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
+				+ " TenLoaiDa = '', '' as TenDoSut, '' as TenYCDB, "
 				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
 				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
 				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
 				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
-				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
+//				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
+//				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
 				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
 		/*
 		 * SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong =
@@ -142,6 +143,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
 		}
 		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
 		try {
@@ -161,19 +166,25 @@ public class CustomRepositoryImpl implements CustomRepository {
 	@Override
 	public List<LichXuatBeTong> getListLichXuatBeTong(LichXuatBeTongSearch entity) {
 		List<LichXuatBeTong> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, a.NgayThang, a.GioXuat, i.TenChiNhanh, h.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, \r\n"
-				+ "	e.TenDoSut, f.TenYCDB, g.TenHinhThucBom, a.KLThucXuat, a.TrangThai, a.IDChiNhanh, \r\n"
+		String queryStr = "SELECT a.ID, a.NgayThang, a.GioXuat, i.TenChiNhanh, h.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
+				+ " TenLoaiDa = '', \r\n"
+				+ "	'' as TenDoSut, '' as TenYCDB, g.TenHinhThucBom, a.KLThucXuat, a.TrangThai, a.IDChiNhanh, \r\n"
 				+ "	a.KLKhachHang, a.TrangThaiText, a.NguoiTao, a.NgayTao \r\n"
 				+ "FROM tblLichXuatBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
 				+ " JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-				+ " JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID \r\n" + "JOIN tblDoSut AS e ON a.DoSut = e.ID \r\n"
-				+ " JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" + "JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
+//				+ " JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID \r\n" + "JOIN tblDoSut AS e ON a.DoSut = e.ID \r\n"
+//				+ " JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" 
+				+ " JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
 				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
 				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 ";
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
 		}
 		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
 		/*

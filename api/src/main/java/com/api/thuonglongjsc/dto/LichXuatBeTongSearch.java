@@ -11,13 +11,18 @@ public class LichXuatBeTongSearch {
 	private String DoSut;
 	private String YCDB;
 	private String HinhThucBom;
+	private String idTrangThai;
+	private String TrangThaiText;
 
 	public LichXuatBeTongSearch() {
 		super();
 	}
 
+	
+
 	public LichXuatBeTongSearch(String iDChiNhanh, String tuNgay, String denNgay, String iDNhaCungCap,
-			String iDCongTrinh, String macBeTong, String loaiDa, String doSut, String yCDB, String hinhThucBom) {
+			String iDCongTrinh, String macBeTong, String loaiDa, String doSut, String yCDB, String hinhThucBom,
+			String idTrangThai, String trangThaiText) {
 		super();
 		IDChiNhanh = iDChiNhanh;
 		TuNgay = tuNgay;
@@ -29,7 +34,13 @@ public class LichXuatBeTongSearch {
 		DoSut = doSut;
 		YCDB = yCDB;
 		HinhThucBom = hinhThucBom;
+		this.idTrangThai = idTrangThai;
+		TrangThaiText = trangThaiText;
 	}
+
+
+
+
 
 	public String getIDChiNhanh() {
 		return IDChiNhanh;
@@ -38,6 +49,9 @@ public class LichXuatBeTongSearch {
 	public void setIDChiNhanh(String iDChiNhanh) {
 		IDChiNhanh = iDChiNhanh;
 	}
+
+
+
 
 	public String getTuNgay() {
 		return TuNgay;
@@ -110,12 +124,38 @@ public class LichXuatBeTongSearch {
 	public void setHinhThucBom(String hinhThucBom) {
 		HinhThucBom = hinhThucBom;
 	}
+	
+
+
+	public String getIdTrangThai() {
+		return idTrangThai;
+	}
+
+
+
+	public void setIdTrangThai(String idTrangThai) {
+		this.idTrangThai = idTrangThai;
+	}
+
+
+	public String getTrangThaiText() {
+		return TrangThaiText;
+	}
+
+	public void setTrangThaiText(String trangThaiText) {
+		TrangThaiText = trangThaiText;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "LichXuatBeTongSearch [IDChiNhanh=" + IDChiNhanh + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay
 				+ ", IDNhaCungCap=" + IDNhaCungCap + ", IDCongTrinh=" + IDCongTrinh + ", MacBeTong=" + MacBeTong
-				+ ", LoaiDa=" + LoaiDa + ", DoSut=" + DoSut + ", YCDB=" + YCDB + ", HinhThucBom=" + HinhThucBom + "]";
+				+ ", LoaiDa=" + LoaiDa + ", DoSut=" + DoSut + ", YCDB=" + YCDB + ", HinhThucBom=" + HinhThucBom
+				+ ", idTrangThai=" + idTrangThai + ", TrangThaiText=" + TrangThaiText + "]";
 	}
+
+
 
 }
