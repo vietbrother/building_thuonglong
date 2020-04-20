@@ -23,6 +23,7 @@ const Config = {
         apiGiaBanVatLieu: '/api/main/v1/giabanvatlieu',
         apiApprove: '/api/main/v1/approve'
     },
+    sessionTime: 3600*24*7,
     url: 'http://103.94.18.249/jstore',
     ssl: false,
     // consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503',
@@ -123,6 +124,7 @@ const Config = {
         wait: 'Chờ duyệt',
         approved: 'Đã duyệt',
         approve_delete: 'Chờ duyệt xóa',
+        active: 'Đang thực hiện'
     },
     stateCode: {
         wait: '1',

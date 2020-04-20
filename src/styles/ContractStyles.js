@@ -135,18 +135,18 @@ export default StyleSheet.create({
         padding: 10,
         color: '#849192',
     },
-    branchPicker : {
-        width : '100%',
+    branchPicker: {
+        width: '100%',
         height: 50,
         padding: 10,
-        borderWidth : 0.5,
+        borderWidth: 0.5,
         borderBottomColor: Config.mainColor,
         borderTopColor: Config.mainColor,
         borderLeftColor: Config.mainColor,
         borderRightColor: Config.mainColor,
     },
-    branchPickerItem : {
-        borderWidth : 0.5,
+    branchPickerItem: {
+        borderWidth: 0.5,
         borderBottomColor: Config.mainColor,
         borderTopColor: Config.mainColor,
         borderLeftColor: Config.mainColor,
@@ -154,4 +154,16 @@ export default StyleSheet.create({
         color: Config.mainColor
     },
 
+    tabActive: {
+        height: 5, backgroundColor: Config.mainColor
+    },
+    tabHeading: {
+        backgroundColor: 'white'
+    },
+    tabTitle: {
+        backgroundColor: 'transparent', color: Config.mainColor
+    },
+    tabIcon: {
+        backgroundColor: 'transparent', color: Config.mainColor
+    },
 });

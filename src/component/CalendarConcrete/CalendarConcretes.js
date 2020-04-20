@@ -26,12 +26,7 @@ import {
     Icon,
     Card,
     CardItem,
-    cardBody,
-    Row,
-    Grid,
-    Col,
-    Item,
-    Input, List, ListItem,
+    Tab, Tabs, TabHeading
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -39,11 +34,9 @@ import {Actions} from 'react-native-router-flux';
 
 import Text from '../../component/Text';
 import Navbar from '../../component/Navbar';
-import SideMenu from '../../component/SideMenu';
 import SideMenuDrawer from '../../component/SideMenuDrawer';
-import Colors from "../../Colors";
 import Config from "../../Config";
-import HTML from 'react-native-render-html';
+// import HTML from 'react-native-render-html';
 import CalendarConcretesItem from "./CalendarConcreteItem";
 import styles from "../../styles/ContractStyles";
 
@@ -55,9 +48,11 @@ export default class CalendarConcretes extends Component {
 
         this.state = {
             contracts: [],
+            contractsActive: [],
             branchs: [],
             // isLoading: true,
             isSearching: false,
+            isSearchingActive: false,
             error: null,
             sessionKey: null,
 
@@ -69,8 +64,9 @@ export default class CalendarConcretes extends Component {
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        this.setState({componentKey: new Date(), searchText: ''});
-        this._loadBranchData();
+        console.log(this.state.branchSelected);
+        this.search(this.state.branchSelected, Config.stateCode.wait);
+        this.search(this.state.branchSelected, Config.stateCode.approved);
     }
 
     componentDidMount() {
@@ -104,7 +100,7 @@ export default class CalendarConcretes extends Component {
         var items = [];
         for (var i = 0; i < this.state.branchs.length; i++) {
             var branchItem = this.state.branchs[i];
-            items.push(<Picker.Item label={branchItem.tenChiNhanh} value={branchItem.id}/>);
+            items.push(<Picker.Item key={branchItem.id} label={branchItem.tenChiNhanh} value={branchItem.id}/>);
         }
         return items;
     }
@@ -128,16 +124,17 @@ export default class CalendarConcretes extends Component {
     _actionSelectBranch(itemValue) {
         console.log("+++++++++++++++++++++++ " + itemValue);
         this.setState({branchSelected: itemValue});
-        this.search();
+        this.search(itemValue, Config.stateCode.wait);
+        this.search(itemValue, Config.stateCode.approved);
     }
 
 
-    async search() {
+    async search(branchId, type) {
         console.log('CalendarConcretess-----------------search');
-        this.setState({isSearching: true});
+        this._switchState(type, [], true);
         let items = [];
         try {
-            var param = {};
+            var param = {idchiNhanh: branchId, idTrangThai: type};
             let response = await fetch(Config.api.url + Config.api.apiLichXuatBeTong, {
                 method: 'POST',
                 headers: {
@@ -147,11 +144,20 @@ export default class CalendarConcretes extends Component {
                 body: JSON.stringify(param)
             });
             var responseObj = await response.json();
-            this.setState({isSearching: false});
-            this.setState({contracts: responseObj});
+            this._switchState(type, responseObj, false);
         } catch (e) {
             console.log(e);
-            this.setState({isSearching: false});
+            this._switchState(type, [], false);
+        }
+    }
+
+    _switchState(type, data, status) {
+        if (type = Config.stateCode.approved) {
+            this.setState({isSearchingActive: status});
+            this.setState({contractsActive: data});
+        } else {
+            this.setState({isSearching: status});
+            this.setState({contracts: data});
         }
     }
 
@@ -191,17 +197,6 @@ export default class CalendarConcretes extends Component {
                             // paddingLeft: 10,
                             // paddingRight: 10
                         }}>
-                            {/*<Item>*/}
-                            {/*    <Input*/}
-                            {/*        placeholder="Tìm kiếm bình..."*/}
-                            {/*        // value={this.state.searchText}*/}
-                            {/*        onChangeText={(text) => this.setState({searchText: text})}*/}
-                            {/*        onSubmitEditing={() => this.search(this.state.searchText)}*/}
-                            {/*        // style={{marginTop: 9}}*/}
-                            {/*    />*/}
-                            {/*    <Icon name="ios-search" style={Config.mainColor}*/}
-                            {/*          onPress={() => this.search(this.state.searchText)}/>*/}
-                            {/*</Item>*/}
                             <Card>
                                 <CardItem>
                                     <Picker
@@ -213,19 +208,46 @@ export default class CalendarConcretes extends Component {
                                     </Picker>
                                 </CardItem>
                             </Card>
-                            {this.state.isSearching ?
-                                <ActivityIndicator
-                                    animating={this.state.isSearching}
-                                    color={Config.mainColor}
-                                    size="large"
-                                />
-                                : <Text></Text>}
-
-                            <FlatList
-                                style={{width: '100%'}}
-                                data={this.state.contracts}
-                                renderItem={({item}) => this._renderItemResult(item)}
-                            />
+                            <Tabs tabBarUnderlineStyle={styles.tabActive}>
+                                <Tab heading={
+                                    <TabHeading style={styles.tabHeading}>
+                                        <Icon name="md-lock" style={styles.tabTitle}/>
+                                        <Text style={styles.tabTitle}>{Config.state.wait.toUpperCase()}</Text>
+                                    </TabHeading>
+                                }>
+                                    {this.state.isSearching ?
+                                        <ActivityIndicator
+                                            animating={this.state.isSearching}
+                                            color={Config.mainColor}
+                                            size="large"
+                                        />
+                                        : <Text></Text>}
+                                    <FlatList
+                                        style={{width: '100%'}}
+                                        data={this.state.contracts}
+                                        renderItem={({item}) => this._renderItemResult(item)}
+                                    />
+                                </Tab>
+                                <Tab heading={
+                                    <TabHeading style={styles.tabHeading}>
+                                        <Icon name="md-checkmark" style={styles.tabTitle}/>
+                                        <Text style={styles.tabTitle}>{Config.state.active.toUpperCase()}</Text>
+                                    </TabHeading>
+                                }>
+                                    {this.state.isSearchingActive ?
+                                        <ActivityIndicator
+                                            animating={this.state.isSearchingActive}
+                                            color={Config.mainColor}
+                                            size="large"
+                                        />
+                                        : <Text></Text>}
+                                    <FlatList
+                                        style={{width: '100%'}}
+                                        data={this.state.contractsActive}
+                                        renderItem={({item}) => this._renderItemResult(item)}
+                                    />
+                                </Tab>
+                            </Tabs>
                         </View>
 
                     </Content>

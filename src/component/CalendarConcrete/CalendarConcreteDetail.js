@@ -67,50 +67,6 @@ export default class CalendarConcreteDetail extends Component {
         console.log(this.state.username);
     }
 
-    // _renderDateFormat(date) {
-    //     if (date != null && date != undefined) {
-    //         var dateStr = date.substring(0, 10);
-    //         console.log(date);
-    //         dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
-    //             return d + '/' + m + '/' + y;
-    //         });
-    //         return dateStr;
-    //     } else {
-    //         return '';
-    //     }
-    // }
-    //
-    // _renderStatus(status) {
-    //     console.log(status);
-    //     if (status == Config.state.wait) {
-    //         return (
-    //             <Text style={styles.statusRed}>
-    //                 <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.wait.toUpperCase()}
-    //             </Text>
-    //         );
-    //     } else if (status == Config.state.approved) {
-    //         return (
-    //             <Text style={styles.statusSuccess}>
-    //                 <Icon active name="md-checkmark"
-    //                       style={styles.statusSuccess}/> {Config.state.approved.toUpperCase()}
-    //             </Text>
-    //         );
-    //     } else if (status == Config.state.approve_delete) {
-    //         return (
-    //             <Text style={styles.statusOther}>
-    //                 <Icon active name="md-trash"
-    //                       style={styles.statusOther}/> {Config.state.approve_delete.toUpperCase()}
-    //             </Text>
-    //         );
-    //     } else {
-    //         return (
-    //             <Text style={styles.statusOther}>
-    //                 <Icon active name="md-trash" style={styles.statusOther}/> {status}
-    //             </Text>
-    //         );
-    //     }
-    //
-    // }
 
     _renderApproveButton(status) {
         if (status == Config.state.wait) {
@@ -118,7 +74,7 @@ export default class CalendarConcreteDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
                             </Text>
                         </Button>
                     </Left>
@@ -139,10 +95,9 @@ export default class CalendarConcreteDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                    <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
-                        </Text>
-                    </Button>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                        </Button>
                     </Body>
                 </CardItem>
             );
@@ -150,10 +105,10 @@ export default class CalendarConcreteDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                    <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
-                        </Text>
-                    </Button>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            </Text>
+                        </Button>
                     </Body>
                 </CardItem>
             );
@@ -203,7 +158,7 @@ export default class CalendarConcreteDetail extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 alert(Config.successApprove);
-                Actions.calendarConcretes({sessionLoginKey: '123'});
+                Actions.calendarConcretes({branchId: '123'});
             } else {
                 alert(Config.err_approve + " : " + responseObj.message);
             }

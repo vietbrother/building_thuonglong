@@ -29,9 +29,11 @@ export default class Login extends Component {
             isLoading: false
         };
     }
-
+    componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+        this.removeSessionKey();
+    }
     componentWillMount() {
-        this.checkLogin();
+        this.removeSessionKey();
     }
     async checkLogin() {
         try {
@@ -48,13 +50,11 @@ export default class Login extends Component {
     }
     async removeSessionKey() {
         try {
-            let userSessionKeyLogin = await AsyncStorage.getItem('cookieUserFromApi');
+            let userSessionKeyLogin = await AsyncStorage.getItem('userId');
             if (userSessionKeyLogin !== null) {
                 // We have data!!
                 console.log(userSessionKeyLogin);
-                await AsyncStorage.removeItem('cookieUserFromApi');
                 await AsyncStorage.removeItem('userId');
-                await AsyncStorage.removeItem('userInfo');
                 console.log("remove session key");
             }
         } catch (error) {
@@ -236,6 +236,7 @@ export default class Login extends Component {
             this.setState({hasError: true, errorText: res.message});
         } else {
             AsyncStorage.setItem('userId', res.data.userName);
+            AsyncStorage.setItem('lastLoginTime', new Date().valueOf());
             console.log(res.data.userName);
             Actions.contractConcretes({sessionLoginKey: '123'});
         }

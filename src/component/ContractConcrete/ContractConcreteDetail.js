@@ -95,7 +95,7 @@ export default class ContractConcreteDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
+                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
                         </Text>
                     </Button>
                     </Body>
@@ -106,7 +106,7 @@ export default class ContractConcreteDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
+                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
                         </Text>
                     </Button>
                     </Body>
@@ -157,7 +157,7 @@ export default class ContractConcreteDetail extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 alert(Config.successApprove);
-                Actions.contractConcretes({sessionLoginKey: '123'});
+                Actions.contractConcretes({branchId: '123'});
             } else {
                 alert(Config.err_approve + " : " + responseObj.message);
             }
