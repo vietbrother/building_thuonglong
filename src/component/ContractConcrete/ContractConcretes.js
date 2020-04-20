@@ -241,7 +241,7 @@ export default class ContractConcretes extends Component {
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>
                                         <Icon name="md-lock" style={styles.tabTitle}/>
-                                        <Text style={styles.tabTitle}>{Config.state.wait.toUpperCase()}</Text>
+                                        <Text style={styles.tabTitle}> {Config.state.wait.toUpperCase()}</Text>
                                     </TabHeading>
                                 }>
                                     {this.state.isSearching ?
@@ -252,6 +252,7 @@ export default class ContractConcretes extends Component {
                                         />
                                         : <Text></Text>}
                                     <FlatList
+                                        key={'contractConcrete_1'}
                                         style={{width: '100%'}}
                                         data={this.state.contracts}
                                         renderItem={({item}) => this._renderItemResult(item)}
@@ -260,7 +261,7 @@ export default class ContractConcretes extends Component {
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>
                                         <Icon name="md-checkmark" style={styles.tabTitle}/>
-                                        <Text style={styles.tabTitle}>{Config.state.active.toUpperCase()}</Text>
+                                        <Text style={styles.tabTitle}> {Config.state.active.toUpperCase()}</Text>
                                     </TabHeading>
                                 }>
                                     {this.state.isSearchingActive ?
@@ -271,6 +272,7 @@ export default class ContractConcretes extends Component {
                                         />
                                         : <Text></Text>}
                                     <FlatList
+                                        key={'contractConcrete_2'}
                                         style={{width: '100%'}}
                                         data={this.state.contractsActive}
                                         renderItem={({item}) => this._renderItemResult(item)}

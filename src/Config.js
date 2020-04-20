@@ -23,7 +23,7 @@ const Config = {
         apiGiaBanVatLieu: '/api/main/v1/giabanvatlieu',
         apiApprove: '/api/main/v1/approve'
     },
-    sessionTime: 3600*24*7,
+    sessionTime: 3600*24*7*1000,
     url: 'http://103.94.18.249/jstore',
     ssl: false,
     // consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503',
