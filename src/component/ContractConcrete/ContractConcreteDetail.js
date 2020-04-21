@@ -157,7 +157,7 @@ export default class ContractConcreteDetail extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 alert(Config.successApprove);
-                Actions.contractConcretes({branchId: '123'});
+                Actions.contractConcretes({branchId: this.state.contract.idchiNhanh});
             } else {
                 alert(Config.err_approve + " : " + responseObj.message);
             }

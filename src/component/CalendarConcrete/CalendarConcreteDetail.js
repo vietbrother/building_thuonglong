@@ -158,7 +158,7 @@ export default class CalendarConcreteDetail extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 alert(Config.successApprove);
-                Actions.calendarConcretes({branchId: '123'});
+                Actions.calendarConcretes({branchId: this.state.contract.idchiNhanh});
             } else {
                 alert(Config.err_approve + " : " + responseObj.message);
             }

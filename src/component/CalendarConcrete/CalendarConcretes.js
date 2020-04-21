@@ -152,7 +152,7 @@ export default class CalendarConcretes extends Component {
     }
 
     _switchState(type, data, status) {
-        if (type = Config.stateCode.approved) {
+        if (type == Config.stateCode.approved) {
             this.setState({isSearchingActive: status});
             this.setState({contractsActive: data});
         } else {
