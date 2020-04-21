@@ -75,6 +75,7 @@ export default class CalendarConcretes extends Component {
 
     async _loadBranchData() {
         this.setState({isSearching: true});
+        this.setState({contracts: []});
         try {
             var param = {};
             let response = await fetch(Config.api.url + Config.api.apiListBranch, {
@@ -89,7 +90,9 @@ export default class CalendarConcretes extends Component {
             if (responseObj != null && responseObj.length > 0) {
                 this.setState({branchSelected: responseObj[0].id});
             }
-            this.search();
+            // this.search(responseObj[0].id);
+            this.search(responseObj[0].id, Config.stateCode.wait);
+            this.search(responseObj[0].id, Config.stateCode.approved);
         } catch (e) {
             console.log(e);
             this.setState({isSearching: false});
@@ -116,7 +119,7 @@ export default class CalendarConcretes extends Component {
                             borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
                             padding: 5
                         }}>*/
-            <CalendarConcretesItem key={key} contract={item}></CalendarConcretesItem>
+            <CalendarConcretesItem key={item.id} contract={item}></CalendarConcretesItem>
             /*</View>*/
         );
     }
@@ -212,7 +215,7 @@ export default class CalendarConcretes extends Component {
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>
                                         <Icon name="md-lock" style={styles.tabTitle}/>
-                                        <Text style={styles.tabTitle}>{Config.state.wait.toUpperCase()}</Text>
+                                        <Text style={styles.tabTitle}> {Config.state.wait.toUpperCase()}</Text>
                                     </TabHeading>
                                 }>
                                     {this.state.isSearching ?
@@ -231,7 +234,7 @@ export default class CalendarConcretes extends Component {
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>
                                         <Icon name="md-checkmark" style={styles.tabTitle}/>
-                                        <Text style={styles.tabTitle}>{Config.state.active.toUpperCase()}</Text>
+                                        <Text style={styles.tabTitle}> {Config.state.active.toUpperCase()}</Text>
                                     </TabHeading>
                                 }>
                                     {this.state.isSearchingActive ?

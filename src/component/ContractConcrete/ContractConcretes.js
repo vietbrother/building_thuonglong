@@ -91,7 +91,7 @@ export default class ContractConcretes extends Component {
             } else {
                 let lastLoginTime = await AsyncStorage.getItem('lastLoginTime');
                 var currentTime = new Date().valueOf();
-                if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined && currentTime > lastLoginTime + Config.sessionTime) {
+                if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined && currentTime > parseInt(lastLoginTime) + Config.sessionTime) {
                     Actions.login({sessionLoginKey: '123'});
                 }
             }
@@ -146,7 +146,7 @@ export default class ContractConcretes extends Component {
                             borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
                             padding: 5
                         }}>*/
-            <ContractConcretesItem key={key} contract={item} sessionKey={this.state.sessionKey}></ContractConcretesItem>
+            <ContractConcretesItem key={item.id} contract={item} sessionKey={this.state.sessionKey}></ContractConcretesItem>
             /*</View>*/
         );
     }
