@@ -220,11 +220,13 @@ export default class CalendarConcretes extends Component {
                                     </TabHeading>
                                 }>
                                     {this.state.isSearching ?
-                                        <ActivityIndicator
-                                            animating={this.state.isSearching}
-                                            color={Config.mainColor}
-                                            size="large"
-                                        />
+                                        <View style={styles.loadingActivity}>
+                                            <ActivityIndicator
+                                                animating={this.state.isSearching}
+                                                color={Config.mainColor}
+                                                size="large"
+                                            />
+                                        </View>
                                         : <Text></Text>}
                                     <FlatList
                                         style={{width: '100%'}}
@@ -239,11 +241,13 @@ export default class CalendarConcretes extends Component {
                                     </TabHeading>
                                 }>
                                     {this.state.isSearchingActive ?
-                                        <ActivityIndicator
-                                            animating={this.state.isSearchingActive}
-                                            color={Config.mainColor}
-                                            size="large"
-                                        />
+                                        <View style={styles.loadingActivity}>
+                                            <ActivityIndicator
+                                                animating={this.state.isSearchingActive}
+                                                color={Config.mainColor}
+                                                size="large"
+                                            />
+                                        </View>
                                         : <Text></Text>}
                                     <FlatList
                                         style={{width: '100%'}}

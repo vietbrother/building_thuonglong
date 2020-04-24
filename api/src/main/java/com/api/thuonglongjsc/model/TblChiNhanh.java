@@ -99,8 +99,14 @@ public class TblChiNhanh {
 
 	public TblChiNhanh() {
 		super();
-	}
+	}	
 
+
+	public TblChiNhanh(String iD, String tenChiNhanh) {
+		super();
+		ID = iD;
+		TenChiNhanh = tenChiNhanh;
+	}
 
 	public TblChiNhanh(String iD, String iDCha, String tenChiNhanh, String diaChi, String email, String phoneNumber,
 			Boolean trangThai, String trangThaiText, Integer loaiChiNhanh, Date ngayTao, String nguoiTao) {

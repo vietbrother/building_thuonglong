@@ -20,6 +20,8 @@ public class GiaBanVatLieu {
 	private String TrangThaiText;
 	private String NguoiTao;
 	private Timestamp NgayTao;
+	private Integer TrangThai;
+	private String IDChiNhanh;
 
 	public GiaBanVatLieu() {
 		super();
@@ -43,6 +45,31 @@ public class GiaBanVatLieu {
 		TrangThaiText = trangThaiText;
 		NguoiTao = nguoiTao;
 		NgayTao = ngayTao;
+	}
+	
+	
+
+	public GiaBanVatLieu(String iD, String tenChiNhanh, String congTrinh, String nhaCungCap, String nhomVatLieu,
+			String loaiVatLieu, String donViTinh, BigDecimal donGiaCoThue, BigDecimal donGiaKhongThue, Date tuNgay,
+			Date denNgay, String trangThaiText, String nguoiTao, Timestamp ngayTao, Integer trangThai,
+			String iDChiNhanh) {
+		super();
+		ID = iD;
+		TenChiNhanh = tenChiNhanh;
+		CongTrinh = congTrinh;
+		NhaCungCap = nhaCungCap;
+		NhomVatLieu = nhomVatLieu;
+		LoaiVatLieu = loaiVatLieu;
+		DonViTinh = donViTinh;
+		DonGiaCoThue = donGiaCoThue;
+		DonGiaKhongThue = donGiaKhongThue;
+		TuNgay = tuNgay;
+		DenNgay = denNgay;
+		TrangThaiText = trangThaiText;
+		NguoiTao = nguoiTao;
+		NgayTao = ngayTao;
+		TrangThai = trangThai;
+		IDChiNhanh = iDChiNhanh;
 	}
 
 	public void setDonGiaCoThue(BigDecimal donGiaCoThue) {
@@ -157,14 +184,33 @@ public class GiaBanVatLieu {
 		return NgayTao;
 	}
 
+	
+	public Integer getTrangThai() {
+		return TrangThai;
+	}
+
+	public void setTrangThai(Integer trangThai) {
+		TrangThai = trangThai;
+	}
+
+	public String getIDChiNhanh() {
+		return IDChiNhanh;
+	}
+
+	public void setIDChiNhanh(String iDChiNhanh) {
+		IDChiNhanh = iDChiNhanh;
+	}
+
 	@Override
 	public String toString() {
 		return "GiaBanVatLieu [ID=" + ID + ", TenChiNhanh=" + TenChiNhanh + ", CongTrinh=" + CongTrinh + ", NhaCungCap="
 				+ NhaCungCap + ", NhomVatLieu=" + NhomVatLieu + ", LoaiVatLieu=" + LoaiVatLieu + ", DonViTinh="
 				+ DonViTinh + ", DonGiaCoThue=" + DonGiaCoThue + ", DonGiaKhongThue=" + DonGiaKhongThue + ", TuNgay="
 				+ TuNgay + ", DenNgay=" + DenNgay + ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao
-				+ ", NgayTao=" + NgayTao + "]";
+				+ ", NgayTao=" + NgayTao + ", TrangThai=" + TrangThai + ", IDChiNhanh=" + IDChiNhanh + "]";
 	}
+
+
 
 	/*
 	 * private String ID; private Date NgayThang; private String TenChiNhanh;

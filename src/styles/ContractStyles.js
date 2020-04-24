@@ -155,7 +155,7 @@ export default StyleSheet.create({
     },
 
     tabActive: {
-        height: 5, backgroundColor: Config.mainColor
+        height: 4, backgroundColor: Config.mainColor
     },
     tabHeading: {
         backgroundColor: 'white'
@@ -166,4 +166,7 @@ export default StyleSheet.create({
     tabIcon: {
         backgroundColor: 'transparent', color: Config.mainColor
     },
+    loadingActivity : {
+        paddingTop: 40
+    }
 });

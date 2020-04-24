@@ -142,14 +142,14 @@ const Utils = {
             Config.confirm_approve, // <- this part is optional, you can pass an empty string
             [
                 {
-                    text: 'Đồng ý', onPress: () => {
+                    text: '�?ng �', onPress: () => {
                         if (typeof callback == 'function') {
                             callback();
                         }
                     }
                 },
                 {
-                    text: 'Hủy',
+                    text: 'H?y',
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },

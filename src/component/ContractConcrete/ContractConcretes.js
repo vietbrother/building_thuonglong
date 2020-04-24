@@ -147,7 +147,8 @@ export default class ContractConcretes extends Component {
                             borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
                             padding: 5
                         }}>*/
-            <ContractConcretesItem key={item.id} contract={item} sessionKey={this.state.sessionKey}></ContractConcretesItem>
+            <ContractConcretesItem key={item.id} contract={item}
+                                   sessionKey={this.state.sessionKey}></ContractConcretesItem>
             /*</View>*/
         );
     }
@@ -246,11 +247,13 @@ export default class ContractConcretes extends Component {
                                     </TabHeading>
                                 }>
                                     {this.state.isSearching ?
-                                        <ActivityIndicator
-                                            animating={this.state.isSearching}
-                                            color={Config.mainColor}
-                                            size="large"
-                                        />
+                                        <View style={styles.loadingActivity}>
+                                            <ActivityIndicator
+                                                animating={this.state.isSearching}
+                                                color={Config.mainColor}
+                                                size="large"
+                                            />
+                                        </View>
                                         : <Text></Text>}
                                     <FlatList
                                         key={'contractConcrete_1'}
@@ -266,11 +269,13 @@ export default class ContractConcretes extends Component {
                                     </TabHeading>
                                 }>
                                     {this.state.isSearchingActive ?
-                                        <ActivityIndicator
-                                            animating={this.state.isSearchingActive}
-                                            color={Config.mainColor}
-                                            size="large"
-                                        />
+                                        <View style={styles.loadingActivity}>
+                                            <ActivityIndicator
+                                                animating={this.state.isSearchingActive}
+                                                color={Config.mainColor}
+                                                size="large"
+                                            />
+                                        </View>
                                         : <Text></Text>}
                                     <FlatList
                                         key={'contractConcrete_2'}

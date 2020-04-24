@@ -97,13 +97,13 @@ public class CustomRepositoryImpl implements CustomRepository {
 		}
 		return res;
 	}
-	
+
 	@Override
 	public List<TblChiNhanh> getListChiNhanh() {
 		// TODO Auto-generated method stub
 		List<TblChiNhanh> res = new ArrayList<>();
 		String queryStr = "SELECT * from tblChiNhanh where TrangThai = '1' order by TenChiNhanh asc";
-		
+
 		try {
 			Query query = entityManager.createNativeQuery(queryStr, TblChiNhanh.class);
 			res = query.getResultList();
@@ -140,7 +140,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		 * a.TuNgay
 		 */
 		List<String> lstParams = new ArrayList<>();
-		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
 		}
@@ -178,7 +178,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
 				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 ";
 		List<String> lstParams = new ArrayList<>();
-		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())  && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
 		}
@@ -246,7 +246,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 			}
 
 			queryStr += " set TrangThai = ?, TrangThaiText = ? , NguoiDuyet = ?  where id = ?";
-			
+
 			lstParams.add(newState.getCode());
 			lstParams.add(newState.getMessage());
 			lstParams.add(username);
@@ -278,16 +278,20 @@ public class CustomRepositoryImpl implements CustomRepository {
 	@Override
 	public List<GiaBanVatLieu> getListGiaBanVatLieu(GiaBanVatLieuSearch entity) {
 		List<GiaBanVatLieu> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, a.NgayThang, g.TenChiNhanh, b.TenNhaCungCap, d.TenNhomVatLieu, "
-				+ "e.TenLoaiVatLieu, f.TenDonViTinh, a.TLTong, a.TLBi, a.TLHang, a.TyLeQuyDoi, "
-				+ "a.SoPhieuCan, a.KLQuanCan, a.KLBan, a.KLXuatKho, a.TenBienSoXe, a.TenLaiXe, a.DonGiaCoThue, a.DonGiaKhongThue, "
-				+ "a.ThanhTienCoThue, a.ThanhTienKhongThue, a.TrangThaiText, a.TrangThai, a.IDChiNhanh, "
-				+ "a.TrangThaiChot, a.NguoiDuyet, a.NguoiDuyetChot, a.NgayTao, a.NguoiTao "
-				+ " FROM tblBanVatLieu AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID "
-				+ "JOIN tblNhomVatLieu AS d ON a.IDNhomVatLieu = d.ID "
-				+ "JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID "
-				+ "JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID " + "JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  "
-				+ " WHERE 1 = 1 ";
+		String queryStr = " SELECT a.ID, g.TenChiNhanh,     \r\n"
+				+ "			      a.CongTrinh,b.TenNhaCungCap AS NhaCungCap,     \r\n"
+				+ "               d.TenNhomVatLIeu AS NhomVatLieu,     \r\n"
+				+ "               e.TenLoaiVatLieu AS LoaiVatLieu,     \r\n"
+				+ "               f.TenDonViTinh AS DonViTinh, a.DonGiaCoThue,     \r\n"
+				+ "               a.DonGiaKhongThue, a.TuNgay,     \r\n"
+				+ "               a.DenNgay, a.TrangThaiText,     \r\n"
+				+ "               a.NguoiTao, a.NgayTao, a.TrangThai, a.IDChiNhanh    \r\n"
+				+ "        FROM tblGiaBanVatLieu AS a    \r\n"
+				+ "             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID    \r\n"
+				+ "             JOIN tblNhomVatLieu AS d ON a.IDNhomVatLieu = d.ID    \r\n"
+				+ "             JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID    \r\n"
+				+ "             JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID    \r\n"
+				+ "             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  WHERE 1 = 1 ";
 		/*
 		 * SELECT a.ID, g.TenChiNhanh, a.CongTrinh, b.TenNhaCungCap AS NhaCungCap,
 		 * d.TenNhomVatLIeu AS NhomVatLieu, e.TenLoaiVatLieu AS LoaiVatLieu,
@@ -300,28 +304,24 @@ public class CustomRepositoryImpl implements CustomRepository {
 		 * a.TuNgay DESC
 		 */
 		List<String> lstParams = new ArrayList<>();
-		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())) {
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
+		}
+		queryStr += " ORDER BY a.TuNgay desc";
 		try {
-			/*
-			 * Query query = entityManager.createNativeQuery(queryStr); for (int i = 0; i <
-			 * lstParams.size(); i++) { query.setParameter(i + 1, lstParams.get(i)); } res =
-			 * query.unwrap(org.hibernate.query.Query.class)
-			 * .setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).
-			 * getResultList();
-			 */
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).getResultList();
 
-			/*
-			 * Query query = entityManager
-			 * .createNativeQuery("call sp_GiaBanVatLieu_ListDuyet(:IDChiNhanh,:PageSize, :PageNumber) "
-			 * ) .setParameter("IDChiNhanh", entity.getIDChiNhanh())
-			 * .setParameter("TrangThai", 456L) .setParameter("PageSize",
-			 * 10).setParameter("PageNumber", 1); List result = query.getResultList();
-			 */
-
+/*
 			StoredProcedureQuery storedProcedure = entityManager
 					.createStoredProcedureQuery("dbo.sp_GiaBanVatLieu_ListDuyet");
 			// set parameters
@@ -330,8 +330,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 			storedProcedure.registerStoredProcedureParameter("PageSize", Integer.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("PageNumber", Integer.class, ParameterMode.IN);
 			storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
-			storedProcedure.setParameter("TrangThai", "1");
-			storedProcedure.setParameter("PageSize", 10);
+			storedProcedure.setParameter("TrangThai", entity.getIdTrangThai());
+			storedProcedure.setParameter("PageSize", 100);
 			storedProcedure.setParameter("PageNumber", 1);
 			// execute stored procedure
 			storedProcedure.execute();
@@ -346,7 +346,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				res.add(item);
 			}
 
-			System.out.println(res);
+			//System.out.println(res);*/
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);

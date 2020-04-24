@@ -45,7 +45,9 @@ public class CategoryController {
 //			});
 //		}
 //		return res;
-		return chiNhanhRepository.getListChiNhanh();
+		List<TblChiNhanh> res = chiNhanhRepository.getListChiNhanh();
+		res.add(0, new TblChiNhanh("BranchIdAll", "Tất cả"));
+		return res;
 	}
 
 }
