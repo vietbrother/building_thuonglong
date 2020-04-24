@@ -49,21 +49,18 @@ export default class Statistic extends Component {
         super(props);
 
         this.state = {
-            categories: [],
-            customers: [],
-            isLoading: true,
+            contracts: [],
+            contractsActive: [],
+            branchs: [],
+            // isLoading: true,
             isSearching: false,
+            isSearchingActive: false,
             error: null,
             sessionKey: null,
 
             extractedText: "",
             searchText: '',
-            countStage_1: '0',
-            countStage_2: '0',
-            countStage_3: '0',
-            countStage_4: '0',
-            countStage_all: '0',
-
+            branchSelected: '',
             componentKey: new Date()
         };
     }

@@ -64,6 +64,7 @@ export default class CalendarConcretes extends Component {
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+        this.setState({componentKey: new Date()});//refresh menu
         console.log(this.state.branchSelected);
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);

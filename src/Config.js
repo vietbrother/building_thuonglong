@@ -80,8 +80,8 @@ const Config = {
         subsidence: 'Độ sụt lún',
         specialRequire: 'Yêu cầu đặc biệt',
         concreteType: 'Mác bê tông',
-        price: 'Đơn giá không thuế',
-        priceBill: 'Đơn giá có thuế',
+        price: 'Giá thanh toán',
+        priceBill: 'Giá hóa đơn',
     },
 
     calendarConcrete: {
@@ -109,8 +109,8 @@ const Config = {
         materialGroup: 'Nhóm vật liệu',
         materialType: 'Loại vật liệu',
         unit: 'Đơn vị tính',
-        price: 'Đơn giá không thuế',
-        priceBill: 'Đơn giá có thuế',
+        price: 'Giá thanh toán',
+        priceBill: 'Giá hóa đơn',
         userCreate: 'Người tạo',
     },
 
@@ -183,6 +183,7 @@ const Config = {
     err_approve: 'Phê duyệt thất bại',
 
     //confirm
+    confirm_title: 'Thông báo',
     confirm_approve: 'Bạn có chắc chắn phê duyệt hợp đồng này?',
 
     //stage
