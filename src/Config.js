@@ -245,7 +245,7 @@ const Config = {
     keyStoreOrderDeviceOut: 'ORDER_DEVICE_OUT',
 
     //statistic
-    statisticTitle: "Thống kê",
+    statisticTitle: "Báo cáo",
     statisticCountStage1: "Vỏ",
     statisticCountStage2: "Đang chuyển nạp",
     statisticCountStage3: "Khí Argonmed",
