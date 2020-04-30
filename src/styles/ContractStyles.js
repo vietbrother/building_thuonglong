@@ -168,5 +168,11 @@ export default StyleSheet.create({
     },
     loadingActivity : {
         paddingTop: 40
+    },
+    badgeTitle: {
+        marginTop: 5, marginLeft: 5
+    },
+    badgeTitleText: {
+        color : 'white', paddingTop: 2, fontSize: 16, fontWeight: 'bold'
     }
 });

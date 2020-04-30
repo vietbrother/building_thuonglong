@@ -1,8 +1,7 @@
 import Config from "../Config";
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import {Text, Icon} from "native-base";
-import {Button, Left, Right, Icon, CardItem, Body} from 'native-base';
+import {Text, Button, Left, Right, Icon, CardItem, Body} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import styles from "../styles/ContractStyles";
 
@@ -79,60 +78,66 @@ const Utils = {
         return statusName;
 
     },
-    _renderApproveButton(status, callback) {
-        if (status == Config.state.wait) {
-            return (
-                <CardItem>
-                    <Left>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
-                            </Text>
-                        </Button>
-                    </Left>
-                    <Right>
-                        <TouchableOpacity
-                            style={styles.btnApprove}
-                            onPress={() => this._alertConfirm(callback)}
-                            activeOpacity={0.9}
-                        >
-                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                    name='md-checkmark'/> {Config.btnApprove}
-                            </Text>
-                        </TouchableOpacity>
-                    </Right>
-                </CardItem>
-            );
-        } else if (status == Config.state.approved) {
-            return (
-                <CardItem>
-                    <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
-                            </Text>
-                        </Button>
-                    </Body>
-                </CardItem>
-            );
-        } else {
-            return (
-                <CardItem>
-                    <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
-                            </Text>
-                        </Button>
-                    </Body>
-                </CardItem>
-            );
-        }
-
-    },
+    // _renderApproveButton(status, callback) {
+    //     if (status == Config.state.wait) {
+    //         return (
+    //             <CardItem>
+    //                 <Left>
+    //                     <Button active onPress={() => Actions.pop()} transparent>
+    //                         <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+    //                         </Text>
+    //                     </Button>
+    //                 </Left>
+    //                 <Right>
+    //                     <TouchableOpacity
+    //                         style={styles.btnApprove}
+    //                         onPress={() => this._alertConfirm(callback)}
+    //                         activeOpacity={0.9}
+    //                     >
+    //                         <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+    //                                                                 name='md-checkmark'/> {Config.btnApprove}
+    //                         </Text>
+    //                     </TouchableOpacity>
+    //                 </Right>
+    //             </CardItem>
+    //         );
+    //     } else if (status == Config.state.approved) {
+    //         return (
+    //             <CardItem>
+    //                 <Body>
+    //                     <Button active onPress={() => Actions.pop()} transparent>
+    //                         <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+    //                         </Text>
+    //                     </Button>
+    //                 </Body>
+    //             </CardItem>
+    //         );
+    //     } else {
+    //         return (
+    //             <CardItem>
+    //                 <Body>
+    //                     <Button active onPress={() => Actions.pop()} transparent>
+    //                         <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+    //                         </Text>
+    //                     </Button>
+    //                 </Body>
+    //             </CardItem>
+    //         );
+    //     }
+    //
+    // },
 
     _alert(messages) {
         Alert.alert(
             '',
             messages, // <- this part is optional, you can pass an empty string
-            [],
+            [
+                {
+                    text: Config.btnClose,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+            ],
             {cancelable: false},
         );
     },
@@ -142,14 +147,14 @@ const Utils = {
             Config.confirm_approve, // <- this part is optional, you can pass an empty string
             [
                 {
-                    text: 'Ð?ng ý', onPress: () => {
+                    text: Config.btnApply, onPress: () => {
                         if (typeof callback == 'function') {
                             callback();
                         }
                     }
                 },
                 {
-                    text: 'H?y',
+                    text: Config.btnCancel,
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },

@@ -41,7 +41,6 @@ import SideMenu from '../../component/SideMenu';
 import SideMenuDrawer from '../../component/SideMenuDrawer';
 import Colors from "../../Colors";
 import Config from "../../Config";
-import ContractMaterialsItem from "./ContractMaterialItem";
 import styles from '../../styles/ContractStyles';
 
 
@@ -127,20 +126,6 @@ export default class Statistic extends Component {
         return items;
     }
 
-    _renderItemResult(item) {
-        console.log(item);
-        var key = new Date().valueOf();
-        return (
-            /*            <View style={{
-                            flex: 1,
-                            width: '100%', color: Config.mainColor, fontSize: 16,
-                            borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
-                            padding: 5
-                        }}>*/
-            <ContractMaterialsItem key={key} contract={item}></ContractMaterialsItem>
-            /*</View>*/
-        );
-    }
 
     _actionSelectBranch(itemValue) {
         console.log("+++++++++++++++++++++++ " + itemValue);

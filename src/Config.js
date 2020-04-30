@@ -164,6 +164,7 @@ const Config = {
     btnClose: 'Đóng',
     btnApprove: 'Phê duyệt',
     btnReject: 'Từ chối',
+    btnApply: 'Đồng ý',
 
     //success
     success: 'Thành công',

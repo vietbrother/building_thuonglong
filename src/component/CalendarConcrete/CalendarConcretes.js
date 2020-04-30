@@ -26,7 +26,7 @@ import {
     Icon,
     Card,
     CardItem,
-    Tab, Tabs, TabHeading
+    Tab, Tabs, TabHeading, Badge
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -217,6 +217,7 @@ export default class CalendarConcretes extends Component {
                                     <TabHeading style={styles.tabHeading}>
                                         <Icon name="md-lock" style={styles.tabTitle}/>
                                         <Text style={styles.tabTitle}> {Config.state.wait.toUpperCase()}</Text>
+                                        <Badge style={styles.badgeTitle}><Text style={styles.badgeTitleText}>{this.state.contracts.length}</Text></Badge>
                                     </TabHeading>
                                 }>
                                     {this.state.isSearching ?

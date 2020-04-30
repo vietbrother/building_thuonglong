@@ -69,54 +69,70 @@ export default class CalendarConcreteDetail extends Component {
 
 
     _renderApproveButton(status) {
-        return Utils._renderApproveButton(status, this._actionApprove());
-        // if (status == Config.state.wait) {
-        //     return (
-        //         <CardItem>
-        //             <Left>
-        //                 <Button active onPress={() => Actions.pop()} transparent>
-        //                     <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
-        //                     </Text>
-        //                 </Button>
-        //             </Left>
-        //             <Right>
-        //                 <TouchableOpacity
-        //                     style={styles.btnApprove}
-        //                     onPress={() => Utils._alertConfirm(this._actionApprove())}
-        //                     activeOpacity={0.9}
-        //                 >
-        //                     <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-        //                                                             name='md-checkmark'/> {Config.btnApprove}
-        //                     </Text>
-        //                 </TouchableOpacity>
-        //             </Right>
-        //         </CardItem>
-        //     );
-        // } else if (status == Config.state.approved) {
-        //     return (
-        //         <CardItem>
-        //             <Body>
-        //                 <Button active onPress={() => Actions.pop()} transparent>
-        //                     <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
-        //                 </Button>
-        //             </Body>
-        //         </CardItem>
-        //     );
-        // } else {
-        //     return (
-        //         <CardItem>
-        //             <Body>
-        //                 <Button active onPress={() => Actions.pop()} transparent>
-        //                     <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
-        //                     </Text>
-        //                 </Button>
-        //             </Body>
-        //         </CardItem>
-        //     );
-        // }
+        //return Utils._renderApproveButton(status, this._actionApprove());
+        if (status == Config.state.wait) {
+            return (
+                <CardItem>
+                    <Left>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
+                            </Text>
+                        </Button>
+                    </Left>
+                    <Right>
+                        <TouchableOpacity
+                            style={styles.btnApprove}
+                            onPress={() => this._preApprove()}
+                            activeOpacity={0.9}
+                        >
+                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                    name='md-checkmark'/> {Config.btnApprove}
+                            </Text>
+                        </TouchableOpacity>
+                    </Right>
+                </CardItem>
+            );
+        } else if (status == Config.state.approved) {
+            return (
+                <CardItem>
+                    <Body>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                        </Button>
+                    </Body>
+                </CardItem>
+            );
+        } else {
+            return (
+                <CardItem>
+                    <Body>
+                        <Button active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            </Text>
+                        </Button>
+                    </Body>
+                </CardItem>
+            );
+        }
 
     }
-
+    _preApprove() {
+        Alert.alert(
+            '',
+            Config.confirm_approve, // <- this part is optional, you can pass an empty string
+            [
+                {
+                    text: Config.btnApply, onPress: () => this._actionApprove()
+                },
+                {
+                    text: Config.btnCancel,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+            ],
+            {cancelable: false},
+        );
+    }
 
     async _actionApprove() {
         try {
