@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.thuonglongjsc.dto.ChartSearch;
 import com.api.thuonglongjsc.dto.GiaBanVatLieu;
 import com.api.thuonglongjsc.dto.GiaBanVatLieuSearch;
 import com.api.thuonglongjsc.dto.HopDongBeTong;

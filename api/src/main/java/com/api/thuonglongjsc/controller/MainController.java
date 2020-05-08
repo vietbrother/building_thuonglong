@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.thuonglongjsc.dto.*;
 import com.api.thuonglongjsc.exception.ResourceNotFoundException;
 import com.api.thuonglongjsc.model.TblUserAccount;
+import com.api.thuonglongjsc.repository.StatisticRepository;
 import com.api.thuonglongjsc.repository.UserRepository;
 
 @RestController
@@ -27,6 +28,9 @@ import com.api.thuonglongjsc.repository.UserRepository;
 public class MainController {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private StatisticRepository statisticRepository;
 
 	@PostMapping("/v1/login")
 	public ResultDTO login(@Valid @RequestBody TblUserAccount user) {
@@ -53,5 +57,15 @@ public class MainController {
 	public ResultDTO approve(@Valid @RequestBody ApproveInputDTO param) {
 		ResultDTO res = userRepository.approveContract(param.getContractId(), param.getUsername(), param.getType(), param.getApproveStateId());
 		return res;
+	}
+	
+	@PostMapping("/v1/statistic/sumary")
+	public List<ChartData> getChartTotal(@Valid @RequestBody ChartSearch entity) {
+		return statisticRepository.getChartTotal(entity);
+	}
+	
+	@PostMapping("/v1/statistic/detail")
+	public List<ChartDataDetail> getChartDetail(@Valid @RequestBody ChartSearch entity){
+		return statisticRepository.getChartDetail(entity);
 	}
 }

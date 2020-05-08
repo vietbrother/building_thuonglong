@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.api.thuonglongjsc.model.TblUserAccount;
 
 @Repository
-public interface UserRepository extends JpaRepository<TblUserAccount, String>, CustomRepository{
+public interface UserRepository extends JpaRepository<TblUserAccount, String>, CustomRepository {
 
 }
