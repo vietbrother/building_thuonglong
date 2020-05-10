@@ -5,7 +5,7 @@
 
 // React native and others libraries imports
 import React, {Component} from 'react';
-import {BackHandler} from 'react-native';
+import {BackHandler, AsyncStorage, Alert} from 'react-native';
 import {Root} from 'native-base';
 import {Scene, Router, Actions} from 'react-native-router-flux';
 
@@ -247,7 +247,7 @@ export default class Main extends Component {
                         <Scene key="orderDetail" component={OrderDetail} hideNavBar/>
 
                         <Scene key="bill" component={Bill} modal hideNavBar/>
-                        <Scene key="statistic" component={Statistic} modal hideNavBar/>
+                        <Scene initial key="statistic" component={Statistic} modal hideNavBar/>
 
                         <Scene key="manualScannerList" component={ManualScannerList} hideNavBar/>
                         <Scene key="stockInList" component={StockInList} hideNavBar/>
@@ -255,7 +255,7 @@ export default class Main extends Component {
                         <Scene key="billList" component={BillList} hideNavBar/>
 
 
-                        <Scene initial key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>

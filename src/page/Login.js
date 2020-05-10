@@ -110,7 +110,7 @@ export default class Login extends Component {
                         paddingRight: 50
                     }}>
                         <View style={{marginBottom: 15, width: '100%', alignItems: 'center'}}>
-                            <Image style={{height: 96, width: 96}} source={require('../images/logo.png')}/>
+                            <Image style={{height: 144, width: 144}} source={require('../images/logo.png')}/>
                             <Text style={{
                                 fontSize: 24,
                                 fontWeight: 'bold',

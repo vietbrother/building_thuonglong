@@ -21,7 +21,9 @@ const Config = {
         apiHopDongBeTong: '/api/main/v1/hopdongbetong',
         apiLichXuatBeTong: '/api/main/v1/lichxuatbetong',
         apiGiaBanVatLieu: '/api/main/v1/giabanvatlieu',
-        apiApprove: '/api/main/v1/approve'
+        apiApprove: '/api/main/v1/approve',
+        apiStatisticTotal: '/api/main/v1/statistic/sumary',
+        apiStatisticDetail: '/api/main/v1/statistic/detail'
     },
     sessionTime: 3600*24*7*1000,
     url: 'http://103.94.18.249/jstore',
@@ -62,6 +64,7 @@ const Config = {
     titleLichXuatBeTong: 'Lịch trộn bê tông',
     titleHopDongBanNVL: 'Hợp đồng bán NVL',
     titleHopDongBanGach: 'Hợp đồng bán gạch',
+    titleReportHopDongBeTong: 'Báo cáo HĐ bê tông',
 
     APPROVE_TYPE: {
         CONTRACT_CONCRETE: '1',//duyet hop dong be tong,

@@ -57,7 +57,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 	public List<ChartData> getChartTotal(ChartSearch entity) {
 		// TODO Auto-generated method stub
 		List<ChartData> res = new ArrayList<>();
-		String queryStr = "SELECT h.TenChiNhanh, a.total FROM (\r\n" + "	SELECT IDChiNhanh, COUNT(id) as total\r\n"
+		String queryStr = "SELECT h.TenChiNhanh, a.IDChiNhanh, a.total FROM (\r\n" + "	SELECT IDChiNhanh, COUNT(id) as total\r\n"
 				+ "	FROM tblGiaBanBeTong  \r\n" + "	GROUP BY IDChiNhanh\r\n" + " ) \r\n"
 				+ " AS a JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
 

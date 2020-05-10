@@ -3,6 +3,8 @@ package com.thuonglong;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+//import com.github.wuxudong.rncharts.MPAndroidChartPackage;
+import com.horcrux.svg.SvgPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -37,6 +39,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            //new MPAndroidChartPackage(),
+            new SvgPackage(),
             new ImageResizerPackage(),
             new RNGestureHandlerPackage(),
             new ImagePickerPackage(),

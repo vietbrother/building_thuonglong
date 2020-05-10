@@ -44,6 +44,14 @@ https://github.com/kevin3274/react-native-odoo
 https://www.odoo.com/documentation/9.0/reference/orm.html#openerp.models.Model.search
 https://snack.expo.io/@rafah-mehfooz/network-requests-with-fetch
 https://snack.expo.io/yXR_PueN!
+https://snack.expo.io/@rapture112/react-native-svg-charts
+https://v5.rnfirebase.io/docs/v5.x.x/installation/android
+
+https://medium.com/@hitensharma1515/create-chart-in-react-native-and-load-dynamic-data-d2e203fad7e3
+https://medium.com/skyshidigital/make-chart-in-react-native-671910254e9b
+https://medium.com/the-react-native-log/animated-charts-in-react-native-using-d3-and-art-21cd9ccf6c58
+https://snack.expo.io/embedded/@aboutreact/react-native-chart-kit?preview=true&platform=ios&iframeId=t099o2svbu&theme=dark
+
 ## Documentation
 
 Updating the codebase will require changes to the `.js` files in the [src/](./src/) folder. Individual pages can be edited by editing the `.js` files in [src/page/](./src/page/). Re-usable components can be edited by editing the `.js` files in [src/component/](./src/component/).
