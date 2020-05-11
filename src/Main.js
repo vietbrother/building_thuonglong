@@ -95,6 +95,7 @@ export default class Main extends Component {
             queryStringAuth: true
         });
 
+        global.hostAPI = [Config.api.url];
         // global.odooAPI = new Odoo({
         //   host: Config.odooUrl,
         //   port: Config.odooPort,

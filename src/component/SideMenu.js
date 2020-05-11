@@ -349,7 +349,7 @@ export default class SideMenu extends Component {
                     icon
                     key={key+ '_' + item.id}
                     button={true}
-                    onPress={Actions[item.key]}
+                    onPress={() => {Actions.refresh({ key: item.key, refresh: '1' }); Actions[item.key]} }
                 >
                     <Left>
                         <Icon style={{fontSize: 18}} name={item.icon}/>

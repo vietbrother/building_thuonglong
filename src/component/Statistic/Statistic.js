@@ -92,7 +92,7 @@ export default class Statistic extends Component {
         this.setState({contracts: []});
         try {
             var param = {};
-            let response = await fetch(Config.api.url + Config.api.apiListBranch, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
                 method: 'GET',
                 headers: {
                     'Accept': '*/*'
@@ -134,7 +134,7 @@ export default class Statistic extends Component {
         let items = [];
         try {
             var param = {idchiNhanh: this.state.branchSelected};
-            let response = await fetch(Config.api.url + Config.api.apiGiaBanVatLieu, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiGiaBanVatLieu, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -158,7 +158,7 @@ export default class Statistic extends Component {
         let itemsLabel = [];
         try {
             var param = {};
-            let response = await fetch(Config.api.url + Config.api.apiStatisticTotal, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticTotal, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

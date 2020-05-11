@@ -147,7 +147,7 @@ export default class CalendarConcreteDetail extends Component {
             // var res = Api.login(param);
             // this._getResLogin(res);
 
-            let response = await fetch(Config.api.url + Config.api.apiApprove, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiApprove, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

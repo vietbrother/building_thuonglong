@@ -26,15 +26,20 @@ export default class Login extends Component {
             password: '',
             hasError: false,
             errorText: '',
-            isLoading: false
+            isLoading: false,
+            showAdvancedSettings: false,
+            newIpAddress: ''
         };
     }
+
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
         this.removeSessionKey();
     }
+
     componentWillMount() {
         this.removeSessionKey();
     }
+
     async checkLogin() {
         try {
             let userSessionKeyLogin = await AsyncStorage.getItem('userId');
@@ -48,6 +53,7 @@ export default class Login extends Component {
             console.error(error);
         }
     }
+
     async removeSessionKey() {
         try {
             let userSessionKeyLogin = await AsyncStorage.getItem('userId');
@@ -147,6 +153,20 @@ export default class Login extends Component {
                                 <Text style={{color: '#fdfdfd'}}> {Config.btnLogin} </Text>
                             </Button>
                         </View>
+                        <View style={{alignItems: 'right', width: '100%'}}>
+                            <Button
+                                onPress={() => this.setState({showAdvancedSettings: !this.state.showAdvancedSettings})}
+                                transparent>
+                                <Icon active name='ios-settings' style={{color: "#687373"}}/>
+                            </Button>
+                            {this.state.showAdvancedSettings ?
+                                <Item>
+                                    <Input placeholder='Nhập thông tin server'
+                                           onChangeText={(text) => this.setState({newIpAddress: text})}
+                                           placeholderTextColor="#687373"/>
+                                </Item>
+                                : <Text></Text>}
+                        </View>
                         {/*<View style={{alignItems: 'center', width: '100%'}}>*/}
                         {/*<Button onPress={() => Actions.signup()}*/}
                         {/*style={styles.buttonLogin}>*/}
@@ -167,39 +187,25 @@ export default class Login extends Component {
 
         var user = this.state.username;
         var pass = this.state.password;
+        var newIpAddress = this.state.newIpAddress;
         let statusLogin;
         let sessionLoginKey;
         if (user == null || user == '' || pass == '' || pass == '') {
             this.setState({hasError: true, errorText: 'Cần nhập tên đăng nhập và mật khẩu'});
             return;
         }
+        if (newIpAddress != null && newIpAddress != '') {
+            let match = newIpAddress.match(/((https?:\/\/)|(www.))(?:([a-zA-Z]+)|(\d+\.\d+.\d+.\d+))((.\w+)|:\d{4})/g);
+            if (match == null || match == '') {
+                this.setState({hasError: true, errorText: 'Địa chỉ server không đúng'});
+                return;
+            } else {
+                global.hostAPI[0] = newIpAddress;
+            }
+        }
         try {
             this.setState({isLoading: true});
             this.setState({hasError: false, errorText: ''});
-
-            // await fetch(Config.url + '/api/user/generate_auth_cookie/?username=' + user + '&password=' + pass + '&insecure=cool')
-            //     .then((response) => response.json())
-            //     .then((responseJson) => {
-            //         console.log(responseJson);
-            //         try {
-            //             this.setState({isLoading: false});
-            //             statusLogin = responseJson.status;
-            //             if (statusLogin == 'ok') {
-            //                 sessionLoginKey = responseJson.cookie;
-            //                 AsyncStorage.setItem('cookieUserFromApi', responseJson.cookie);
-            //                 AsyncStorage.setItem('userId', responseJson.user.id.toString());
-            //                 responseJson.user['pass'] = pass;
-            //                 AsyncStorage.setItem('userInfo', JSON.stringify(responseJson.user));
-            //             }
-            //         } catch (error) {
-            //             // Error saving data
-            //             console.error(error);
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     });
-            // console.log(statusLogin);
             var param = {
                 userName: user,
                 password: pass
@@ -207,7 +213,7 @@ export default class Login extends Component {
             // var res = Api.login(param);
             // this._getResLogin(res);
 
-            let response = await fetch(Config.api.url + Config.api.apiLogin, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLogin, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

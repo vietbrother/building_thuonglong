@@ -148,7 +148,7 @@ export default class ContractConcreteDetail extends Component {
             };
             console.log(param);
 
-            let response = await fetch(Config.api.url + Config.api.apiApprove, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiApprove, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

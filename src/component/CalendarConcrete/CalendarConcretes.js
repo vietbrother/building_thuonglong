@@ -79,7 +79,7 @@ export default class CalendarConcretes extends Component {
         this.setState({contracts: []});
         try {
             var param = {};
-            let response = await fetch(Config.api.url + Config.api.apiListBranch, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
                 method: 'GET',
                 headers: {
                     'Accept': '*/*'
@@ -139,7 +139,7 @@ export default class CalendarConcretes extends Component {
         let items = [];
         try {
             var param = {idchiNhanh: branchId, idTrangThai: type};
-            let response = await fetch(Config.api.url + Config.api.apiLichXuatBeTong, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTong, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -217,23 +217,29 @@ export default class CalendarConcretes extends Component {
                                     <TabHeading style={styles.tabHeading}>
                                         <Icon name="md-lock" style={styles.tabTitle}/>
                                         <Text style={styles.tabTitle}> {Config.state.wait.toUpperCase()}</Text>
-                                        <Badge style={styles.badgeTitle}><Text style={styles.badgeTitleText}>{this.state.contracts.length}</Text></Badge>
+                                        <Badge style={styles.badgeTitle}><Text
+                                            style={styles.badgeTitleText}>{this.state.contracts.length}</Text></Badge>
                                     </TabHeading>
                                 }>
-                                    {this.state.isSearching ?
-                                        <View style={styles.loadingActivity}>
-                                            <ActivityIndicator
-                                                animating={this.state.isSearching}
-                                                color={Config.mainColor}
-                                                size="large"
-                                            />
-                                        </View>
-                                        : <Text></Text>}
-                                    <FlatList
-                                        style={{width: '100%'}}
-                                        data={this.state.contracts}
-                                        renderItem={({item}) => this._renderItemResult(item)}
-                                    />
+                                    <View style={{
+                                        width: '100%',
+                                        minHeight: 300
+                                    }}>
+                                        {this.state.isSearching ?
+                                            <View style={styles.loadingActivity}>
+                                                <ActivityIndicator
+                                                    animating={this.state.isSearching}
+                                                    color={Config.mainColor}
+                                                    size="large"
+                                                />
+                                            </View>
+                                            : <Text></Text>}
+                                        <FlatList
+                                            style={{width: '100%'}}
+                                            data={this.state.contracts}
+                                            renderItem={({item}) => this._renderItemResult(item)}
+                                        />
+                                    </View>
                                 </Tab>
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>
@@ -241,20 +247,25 @@ export default class CalendarConcretes extends Component {
                                         <Text style={styles.tabTitle}> {Config.state.active.toUpperCase()}</Text>
                                     </TabHeading>
                                 }>
-                                    {this.state.isSearchingActive ?
-                                        <View style={styles.loadingActivity}>
-                                            <ActivityIndicator
-                                                animating={this.state.isSearchingActive}
-                                                color={Config.mainColor}
-                                                size="large"
-                                            />
-                                        </View>
-                                        : <Text></Text>}
-                                    <FlatList
-                                        style={{width: '100%'}}
-                                        data={this.state.contractsActive}
-                                        renderItem={({item}) => this._renderItemResult(item)}
-                                    />
+                                    <View style={{
+                                        width: '100%',
+                                        minHeight: 300
+                                    }}>
+                                        {this.state.isSearchingActive ?
+                                            <View style={styles.loadingActivity}>
+                                                <ActivityIndicator
+                                                    animating={this.state.isSearchingActive}
+                                                    color={Config.mainColor}
+                                                    size="large"
+                                                />
+                                            </View>
+                                            : <Text></Text>}
+                                        <FlatList
+                                            style={{width: '100%'}}
+                                            data={this.state.contractsActive}
+                                            renderItem={({item}) => this._renderItemResult(item)}
+                                        />
+                                    </View>
                                 </Tab>
                             </Tabs>
                         </View>
