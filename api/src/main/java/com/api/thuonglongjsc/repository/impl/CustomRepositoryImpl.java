@@ -20,6 +20,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.thuonglongjsc.dto.ChartSearch;
+import com.api.thuonglongjsc.dto.GachMenBongSearch;
+import com.api.thuonglongjsc.dto.GachTerrazoSearch;
+import com.api.thuonglongjsc.dto.GachXayDungSearch;
 import com.api.thuonglongjsc.dto.GiaBanVatLieu;
 import com.api.thuonglongjsc.dto.GiaBanVatLieuSearch;
 import com.api.thuonglongjsc.dto.HopDongBeTong;
@@ -179,7 +182,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
 				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 ";
 		List<String> lstParams = new ArrayList<>();
-		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh())  && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
 		}
@@ -322,32 +325,187 @@ public class CustomRepositoryImpl implements CustomRepository {
 			res = query.unwrap(org.hibernate.query.Query.class)
 					.setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).getResultList();
 
-/*
-			StoredProcedureQuery storedProcedure = entityManager
-					.createStoredProcedureQuery("dbo.sp_GiaBanVatLieu_ListDuyet");
-			// set parameters
-			storedProcedure.registerStoredProcedureParameter("IDChiNhanh", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("TrangThai", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("PageSize", Integer.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("PageNumber", Integer.class, ParameterMode.IN);
-			storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
-			storedProcedure.setParameter("TrangThai", entity.getIdTrangThai());
-			storedProcedure.setParameter("PageSize", 100);
-			storedProcedure.setParameter("PageNumber", 1);
-			// execute stored procedure
-			storedProcedure.execute();
-			// res = storedProcedure.getResultList();
+			/*
+			 * StoredProcedureQuery storedProcedure = entityManager
+			 * .createStoredProcedureQuery("dbo.sp_GiaBanVatLieu_ListDuyet"); // set
+			 * parameters storedProcedure.registerStoredProcedureParameter("IDChiNhanh",
+			 * String.class, ParameterMode.IN);
+			 * storedProcedure.registerStoredProcedureParameter("TrangThai", String.class,
+			 * ParameterMode.IN);
+			 * storedProcedure.registerStoredProcedureParameter("PageSize", Integer.class,
+			 * ParameterMode.IN);
+			 * storedProcedure.registerStoredProcedureParameter("PageNumber", Integer.class,
+			 * ParameterMode.IN); storedProcedure.setParameter("IDChiNhanh",
+			 * entity.getIDChiNhanh()); storedProcedure.setParameter("TrangThai",
+			 * entity.getIdTrangThai()); storedProcedure.setParameter("PageSize", 100);
+			 * storedProcedure.setParameter("PageNumber", 1); // execute stored procedure
+			 * storedProcedure.execute(); // res = storedProcedure.getResultList();
+			 * 
+			 * // res = storedProcedure.unwrap(org.hibernate.query.Query.class) //
+			 * .setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).
+			 * getResultList(); // Load all fields in the class (private included)
+			 * List<Object[]> lst = storedProcedure.getResultList(); for (Object[] data :
+			 * lst) { GiaBanVatLieu item = (GiaBanVatLieu) Utils.cashObject(new
+			 * GiaBanVatLieu(), data); res.add(item); }
+			 * 
+			 * //System.out.println(res);
+			 */
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
+		return res;
+	}
 
-//			res = storedProcedure.unwrap(org.hibernate.query.Query.class)
-//					.setResultTransformer(Transformers.aliasToBean(GiaBanVatLieu.class)).getResultList();
-			// Load all fields in the class (private included)
-			List<Object[]> lst = storedProcedure.getResultList();
-			for (Object[] data : lst) {
-				GiaBanVatLieu item = (GiaBanVatLieu) Utils.cashObject(new GiaBanVatLieu(), data);
-				res.add(item);
+	@Override
+	public List<GachMenBongSearch> getListGiaBanVatLieu(GachMenBongSearch entity) {
+		// TODO Auto-generated method stub
+		List<GachMenBongSearch> res = new ArrayList<>();
+		String queryStr = "SELECT a.ID,   \r\n" + 
+				"               a.NgayThang,   \r\n" + 
+				"               g.TenChiNhanh,    \r\n" + 
+				"			   a.TenLoaiGach,\r\n" + 
+				"			   a.SoLuong,\r\n" + 
+				"			   a.GhiChu, \r\n" + 
+				"               a.SoMeTron1,   \r\n" + 
+				"               a.SoMeTron2,   \r\n" + 
+				"               a.KLCatSongDa,   \r\n" + 
+				"               a.KLBotMau,   \r\n" + 
+				"               a.KLKeoBong,   \r\n" + 
+				"               a.KLXiMangPCB401,   \r\n" + 
+				"               a.KLCatSongDa2,   \r\n" + 
+				"               a.KLXiMangPCB402,   \r\n" + 
+				"               a.KLDaMat, \r\n" + 
+				"			   a.TrangThai,a.IDChiNhanh,  \r\n" + 
+				"               a.TrangThaiText,   \r\n" + 
+				"               a.TrangThaiChot,   \r\n" + 
+				"               a.NguoiDuyet,   \r\n" + 
+				"               a.NguoiDuyetChot,   \r\n" + 
+				"               a.NgayTao,   \r\n" + 
+				"               a.NguoiTao  \r\n" + 
+				"        FROM tblGachMenBong AS a  \r\n" + 
+				"             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  where 1 = 1 ";
+
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
+		}
+		queryStr += " ORDER BY a.NgayThang DESC";
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
 			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(GachMenBongSearch.class)).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
+		return res;
+	}
 
-			//System.out.println(res);*/
+	@Override
+	public List<GachTerrazoSearch> getListGiaBanVatLieu(GachTerrazoSearch entity) {
+		List<GachTerrazoSearch> res = new ArrayList<>();
+		String queryStr = "SELECT a.ID, \r\n" + 
+				"               a.NgayThang, \r\n" + 
+				"               g.TenChiNhanh, \r\n" + 
+				"               a.TenLoaiGach, \r\n" + 
+				"               a.SoLuong, \r\n" + 
+				"               a.GhiChu, \r\n" + 
+				"               a.SoMeTron1, \r\n" + 
+				"               a.SoMeTron2, \r\n" + 
+				"               a.TLMauXi, \r\n" + 
+				"               a.TLMauDo, \r\n" + 
+				"               a.TLBotDa, \r\n" + 
+				"               a.TLDaDen2ly, \r\n" + 
+				"               a.TLDaTrang2Ly, \r\n" + 
+				"               a.TLDaTrang4Ly, \r\n" + 
+				"               a.TLXiMangPCB401, \r\n" + 
+				"               a.TLXiMangPCB402, \r\n" + 
+				"               a.TLMatDa, \r\n" + 
+				"               a.TLCatSongDa, \r\n" + 
+				"               a.TrangThai,a.IDChiNhanh," +
+				"               a.TrangThaiText, \r\n" + 
+				"               a.TrangThaiChot, \r\n" + 
+				"               a.NguoiDuyet, \r\n" + 
+				"               a.NguoiDuyetChot, \r\n" + 
+				"               a.NgayTao, \r\n" + 
+				"               a.NguoiTao\r\n" + 
+				"        FROM tblGachTerrazo AS a\r\n" + 
+				"             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  where 1 = 1 ";
+
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
+		}
+		queryStr += " ORDER BY a.NgayThang DESC";
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(GachTerrazoSearch.class)).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
+		return res;
+	}
+
+	@Override
+	public List<GachXayDungSearch> getListGiaBanVatLieu(GachXayDungSearch entity) {
+		List<GachXayDungSearch> res = new ArrayList<>();
+		String queryStr = "SELECT a.ID,     \r\n" + 
+				"               a.NgayThang,     \r\n" + 
+				"               g.TenChiNhanh,     \r\n" + 
+				"      b.TenLoaiVatLieu,  \r\n" + 
+				"               a.SoMeTron,     \r\n" + 
+				"               a.KLXiMang,     \r\n" + 
+				"               a.KLCat,     \r\n" + 
+				"               a.KLDaMat,     \r\n" + 
+				"               a.KLVLKhac,     \r\n" + 
+				"               a.SoLuong,     a.GhiChu,\r\n" + 
+				"               a.TrangThaiText,     \r\n" + 
+				"               a.TrangThaiChot,     \r\n" + 
+				"               a.NguoiDuyet,     \r\n" + 
+				"               a.NguoiDuyetChot,     \r\n" + 
+				"               a.NgayTao,     \r\n" + 
+				"               a.NguoiTao,    \r\n" + 
+				"               a.TrangThai,a.IDChiNhanh " +
+				"        FROM tblGachXayDung AS a    \r\n" + 
+				"             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID    \r\n" + 
+				"    join tblLoaiVatLieu as b on a.LoaiGach = b.ID    where 1 = 1 ";
+
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
+		}
+		queryStr += " ORDER BY a.NgayThang DESC";
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(GachXayDungSearch.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);

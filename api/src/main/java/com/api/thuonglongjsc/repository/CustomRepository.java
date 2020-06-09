@@ -15,5 +15,9 @@ public interface CustomRepository {
 	
 	public List<GiaBanVatLieu> getListGiaBanVatLieu(GiaBanVatLieuSearch entity);
 	
+	public List<GachMenBongSearch> getListGiaBanVatLieu(GachMenBongSearch entity);
+	public List<GachTerrazoSearch> getListGiaBanVatLieu(GachTerrazoSearch entity);
+	public List<GachXayDungSearch> getListGiaBanVatLieu(GachXayDungSearch entity);
+	
 	public ResultDTO approveContract(String contractId, String username, String approveType, String stateId);
 }
