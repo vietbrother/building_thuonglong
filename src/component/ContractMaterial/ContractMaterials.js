@@ -70,6 +70,7 @@ export default class ContractMaterials extends Component {
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+        this.setState({componentKey: new Date()});//refresh menu
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);
     }
@@ -83,7 +84,7 @@ export default class ContractMaterials extends Component {
         this.setState({contracts: []});
         try {
             var param = {};
-            let response = await fetch(Config.api.url + Config.api.apiListBranch, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
                 method: 'GET',
                 headers: {
                     'Accept': '*/*'
@@ -140,7 +141,7 @@ export default class ContractMaterials extends Component {
         let items = [];
         try {
             var param = {idchiNhanh: branchId, idTrangThai: type};
-            let response = await fetch(Config.api.url + Config.api.apiGiaBanVatLieu, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiGiaBanVatLieu, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
