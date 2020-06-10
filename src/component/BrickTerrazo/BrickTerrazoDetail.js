@@ -258,7 +258,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.SoMeTron2}</Text>
+                                <Text style={styles.title}>{this.state.contract.soMeTron2}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -268,7 +268,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLMauXi}</Text>
+                                <Text style={styles.title}>{this.state.contract.tlmauXi}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -278,7 +278,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLMauDo}</Text>
+                                <Text style={styles.title}>{this.state.contract.tlmauDo}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -288,7 +288,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLBotDa}</Text>
+                                <Text style={styles.title}>{this.state.contract.tlbotDa}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -298,7 +298,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLDaDen2ly}</Text>
+                                <Text style={styles.title}>{this.state.contract.tldaDen2ly}</Text>
                             </Right>
                         </CardItem>
 
@@ -309,7 +309,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLDaTrang2Ly}</Text>
+                                <Text style={styles.title}>{this.state.contract.tldaTrang2Ly}</Text>
                             </Right>
                         </CardItem>
 
@@ -320,7 +320,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLDaTrang4Ly}</Text>
+                                <Text style={styles.title}>{this.state.contract.tldaTrang4Ly}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -340,7 +340,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLMatDa}</Text>
+                                <Text style={styles.title}>{this.state.contract.tlmatDa}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -350,7 +350,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLCatSongDa}</Text>
+                                <Text style={styles.title}>{this.state.contract.tlcatSongDa}</Text>
                             </Right>
                         </CardItem>
 
@@ -362,7 +362,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.GhiChu}</Text>
+                                <Text style={styles.statusRed}>{this.state.contract.ghiChu}</Text>
                             </Right>
                         </CardItem>
 
@@ -383,7 +383,7 @@ export default class BrickTerrazoDetail extends Component {
                                     <Button transparent>
                                         <Icon name="md-calendar" style={{}}/>
                                         <Text
-                                            style={styles.date}>{Utils._renderDateFormat(this.state.contract.NgayThang)}</Text>
+                                            style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                                     </Button>
                                 </Body>
                                 {/*</Right>*/}

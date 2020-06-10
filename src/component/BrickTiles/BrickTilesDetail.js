@@ -238,7 +238,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.TenLoaiGach}</Text>
+                                <Text>{this.state.contract.tenLoaiGach}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -248,7 +248,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.SoLuong}</Text>
+                                <Text style={styles.title}>{this.state.contract.soLuong}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -258,7 +258,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.SoMeTron2}</Text>
+                                <Text style={styles.title}>{this.state.contract.soMeTron2}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -268,7 +268,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLCatSongDa2}</Text>
+                                <Text style={styles.title}>{this.state.contract.klcatSongDa2}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -278,7 +278,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLBotMau}</Text>
+                                <Text style={styles.title}>{this.state.contract.klbotMau}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -288,7 +288,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLKeoBong}</Text>
+                                <Text style={styles.title}>{this.state.contract.klkeoBong}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -298,17 +298,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLXiMangPCB402}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.brickTiles.KLKeoBong} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.KLKeoBong}</Text>
+                                <Text style={styles.title}>{this.state.contract.klxiMangPCB402}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -318,7 +308,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLDaMat}</Text>
+                                <Text style={styles.title}>{this.state.contract.kldaMat}</Text>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
@@ -328,7 +318,7 @@ export default class BrickTilesDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.GhiChu}</Text>
+                                <Text style={styles.statusRed}>{this.state.contract.ghiChu}</Text>
                             </Right>
                         </CardItem>
 
@@ -349,7 +339,7 @@ export default class BrickTilesDetail extends Component {
                                     <Button transparent>
                                         <Icon name="md-calendar" style={{}}/>
                                         <Text
-                                            style={styles.date}>{Utils._renderDateFormat(this.state.contract.NgayThang)}</Text>
+                                            style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                                     </Button>
                                 </Body>
                                 {/*</Right>*/}

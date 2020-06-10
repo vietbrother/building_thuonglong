@@ -67,6 +67,9 @@ const Config = {
     titleLichXuatBeTong: 'Lịch trộn bê tông',
     titleHopDongBanNVL: 'Hợp đồng bán NVL',
     titleHopDongBanGach: 'Hợp đồng bán gạch',
+    titleGachMenBong: 'Hợp đồng gạch men bóng',
+    titleGachTerrazo: 'Hợp đồng gạch terrazo',
+    titleGachXayDung: 'Hợp đồng gạch xây dựng',
     titleReportHopDongBeTong: 'Báo cáo HĐ bê tông',
 
     APPROVE_TYPE: {

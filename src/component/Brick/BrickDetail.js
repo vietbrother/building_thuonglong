@@ -222,7 +222,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.titleBranch}>{this.state.contract.TenChiNhanh}</Text>
+                                <Text style={styles.titleBranch}>{this.state.contract.tenChiNhanh}</Text>
                             </Right>
                         </CardItem>
 
@@ -234,7 +234,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.TenLoaiVatLieu}</Text>
+                                <Text>{this.state.contract.tenLoaiVatLieu}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -244,7 +244,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.SoMeTron}</Text>
+                                <Text style={styles.title}>{this.state.contract.soMeTron}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -254,7 +254,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLXiMang}</Text>
+                                <Text style={styles.title}>{this.state.contract.klxiMang}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -264,7 +264,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLCat}</Text>
+                                <Text style={styles.title}>{this.state.contract.klcat}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -274,7 +274,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLDaMat}</Text>
+                                <Text style={styles.title}>{this.state.contract.kldaMat}</Text>
                             </Right>
                         </CardItem>
 
@@ -286,7 +286,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.KLVLKhac}</Text>
+                                <Text style={styles.title}>{this.state.contract.klvlkhac}</Text>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
@@ -296,7 +296,7 @@ export default class BrickDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.GhiChu}</Text>
+                                <Text style={styles.statusRed}>{this.state.contract.ghiChu}</Text>
                             </Right>
                         </CardItem>
 
@@ -317,7 +317,7 @@ export default class BrickDetail extends Component {
                                 <Button transparent>
                                     <Icon name="md-calendar" style={{}}/>
                                     <Text
-                                        style={styles.date}>{Utils._renderDateFormat(this.state.contract.NgayThang)}</Text>
+                                        style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                                 </Button>
                                 </Body>
                                 {/*</Right>*/}

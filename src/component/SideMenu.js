@@ -341,7 +341,7 @@ export default class SideMenu extends Component {
 
     renderSecondaryList() {
         let secondaryItems = [];
-        var key = new Date();
+        var key = new Date().valueOf();
         menusSecondaryItems.map((item, i) => {
             secondaryItems.push(
                 <ListItem
@@ -349,7 +349,7 @@ export default class SideMenu extends Component {
                     icon
                     key={key+ '_' + item.id}
                     button={true}
-                    onPress={() => {Actions.refresh({ key: item.key, refresh: '1' }); Actions[item.key]} }
+                    onPress={() => { Actions[item.key]} }
                 >
                     <Left>
                         <Icon style={{fontSize: 18}} name={item.icon}/>
@@ -438,12 +438,24 @@ const menusSecondaryItems = [
         icon: 'ios-cube',
         key: 'contractMaterials'
     },
-    {
-        id: 15,
-        title: Config.titleHopDongBanGach,
-        icon: 'ios-grid',
-        key: 'contractBricks'
-    },
+    // {
+    //     id: 17,
+    //     title: Config.titleGachXayDung,
+    //     icon: 'ios-grid',
+    //     key: 'bricks'
+    // },
+    // {
+    //     id: 18,
+    //     title: Config.titleGachTerrazo,
+    //     icon: 'ios-grid',
+    //     key: 'brickTerrazos'
+    // },
+    // {
+    //     id: 19,
+    //     title: Config.titleGachMenBong,
+    //     icon: 'ios-grid',
+    //     key: 'brickTiles'
+    // },
     {
         id: 14,
         title: Config.titleMngtStatistics,

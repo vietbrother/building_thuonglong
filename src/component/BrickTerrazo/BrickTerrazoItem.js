@@ -105,7 +105,7 @@ export default class BrickTerrazoItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.title}>{this.state.contract.TenLoaiVatLieu}</Text>
+                            <Text style={styles.title}>{this.state.contract.tenLoaiVatLieu}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -113,7 +113,7 @@ export default class BrickTerrazoItem extends Component {
                     <Left>
                         <Body>
                             <Text style={styles.muted}><Icon note name="md-bookmark"
-                                                             style={styles.icon}/> {Config.brickTerrazo.GhiChu} :
+                                                             style={styles.icon}/> {Config.brickTerrazo.ghiChu} :
                             </Text>
                         </Body>
                     </Left>
