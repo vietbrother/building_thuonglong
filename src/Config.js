@@ -21,6 +21,9 @@ const Config = {
         apiHopDongBeTong: '/api/main/v1/hopdongbetong',
         apiLichXuatBeTong: '/api/main/v1/lichxuatbetong',
         apiGiaBanVatLieu: '/api/main/v1/giabanvatlieu',
+        apiGachMenBong: '/api/main/v1/gachmenbong',
+        apiGachTerrazo: '/api/main/v1/gachterrazo',
+        apiGachXayDung: '/api/main/v1/gachxaydung',
         apiApprove: '/api/main/v1/approve',
         apiStatisticTotal: '/api/main/v1/statistic/sumary',
         apiStatisticDetail: '/api/main/v1/statistic/detail'
@@ -70,7 +73,9 @@ const Config = {
         CONTRACT_CONCRETE: '1',//duyet hop dong be tong,
         CALENDAR_CONCRETE: '2',//duyet lich tron be tong
         CONTRACT_MATERIAL: '3',//duyet hop dong vat lieu
-        CONTRACT_BRICK: '4',//duyet hop dong gach
+        CONTRACT_BRICK_TILES: '4',//duyet hop dong gach
+        CONTRACT_BRICK_TERRAZO: '5',//duyet hop dong gach
+        CONTRACT_BRICK: '6',//duyet hop dong gach
     },
 
     contractConcrete: {
@@ -117,10 +122,70 @@ const Config = {
         userCreate: 'Người tạo',
     },
 
+    brickTiles: {
+        title: 'HĐ gạch men bóng',
+        detail: 'Thông tin chi tiết',
+        branch: 'Chi nhánh',
+        userCreate: 'Người tạo',
+        TenLoaiGach:  'Tên loại gạch',
+        SoLuong:  'Số Lượng',
+        GhiChu:  'Ghi chú',
+        SoMeTron1:  'Số mẻ trộn 1',
+        SoMeTron2:  'Số mẻ trộn',
+        KLCatSongDa:  'Khối lượng cát sông Đà',
+        KLBotMau:  'Khối lượng bột màu',
+        KLKeoBong:  'Khối lượng keo bóng',
+        KLXiMangPCB401:  'Khối lượng xi măng PCB40',
+        KLCatSongDa2:  'Khối lượng cát sông Đà',
+        KLXiMangPCB402:  'Khối lượng xi măng PCB40',
+        KLDaMat:  'Khối lượng đá mạt',
+        NgayThang: 'Ngày tháng',
+    },
+
+    brickTerrazo: {
+        title: 'HĐ gạch terrazo',
+        detail: 'Thông tin chi tiết',
+        branch: 'Chi nhánh',
+        userCreate: 'Người tạo',
+        TenLoaiGach: 'Tên loại gạch',
+        SoLuong: 'Số lượng',
+        GhiChu: 'Ghi chú',
+        SoMeTron1:  'Số mẻ trộn 1',
+        SoMeTron2:  'Số mẻ trộn',
+        TLMauXi: 'Màu xi',
+        TLMauDo: 'Màu đỏ',
+        TLBotDa: 'Bột đá',
+        TLDaDen2ly: 'Đá đen 2 ly',
+        TLDaTrang2Ly: 'Đá trắng 2 ly',
+        TLDaTrang4Ly: 'Đá trắng 2 ly',
+        TLXiMangPCB401: 'Xi măng PCB401',
+        TLXiMangPCB402: 'Xi măng PCB40',
+        TLMatDa: 'Mạt đá',
+        TLCatSongDa: 'Cát sông đà',
+        NgayThang: 'Ngày tháng',
+    },
+
+    brick: {
+        title: 'HĐ gạch xây dựng',
+        detail: 'Thông tin chi tiết',
+        branch: 'Chi nhánh',
+        userCreate: 'Người tạo',
+        TenLoaiVatLieu: 'TenLoaiVatLieu',
+        SoMeTron: 'Số mẻ trộn',
+        KLXiMang: 'Xi măng',
+        KLCat: 'Cát',
+        KLDaMat: 'Đá mạt',
+        KLVLKhac: 'Vật liệu khác',
+        SoLuong: 'Số lượng',
+        GhiChu: 'Ghi chú',
+        NgayThang: 'Ngày tháng',
+    },
+
     common: {
         fromDate: 'Từ ngày',
         toDate: 'Đến ngày',
-        createDate: 'Ngày tạo'
+        createDate: 'Ngày tạo',
+        date: 'Ngày tháng'
     },
     state: {
         name: 'Trạng thái',
@@ -256,11 +321,6 @@ const Config = {
     statisticCountStage4: "Xuất khí Argonmed",
     statisticCountAll: "Tổng số thiết bị",
 
-    //stock
-    stockInListStage1: "Nhập vỏ",
-    stockInListStage3: "Nhập khí",
-    stockOutListStage2: "Xuất vỏ",
-    stockOutListStage4: "Xuất khí",
 
 };
 

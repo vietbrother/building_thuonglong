@@ -53,6 +53,21 @@ public class MainController {
 		return userRepository.getListGiaBanVatLieu(entity);
 	}
 	
+	@PostMapping("/v1/gachmenbong")
+	public List<GachMenBong> getListGachMenBong(@RequestBody GachMenBongSearch entity) {
+		return userRepository.getListGachMenBong(entity);
+	}
+	
+	@PostMapping("/v1/gachterrazo")
+	public List<GachTerrazo> getListGachTerrazo(@RequestBody GachTerrazoSearch entity) {
+		return userRepository.getListGachTerrazo(entity);
+	}
+	
+	@PostMapping("/v1/gachxaydung")
+	public List<GachXayDung> getListGachXayDung(@RequestBody GachXayDungSearch entity) {
+		return userRepository.getListGachXayDung(entity);
+	}
+	
 	@PostMapping("/v1/approve")
 	public ResultDTO approve(@Valid @RequestBody ApproveInputDTO param) {
 		ResultDTO res = userRepository.approveContract(param.getContractId(), param.getUsername(), param.getType(), param.getApproveStateId());

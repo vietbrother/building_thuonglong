@@ -6,250 +6,92 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 
 public class GachTerrazoSearch {
-	private String ID;
 
-	private Timestamp NgayThang;
-
-	private String TenChiNhanh;
-
-	private String TenLoaiVatLieu;
-
-	private Integer SoMeTron;
-
-	private Double KLXiMang;
-
-	private Double KLCat;
-
-	private Double KLDaMat;
-
-	private Double KLVLKhac;
-
-	private Integer SoLuong;
-
-	private String GhiChu;
-
+	private String IDChiNhanh;
+	private String IDNhaCungCap;
+	private String TuNgay;
+	private String DenNgay;
+	private String idHopDong;
+	private String idTrangThai;
 	private String TrangThaiText;
-
-	private Integer TrangThaiChot;
-
-	private String NguoiDuyet;
-
-	private String NguoiDuyetChot;
-
-	private Timestamp NgayTao;
-
-	private String NguoiTao;
-	
 
 	public GachTerrazoSearch() {
 		super();
 	}
 
-
-	public GachTerrazoSearch(String iD, Timestamp ngayThang, String tenChiNhanh, String tenLoaiVatLieu,
-			Integer soMeTron, Double kLXiMang, Double kLCat, Double kLDaMat, Double kLVLKhac, Integer soLuong,
-			String ghiChu, String trangThaiText, Integer trangThaiChot, String nguoiDuyet, String nguoiDuyetChot,
-			Timestamp ngayTao, String nguoiTao) {
+	public GachTerrazoSearch(String iDChiNhanh, String iDNhaCungCap, String tuNgay, String denNgay, String idHopDong,
+			String idTrangThai, String trangThaiText) {
 		super();
-		ID = iD;
-		NgayThang = ngayThang;
-		TenChiNhanh = tenChiNhanh;
-		TenLoaiVatLieu = tenLoaiVatLieu;
-		SoMeTron = soMeTron;
-		KLXiMang = kLXiMang;
-		KLCat = kLCat;
-		KLDaMat = kLDaMat;
-		KLVLKhac = kLVLKhac;
-		SoLuong = soLuong;
-		GhiChu = ghiChu;
+		IDChiNhanh = iDChiNhanh;
+		IDNhaCungCap = iDNhaCungCap;
+		TuNgay = tuNgay;
+		DenNgay = denNgay;
+		this.idHopDong = idHopDong;
+		this.idTrangThai = idTrangThai;
 		TrangThaiText = trangThaiText;
-		TrangThaiChot = trangThaiChot;
-		NguoiDuyet = nguoiDuyet;
-		NguoiDuyetChot = nguoiDuyetChot;
-		NgayTao = ngayTao;
-		NguoiTao = nguoiTao;
 	}
 
-
-	public String getID() {
-		return ID;
+	public String getIDChiNhanh() {
+		return IDChiNhanh;
 	}
 
-
-	public void setID(String iD) {
-		ID = iD;
+	public void setIDChiNhanh(String iDChiNhanh) {
+		IDChiNhanh = iDChiNhanh;
 	}
 
-
-	public Timestamp getNgayThang() {
-		return NgayThang;
+	public String getIDNhaCungCap() {
+		return IDNhaCungCap;
 	}
 
-
-	public void setNgayThang(Timestamp ngayThang) {
-		NgayThang = ngayThang;
+	public void setIDNhaCungCap(String iDNhaCungCap) {
+		IDNhaCungCap = iDNhaCungCap;
 	}
 
-
-	public String getTenChiNhanh() {
-		return TenChiNhanh;
+	public String getTuNgay() {
+		return TuNgay;
 	}
 
-
-	public void setTenChiNhanh(String tenChiNhanh) {
-		TenChiNhanh = tenChiNhanh;
+	public void setTuNgay(String tuNgay) {
+		TuNgay = tuNgay;
 	}
 
-
-	public String getTenLoaiVatLieu() {
-		return TenLoaiVatLieu;
+	public String getDenNgay() {
+		return DenNgay;
 	}
 
-
-	public void setTenLoaiVatLieu(String tenLoaiVatLieu) {
-		TenLoaiVatLieu = tenLoaiVatLieu;
+	public void setDenNgay(String denNgay) {
+		DenNgay = denNgay;
 	}
 
-
-	public Integer getSoMeTron() {
-		return SoMeTron;
+	public String getIdHopDong() {
+		return idHopDong;
 	}
 
-
-	public void setSoMeTron(Integer soMeTron) {
-		SoMeTron = soMeTron;
+	public void setIdHopDong(String idHopDong) {
+		this.idHopDong = idHopDong;
 	}
 
-
-	public Double getKLXiMang() {
-		return KLXiMang;
+	public String getIdTrangThai() {
+		return idTrangThai;
 	}
 
-
-	public void setKLXiMang(Double kLXiMang) {
-		KLXiMang = kLXiMang;
+	public void setIdTrangThai(String idTrangThai) {
+		this.idTrangThai = idTrangThai;
 	}
-
-
-	public Double getKLCat() {
-		return KLCat;
-	}
-
-
-	public void setKLCat(Double kLCat) {
-		KLCat = kLCat;
-	}
-
-
-	public Double getKLDaMat() {
-		return KLDaMat;
-	}
-
-
-	public void setKLDaMat(Double kLDaMat) {
-		KLDaMat = kLDaMat;
-	}
-
-
-	public Double getKLVLKhac() {
-		return KLVLKhac;
-	}
-
-
-	public void setKLVLKhac(Double kLVLKhac) {
-		KLVLKhac = kLVLKhac;
-	}
-
-
-	public Integer getSoLuong() {
-		return SoLuong;
-	}
-
-
-	public void setSoLuong(Integer soLuong) {
-		SoLuong = soLuong;
-	}
-
-
-	public String getGhiChu() {
-		return GhiChu;
-	}
-
-
-	public void setGhiChu(String ghiChu) {
-		GhiChu = ghiChu;
-	}
-
 
 	public String getTrangThaiText() {
 		return TrangThaiText;
 	}
 
-
 	public void setTrangThaiText(String trangThaiText) {
 		TrangThaiText = trangThaiText;
 	}
 
-
-	public Integer getTrangThaiChot() {
-		return TrangThaiChot;
-	}
-
-
-	public void setTrangThaiChot(Integer trangThaiChot) {
-		TrangThaiChot = trangThaiChot;
-	}
-
-
-	public String getNguoiDuyet() {
-		return NguoiDuyet;
-	}
-
-
-	public void setNguoiDuyet(String nguoiDuyet) {
-		NguoiDuyet = nguoiDuyet;
-	}
-
-
-	public String getNguoiDuyetChot() {
-		return NguoiDuyetChot;
-	}
-
-
-	public void setNguoiDuyetChot(String nguoiDuyetChot) {
-		NguoiDuyetChot = nguoiDuyetChot;
-	}
-
-
-	public Timestamp getNgayTao() {
-		return NgayTao;
-	}
-
-
-	public void setNgayTao(Timestamp ngayTao) {
-		NgayTao = ngayTao;
-	}
-
-
-	public String getNguoiTao() {
-		return NguoiTao;
-	}
-
-
-	public void setNguoiTao(String nguoiTao) {
-		NguoiTao = nguoiTao;
-	}
-
-
 	@Override
 	public String toString() {
-		return "GachTerrazoSearch [ID=" + ID + ", NgayThang=" + NgayThang + ", TenChiNhanh=" + TenChiNhanh
-				+ ", TenLoaiVatLieu=" + TenLoaiVatLieu + ", SoMeTron=" + SoMeTron + ", KLXiMang=" + KLXiMang
-				+ ", KLCat=" + KLCat + ", KLDaMat=" + KLDaMat + ", KLVLKhac=" + KLVLKhac + ", SoLuong=" + SoLuong
-				+ ", GhiChu=" + GhiChu + ", TrangThaiText=" + TrangThaiText + ", TrangThaiChot=" + TrangThaiChot
-				+ ", NguoiDuyet=" + NguoiDuyet + ", NguoiDuyetChot=" + NguoiDuyetChot + ", NgayTao=" + NgayTao
-				+ ", NguoiTao=" + NguoiTao + "]";
+		return "GachTerrazoSearch [IDChiNhanh=" + IDChiNhanh + ", IDNhaCungCap=" + IDNhaCungCap + ", TuNgay=" + TuNgay
+				+ ", DenNgay=" + DenNgay + ", idHopDong=" + idHopDong + ", idTrangThai=" + idTrangThai
+				+ ", TrangThaiText=" + TrangThaiText + "]";
 	}
-	
-	
+
 }

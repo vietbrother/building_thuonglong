@@ -20,8 +20,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.thuonglongjsc.dto.ChartSearch;
+import com.api.thuonglongjsc.dto.GachMenBong;
 import com.api.thuonglongjsc.dto.GachMenBongSearch;
+import com.api.thuonglongjsc.dto.GachTerrazo;
 import com.api.thuonglongjsc.dto.GachTerrazoSearch;
+import com.api.thuonglongjsc.dto.GachXayDung;
 import com.api.thuonglongjsc.dto.GachXayDungSearch;
 import com.api.thuonglongjsc.dto.GiaBanVatLieu;
 import com.api.thuonglongjsc.dto.GiaBanVatLieuSearch;
@@ -242,7 +245,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 			} else if (Constants.APPROVE_TYPE.CONTRACT_MATERIAL.equals(approveType)) {
 				queryStr += " tblGiaBanVatLieu ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK.equals(approveType)) {
-
+				queryStr += " tblGiaBanVatLieu ";
+			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TILES.equals(approveType)) {
+				queryStr += " tblGachTerrazo ";
+			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TERRAZO.equals(approveType)) {
+				queryStr += " tblGachXayDung ";
 			} else {
 				message = "Invalid Approve Type";
 				res.setMessage(message);
@@ -358,9 +365,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public List<GachMenBongSearch> getListGiaBanVatLieu(GachMenBongSearch entity) {
+	public List<GachMenBong> getListGachMenBong(GachMenBongSearch entity) {
 		// TODO Auto-generated method stub
-		List<GachMenBongSearch> res = new ArrayList<>();
+		List<GachMenBong> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID,   \r\n" + 
 				"               a.NgayThang,   \r\n" + 
 				"               g.TenChiNhanh,    \r\n" + 
@@ -402,7 +409,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				query.setParameter(i + 1, lstParams.get(i));
 			}
 			res = query.unwrap(org.hibernate.query.Query.class)
-					.setResultTransformer(Transformers.aliasToBean(GachMenBongSearch.class)).getResultList();
+					.setResultTransformer(Transformers.aliasToBean(GachMenBong.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);
@@ -411,8 +418,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public List<GachTerrazoSearch> getListGiaBanVatLieu(GachTerrazoSearch entity) {
-		List<GachTerrazoSearch> res = new ArrayList<>();
+	public List<GachTerrazo> getListGachTerrazo(GachTerrazoSearch entity) {
+		List<GachTerrazo> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID, \r\n" + 
 				"               a.NgayThang, \r\n" + 
 				"               g.TenChiNhanh, \r\n" + 
@@ -457,7 +464,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				query.setParameter(i + 1, lstParams.get(i));
 			}
 			res = query.unwrap(org.hibernate.query.Query.class)
-					.setResultTransformer(Transformers.aliasToBean(GachTerrazoSearch.class)).getResultList();
+					.setResultTransformer(Transformers.aliasToBean(GachTerrazo.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);
@@ -466,8 +473,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public List<GachXayDungSearch> getListGiaBanVatLieu(GachXayDungSearch entity) {
-		List<GachXayDungSearch> res = new ArrayList<>();
+	public List<GachXayDung> getListGachXayDung(GachXayDungSearch entity) {
+		List<GachXayDung> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID,     \r\n" + 
 				"               a.NgayThang,     \r\n" + 
 				"               g.TenChiNhanh,     \r\n" + 
@@ -505,7 +512,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				query.setParameter(i + 1, lstParams.get(i));
 			}
 			res = query.unwrap(org.hibernate.query.Query.class)
-					.setResultTransformer(Transformers.aliasToBean(GachXayDungSearch.class)).getResultList();
+					.setResultTransformer(Transformers.aliasToBean(GachXayDung.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);
