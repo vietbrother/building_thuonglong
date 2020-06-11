@@ -60,12 +60,12 @@ export default class ContractConcretes extends Component {
             extractedText: "",
             searchText: '',
             branchSelected: '',
-            componentKey: new Date().valueOf()
+            componentKey: new Date()
         };
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        this.setState({componentKey: new Date().valueOf()});//refresh menu
+        this.setState({componentKey: new Date()});//refresh menu
         console.log(this.state.branchSelected);
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);

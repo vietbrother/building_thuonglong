@@ -50,7 +50,7 @@ import DeviceDetail from "./component/Device/DeviceDetail";
 import OrderList from "./component/Orders/Orders";
 import OrderDetail from "./component/Orders/OrderDetail";
 import Bill from "./component/Bill/Bill";
-import Statistic from "./component/Statistic/Statistic";
+import Statistic from "./component/Statistic/StatisticDaily";
 import StockOutMultipleManual from "./component/Stock/StockOutMultipleManual";
 import ManualScannerList from "./component/Manual/ManualScannerList";
 import StockInList from "./component/Stock/StockInList";
@@ -227,7 +227,7 @@ export default class Main extends Component {
                         <Scene key="category" component={Category} hideNavBar/>
                         <Scene key="product" component={Product} hideNavBar/>
                         <Scene key="imageGallery" component={ImageGallery} modal hideNavBar/>
-                        <Scene initial key="login" component={Login} hideNavBar/>
+                        <Scene key="login" component={Login} hideNavBar/>
                         <Scene key="signup" component={Signup} hideNavBar/>
                         <Scene key="checkout" component={Checkout} hideNavBar/>
                         {/*<Scene key="orders" component={Orders} hideNavBar />*/}
@@ -263,7 +263,7 @@ export default class Main extends Component {
                         <Scene key="billList" component={BillList} hideNavBar/>
 
 
-                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene initial key="contractConcretes" component={ContractConcretes} hideNavBar/>
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>

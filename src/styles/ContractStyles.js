@@ -86,7 +86,7 @@ export default StyleSheet.create({
         fontSize: 16,
     },
     titleBranch: {
-        color: Config.mainColor, fontSize: 20, marginLeft: 0, fontWeight: 'bold'
+        color: 'dodgerblue', fontSize: 20, marginLeft: 0, fontWeight: 'bold'
     },
     muted: {
         color: '#849192',
@@ -173,7 +173,7 @@ export default StyleSheet.create({
         marginTop: 5, marginLeft: 5
     },
     badgeTitleText: {
-        color: 'white', paddingTop: 2, fontSize: 12, fontWeight: 'bold'
+        color: 'white', padding: 2, fontSize: 14, fontWeight: 'bold'
     },
 
     main: {
@@ -197,10 +197,10 @@ export default StyleSheet.create({
         borderRadius: 5
     },
     boxItem: {
-        paddingTop: 20,
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingBottom: 20,
+        paddingTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 10,
         textAlign: 'center'
     },
     boxContent: {

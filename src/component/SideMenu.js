@@ -341,7 +341,7 @@ export default class SideMenu extends Component {
 
     renderSecondaryList() {
         let secondaryItems = [];
-        var key = new Date().valueOf();
+        var key = new Date();
         menusSecondaryItems.map((item, i) => {
             secondaryItems.push(
                 <ListItem
@@ -349,7 +349,7 @@ export default class SideMenu extends Component {
                     icon
                     key={key+ '_' + item.id}
                     button={true}
-                    onPress={() => { Actions[item.key]} }
+                    onPress={Actions[item.key]}
                 >
                     <Left>
                         <Icon style={{fontSize: 18}} name={item.icon}/>
