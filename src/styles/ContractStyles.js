@@ -86,7 +86,7 @@ export default StyleSheet.create({
         fontSize: 16,
     },
     titleBranch: {
-        color: 'dodgerblue', fontSize: 20, marginLeft: 0, fontWeight: 'bold'
+        color: Config.mainColor, fontSize: 20, marginLeft: 0, fontWeight: 'bold'
     },
     muted: {
         color: '#849192',
@@ -166,13 +166,48 @@ export default StyleSheet.create({
     tabIcon: {
         backgroundColor: 'transparent', color: Config.mainColor
     },
-    loadingActivity : {
+    loadingActivity: {
         paddingTop: 40
     },
     badgeTitle: {
         marginTop: 5, marginLeft: 5
     },
     badgeTitleText: {
-        color : 'white', paddingTop: 2, fontSize: 16, fontWeight: 'bold'
+        color: 'white', paddingTop: 2, fontSize: 12, fontWeight: 'bold'
+    },
+
+    main: {
+        backgroundColor: '#fcfcfc', flex: 1,
+        color: Config.mainColor
+    },
+    boxTitle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        padding: 10
+    },
+    box: {
+        shadowColor: "#f3f3f3",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 5
+    },
+    boxItem: {
+        paddingTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingBottom: 20,
+        textAlign: 'center'
+    },
+    boxContent: {
+        padding: 10,
+        alignItems: 'flex-end'
+    },
+    subItem:{
+        padding: 15
     }
 });

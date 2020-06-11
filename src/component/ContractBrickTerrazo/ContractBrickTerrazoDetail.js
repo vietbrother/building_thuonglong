@@ -37,7 +37,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
 
-export default class BrickTerrazoDetail extends Component {
+export default class ContractBrickTerrazoDetail extends Component {
 
     constructor(props) {
         super(props);
@@ -226,7 +226,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.titleBranch}>{this.state.contract.TenChiNhanh}</Text>
+                                <Text style={styles.titleBranch}>{this.state.contract.tenChiNhanh}</Text>
                             </Right>
                         </CardItem>
 
@@ -238,7 +238,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.TenLoaiGach}</Text>
+                                <Text>{this.state.contract.tenLoaiGach}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -248,7 +248,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.SoLuong}</Text>
+                                <Text style={styles.title}>{this.state.contract.soLuong}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -330,7 +330,7 @@ export default class BrickTerrazoDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.TLXiMangPCB402}</Text>
+                                <Text style={styles.title}>{this.state.contract.tlxiMangPCB402}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>

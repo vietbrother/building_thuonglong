@@ -37,11 +37,11 @@ import Navbar from '../../component/Navbar';
 import SideMenuDrawer from '../../component/SideMenuDrawer';
 import Config from "../../Config";
 // import HTML from 'react-native-render-html';
-import BrickItem from "./BrickItem";
+import ContractBrickTilesItem from "./ContractBrickTilesItem";
 import styles from "../../styles/ContractStyles";
 
 
-export default class Bricks extends Component {
+export default class ContractBrickTiles extends Component {
 
     constructor(props) {
         super(props);
@@ -59,12 +59,12 @@ export default class Bricks extends Component {
             extractedText: "",
             searchText: '',
             branchSelected: '',
-            componentKey: new Date()
+            componentKey: new Date().valueOf().toString()
         };
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        this.setState({componentKey: new Date()});//refresh menu
+        this.setState({componentKey: new Date().valueOf().toString()});//refresh menu
         console.log(this.state.branchSelected);
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);
@@ -120,7 +120,7 @@ export default class Bricks extends Component {
                             borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
                             padding: 5
                         }}>*/
-            <BrickItem key={item.id} contract={item}></BrickItem>
+            <ContractBrickTilesItem key={item.id} contract={item}></ContractBrickTilesItem>
             /*</View>*/
         );
     }
@@ -134,12 +134,12 @@ export default class Bricks extends Component {
 
 
     async search(branchId, type) {
-        console.log('BrickTiles-----------------search');
+        console.log('ContractBrickTiles-----------------search');
         this._switchState(type, [], true);
         let items = [];
         try {
             var param = {idchiNhanh: branchId, idTrangThai: type};
-            let response = await fetch(global.hostAPI[0] + Config.api.apiGachXayDung, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiGachMenBong, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -192,7 +192,7 @@ export default class Bricks extends Component {
                 // sessionLoginKey={this.props.sessionLoginKey}
             >
                 <Container>
-                    <Navbar left={left} right={right} title={Config.brick.title}/>
+                    <Navbar left={left} right={right} title={Config.brickTiles.title}/>
                     <Content>
                         <View style={{
                             flex: 1,

@@ -64,12 +64,12 @@ import CalendarConcretes from "./component/CalendarConcrete/CalendarConcretes";
 import CalendarConcreteDetail from "./component/CalendarConcrete/CalendarConcreteDetail";
 import ContractMaterials from "./component/ContractMaterial/ContractMaterials";
 import ContractMaterialDetail from "./component/ContractMaterial/ContractMaterialDetail";
-import Bricks from "./component/Brick/Bricks";
-import BrickDetail from "./component/Brick/BrickDetail";
-import BrickTerrazos from "./component/BrickTerrazo/BrickTerrazos";
-import BrickTerrazoDetail from "./component/BrickTerrazo/BrickTerrazoDetail";
-import BrickTiles from "./component/BrickTiles/BrickTiles";
-import BrickTilesDetail from "./component/BrickTiles/BrickTilesDetail";
+import ContractBricks from "./component/ContractBrick/ContractBricks";
+import ContractBrickDetail from "./component/ContractBrick/ContractBrickDetail";
+import ContractBrickTerrazos from "./component/ContractBrickTerrazo/ContractBrickTerrazos";
+import ContractBrickTerrazoDetail from "./component/ContractBrickTerrazo/ContractBrickTerrazoDetail";
+import ContractBrickTiles from "./component/ContractBrickTiles/ContractBrickTiles";
+import ContractBrickTilesDetail from "./component/ContractBrickTiles/ContractBrickTilesDetail";
 
 export default class Main extends Component {
 
@@ -270,12 +270,12 @@ export default class Main extends Component {
                         <Scene key="contractMaterials" component={ContractMaterials} hideNavBar/>
                         <Scene key="contractMaterialDetail" component={ContractMaterialDetail} hideNavBar/>
 
-                        {/*<Scene key="bricks" component={Bricks} hideNavBar/>*/}
-                        {/*<Scene key="brickDetail" component={BrickDetail} hideNavBar/>*/}
-                        {/*<Scene key="brickTerrazos" component={BrickTerrazos} hideNavBar/>*/}
-                        {/*<Scene key="brickTerrazoDetail" component={BrickTerrazoDetail} hideNavBar/>*/}
-                        {/*<Scene key="brickTiles" component={BrickTiles} hideNavBar/>*/}
-                        {/*<Scene key="brickTilesDetail" component={BrickTilesDetail} hideNavBar/>*/}
+                        <Scene key="contractBricks" component={ContractBricks} hideNavBar/>
+                        <Scene key="contractBrickDetail" component={ContractBrickDetail} hideNavBar/>
+                        <Scene key="contractBrickTerrazos" component={ContractBrickTerrazos} hideNavBar/>
+                        <Scene key="contractBrickTerrazoDetail" component={ContractBrickTerrazoDetail} hideNavBar/>
+                        <Scene key="contractBrickTiles" component={ContractBrickTiles} hideNavBar/>
+                        <Scene key="contractBrickTilesDetail" component={ContractBrickTilesDetail} hideNavBar/>
 
                     </Scene>
                 </Router>

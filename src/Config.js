@@ -184,6 +184,26 @@ const Config = {
         NgayThang: 'Ngày tháng',
     },
 
+    statisticDaily: {
+        title: 'Báo cáo ngày',
+        detail: 'Thông tin chi tiết',
+        fund: 'Quỹ',
+        fundTotalIn: 'Tổng Thu',
+        fundTotalOut: 'Tổng Chi',
+        fundLiabilitiesCollection: 'Công nợ phải thu',
+        fundLiabilitiesPay: 'Công nợ phải trả',
+        brick: 'Gạch',
+        brickTazo3030: 'Số lượng gạch Tazo 30x30',
+        brickTazo2040: 'Số lượng gạch Tazo 20x40',
+        brickTazo5020: 'Số lượng gạch Tazo 50x20',
+        brickUnit: 'viên',
+        concrete: 'Bê tông',
+        concreteOut: 'Khối lượng bê tông đã đổ',
+        concreteMix: 'Khối lượng bê tông đã trộn',
+        concretePlan: 'Khối lượng bê tông dự kiến đổ',
+        concreteUnit: 'm3',
+    },
+
     common: {
         fromDate: 'Từ ngày',
         toDate: 'Đến ngày',

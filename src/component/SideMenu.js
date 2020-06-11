@@ -438,24 +438,24 @@ const menusSecondaryItems = [
         icon: 'ios-cube',
         key: 'contractMaterials'
     },
-    // {
-    //     id: 17,
-    //     title: Config.titleGachXayDung,
-    //     icon: 'ios-grid',
-    //     key: 'bricks'
-    // },
-    // {
-    //     id: 18,
-    //     title: Config.titleGachTerrazo,
-    //     icon: 'ios-grid',
-    //     key: 'brickTerrazos'
-    // },
-    // {
-    //     id: 19,
-    //     title: Config.titleGachMenBong,
-    //     icon: 'ios-grid',
-    //     key: 'brickTiles'
-    // },
+    {
+        id: 17,
+        title: Config.titleGachXayDung,
+        icon: 'ios-grid',
+        key: 'contractBricks'
+    },
+    {
+        id: 18,
+        title: Config.titleGachTerrazo,
+        icon: 'ios-grid',
+        key: 'contractBrickTerrazos'
+    },
+    {
+        id: 19,
+        title: Config.titleGachMenBong,
+        icon: 'ios-grid',
+        key: 'contractBrickTiles'
+    },
     {
         id: 14,
         title: Config.titleMngtStatistics,

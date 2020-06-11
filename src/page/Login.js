@@ -153,7 +153,7 @@ export default class Login extends Component {
                                 <Text style={{color: '#fdfdfd'}}> {Config.btnLogin} </Text>
                             </Button>
                         </View>
-                        <View style={{alignItems: 'center', width: '100%'}}>
+                        <View style={{alignItems: 'flex-end', width: '100%'}}>
                             <Button
                                 onPress={() => this.setState({showAdvancedSettings: !this.state.showAdvancedSettings})}
                                 transparent>

@@ -37,7 +37,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
 
-export default class BrickTilesDetail extends Component {
+export default class ContractBrickDetail extends Component {
 
     constructor(props) {
         super(props);
@@ -75,8 +75,7 @@ export default class BrickTilesDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon}
-                                                                 name='ios-close'/> {Config.btnReject}
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
                             </Text>
                         </Button>
                     </Left>
@@ -98,8 +97,7 @@ export default class BrickTilesDetail extends Component {
                 <CardItem>
                     <Body>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon}
-                                                                 name='ios-close'/> {Config.btnClose}</Text>
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
                         </Button>
                     </Body>
                 </CardItem>
@@ -109,8 +107,7 @@ export default class BrickTilesDetail extends Component {
                 <CardItem>
                     <Body>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon}
-                                                                 name='ios-close'/> {Config.btnClose}
+                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
                             </Text>
                         </Button>
                     </Body>
@@ -119,7 +116,6 @@ export default class BrickTilesDetail extends Component {
         }
 
     }
-
     _preApprove() {
         Alert.alert(
             '',
@@ -145,7 +141,7 @@ export default class BrickTilesDetail extends Component {
             var param = {
                 approveStateId: Utils._getStatusCode(this.state.contract.trangThaiText),
                 contractId: this.state.contract.id,
-                type: Config.APPROVE_TYPE.CONTRACT_BRICK_TILES,
+                type: Config.APPROVE_TYPE.CONTRACT_BRICK,
                 username: this.state.username
             };
             // var res = Api.login(param);
@@ -203,14 +199,14 @@ export default class BrickTilesDetail extends Component {
                     //Text style of the Spinner Text
                     textStyle={styles.spinnerTextStyle}
                 />
-                <Navbar left={left} right={right} title={Config.brickTiles.detail}/>
+                <Navbar left={left} right={right} title={Config.brick.detail}/>
                 <Content contentContainerStyle={{
                     paddingHorizontal: 10,
                     backgroundColor: '#f3f9ff'
                 }}>
                     <Card transparent>
                         <CardItem header bordered>
-                            <H3>{Config.brickTiles.title}</H3>
+                            <H3>{Config.brick.title}</H3>
                         </CardItem>
 
                         <CardItem>
@@ -222,11 +218,11 @@ export default class BrickTilesDetail extends Component {
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cube"
-                                                                      style={styles.icon}/> {Config.brickTiles.branch} :
+                                                                      style={styles.icon}/> {Config.brick.branch} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.titleBranch}>{this.state.contract.TenChiNhanh}</Text>
+                                <Text style={styles.titleBranch}>{this.state.contract.tenChiNhanh}</Text>
                             </Right>
                         </CardItem>
 
@@ -234,87 +230,69 @@ export default class BrickTilesDetail extends Component {
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="briefcase"
-                                                                      style={styles.icon}/> {Config.brickTiles.TenLoaiGach} :
+                                                                      style={styles.icon}/> {Config.brick.TenLoaiVatLieu} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenLoaiGach}</Text>
+                                <Text>{this.state.contract.tenLoaiVatLieu}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brickTiles.SoLuong} :
+                                                                      style={styles.icon}/> {Config.brick.SoMeTron} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.soLuong}</Text>
+                                <Text style={styles.title}>{this.state.contract.soMeTron}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brickTiles.SoMeTron2} :
+                                                                      style={styles.icon}/> {Config.brick.KLXiMang} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.soMeTron2}</Text>
+                                <Text style={styles.title}>{this.state.contract.klxiMang}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brickTiles.KLCatSongDa2} :
+                                                                      style={styles.icon}/> {Config.brick.KLCat} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.klcatSongDa2}</Text>
+                                <Text style={styles.title}>{this.state.contract.klcat}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brickTiles.KLBotMau} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.klbotMau}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.brickTiles.KLKeoBong} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.klkeoBong}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.brickTiles.KLXiMangPCB402} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.klxiMangPCB402}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.brickTiles.KLDaMat} :
+                                                                      style={styles.icon}/> {Config.brick.KLDaMat} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.title}>{this.state.contract.kldaMat}</Text>
                             </Right>
                         </CardItem>
+
+
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
+                                                                      style={styles.icon}/> {Config.brick.KLVLKhac} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.klvlkhac}</Text>
+                            </Right>
+                        </CardItem>
                         <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-star-outline"
-                                                                      style={styles.icon}/> {Config.brickTiles.GhiChu} :
+                                                                      style={styles.icon}/> {Config.brick.GhiChu} :
                                 </Text>
                             </Left>
                             <Right>
@@ -335,12 +313,12 @@ export default class BrickTilesDetail extends Component {
 
                                 {/*<Right>*/}
                                 <Body>
-                                    <Text style={styles.muted}>{Config.common.date}</Text>
-                                    <Button transparent>
-                                        <Icon name="md-calendar" style={{}}/>
-                                        <Text
-                                            style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
-                                    </Button>
+                                <Text style={styles.muted}>{Config.common.date}</Text>
+                                <Button transparent>
+                                    <Icon name="md-calendar" style={{}}/>
+                                    <Text
+                                        style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
+                                </Button>
                                 </Body>
                                 {/*</Right>*/}
                             </Left>

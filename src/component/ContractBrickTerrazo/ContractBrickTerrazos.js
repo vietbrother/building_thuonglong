@@ -37,11 +37,11 @@ import Navbar from '../../component/Navbar';
 import SideMenuDrawer from '../../component/SideMenuDrawer';
 import Config from "../../Config";
 // import HTML from 'react-native-render-html';
-import BrickTerrazoItem from "./BrickTerrazoItem";
+import ContractBrickTerrazoItem from "./ContractBrickTerrazoItem";
 import styles from "../../styles/ContractStyles";
 
 
-export default class BrickTerrazos extends Component {
+export default class ContractBrickTerrazos extends Component {
 
     constructor(props) {
         super(props);
@@ -59,12 +59,12 @@ export default class BrickTerrazos extends Component {
             extractedText: "",
             searchText: '',
             branchSelected: '',
-            componentKey: new Date()
+            componentKey: new Date().valueOf().toString()
         };
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        this.setState({componentKey: new Date()});//refresh menu
+        this.setState({componentKey: new Date().valueOf().toString()});//refresh menu
         console.log(this.state.branchSelected);
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);
@@ -120,7 +120,7 @@ export default class BrickTerrazos extends Component {
                             borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 0.5,
                             padding: 5
                         }}>*/
-            <BrickTerrazoItem key={item.id} contract={item}></BrickTerrazoItem>
+            <ContractBrickTerrazoItem key={item.id} contract={item}></ContractBrickTerrazoItem>
             /*</View>*/
         );
     }
@@ -134,7 +134,7 @@ export default class BrickTerrazos extends Component {
 
 
     async search(branchId, type) {
-        console.log('BrickTiles-----------------search');
+        console.log('ContractBrickTerrazo-----------------search');
         this._switchState(type, [], true);
         let items = [];
         try {

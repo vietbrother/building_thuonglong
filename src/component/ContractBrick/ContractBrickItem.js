@@ -45,7 +45,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
 
-export default class BrickItem extends Component {
+export default class ContractBrickItem extends Component {
     constructor(props) {
         super(props);
 
@@ -80,7 +80,7 @@ export default class BrickItem extends Component {
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.brickDetail({contract: this.props.contract})}
+                onPress={() => Actions.contractBrickDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
                 <CardItem header>
@@ -140,7 +140,7 @@ export default class BrickItem extends Component {
                             <Button transparent>
                                 <Icon name="md-calendar" style={{}}/>
                                 <Text
-                                    style={styles.date}>{Utils._renderDateFormat(this.state.contract.NgayThang)}</Text>
+                                    style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                             </Button>
                         </Body>
                     </Right>

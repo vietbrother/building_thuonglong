@@ -45,7 +45,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
 
-export default class BrickTerrazoItem extends Component {
+export default class ContractBrickTilesItem extends Component {
     constructor(props) {
         super(props);
 
@@ -80,7 +80,7 @@ export default class BrickTerrazoItem extends Component {
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.brickDetail({contract: this.props.contract})}
+                onPress={() => Actions.contractBrickTilesDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
                 <CardItem header>
@@ -99,7 +99,7 @@ export default class BrickTerrazoItem extends Component {
                     <Left>
                         <Body>
                             <Text style={styles.muted}><Icon note name="briefcase"
-                                                             style={styles.icon}/> {Config.brickTerrazo.TenLoaiVatLieu} :
+                                                             style={styles.icon}/> {Config.brickTiles.TenLoaiVatLieu} :
                             </Text>
                         </Body>
                     </Left>
@@ -113,13 +113,13 @@ export default class BrickTerrazoItem extends Component {
                     <Left>
                         <Body>
                             <Text style={styles.muted}><Icon note name="md-bookmark"
-                                                             style={styles.icon}/> {Config.brickTerrazo.ghiChu} :
+                                                             style={styles.icon}/> {Config.brickTiles.GhiChu} :
                             </Text>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.title}>{this.state.contract.GhiChu}</Text>
+                            <Text style={styles.title}>{this.state.contract.ghiChu}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -140,7 +140,7 @@ export default class BrickTerrazoItem extends Component {
                             <Button transparent>
                                 <Icon name="md-calendar" style={{}}/>
                                 <Text
-                                    style={styles.date}>{Utils._renderDateFormat(this.state.contract.NgayThang)}</Text>
+                                    style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                             </Button>
                         </Body>
                     </Right>
