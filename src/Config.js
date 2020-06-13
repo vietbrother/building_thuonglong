@@ -226,7 +226,11 @@ const Config = {
         success: '0',
         false: '1',
     },
-
+    currencyUnit: {
+        thousand : 'K',
+        million : 'Triệu',
+        billion : 'Tỉ',
+    },
 
     titleMngtDevices: 'Quản lý thiết bị',
     titleMngtOrders: 'Đơn hàng',

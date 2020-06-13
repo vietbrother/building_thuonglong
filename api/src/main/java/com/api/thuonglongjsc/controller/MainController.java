@@ -83,4 +83,14 @@ public class MainController {
 	public List<ChartDataDetail> getChartDetail(@Valid @RequestBody ChartSearch entity){
 		return statisticRepository.getChartDetail(entity);
 	}
+	
+	@PostMapping("/v1/statistic/daily")
+	public List<ChartDataDaily> getChartDaily(@Valid @RequestBody ChartSearch entity) {
+		return statisticRepository.getChartDaily(entity);
+	}
+	
+	@PostMapping("/v1/statistic/daily/bricks")
+	public List<ChartDataBricksDaily> getChartBricksDaily(@Valid @RequestBody ChartSearch entity) {
+		return statisticRepository.getChartBricksDaily(entity);
+	}
 }

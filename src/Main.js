@@ -255,7 +255,7 @@ export default class Main extends Component {
                         <Scene key="orderDetail" component={OrderDetail} hideNavBar/>
 
                         <Scene key="bill" component={Bill} modal hideNavBar/>
-                        <Scene key="statistic" component={Statistic} hideNavBar/>
+                        <Scene initial key="statistic" component={Statistic} hideNavBar/>
 
                         <Scene key="manualScannerList" component={ManualScannerList} hideNavBar/>
                         <Scene key="stockInList" component={StockInList} hideNavBar/>
@@ -263,7 +263,8 @@ export default class Main extends Component {
                         <Scene key="billList" component={BillList} hideNavBar/>
 
 
-                        <Scene initial key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>

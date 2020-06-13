@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.thuonglongjsc.dto.ChartData;
+import com.api.thuonglongjsc.dto.ChartDataBricksDaily;
+import com.api.thuonglongjsc.dto.ChartDataDaily;
 import com.api.thuonglongjsc.dto.ChartDataDetail;
 import com.api.thuonglongjsc.dto.ChartSearch;
 import com.api.thuonglongjsc.dto.GiaBanVatLieu;
@@ -113,6 +115,120 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 			}
 			res = query.unwrap(org.hibernate.query.Query.class)
 					.setResultTransformer(Transformers.aliasToBean(ChartDataDetail.class)).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
+		return res;
+	}
+	
+	@Override
+	public List<ChartDataDaily> getChartDaily(ChartSearch entity) {
+		// TODO Auto-generated method stub
+		List<ChartDataDaily> res = new ArrayList<>();
+		List<String> lstParams = new ArrayList<>();
+		String condition = ""; 
+		
+		
+//		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+//			queryStr += " and IDChiNhanh = ? ";
+//			lstParams.add(entity.getIDChiNhanh());
+//		}
+		
+		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+			//https://stackoverflow.com/questions/207190/sql-server-string-to-date-conversion
+			//https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2005/ms187928(v=sql.90)?redirectedfrom=MSDN
+			condition = " AND CONVERT(DATETIME, CONVERT(DATE, NgayThang)) = convert(date, ? , 103) ";
+			lstParams.add(entity.getNgayThang());//table a
+			lstParams.add(entity.getNgayThang());//table b
+			lstParams.add(entity.getNgayThang());// table c
+			lstParams.add(entity.getNgayThang());// table d
+		}
+		String queryStr = "select TongThu,TongChi,CongNoThu,CongNoTra,  KLBeTongBan, KLBeTongDuKien\r\n" + 
+				"from \r\n" + 
+				"( SELECT  ISNULL(SUM(ISNULL(KLKhachHang, 0)), 0) AS KLBeTongBan, '1' as ID\r\n" + 
+				"  FROM tblXuatBeTong \r\n" + 
+				"  where 1=1 " + condition + 
+				" ) a,\r\n" + 
+				"( SELECT ISNULL(SUM(ISNULL(KLThucXuat, 0)), 0) as KLBeTongDuKien, '1' as ID\r\n" + 
+				"        FROM tblLichXuatBeTong\r\n" + 
+				"  where 1=1 " + condition + 
+				" ) b,\r\n" + 
+				"( SELECT  ISNULL(SUM(CongNoThuThanhToan), 0) as CongNoThu, \r\n" + 
+				"                ISNULL(SUM(CongNoTraThanhToan),0) as CongNoTra, '1' as ID\r\n" + 
+				"        FROM tblCongNo\r\n" + 
+				"  where 1=1 " + condition + 
+				" ) c,\r\n" + 
+				"( SELECT  ISNULL(SUM(SoTienThu), 0) as TongThu, \r\n" + 
+				"                ISNULL(SUM(SoTienChi), 0) as TongChi, '1' as ID\r\n" + 
+				"        FROM tblPhieuThuChi\r\n" + 
+				"  where 1=1 " + condition + 
+				" ) d\r\n" + 
+				"where a.id = b.id  and b.id = c.id and c.id = d.id";
+//		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+//			queryStr += " and a.TrangThai = ? ";
+//			lstParams.add(entity.getIdTrangThai());
+//		}
+		
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(ChartDataDaily.class)).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
+		return res;
+	}
+	
+	@Override
+	public List<ChartDataBricksDaily> getChartBricksDaily(ChartSearch entity) {
+		// TODO Auto-generated method stub
+		List<ChartDataBricksDaily> res = new ArrayList<>();
+		List<String> lstParams = new ArrayList<>();
+		String condition = ""; 
+		
+		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+			condition = " AND CONVERT(DATETIME, CONVERT(DATE, NgayThang)) = convert(date, ? , 103) ";
+			lstParams.add(entity.getNgayThang());//table a
+			lstParams.add(entity.getNgayThang());//table b
+			lstParams.add(entity.getNgayThang());// table c
+		}
+		String queryStr = "SELECT b.TenLoaiVatLieu as name, \r\n" + 
+				"               ISNULL(SUM(a.SoLuong), 0) as value, 'tblGachTerrazo' as type\r\n" + 
+				"        FROM tblGachTerrazo AS a\r\n" + 
+				"             JOIN tblLoaiVatLieu AS b ON a.LoaiGach = b.ID\r\n" + 
+				"  		where 1=1 " + condition + 
+				"        GROUP BY b.TenLoaiVatLieu \r\n";
+		queryStr += " UNION ALL \r\n";
+		queryStr += "SELECT b.TenLoaiVatLieu as name, \r\n" + 
+				"               ISNULL(SUM(a.SoLuong), 0) as value, 'tblGachMenBong' as type\r\n" + 
+				"        FROM tblGachMenBong AS a\r\n" + 
+				"             JOIN tblLoaiVatLieu AS b ON a.LoaiGach = b.ID\r\n" + 
+				"  		where 1=1 " + condition + 
+				"        GROUP BY b.TenLoaiVatLieu \r\n";
+		queryStr += " UNION ALL \r\n";
+		queryStr += "SELECT b.TenLoaiVatLieu as name, \r\n" + 
+				"               ISNULL(SUM(a.SoLuong), 0) as value, 'tblGachXayDung' as type\r\n" + 
+				"        FROM tblGachXayDung AS a\r\n" + 
+				"             JOIN tblLoaiVatLieu AS b ON a.LoaiGach = b.ID\r\n" + 
+				"  		where 1=1 " + condition + 
+				"        GROUP BY b.TenLoaiVatLieu \r\n";
+//		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+//			queryStr += " and a.TrangThai = ? ";
+//			lstParams.add(entity.getIdTrangThai());
+//		}
+		
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(ChartDataBricksDaily.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);

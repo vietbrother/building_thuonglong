@@ -421,6 +421,12 @@ var menuItems = [
 
 const menusSecondaryItems = [
     {
+        id: 14,
+        title: Config.statisticDaily.title,
+        icon: 'ios-podium',
+        key: 'statistic'
+    },
+    {
         id: 11,
         title: Config.titleHopDongBeTong,
         icon: 'ios-paper',
@@ -456,12 +462,7 @@ const menusSecondaryItems = [
         icon: 'ios-grid',
         key: 'contractBrickTiles'
     },
-    {
-        id: 14,
-        title: Config.titleMngtStatistics,
-        icon: 'ios-podium',
-        key: 'statistic'
-    },
+
     {
         id: 16,
         title: Config.btnLogout,

@@ -6,19 +6,21 @@ public class ChartSearch {
 	private String DenNgay;
 	private String idTrangThai;
 	private String TrangThaiText;
+	private String NgayThang;
 
 	public ChartSearch() {
 		super();
 	}
 
-	public ChartSearch(String iDChiNhanh, String tuNgay, String denNgay, String idTrangThai,
-			String trangThaiText) {
+	public ChartSearch(String iDChiNhanh, String tuNgay, String denNgay, String idTrangThai, String trangThaiText,
+			String ngayThang) {
 		super();
 		IDChiNhanh = iDChiNhanh;
 		TuNgay = tuNgay;
 		DenNgay = denNgay;
 		this.idTrangThai = idTrangThai;
 		TrangThaiText = trangThaiText;
+		NgayThang = ngayThang;
 	}
 
 	public String getIDChiNhanh() {
@@ -61,10 +63,19 @@ public class ChartSearch {
 		TrangThaiText = trangThaiText;
 	}
 
+	public String getNgayThang() {
+		return NgayThang;
+	}
+
+	public void setNgayThang(String ngayThang) {
+		NgayThang = ngayThang;
+	}
+
 	@Override
 	public String toString() {
-		return "ChartTotalSearch [IDChiNhanh=" + IDChiNhanh + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay
-				+ ", idTrangThai=" + idTrangThai + ", TrangThaiText=" + TrangThaiText + "]";
+		return "ChartSearch [IDChiNhanh=" + IDChiNhanh + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay
+				+ ", idTrangThai=" + idTrangThai + ", TrangThaiText=" + TrangThaiText + ", NgayThang=" + NgayThang
+				+ "]";
 	}
 
 }

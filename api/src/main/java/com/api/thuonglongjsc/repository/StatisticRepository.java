@@ -10,4 +10,6 @@ import com.api.thuonglongjsc.dto.*;
 public interface StatisticRepository {
 	public List<ChartData> getChartTotal(ChartSearch entity);
 	public List<ChartDataDetail> getChartDetail(ChartSearch entity);
+	public List<ChartDataDaily> getChartDaily(ChartSearch entity);
+	public List<ChartDataBricksDaily> getChartBricksDaily(ChartSearch entity);
 }

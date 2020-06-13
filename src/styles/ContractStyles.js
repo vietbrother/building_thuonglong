@@ -177,13 +177,21 @@ export default StyleSheet.create({
     },
 
     main: {
-        backgroundColor: '#fcfcfc', flex: 1,
-        color: Config.mainColor
+        backgroundColor: '#f4f4ff', flex: 1
     },
     boxTitle: {
+        width: '100%',
         fontWeight: 'bold',
-        fontSize: 20,
-        padding: 10
+        fontSize: 36,
+        marginTop: 10,
+        textAlign: 'center', alignSelf: 'stretch'
+    },
+    boxTitleSecond: {
+        width: '100%',
+        fontWeight: 'bold',
+        fontSize: 26,
+        //marginTop: 10,
+        textAlign: 'center', alignSelf: 'stretch'
     },
     box: {
         shadowColor: "#f3f3f3",
@@ -205,9 +213,91 @@ export default StyleSheet.create({
     },
     boxContent: {
         padding: 10,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        textAlign: 'right'
     },
-    subItem:{
+    subItem: {
         padding: 15
+    },
+    subColItemLeft: {
+        paddingLeft: 20,
+        paddingBottom: 20,
+        paddingTop: 20,
+        paddingRight: 10,
+    },
+    subColItemRight: {
+        paddingLeft: 10,
+        paddingBottom: 20,
+        paddingTop: 20,
+        paddingRight: 20,
+    },
+    labelRed: {
+        color: 'red',
+    },
+    labelSuccess: {
+        color: 'green',
+    },
+    labelWhite: {
+        color: 'white',
+    },
+    labelMain: {
+        color: Config.mainColor
+    },
+    titleUnder: {
+        //color: '#849192',
+        color: '#5c6566',
+        fontSize: 16,
+        width: '100%',
+        textAlign: 'center', alignSelf: 'stretch',
+        marginTop: -15,
+        //paddingRight: 10
+    },
+    titleAbove: {
+        //color: '#849192',
+        color: '#5c6566',
+        fontSize: 16,
+        width: '100%',
+        textAlign: 'center', alignSelf: 'stretch',
+        //marginBottom: -20,
+        //paddingRight: 10
+    },
+    labelHeader: {
+        color: Config.mainColor,
+        fontSize: 20,
+
+    },
+    iconMedium: {
+        fontSize: 24
+    },
+    labelValue: {
+        color: Config.mainColor,
+        fontWeight: 'bold',
+        fontSize: 24,
+        //padding: 10
+    },
+
+    m_r_5: {
+       marginRight: 10
+    },
+    fontXL:{
+
+    },
+    p_t_b_20:{
+        paddingTop : 20,
+        paddingBottom : 20,
+    },
+    header: {
+        paddingTop: 10,
+        paddingBottom: 60,
+    },
+    bgMain: {
+        backgroundColor : Config.mainColor,
+        color: 'white'
+    },
+    subHeader: {
+        marginTop: -40
+    },
+    mainTitle: {
+        marginTop: -20
     }
 });
