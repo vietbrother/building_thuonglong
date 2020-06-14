@@ -244,7 +244,7 @@ export default class Login extends Component {
             AsyncStorage.setItem('userId', res.data.userName);
             AsyncStorage.setItem('lastLoginTime', new Date().valueOf());
             console.log(res.data.userName);
-            Actions.contractConcretes({sessionLoginKey: '123'});
+            Actions.statistic({sessionLoginKey: '123'});
         }
 
     }
