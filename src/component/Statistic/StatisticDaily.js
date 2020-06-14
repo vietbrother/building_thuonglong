@@ -12,7 +12,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     NativeModules,
-    Dimensions
+    Dimensions, FlatList
 } from 'react-native';
 import {
     Container,
@@ -37,6 +37,7 @@ import Colors from "../../Colors";
 import Config from "../../Config";
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
+import ContractConcretesItem from "../ContractConcrete/ContractConcretes";
 
 
 export default class StatisticDaily extends Component {
@@ -66,6 +67,12 @@ export default class StatisticDaily extends Component {
             fundTotalOut: 0,
             fundCollection: 0,
             fundPay: 0,
+            concreateOut: 0,
+            concretePlan: 0,
+            bricks: [],
+
+            currentDate: new Date().toISOString().split('T')[0],
+            isSearchingBricks: false,
         };
     }
 
@@ -76,11 +83,26 @@ export default class StatisticDaily extends Component {
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
         this.setState({componentKey: new Date().valueOf().toString(), searchText: ''});
+        this._loadData();
+        this._loadDataBricks();
     }
 
     componentDidMount() {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        var startDate = firstDay.toISOString().split('T')[0];
+        var endDate = lastDay.toISOString().split('T')[0];
+
+        // var temp = new Date().toISOString().split('T')[0];
+        // var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+        // this.setState({currentDate: currentDate});
+
         this.getSessionKey();
+        this._loadData();
+        this._loadDataBricks();
     }
+
     async getSessionKey() {
         try {
             let userSessionKeyLogin = await AsyncStorage.getItem('userId');
@@ -103,6 +125,95 @@ export default class StatisticDaily extends Component {
             console.error(error);
         }
     }
+
+    async _loadData() {
+        this.setState({isSearching: true});
+        this.setState({
+            fundTotalIn: 0,
+            fundTotalOut: 0,
+            fundCollection: 0,
+            fundPay: 0,
+            concreateOut: 0,
+            concretePlan: 0
+        });
+        try {
+            var temp = new Date().toISOString().split('T')[0];
+            var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+            console.log(currentDate);
+            var param = {ngayThang: currentDate};
+            let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            console.log(responseObj);
+            this.setState({isSearching: false});
+            this.setState({
+                fundTotalIn: responseObj[0].tongThu,
+                fundTotalOut: responseObj[0].tongChi,
+                fundCollection: responseObj[0].congNoThu,
+                fundPay: responseObj[0].congNoTra,
+                concreateOut: responseObj[0].klbeTongBan,
+                concretePlan: responseObj[0].klbeTongDuKien
+            });
+            // this.search(responseObj[0].id);
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearching: false});
+        }
+    }
+
+    async _loadDataBricks() {
+        this.setState({isSearchingBricks: true});
+        this.setState({
+            bricks: []
+        });
+        try {
+            var temp = new Date().toISOString().split('T')[0];
+            var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+            console.log(currentDate);
+            var param = {ngayThang: currentDate};
+            let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticBricks, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            console.log(responseObj);
+            this.setState({isSearchingBricks: false});
+            this.setState({
+                bricks: responseObj
+            });
+            // this.search(responseObj[0].id);
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearchingBricks: false});
+        }
+    }
+
+    _renderItemResult(item) {
+        var key = new Date().valueOf().toString();
+        return (
+            <Card transparent>
+                <CardItem>
+                    <Text style={[styles.boxTitleSecond, styles.labelMain]}>
+                        {Utils.numberWithCommas(item.value)} {Config.statisticDaily.brickUnit}
+                    </Text>
+                </CardItem>
+                <CardItem bordered>
+                    <Text style={styles.titleUnder}>{item.name}</Text>
+                </CardItem>
+            </Card>
+        );
+    }
+
     render() {
         //var data = this.state.summaryData;
 
@@ -138,7 +249,8 @@ export default class StatisticDaily extends Component {
                     <Content style={styles.main}>
                         <View style={[styles.header, styles.bgMain]}>
                             <CardItem style={styles.bgMain}>
-                                <Text style={[styles.titleAbove, styles.labelWhite]}>{Config.statisticDaily.fundTotalIn}</Text>
+                                <Text
+                                    style={[styles.titleAbove, styles.labelWhite]}>{Config.statisticDaily.fundTotalIn}</Text>
                             </CardItem>
                             <CardItem style={styles.bgMain}>
                                 <Text style={[styles.boxTitle, styles.labelWhite, styles.mainTitle]}>
@@ -146,7 +258,7 @@ export default class StatisticDaily extends Component {
                                           style={[styles.boxTitle, styles.labelWhite, styles.m_r_5, styles.mainTitle]}/>
                                     <Text style={[styles.boxTitle, styles.labelWhite, styles.mainTitle]}>
                                         {/*{ ' ' +  Utils.numberWithCommas(Utils._nFormatter(100000000, 2))}*/}
-                                        { ' ' +  Utils.numberWithCommas(this.state.fundTotalIn)}
+                                        {' ' + Utils.numberWithCommas(this.state.fundTotalIn)}
                                     </Text>
                                 </Text>
                             </CardItem>
@@ -154,21 +266,22 @@ export default class StatisticDaily extends Component {
 
 
                         {/*<View style={styles.boxItem}>*/}
-                            {/*<View style={styles.box}>*/}
-                                {/*<CardItem style={styles.boxContent}>*/}
-                                    {/*<Text style={[styles.boxTitle, styles.labelSuccess]}>10,000,000,000,000</Text>*/}
-                                {/*</CardItem>*/}
-                                {/*<CardItem>*/}
-                                    {/*<Text style={styles.titleUnder}>12312313</Text>*/}
-                                {/*</CardItem>*/}
-                            {/*</View>*/}
+                        {/*<View style={styles.box}>*/}
+                        {/*<CardItem style={styles.boxContent}>*/}
+                        {/*<Text style={[styles.boxTitle, styles.labelSuccess]}>10,000,000,000,000</Text>*/}
+                        {/*</CardItem>*/}
+                        {/*<CardItem>*/}
+                        {/*<Text style={styles.titleUnder}>12312313</Text>*/}
+                        {/*</CardItem>*/}
                         {/*</View>*/}
-                        <View style={[styles.boxItem,styles.subHeader]}>
+                        {/*</View>*/}
+                        <View style={[styles.boxItem, styles.subHeader]}>
                             <View style={styles.box}>
                                 <CardItem style={styles.boxContent}>
                                     <Text style={[styles.boxTitle, styles.labelRed]}>
-                                        <Icon name="ios-share-outline" style={[styles.boxTitle, styles.labelRed, styles.m_r_5]}/>
-                                        {' ' +  Utils.numberWithCommas(this.state.fundTotalOut)}
+                                        <Icon name="ios-share-outline"
+                                              style={[styles.boxTitle, styles.labelRed, styles.m_r_5]}/>
+                                        {' ' + Utils.numberWithCommas(this.state.fundTotalOut)}
                                     </Text>
 
                                 </CardItem>
@@ -177,8 +290,9 @@ export default class StatisticDaily extends Component {
                                 </CardItem>
                                 <CardItem>
                                     <Text style={[styles.boxTitle, styles.labelSuccess]}>
-                                        <Icon name="ios-add-circle-outline" style={[styles.boxTitle, styles.labelSuccess, styles.m_r_5]}/>
-                                        {' ' +  Utils.numberWithCommas(this.state.fundCollection)}
+                                        <Icon name="ios-add-circle-outline"
+                                              style={[styles.boxTitle, styles.labelSuccess, styles.m_r_5]}/>
+                                        {' ' + Utils.numberWithCommas(this.state.fundCollection)}
                                     </Text>
                                 </CardItem>
                                 <CardItem bordered>
@@ -188,7 +302,8 @@ export default class StatisticDaily extends Component {
                                 </CardItem>
                                 <CardItem>
                                     <Text style={[styles.boxTitle, styles.labelRed]}>
-                                        <Icon name="ios-remove-circle-outline" style={[styles.boxTitle, styles.labelRed, styles.m_r_5]}/>
+                                        <Icon name="ios-remove-circle-outline"
+                                              style={[styles.boxTitle, styles.labelRed, styles.m_r_5]}/>
                                         {' ' + Utils.numberWithCommas(Utils._nFormatter(this.state.fundPay, 2))}
                                     </Text>
                                 </CardItem>
@@ -201,34 +316,34 @@ export default class StatisticDaily extends Component {
                         </View>
 
                         {/*<Grid style={{marginTop: 10}}>*/}
-                            {/*<Col style={styles.subColItemLeft}>*/}
-                                {/*<View style={styles.box}>*/}
-                                    {/*<CardItem>*/}
-                                        {/*<Text>*/}
-                                            {/*<Icon note name="ios-card-outline" style={[styles.m_r_5]}/>*/}
-                                            {/*{Config.statisticDaily.fundLiabilitiesCollection}*/}
-                                        {/*</Text>*/}
-                                    {/*</CardItem>*/}
-                                    {/*<CardItem>*/}
-                                        {/*<Text*/}
-                                            {/*style={[styles.boxTitle, styles.labelSuccess]}>{Utils.numberWithCommas(Utils._nFormatter(1000000000000, 2))}</Text>*/}
-                                    {/*</CardItem>*/}
-                                {/*</View>*/}
-                            {/*</Col>*/}
-                            {/*<Col style={styles.subColItemRight}>*/}
-                                {/*<View style={styles.box}>*/}
-                                    {/*<CardItem>*/}
-                                        {/*<Text>*/}
-                                            {/*<Icon note name="ios-card-outline" style={[styles.m_r_5]}/>*/}
-                                            {/*{Config.statisticDaily.fundLiabilitiesPay}*/}
-                                        {/*</Text>*/}
-                                    {/*</CardItem>*/}
-                                    {/*<CardItem>*/}
-                                        {/*<Text*/}
-                                            {/*style={[styles.boxTitle, styles.labelRed]}>{Utils.numberWithCommas(Utils._nFormatter(1000000000000, 2))}</Text>*/}
-                                    {/*</CardItem>*/}
-                                {/*</View>*/}
-                            {/*</Col>*/}
+                        {/*<Col style={styles.subColItemLeft}>*/}
+                        {/*<View style={styles.box}>*/}
+                        {/*<CardItem>*/}
+                        {/*<Text>*/}
+                        {/*<Icon note name="ios-card-outline" style={[styles.m_r_5]}/>*/}
+                        {/*{Config.statisticDaily.fundLiabilitiesCollection}*/}
+                        {/*</Text>*/}
+                        {/*</CardItem>*/}
+                        {/*<CardItem>*/}
+                        {/*<Text*/}
+                        {/*style={[styles.boxTitle, styles.labelSuccess]}>{Utils.numberWithCommas(Utils._nFormatter(1000000000000, 2))}</Text>*/}
+                        {/*</CardItem>*/}
+                        {/*</View>*/}
+                        {/*</Col>*/}
+                        {/*<Col style={styles.subColItemRight}>*/}
+                        {/*<View style={styles.box}>*/}
+                        {/*<CardItem>*/}
+                        {/*<Text>*/}
+                        {/*<Icon note name="ios-card-outline" style={[styles.m_r_5]}/>*/}
+                        {/*{Config.statisticDaily.fundLiabilitiesPay}*/}
+                        {/*</Text>*/}
+                        {/*</CardItem>*/}
+                        {/*<CardItem>*/}
+                        {/*<Text*/}
+                        {/*style={[styles.boxTitle, styles.labelRed]}>{Utils.numberWithCommas(Utils._nFormatter(1000000000000, 2))}</Text>*/}
+                        {/*</CardItem>*/}
+                        {/*</View>*/}
+                        {/*</Col>*/}
                         {/*</Grid>*/}
 
                         <List style={{backgroundColor: 'white', marginTop: 20, marginBottom: 20}}>
@@ -236,24 +351,26 @@ export default class StatisticDaily extends Component {
                                 <Text style={styles.labelHeader}>{Config.statisticDaily.concrete}</Text>
                             </ListItem>
                             <CardItem>
-                                <Text
-                                    style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>
+                                <Text style={[styles.boxTitleSecond, styles.labelMain]}>
+                                    {Utils.numberWithCommas(this.state.concreateOut)} {Config.statisticDaily.concreteUnit}
+                                </Text>
                             </CardItem>
                             <CardItem bordered>
                                 <Text style={styles.titleUnder}>{Config.statisticDaily.concreteOut}</Text>
                             </CardItem>
 
-                            <CardItem>
-                                <Text
-                                    style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>
-                            </CardItem>
-                            <CardItem bordered>
-                                <Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>
-                            </CardItem>
+                            {/*<CardItem>*/}
+                                {/*<Text*/}
+                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>*/}
+                            {/*</CardItem>*/}
+                            {/*<CardItem bordered>*/}
+                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>*/}
+                            {/*</CardItem>*/}
 
                             <CardItem>
-                                <Text
-                                    style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>
+                                <Text style={[styles.boxTitleSecond, styles.labelMain]}>
+                                    {Utils.numberWithCommas(this.state.concretePlan)} {Config.statisticDaily.concreteUnit}
+                                </Text>
                             </CardItem>
                             <CardItem bordered>
                                 <Text style={styles.titleUnder}>{Config.statisticDaily.concretePlan}</Text>
@@ -288,29 +405,45 @@ export default class StatisticDaily extends Component {
                             <ListItem itemDivider>
                                 <Text style={styles.labelHeader}>{Config.statisticDaily.brick}</Text>
                             </ListItem>
-                            <CardItem>
-                                <Text
-                                    style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>
-                            </CardItem>
-                            <CardItem bordered>
-                                <Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo2040}</Text>
-                            </CardItem>
 
-                            <CardItem>
-                                <Text
-                                    style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>
-                            </CardItem>
-                            <CardItem bordered>
-                                <Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo3030}</Text>
-                            </CardItem>
+                            {this.state.isSearching ?
+                                <View style={styles.loadingActivity}>
+                                    <ActivityIndicator
+                                        animating={this.state.isSearchingBricks}
+                                        color={Config.mainColor}
+                                        size="large"
+                                    />
+                                </View>
+                                : <Text></Text>}
+                            <FlatList
+                                key={'statisticDailyBricksId'}
+                                style={{width: '100%'}}
+                                data={this.state.bricks}
+                                renderItem={({item}) => this._renderItemResult(item)}
+                            />
+                            {/*<CardItem>*/}
+                                {/*<Text*/}
+                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
+                            {/*</CardItem>*/}
+                            {/*<CardItem bordered>*/}
+                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo2040}</Text>*/}
+                            {/*</CardItem>*/}
 
-                            <CardItem>
-                                <Text
-                                    style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>
-                            </CardItem>
-                            <CardItem bordered>
-                                <Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo5020}</Text>
-                            </CardItem>
+                            {/*<CardItem>*/}
+                                {/*<Text*/}
+                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
+                            {/*</CardItem>*/}
+                            {/*<CardItem bordered>*/}
+                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo3030}</Text>*/}
+                            {/*</CardItem>*/}
+
+                            {/*<CardItem>*/}
+                                {/*<Text*/}
+                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
+                            {/*</CardItem>*/}
+                            {/*<CardItem bordered>*/}
+                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo5020}</Text>*/}
+                            {/*</CardItem>*/}
                         </List>
 
                     </Content>

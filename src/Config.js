@@ -26,6 +26,8 @@ const Config = {
         apiGachXayDung: '/api/main/v1/gachxaydung',
         apiApprove: '/api/main/v1/approve',
         apiStatisticTotal: '/api/main/v1/statistic/sumary',
+        apiStatisticDaily: '/api/main/v1/statistic/daily',
+        apiStatisticBricks: '/api/main/v1/statistic/daily/bricks',
         apiStatisticDetail: '/api/main/v1/statistic/detail'
     },
     sessionTime: 3600*24*7*1000,
