@@ -138,6 +138,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
 			//https://stackoverflow.com/questions/207190/sql-server-string-to-date-conversion
 			//https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2005/ms187928(v=sql.90)?redirectedfrom=MSDN
+			//http://www.sqlines.com/oracle-to-sql-server/trunc_datetime
 			condition = " AND CONVERT(DATETIME, CONVERT(DATE, NgayThang)) = convert(date, ? , 103) ";
 			lstParams.add(entity.getNgayThang());//table a
 			lstParams.add(entity.getNgayThang());//table b

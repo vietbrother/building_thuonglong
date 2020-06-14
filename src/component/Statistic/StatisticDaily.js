@@ -99,8 +99,6 @@ export default class StatisticDaily extends Component {
         // this.setState({currentDate: currentDate});
 
         this.getSessionKey();
-        this._loadData();
-        this._loadDataBricks();
     }
 
     async getSessionKey() {
@@ -119,6 +117,8 @@ export default class StatisticDaily extends Component {
                 if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined && currentTime > parseInt(lastLoginTime) + Config.sessionTime) {
                     Actions.login({sessionLoginKey: '123'});
                 }
+                this._loadData();
+                this._loadDataBricks();
             }
         } catch (error) {
             // Handle errors here

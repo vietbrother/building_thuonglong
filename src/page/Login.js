@@ -13,10 +13,23 @@ import Config from '../Config';
 import Text from '../component/Text';
 import Navbar from '../component/Navbar';
 
-import {StyleSheet, Image, AsyncStorage, ScrollView, Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {
+    AlertIOS,
+    Alert,
+    StyleSheet,
+    Image,
+    AsyncStorage,
+    ScrollView,
+    Keyboard,
+    TouchableWithoutFeedback,
+    TouchableHighlight
+} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Odoo from "../Odoo";
-import Api from "../services/ApiWorker"
+import Api from "../services/ApiWorker";
+
+import TouchID from "react-native-touch-id";
+import Utils from "../utils/Utils";
 
 export default class Login extends Component {
     constructor(props) {
@@ -28,7 +41,8 @@ export default class Login extends Component {
             errorText: '',
             isLoading: false,
             showAdvancedSettings: false,
-            newIpAddress: ''
+            newIpAddress: '',
+            biometryType: null
         };
     }
 
@@ -72,6 +86,74 @@ export default class Login extends Component {
     async setSessionKey() {
         try {
             await AsyncStorage.setItem('cookieUserFromApi', responseJson.cookie);
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+        }
+    }
+
+
+    componentDidMount() {
+        TouchID.isSupported()
+            .then(biometryType => {
+                this.setState({biometryType});
+                console.log("+++++++++++ " + biometryType);
+            })
+    }
+
+    //config is optional to be passed in on Android
+
+
+    async fingerprintHandler() {
+        try {
+            var optionalConfigObject = {
+                title: "Đăng nhập", // Android
+                color: "#e00606", // Android,
+                fallbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
+            };
+            await TouchID.authenticate('Chạm vào vân tay để đăng nhập', optionalConfigObject)
+                .then(success => {
+                    console.log(success);
+                    console.log('Authenticated Successfully');
+                    // Utils._alert('Authenticated Successfully');
+                    this._fingerprintLogin();
+                })
+                .catch(error => {
+                    console.log(error);
+                    console.log('Authentication Failed');
+                    Utils._alert('Authentication Failed');
+                });
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+            Utils._alert(Config.err_connect);
+        }
+    }
+
+    async _fingerprintLogin() {
+        try {
+            let fingerprintUser = await AsyncStorage.getItem('fingerprintUser');
+            let fingerprintPass = await AsyncStorage.getItem('fingerprintPass');
+
+            var user = this.state.username;
+            var pass = this.state.password;
+            if (fingerprintUser == null || fingerprintUser == '' || fingerprintUser == undefined ||
+                fingerprintPass == null || fingerprintPass == '' || fingerprintPass == undefined
+            ) {
+                if ((user == null || user == '' || pass == '' || pass == '')) {
+                    Utils._alert('Cần nhập tên đăng nhập và mật khẩu cho lần đầu tiên đăng nhập bằng vân tay');
+                } else {
+                    console.log(user);
+                    console.log(pass);
+                    await AsyncStorage.setItem('fingerprintUser', user);
+                    await AsyncStorage.setItem('fingerprintPass', pass);
+                    this.login();
+                }
+            } else {
+                this.setState({username: fingerprintUser,password: fingerprintPass});
+                this.login();
+            }
+
         } catch (error) {
             // Handle errors here
             console.error(error);
@@ -150,10 +232,26 @@ export default class Login extends Component {
                         <View style={{alignItems: 'center', width: '100%'}}>
                             <Button onPress={() => this.login()}
                                     style={styles.buttonLogin}>
-                                <Text style={{color: '#fdfdfd'}}> {Config.btnLogin} </Text>
+                                <Text style={{color: '#fdfdfd', fontSize : 16}}> {Config.btnLogin} </Text>
                             </Button>
                         </View>
-                        <View style={{alignItems: 'flex-end', width: '100%'}}>
+                        <View style={styles.container}>
+                            {/*<Button onPress={() => this.fingerprintHandler()}*/}
+                                    {/*style={{alignItems: 'center', width: '100%', textAlign: 'center', alignSelf: 'stretch'}}*/}
+                                    {/*transparent>*/}
+                                {/*<Text style={{color: Config.mainColor, fontSize : 16}}>*/}
+                                    {/*<Icon active name='ios-finger-print-outline' style={{color: Config.mainColor, fontSize : 20}}/>*/}
+                                    {/*{' Đăng nhập bằng vân tay'}*/}
+                                {/*</Text>*/}
+                            {/*</Button>*/}
+                            <TouchableHighlight onPress={() => this.fingerprintHandler()}>
+                                <Text style={{color: Config.mainColor, fontSize : 16}}>
+                                    <Icon active name='ios-finger-print-outline' style={{color: Config.mainColor, fontSize : 20}}/>
+                                    {' Đăng nhập bằng vân tay'}
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={{alignItems: 'flex-end',textAlign: 'center', alignSelf: 'stretch', width: '100%'}}>
                             <Button
                                 onPress={() => this.setState({showAdvancedSettings: !this.state.showAdvancedSettings})}
                                 transparent>
@@ -252,6 +350,11 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop : 20
+    },
     buttonLogin: {
         // backgroundColor: '#c40521',
         backgroundColor: Config.mainColor,
@@ -260,11 +363,11 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         borderRadius: 10,
-        fontSize: 14,
+        fontSize: 16,
     },
     buttonSignup: {
         backgroundColor: "transparent",
-        color: "#bcbec1",
+        color: Config.mainColor,
         marginTop: 20,
         width: '100%',
         justifyContent: 'center',
