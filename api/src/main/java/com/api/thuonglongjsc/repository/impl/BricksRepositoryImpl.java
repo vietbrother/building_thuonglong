@@ -64,15 +64,29 @@ public class BricksRepositoryImpl implements BricksRepository {
 	public List<BricksContract> getBricksContracts(BricksSearch entity) {
 		// TODO Auto-generated method stub
 		List<BricksContract> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
-				+ " TenLoaiDa = '', '' as TenDoSut, '' as TenYCDB, "
-				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
-				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
-				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-//						+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
-//						+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
-				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		String queryStr = "        SELECT a.ID, \r\n" + 
+				"               a.SoHD, \r\n" + 
+				"               g.TenChiNhanh, \r\n" + 
+				"               a.CongTrinh, \r\n" + 
+				"               b.TenNhaCungCap AS NhaCungCap, \r\n" + 
+				"               d.TenNhomVatLIeu AS NhomVatLieu, \r\n" + 
+				"               e.TenLoaiVatLieu AS LoaiVatLieu, \r\n" + 
+				"               f.TenDonViTinh AS DonViTinh, \r\n" + 
+				"               h.DonGiaCoThue, \r\n" + 
+				"               h.DonGiaKhongThue, \r\n" + 
+				"               h.TuNgay, \r\n" + 
+				"               h.DenNgay, \r\n" + 
+				"               a.TrangThaiText, \r\n" + 
+				"               a.NguoiTao, \r\n" + 
+				"               a.NgayTao,a.TrangThai, a.IDChiNhanh\r\n" + 
+				"        FROM tblGiaBanGach AS a\r\n" + 
+				"             JOIN tblGiaBanGach_ChiTiet AS h ON a.ID = h.IDHD\r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
+				"             JOIN tblNhomVatLieu AS d ON h.IDNhomVatLieu = d.ID\r\n" + 
+				"             JOIN tblLoaiVatLieu AS e ON h.IDLoaiVatLieu = e.ID\r\n" + 
+				"             JOIN tblDonViTinh AS f ON h.IDDonViTinh = f.ID\r\n" + 
+				"             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID\r\n" + 
+				"        WHERE 1 = 1 \r\n";
 
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
@@ -83,7 +97,7 @@ public class BricksRepositoryImpl implements BricksRepository {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
+		queryStr +=  " ORDER BY  a.NgayThang desc "; 
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -102,15 +116,38 @@ public class BricksRepositoryImpl implements BricksRepository {
 	public List<BricksTicket> getBricksTikets(BricksSearch entity) {
 		// TODO Auto-generated method stub
 		List<BricksTicket> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
-				+ " TenLoaiDa = '', '' as TenDoSut, '' as TenYCDB, "
-				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
-				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
-				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-//						+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
-//						+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
-				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		String queryStr = "SELECT a.ID, \r\n" + 
+				"               a.SoPhieu, \r\n" + 
+				"               a.TenBienSoXe, \r\n" + 
+				"               a.TenLaiXe, \r\n" + 
+				"               a.NgayThang, \r\n" + 
+				"               c.TenChiNhanh, \r\n" + 
+				"               b.TenNhaCungCap, \r\n" + 
+				"               a.CongTrinh, \r\n" + 
+				"               d.TenNhomVatLieu, \r\n" + 
+				"               e.TenLoaiVatLieu, \r\n" + 
+				"               f.TenDonViTinh, \r\n" + 
+				"               g.SoLuongThucXuat, \r\n" + 
+				"               g.SoLuongNhan, \r\n" + 
+				"               g.DonGiaCoThue, \r\n" + 
+				"               g.DonGiaKhongThue, \r\n" + 
+				"               g.ThanhTienCoThue, \r\n" + 
+				"               g.ThanhTienKhongThue, \r\n" + 
+				"               a.TrangThai, \r\n" + 
+				"               a.TrangThaiText, \r\n" + 
+				"               a.NguoiDuyet, \r\n" + 
+				"               a.NguoiXoa, \r\n" + 
+				"               a.NgayTao, \r\n" + 
+				"               a.NguoiTao, \r\n" + 
+				"               a.MoTa,a.IDChiNhanh\r\n" + 
+				"        FROM tblBanGach AS a\r\n" + 
+				"             JOIN tblBanGach_ChiTiet AS g ON a.ID = g.IDBan\r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
+				"             JOIN tblChiNhanh AS c ON a.IDChiNhanh = c.ID\r\n" + 
+				"             JOIN tblNhomVatLieu AS d ON g.IDNhomVatLieu = d.ID\r\n" + 
+				"             JOIN tblLoaiVatLieu AS e ON g.IDLoaiVatLieu = e.ID\r\n" + 
+				"             JOIN tblDonViTinh AS f ON g.IDDonViTinh = f.ID\r\n" + 
+				"        WHERE 1 = 1\r\n";
 
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
@@ -121,7 +158,7 @@ public class BricksRepositoryImpl implements BricksRepository {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
+		queryStr += " ORDER BY a.NgayThang desc ";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -140,15 +177,28 @@ public class BricksRepositoryImpl implements BricksRepository {
 	public List<BricksOrder> getBricksOrders(BricksSearch entity) {
 		// TODO Auto-generated method stub
 		List<BricksOrder> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
-				+ " TenLoaiDa = '', '' as TenDoSut, '' as TenYCDB, "
-				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
-				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
-				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-//						+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
-//						+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
-				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		String queryStr = "SELECT a.ID, \r\n" + 
+				"               a.NgayThang, \r\n" + 
+				"               g.TenChiNhanh, \r\n" + 
+				"               b.TenNhaCungCap, \r\n" + 
+				"               TienCoThue = a.CongNoThuHoaDon, \r\n" + 
+				"               TienKhongThue = a.CongNoThuThanhToan, \r\n" + 
+				"               a.NoiDung, \r\n" + 
+				"               a.Loai, \r\n" + 
+				"               a.TenLoai, \r\n" + 
+				"               a.TrangThai, \r\n" + 
+				"               a.TrangThaiText, \r\n" + 
+				"               a.NguoiDuyet, \r\n" + 
+				"               a.NguoiXoa, \r\n" + 
+				"               a.NgayTao, \r\n" + 
+				"               a.NguoiTao, a.IDChiNhanh\r\n" + 
+				"        FROM tblCongNo AS a\r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
+				"             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID\r\n" + 
+				"        WHERE 1 = 1 --a.TrangThai != 2             \r\n" + 
+				"              --AND IDChiNhanh = @IDChiNhanh\r\n" + 
+				"              AND Loai = 3\r\n" + 
+				"        ";
 
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
@@ -159,7 +209,7 @@ public class BricksRepositoryImpl implements BricksRepository {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
+		queryStr += " ORDER BY a.NgayThang desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
