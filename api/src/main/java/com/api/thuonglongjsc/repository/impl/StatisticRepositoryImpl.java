@@ -135,16 +135,21 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 //			lstParams.add(entity.getIDChiNhanh());
 //		}
 		
-		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
-			//https://stackoverflow.com/questions/207190/sql-server-string-to-date-conversion
-			//https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2005/ms187928(v=sql.90)?redirectedfrom=MSDN
-			//http://www.sqlines.com/oracle-to-sql-server/trunc_datetime
-			condition = " AND CONVERT(DATETIME, CONVERT(DATE, NgayThang)) = convert(date, ? , 103) ";
-			lstParams.add(entity.getNgayThang());//table a
-			lstParams.add(entity.getNgayThang());//table b
-			lstParams.add(entity.getNgayThang());// table c
-			lstParams.add(entity.getNgayThang());// table d
+		for(int i = 0; i < 4; i++) {
+			if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+				//https://stackoverflow.com/questions/207190/sql-server-string-to-date-conversion
+				//https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2005/ms187928(v=sql.90)?redirectedfrom=MSDN
+				//http://www.sqlines.com/oracle-to-sql-server/trunc_datetime
+				condition = " AND CONVERT(DATETIME, CONVERT(DATE, NgayThang)) = convert(date, ? , 103) ";
+				lstParams.add(entity.getNgayThang());//table a
+			}
+			if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+				condition += " and IDChiNhanh = ? ";
+				lstParams.add(entity.getIDChiNhanh());
+			}
 		}
+
+		
 		String queryStr = "select TongThu,TongChi,CongNoThu,CongNoTra,  KLBeTongBan, KLBeTongDuKien\r\n" + 
 				"from \r\n" + 
 				"( SELECT  ISNULL(SUM(ISNULL(KLKhachHang, 0)), 0) AS KLBeTongBan, '1' as ID\r\n" + 

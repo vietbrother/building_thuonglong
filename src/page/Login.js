@@ -272,8 +272,8 @@ export default class Login extends Component {
                         {/*</Button>*/}
                         {/*</View>*/}
 
-                        <Text style={{fontSize: 16, fontWeight: '200', color: Config.colorBold, paddingTop: 100,}}>Bản
-                            quyền thuộc về {Config.titleCopyRight}</Text>
+                        {/*<Text style={{fontSize: 16, fontWeight: '200', color: Config.colorBold, paddingTop: 100,}}>Bản*/}
+                        {/*    quyền thuộc về {Config.titleCopyRight}</Text>*/}
                     </View>
                 </ScrollView>
 

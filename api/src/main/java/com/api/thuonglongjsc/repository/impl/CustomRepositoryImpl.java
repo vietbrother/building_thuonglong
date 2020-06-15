@@ -250,6 +250,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 				queryStr += " tblGachTerrazo ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TERRAZO.equals(approveType)) {
 				queryStr += " tblGachXayDung ";
+			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_SELL.equals(approveType)) {
+				queryStr += " tblGiaBanGaches ";
+			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TICKET.equals(approveType)) {
+				queryStr += " tblBanGaches ";
 			} else {
 				message = "Invalid Approve Type";
 				res.setMessage(message);

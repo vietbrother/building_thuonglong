@@ -14,6 +14,8 @@ public class Constants {
 		public static String CONTRACT_BRICK_TILES = "4";//duyet dong gach men bong
 		public static String CONTRACT_BRICK_TERRAZO = "5";//duyet hop dong gach terrazo
 		public static String CONTRACT_BRICK = "6";//duyet hop dong gach xay dung
+		public static String CONTRACT_BRICK_SELL = "7";//duyet hop dong ban gach
+		public static String CONTRACT_BRICK_TICKET = "8";//duyet phieu ban gach
 	}
 	
 	public static interface APPROVE_STATE {

@@ -119,6 +119,7 @@ export default class StatisticDaily extends Component {
                 }
                 this._loadData();
                 this._loadDataBricks();
+                this._loadBranchData();
             }
         } catch (error) {
             // Handle errors here
@@ -214,6 +215,42 @@ export default class StatisticDaily extends Component {
         );
     }
 
+
+    async _loadBranchData() {
+        this.setState({isSearching: true});
+        this.setState({contracts: []});
+        try {
+            var param = {};
+            let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*'
+                }
+            });
+            var responseObj = await response.json();
+            this.setState({isSearching: false});
+            this.setState({branchs: responseObj});
+            if (responseObj != null && responseObj.length > 0) {
+                this.setState({branchSelected: responseObj[0].id});
+            }
+            // this.search(responseObj[0].id);
+            this.search(responseObj[0].id, Config.stateCode.wait);
+            this.search(responseObj[0].id, Config.stateCode.approved);
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearching: false});
+        }
+    }
+
+    _renderBranch() {
+        var items = [];
+        for (var i = 0; i < this.state.branchs.length; i++) {
+            var branchItem = this.state.branchs[i];
+            items.push(<Picker.Item key={branchItem.id} label={branchItem.tenChiNhanh} value={branchItem.id}/>);
+        }
+        return items;
+    }
+
     render() {
         //var data = this.state.summaryData;
 
@@ -247,6 +284,18 @@ export default class StatisticDaily extends Component {
 
                     <Navbar left={left} right={right} title={Config.statisticDaily.title}/>
                     <Content style={styles.main}>
+                        <Card>
+                            <CardItem>
+                                <Picker
+                                    style={styles.branchPicker}
+                                    itemStyle={styles.branchPickerItem}
+                                    selectedValue={this.state.branchSelected}
+                                    onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
+                                    {this._renderBranch()}
+                                </Picker>
+                            </CardItem>
+                        </Card>
+
                         <View style={[styles.header, styles.bgMain]}>
                             <CardItem style={styles.bgMain}>
                                 <Text

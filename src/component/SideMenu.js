@@ -188,22 +188,22 @@ export default class SideMenu extends Component {
                             {this.renderSecondaryList()}
                         </List>
                     </View>
-                    <View style={styles.line}/>
-                    <View style={{
-                        paddingRight: 15, paddingLeft: 15, paddingBottom: 15, textAlign: 'center',
-                        width: '100%',
-                    }}>
-                        <Text> <Icon style={{fontSize: 18}} name={'ios-call'}/> {Config.titleHotline} <Text style={{
-                            color: "#c0392b",
-                            fontSize: 20,
-                        }}>{Config.hotline}</Text></Text>
-                        <Text style={{
-                            fontSize: 14,
-                            fontWeight: '200',
-                            paddingTop: 10,
-                            color: Config.colorBold
-                        }}>{Config.titleCopyRight}</Text>
-                    </View>
+                    {/*<View style={styles.line}/>*/}
+                    {/*<View style={{*/}
+                    {/*    paddingRight: 15, paddingLeft: 15, paddingBottom: 15, textAlign: 'center',*/}
+                    {/*    width: '100%',*/}
+                    {/*}}>*/}
+                    {/*    <Text> <Icon style={{fontSize: 18}} name={'ios-call'}/> {Config.titleHotline} <Text style={{*/}
+                    {/*        color: "#c0392b",*/}
+                    {/*        fontSize: 20,*/}
+                    {/*    }}>{Config.hotline}</Text></Text>*/}
+                    {/*    <Text style={{*/}
+                    {/*        fontSize: 14,*/}
+                    {/*        fontWeight: '200',*/}
+                    {/*        paddingTop: 10,*/}
+                    {/*        color: Config.colorBold*/}
+                    {/*    }}>{Config.titleCopyRight}</Text>*/}
+                    {/*</View>*/}
                 </View>
             );
         } else {
@@ -355,7 +355,7 @@ export default class SideMenu extends Component {
                         <Icon style={{fontSize: 18}} name={item.icon}/>
                     </Left>
                     <Body style={{marginLeft: -15}}>
-                    <Text style={{
+                    <Text allowFontScaling={false} style={{
                         fontSize: 16,
                         color: Colors.navbarBackgroundColor,
                         fontFamily: 'Roboto',

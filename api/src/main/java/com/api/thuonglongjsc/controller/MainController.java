@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.thuonglongjsc.dto.*;
 import com.api.thuonglongjsc.exception.ResourceNotFoundException;
 import com.api.thuonglongjsc.model.TblUserAccount;
+import com.api.thuonglongjsc.repository.BricksRepository;
 import com.api.thuonglongjsc.repository.StatisticRepository;
 import com.api.thuonglongjsc.repository.UserRepository;
 
@@ -31,6 +32,9 @@ public class MainController {
 	
 	@Autowired
 	private StatisticRepository statisticRepository;
+	
+	@Autowired
+	private BricksRepository bricksRepository;
 
 	@PostMapping("/v1/login")
 	public ResultDTO login(@Valid @RequestBody TblUserAccount user) {
@@ -67,6 +71,22 @@ public class MainController {
 	public List<GachXayDung> getListGachXayDung(@RequestBody GachXayDungSearch entity) {
 		return userRepository.getListGachXayDung(entity);
 	}
+	
+	@PostMapping("/v1/brickscontracts")
+	public List<BricksContract> getBricksContracts(@RequestBody BricksSearch entity) {
+		return bricksRepository.getBricksContracts(entity);
+	}
+	
+	@PostMapping("/v1/brickstickets")
+	public List<BricksTicket> getBricksTikets(@RequestBody BricksSearch entity) {
+		return bricksRepository.getBricksTikets(entity);
+	}
+	
+	@PostMapping("/v1/bricksorders")
+	public List<BricksOrder> getBricksOrders(@RequestBody BricksSearch entity) {
+		return bricksRepository.getBricksOrders(entity);
+	}
+	
 	
 	@PostMapping("/v1/approve")
 	public ResultDTO approve(@Valid @RequestBody ApproveInputDTO param) {
