@@ -78,13 +78,14 @@ export default class StatisticDaily extends Component {
 
 
     componentWillMount(): void {
-
+        this._loadBranchData();
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
         this.setState({componentKey: new Date().valueOf().toString(), searchText: ''});
         this._loadData();
         this._loadDataBricks();
+        this._loadBranchData();
     }
 
     componentDidMount() {
@@ -119,7 +120,7 @@ export default class StatisticDaily extends Component {
                 }
                 //this._loadData();
                 //this._loadDataBricks();
-                this._loadBranchData();
+                //this._loadBranchData();
             }
         } catch (error) {
             // Handle errors here
