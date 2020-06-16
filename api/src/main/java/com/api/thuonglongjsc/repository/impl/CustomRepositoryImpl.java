@@ -173,17 +173,28 @@ public class CustomRepositoryImpl implements CustomRepository {
 	@Override
 	public List<LichXuatBeTong> getListLichXuatBeTong(LichXuatBeTongSearch entity) {
 		List<LichXuatBeTong> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, a.NgayThang, a.GioXuat, i.TenChiNhanh, h.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
-				+ " TenLoaiDa = '', \r\n"
-				+ "	'' as TenDoSut, '' as TenYCDB, g.TenHinhThucBom, a.KLThucXuat, a.TrangThai, a.IDChiNhanh, \r\n"
-				+ "	a.KLKhachHang, a.TrangThaiText, a.NguoiTao, a.NgayTao \r\n"
-				+ "FROM tblLichXuatBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
-				+ " JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-//				+ " JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID \r\n" + "JOIN tblDoSut AS e ON a.DoSut = e.ID \r\n"
-//				+ " JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n" 
-				+ " JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID \r\n"
-				+ " JOIN tblCongTrinhNhaCungCap AS h ON a.IDCongTrinh = h.ID \r\n"
-				+ " JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID \r\n" + " WHERE 1 = 1 ";
+		String queryStr = "SELECT a.ID, \r\n" + 
+				"               a.NgayThang, \r\n" + 
+				"               a.GioXuat, \r\n" + 
+				"               i.TenChiNhanh, \r\n" + 
+				"               TenCongTrinh = h.CongTrinh, \r\n" + 
+				"               b.TenNhaCungCap, \r\n" + 
+				"               TenMacBeTong = c.TenLoaiVatLieu, \r\n" + 
+				"               g.TenHinhThucBom, \r\n" + 
+				"               a.KLThucXuat, \r\n" + 
+				"               a.KLKhachHang, \r\n" + 
+				"               a.CuLyVanChuyen, \r\n" + 
+				"			   a.TrangThai, a.IDChiNhanh,\r\n" + 
+				"               a.TrangThaiText, \r\n" + 
+				"               a.NguoiTao, \r\n" + 
+				"               a.NgayTao\r\n" + 
+				"        FROM tblLichXuatBeTong AS a\r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
+				"             JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID\r\n" + 
+				"             JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID\r\n" + 
+				"             JOIN tblHopDongBanBeTong AS h ON a.IDCongTrinh = h.ID\r\n" + 
+				"             JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID " + 
+				" WHERE 1 = 1 ";
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
@@ -251,9 +262,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TERRAZO.equals(approveType)) {
 				queryStr += " tblGachXayDung ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_SELL.equals(approveType)) {
-				queryStr += " tblGiaBanGaches ";
+				queryStr += " tblGiaBanGach ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TICKET.equals(approveType)) {
-				queryStr += " tblBanGaches ";
+				queryStr += " tblBanGach ";
 			} else {
 				message = "Invalid Approve Type";
 				res.setMessage(message);

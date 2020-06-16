@@ -12,7 +12,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     NativeModules,
-    Dimensions, FlatList
+    Dimensions, FlatList, Picker
 } from 'react-native';
 import {
     Container,
@@ -117,8 +117,8 @@ export default class StatisticDaily extends Component {
                 if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined && currentTime > parseInt(lastLoginTime) + Config.sessionTime) {
                     Actions.login({sessionLoginKey: '123'});
                 }
-                this._loadData();
-                this._loadDataBricks();
+                //this._loadData();
+                //this._loadDataBricks();
                 this._loadBranchData();
             }
         } catch (error) {
@@ -127,7 +127,7 @@ export default class StatisticDaily extends Component {
         }
     }
 
-    async _loadData() {
+    async _loadData(branchId) {
         this.setState({isSearching: true});
         this.setState({
             fundTotalIn: 0,
@@ -141,7 +141,7 @@ export default class StatisticDaily extends Component {
             var temp = new Date().toISOString().split('T')[0];
             var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
             console.log(currentDate);
-            var param = {ngayThang: currentDate};
+            var param = {ngayThang: currentDate, idchiNhanh: branchId};
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
                 method: 'POST',
                 headers: {
@@ -168,7 +168,7 @@ export default class StatisticDaily extends Component {
         }
     }
 
-    async _loadDataBricks() {
+    async _loadDataBricks(branchId) {
         this.setState({isSearchingBricks: true});
         this.setState({
             bricks: []
@@ -177,7 +177,7 @@ export default class StatisticDaily extends Component {
             var temp = new Date().toISOString().split('T')[0];
             var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
             console.log(currentDate);
-            var param = {ngayThang: currentDate};
+            var param = {ngayThang: currentDate, idchiNhanh: branchId};
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticBricks, {
                 method: 'POST',
                 headers: {
@@ -233,9 +233,7 @@ export default class StatisticDaily extends Component {
             if (responseObj != null && responseObj.length > 0) {
                 this.setState({branchSelected: responseObj[0].id});
             }
-            // this.search(responseObj[0].id);
-            this.search(responseObj[0].id, Config.stateCode.wait);
-            this.search(responseObj[0].id, Config.stateCode.approved);
+            this._actionSelectBranch(responseObj[0].id);
         } catch (e) {
             console.log(e);
             this.setState({isSearching: false});
@@ -249,6 +247,14 @@ export default class StatisticDaily extends Component {
             items.push(<Picker.Item key={branchItem.id} label={branchItem.tenChiNhanh} value={branchItem.id}/>);
         }
         return items;
+    }
+
+    _actionSelectBranch(itemValue) {
+        console.log("+++++++++++++++++++++++ " + itemValue);
+        this.setState({branchSelected: itemValue});
+        console.log(this.state.branchSelected);
+        this._loadData(itemValue);
+        this._loadDataBricks(itemValue);
     }
 
     render() {
@@ -284,17 +290,17 @@ export default class StatisticDaily extends Component {
 
                     <Navbar left={left} right={right} title={Config.statisticDaily.title}/>
                     <Content style={styles.main}>
-                        <Card>
+                        {/*<Card style={styles.bgMain}>*/}
                             <CardItem>
                                 <Picker
-                                    style={styles.branchPicker}
+                                    style={[styles.branchPicker]}
                                     itemStyle={styles.branchPickerItem}
                                     selectedValue={this.state.branchSelected}
                                     onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
                                     {this._renderBranch()}
                                 </Picker>
                             </CardItem>
-                        </Card>
+                        {/*</Card>*/}
 
                         <View style={[styles.header, styles.bgMain]}>
                             <CardItem style={styles.bgMain}>
@@ -353,7 +359,8 @@ export default class StatisticDaily extends Component {
                                     <Text style={[styles.boxTitle, styles.labelRed]}>
                                         <Icon name="ios-remove-circle-outline"
                                               style={[styles.boxTitle, styles.labelRed, styles.m_r_5]}/>
-                                        {' ' + Utils.numberWithCommas(Utils._nFormatter(this.state.fundPay, 2))}
+                                        {/*{' ' + Utils.numberWithCommas(Utils._nFormatter(this.state.fundPay, 2))}*/}
+                                        {' ' + Utils.numberWithCommas(this.state.fundPay)}
                                     </Text>
                                 </CardItem>
                                 <CardItem style={{paddingBottom: 20}}>
@@ -470,6 +477,8 @@ export default class StatisticDaily extends Component {
                                 data={this.state.bricks}
                                 renderItem={({item}) => this._renderItemResult(item)}
                             />
+
+                            <Text style={styles.labelHeader}></Text>
                             {/*<CardItem>*/}
                                 {/*<Text*/}
                                     {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}

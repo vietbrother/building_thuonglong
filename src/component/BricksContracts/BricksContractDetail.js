@@ -280,11 +280,11 @@ export default class BricksContractDetail extends Component {
                         <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.bricksContract.donViTinh} :
+                                                                      style={styles.icon}/> {Config.bricksContract.DonViTinh} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.DonViTinh}</Text>
+                                <Text style={styles.title}>{this.state.contract.donViTinh}</Text>
                             </Right>
                         </CardItem>
 

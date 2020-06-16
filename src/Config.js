@@ -116,6 +116,7 @@ const Config = {
         exportReal: 'Khối lượng thực xuất',
         exportPlan: 'Khối lượng khách hàng',
         exportDate: 'Ngày xuất',
+        distance: 'Cự ly vận chuyển'
     },
 
     contractMaterial: {

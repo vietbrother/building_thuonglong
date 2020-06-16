@@ -251,7 +251,7 @@ export default class Login extends Component {
                                 </Text>
                             </TouchableHighlight>
                         </View>
-                        <View style={{alignItems: 'flex-end',textAlign: 'center', alignSelf: 'stretch', width: '100%'}}>
+                        <View style={{alignItems: 'flex-end',textAlign: 'center', alignSelf: 'stretch', width: '100%', paddingTop: 100}}>
                             <Button
                                 onPress={() => this.setState({showAdvancedSettings: !this.state.showAdvancedSettings})}
                                 transparent>

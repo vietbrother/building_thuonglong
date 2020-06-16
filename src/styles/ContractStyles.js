@@ -287,7 +287,7 @@ export default StyleSheet.create({
         paddingBottom : 20,
     },
     header: {
-        paddingTop: 10,
+        paddingTop: 20,
         paddingBottom: 60,
     },
     bgMain: {

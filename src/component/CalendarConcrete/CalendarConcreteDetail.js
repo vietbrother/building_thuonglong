@@ -256,34 +256,44 @@ export default class CalendarConcreteDetail extends Component {
                                 <Text style={styles.title}>{this.state.contract.tenMacBeTong}</Text>
                             </Right>
                         </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.calendarConcrete.stoneType} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.calendarConcrete.subsidence} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.tenDoSut}</Text>
-                            </Right>
-                        </CardItem>
+                        {/*<CardItem>*/}
+                            {/*<Left>*/}
+                                {/*<Text style={styles.titleMuted}><Icon note name="md-grid"*/}
+                                                                      {/*style={styles.icon}/> {Config.calendarConcrete.stoneType} :*/}
+                                {/*</Text>*/}
+                            {/*</Left>*/}
+                            {/*<Right>*/}
+                                {/*<Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>*/}
+                            {/*</Right>*/}
+                        {/*</CardItem>*/}
+                        {/*<CardItem>*/}
+                            {/*<Left>*/}
+                                {/*<Text style={styles.titleMuted}><Icon note name="ios-bookmark"*/}
+                                                                      {/*style={styles.icon}/> {Config.calendarConcrete.subsidence} :*/}
+                                {/*</Text>*/}
+                            {/*</Left>*/}
+                            {/*<Right>*/}
+                                {/*<Text style={styles.title}>{this.state.contract.tenDoSut}</Text>*/}
+                            {/*</Right>*/}
+                        {/*</CardItem>*/}
+                        {/*<CardItem bordered>*/}
+                            {/*<Left>*/}
+                                {/*<Text style={styles.titleMuted}><Icon note name="md-star-outline"*/}
+                                                                      {/*style={styles.icon}/> {Config.calendarConcrete.specialRequire} :*/}
+                                {/*</Text>*/}
+                            {/*</Left>*/}
+                            {/*<Right>*/}
+                                {/*<Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>*/}
+                            {/*</Right>*/}
+                        {/*</CardItem>*/}
                         <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-star-outline"
-                                                                      style={styles.icon}/> {Config.calendarConcrete.specialRequire} :
+                                                                      style={styles.icon}/> {Config.calendarConcrete.distance} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>
+                                <Text style={styles.statusRed}>{this.state.contract.cuLyVanChuyen}</Text>
                             </Right>
                         </CardItem>
 

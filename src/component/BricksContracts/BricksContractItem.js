@@ -103,7 +103,7 @@ export default class BricksContractItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                        <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                        <Text style={styles.title}>{this.state.contract.nhaCungCap}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -117,7 +117,7 @@ export default class BricksContractItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                        <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                        <Text style={styles.title}>{this.state.contract.congTrinh}</Text>
                         </Body>
                     </Right>
                 </CardItem>
