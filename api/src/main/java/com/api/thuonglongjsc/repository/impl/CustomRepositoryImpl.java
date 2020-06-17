@@ -125,15 +125,36 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public List<HopDongBeTong> getListHopDongBeTong(HopDongBeTongSearch entity) {
 		// TODO Auto-generated method stub
 		List<HopDongBeTong> res = new ArrayList<>();
-		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
-				+ " TenLoaiDa = '', '' as TenDoSut, '' as TenYCDB, "
-				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
-				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
-				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
-				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
-//				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
-//				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
-				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+//		String queryStr = "SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu,"
+//				+ " TenLoaiDa = '', '' as TenDoSut, '' as TenYCDB, "
+//				+ "a.DonGiaHoaDon,a.DonGiaThanhToan,a.TuNgay,a.DenNgay,"
+//				+ "a.TrangThai, a.IDChiNhanh, a.TrangThaiText, a.NguoiTao,a.NgayTao \r\n"
+//				+ "FROM tblGiaBanBeTong AS a JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \r\n"
+//				+ "JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID \r\n"
+////				+ "JOIN tblLoaiVatLieu AS d ON a.LoaiDa = d.ID\r\n"
+////				+ "JOIN tblDoSut AS e ON a.DoSut = e.ID JOIN tblYCDB AS f ON a.YCDB = f.ID \r\n"
+//				+ "join tblCongTrinhNhaCungCap as g on a.IDCongTrinh = g.ID JOIN tblChiNhanh AS h ON a.IDChiNhanh = h.ID where 1 = 1 ";
+		String queryStr = "SELECT a.ID, \r\n" + 
+				"               a.SoHD, \r\n" + 
+				"               d.TenChiNhanh, \r\n" + 
+				"               b.TenNhaCungCap, \r\n" + 
+				"               a.CongTrinh, \r\n" + 
+				"               b.TenNhaCungCap AS NhaCungCap, \r\n" + 
+				"               c.TenLoaiVatLieu AS MacBeTong, \r\n" + 
+				"               h.DonGiaCoThue, \r\n" + 
+				"               h.DonGiaKhongThue, \r\n" + 
+				"               h.KhoiLuongDuKien, \r\n" + 
+				"               h.TuNgay, \r\n" + 
+				"               h.DenNgay, \r\n" + 
+				"               a.TrangThaiText, \r\n" + 
+				"               a.NguoiTao, \r\n" + 
+				"               a.TrangThai, a.IDChiNhanh," + 
+				"               a.NgayTao\r\n" + 
+				"        FROM tblHopDongBanBeTong AS a\r\n" + 
+				"             JOIN tblHopDongBanBeTong_ChiTiet AS h ON a.ID = h.IDHD\r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
+				"             JOIN tblLoaiVatLieu AS c ON h.MacBeTong = c.ID\r\n" + 
+				"             JOIN tblChiNhanh AS d ON a.IDChiNhanh = d.ID  where 1 = 1 ";
 		/*
 		 * SELECT a.ID, h.TenChiNhanh, g.TenCongTrinh, b.TenNhaCungCap, TenMacBeTong =
 		 * c.TenLoaiVatLieu, TenLoaiDa = d.TenLoaiVatLieu, e.TenDoSut, f.TenYCDB,
@@ -155,7 +176,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.TuNgay desc";
+		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -181,19 +202,25 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               b.TenNhaCungCap, \r\n" + 
 				"               TenMacBeTong = c.TenLoaiVatLieu, \r\n" + 
 				"               g.TenHinhThucBom, \r\n" + 
+				"               j.TenNhanVien, \r\n" + 
+				"               KyThuat, \r\n" + 
+				"               NguoiThuTien, \r\n" + 
 				"               a.KLThucXuat, \r\n" + 
 				"               a.KLKhachHang, \r\n" + 
 				"               a.CuLyVanChuyen, \r\n" + 
-				"			   a.TrangThai, a.IDChiNhanh,\r\n" + 
+				"               a.KLDaBan, \r\n" + 
+				"               a.KLDaXuat, \r\n" + 
 				"               a.TrangThaiText, \r\n" + 
 				"               a.NguoiTao, \r\n" + 
-				"               a.NgayTao\r\n" + 
+				"               a.NgayTao,\r\n" + 
+				"               a.TrangThai, a.IDChiNhanh\r\n" + 
 				"        FROM tblLichXuatBeTong AS a\r\n" + 
 				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
 				"             JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID\r\n" + 
 				"             JOIN tblHinhThucBom AS g ON a.HinhThucBom = g.ID\r\n" + 
 				"             JOIN tblHopDongBanBeTong AS h ON a.IDCongTrinh = h.ID\r\n" + 
-				"             JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID " + 
+				"             JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID\r\n" + 
+				"             JOIN tblNhanSu AS j ON j.ID = a.IDNVKD " + 
 				" WHERE 1 = 1 ";
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
