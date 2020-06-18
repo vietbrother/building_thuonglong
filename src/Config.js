@@ -100,6 +100,10 @@ const Config = {
         concreteType: 'Mác bê tông',
         price: 'Giá thanh toán',
         priceBill: 'Giá hóa đơn',
+        priceVAT: 'Đơn giá có thuế',
+        priceNoVAT: 'Đơn giá không thuế',
+        contractNumber: 'Số hợp đồng',
+        planWeight: 'Khối lượng dự kiến'
     },
 
     calendarConcrete: {
@@ -113,9 +117,13 @@ const Config = {
         specialRequire: 'Yêu cầu đặc biệt',
         concreteType: 'Mác bê tông',
         pumpType: 'Hình thức bơm',
+        employee: 'Nhân viên',
+        technical: 'Kỹ thuật',
+        cashier: 'Thu ngân',
         exportReal: 'Khối lượng thực xuất',
-        exportPlan: 'Khối lượng khách hàng',
+        exportPlan: 'Khối lượng đã bán',
         exportDate: 'Ngày xuất',
+        exportHour: 'Giờ xuất',
         distance: 'Cự ly vận chuyển'
     },
 

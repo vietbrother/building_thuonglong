@@ -13,6 +13,9 @@ public class LichXuatBeTong {
 	private String TenMacBeTong;
 
 	private String TenHinhThucBom;
+	private String TenNhanVien;
+	private String KyThuat;
+	private String NguoiThuTien;
 
 	private String TenLoaiDa;
 	private String TenDoSut;
@@ -21,6 +24,8 @@ public class LichXuatBeTong {
 	private Double KLThucXuat;
 	private Double KLKhachHang;
 	private Double CuLyVanChuyen;
+	private Double KLDaBan;
+	private Double KLDaXuat;
 
 	private String TrangThaiText;
 	private String NguoiTao;
@@ -34,8 +39,9 @@ public class LichXuatBeTong {
 	}
 
 	public LichXuatBeTong(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
-			String tenNhaCungCap, String tenMacBeTong, String tenHinhThucBom, String tenLoaiDa, String tenDoSut,
-			String tenYCDB, Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, String trangThaiText,
+			String tenNhaCungCap, String TenMacBeTong, String tenHinhThucBom, String tenNhanVien, String kyThuat,
+			String nguoiThuTien, String tenLoaiDa, String tenDoSut, String tenYCDB, Double kLThucXuat,
+			Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat, String trangThaiText,
 			String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai) {
 		super();
 		ID = iD;
@@ -44,14 +50,19 @@ public class LichXuatBeTong {
 		TenChiNhanh = tenChiNhanh;
 		TenCongTrinh = tenCongTrinh;
 		TenNhaCungCap = tenNhaCungCap;
-		TenMacBeTong = tenMacBeTong;
+		TenMacBeTong = TenMacBeTong;
 		TenHinhThucBom = tenHinhThucBom;
+		TenNhanVien = tenNhanVien;
+		KyThuat = kyThuat;
+		NguoiThuTien = nguoiThuTien;
 		TenLoaiDa = tenLoaiDa;
 		TenDoSut = tenDoSut;
 		TenYCDB = tenYCDB;
 		KLThucXuat = kLThucXuat;
 		KLKhachHang = kLKhachHang;
 		CuLyVanChuyen = cuLyVanChuyen;
+		KLDaBan = kLDaBan;
+		KLDaXuat = kLDaXuat;
 		TrangThaiText = trangThaiText;
 		NguoiTao = nguoiTao;
 		NgayTao = ngayTao;
@@ -111,8 +122,40 @@ public class LichXuatBeTong {
 		return TenMacBeTong;
 	}
 
-	public void setTenMacBeTong(String tenMacBeTong) {
-		TenMacBeTong = tenMacBeTong;
+	public void setTenMacBeTong(String TenMacBeTong) {
+		TenMacBeTong = TenMacBeTong;
+	}
+
+	public String getTenHinhThucBom() {
+		return TenHinhThucBom;
+	}
+
+	public void setTenHinhThucBom(String tenHinhThucBom) {
+		TenHinhThucBom = tenHinhThucBom;
+	}
+
+	public String getTenNhanVien() {
+		return TenNhanVien;
+	}
+
+	public void setTenNhanVien(String tenNhanVien) {
+		TenNhanVien = tenNhanVien;
+	}
+
+	public String getKyThuat() {
+		return KyThuat;
+	}
+
+	public void setKyThuat(String kyThuat) {
+		KyThuat = kyThuat;
+	}
+
+	public String getNguoiThuTien() {
+		return NguoiThuTien;
+	}
+
+	public void setNguoiThuTien(String nguoiThuTien) {
+		NguoiThuTien = nguoiThuTien;
 	}
 
 	public String getTenLoaiDa() {
@@ -139,14 +182,6 @@ public class LichXuatBeTong {
 		TenYCDB = tenYCDB;
 	}
 
-	public String getTenHinhThucBom() {
-		return TenHinhThucBom;
-	}
-
-	public void setTenHinhThucBom(String tenHinhThucBom) {
-		TenHinhThucBom = tenHinhThucBom;
-	}
-
 	public Double getKLThucXuat() {
 		return KLThucXuat;
 	}
@@ -161,6 +196,30 @@ public class LichXuatBeTong {
 
 	public void setKLKhachHang(Double kLKhachHang) {
 		KLKhachHang = kLKhachHang;
+	}
+
+	public Double getCuLyVanChuyen() {
+		return CuLyVanChuyen;
+	}
+
+	public void setCuLyVanChuyen(Double cuLyVanChuyen) {
+		CuLyVanChuyen = cuLyVanChuyen;
+	}
+
+	public Double getKLDaBan() {
+		return KLDaBan;
+	}
+
+	public void setKLDaBan(Double kLDaBan) {
+		KLDaBan = kLDaBan;
+	}
+
+	public Double getKLDaXuat() {
+		return KLDaXuat;
+	}
+
+	public void setKLDaXuat(Double kLDaXuat) {
+		KLDaXuat = kLDaXuat;
 	}
 
 	public String getTrangThaiText() {
@@ -203,22 +262,16 @@ public class LichXuatBeTong {
 		TrangThai = trangThai;
 	}
 
-	public Double getCuLyVanChuyen() {
-		return CuLyVanChuyen;
-	}
-
-	public void setCuLyVanChuyen(Double cuLyVanChuyen) {
-		CuLyVanChuyen = cuLyVanChuyen;
-	}
-
 	@Override
 	public String toString() {
 		return "LichXuatBeTong [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
 				+ TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh + ", TenNhaCungCap=" + TenNhaCungCap
-				+ ", TenMacBeTong=" + TenMacBeTong + ", TenHinhThucBom=" + TenHinhThucBom + ", TenLoaiDa=" + TenLoaiDa
+				+ ", TenMacBeTong=" + TenMacBeTong + ", TenHinhThucBom=" + TenHinhThucBom + ", TenNhanVien="
+				+ TenNhanVien + ", KyThuat=" + KyThuat + ", NguoiThuTien=" + NguoiThuTien + ", TenLoaiDa=" + TenLoaiDa
 				+ ", TenDoSut=" + TenDoSut + ", TenYCDB=" + TenYCDB + ", KLThucXuat=" + KLThucXuat + ", KLKhachHang="
-				+ KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen + ", TrangThaiText=" + TrangThaiText + ", NguoiTao="
-				+ NguoiTao + ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
+				+ KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen + ", KLDaBan=" + KLDaBan + ", KLDaXuat=" + KLDaXuat
+				+ ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao
+				+ ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
 	}
 
 }

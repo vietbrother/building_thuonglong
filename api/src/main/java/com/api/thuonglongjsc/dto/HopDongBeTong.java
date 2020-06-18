@@ -7,15 +7,15 @@ import javax.persistence.Entity;
 
 public class HopDongBeTong {
 	private String ID;
+	private Integer SoHD;
 	private String TenChiNhanh;
-	private String TenCongTrinh;
+	private String CongTrinh;
 	private String TenNhaCungCap;
-	private String TenMacBeTong;
-	private String TenLoaiDa;
-	private String TenDoSut;
-	private String TenYCDB;
-	private BigDecimal DonGiaHoaDon;
-	private BigDecimal DonGiaThanhToan;
+	private String NhaCungCap;
+	private String MacBeTong;
+	private BigDecimal DonGiaCoThue;
+	private BigDecimal DonGiaKhongThue;
+	private Double KhoiLuongDuKien;
 	private Timestamp TuNgay;
 	private Timestamp DenNgay;
 	private String TrangThaiText;
@@ -28,21 +28,21 @@ public class HopDongBeTong {
 		super();
 	}
 
-	public HopDongBeTong(String iD, String tenChiNhanh, String tenCongTrinh, String tenNhaCungCap, String tenMacBeTong,
-			String tenLoaiDa, String tenDoSut, String tenYCDB, BigDecimal donGiaHoaDon, BigDecimal donGiaThanhToan,
-			Timestamp tuNgay, Timestamp denNgay, String trangThaiText, String nguoiTao, Timestamp ngayTao,
-			String iDChiNhanh, Integer trangThai) {
+	public HopDongBeTong(String iD, Integer soHD, String tenChiNhanh, String congTrinh, String tenNhaCungCap,
+			String nhaCungCap, String MacBeTong, BigDecimal donGiaCoThue, BigDecimal donGiaKhongThue,
+			Double khoiLuongDuKien, Timestamp tuNgay, Timestamp denNgay, String trangThaiText, String nguoiTao,
+			Timestamp ngayTao, String iDChiNhanh, Integer trangThai) {
 		super();
 		ID = iD;
+		SoHD = soHD;
 		TenChiNhanh = tenChiNhanh;
-		TenCongTrinh = tenCongTrinh;
+		CongTrinh = congTrinh;
 		TenNhaCungCap = tenNhaCungCap;
-		TenMacBeTong = tenMacBeTong;
-		TenLoaiDa = tenLoaiDa;
-		TenDoSut = tenDoSut;
-		TenYCDB = tenYCDB;
-		DonGiaHoaDon = donGiaHoaDon;
-		DonGiaThanhToan = donGiaThanhToan;
+		NhaCungCap = nhaCungCap;
+		MacBeTong = MacBeTong;
+		DonGiaCoThue = donGiaCoThue;
+		DonGiaKhongThue = donGiaKhongThue;
+		KhoiLuongDuKien = khoiLuongDuKien;
 		TuNgay = tuNgay;
 		DenNgay = denNgay;
 		TrangThaiText = trangThaiText;
@@ -52,12 +52,21 @@ public class HopDongBeTong {
 		TrangThai = trangThai;
 	}
 
+	
 	public String getID() {
 		return ID;
 	}
 
 	public void setID(String iD) {
 		ID = iD;
+	}
+
+	public Integer getSoHD() {
+		return SoHD;
+	}
+
+	public void setSoHD(Integer soHD) {
+		SoHD = soHD;
 	}
 
 	public String getTenChiNhanh() {
@@ -68,12 +77,12 @@ public class HopDongBeTong {
 		TenChiNhanh = tenChiNhanh;
 	}
 
-	public String getTenCongTrinh() {
-		return TenCongTrinh;
+	public String getCongTrinh() {
+		return CongTrinh;
 	}
 
-	public void setTenCongTrinh(String tenCongTrinh) {
-		TenCongTrinh = tenCongTrinh;
+	public void setCongTrinh(String congTrinh) {
+		CongTrinh = congTrinh;
 	}
 
 	public String getTenNhaCungCap() {
@@ -84,52 +93,44 @@ public class HopDongBeTong {
 		TenNhaCungCap = tenNhaCungCap;
 	}
 
-	public String getTenMacBeTong() {
-		return TenMacBeTong;
+	public String getNhaCungCap() {
+		return NhaCungCap;
 	}
 
-	public void setTenMacBeTong(String tenMacBeTong) {
-		TenMacBeTong = tenMacBeTong;
+	public void setNhaCungCap(String nhaCungCap) {
+		NhaCungCap = nhaCungCap;
 	}
 
-	public String getTenLoaiDa() {
-		return TenLoaiDa;
+	public String getMacBeTong() {
+		return MacBeTong;
 	}
 
-	public void setTenLoaiDa(String tenLoaiDa) {
-		TenLoaiDa = tenLoaiDa;
+	public void setMacBeTong(String MacBeTong) {
+		MacBeTong = MacBeTong;
 	}
 
-	public String getTenDoSut() {
-		return TenDoSut;
+	public BigDecimal getDonGiaCoThue() {
+		return DonGiaCoThue;
 	}
 
-	public void setTenDoSut(String tenDoSut) {
-		TenDoSut = tenDoSut;
+	public void setDonGiaCoThue(BigDecimal donGiaCoThue) {
+		DonGiaCoThue = donGiaCoThue;
 	}
 
-	public String getTenYCDB() {
-		return TenYCDB;
+	public BigDecimal getDonGiaKhongThue() {
+		return DonGiaKhongThue;
 	}
 
-	public void setTenYCDB(String tenYCDB) {
-		TenYCDB = tenYCDB;
+	public void setDonGiaKhongThue(BigDecimal donGiaKhongThue) {
+		DonGiaKhongThue = donGiaKhongThue;
 	}
 
-	public BigDecimal getDonGiaHoaDon() {
-		return DonGiaHoaDon;
+	public Double getKhoiLuongDuKien() {
+		return KhoiLuongDuKien;
 	}
 
-	public void setDonGiaHoaDon(BigDecimal donGiaHoaDon) {
-		DonGiaHoaDon = donGiaHoaDon;
-	}
-
-	public BigDecimal getDonGiaThanhToan() {
-		return DonGiaThanhToan;
-	}
-
-	public void setDonGiaThanhToan(BigDecimal donGiaThanhToan) {
-		DonGiaThanhToan = donGiaThanhToan;
+	public void setKhoiLuongDuKien(Double khoiLuongDuKien) {
+		KhoiLuongDuKien = khoiLuongDuKien;
 	}
 
 	public Timestamp getTuNgay() {
@@ -190,11 +191,12 @@ public class HopDongBeTong {
 
 	@Override
 	public String toString() {
-		return "HopDongBeTong [ID=" + ID + ", TenChiNhanh=" + TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh
-				+ ", TenNhaCungCap=" + TenNhaCungCap + ", TenMacBeTong=" + TenMacBeTong + ", TenLoaiDa=" + TenLoaiDa
-				+ ", TenDoSut=" + TenDoSut + ", TenYCDB=" + TenYCDB + ", DonGiaHoaDon=" + DonGiaHoaDon
-				+ ", DonGiaThanhToan=" + DonGiaThanhToan + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay
+		return "HopDongBeTong [ID=" + ID + ", SoHD=" + SoHD + ", TenChiNhanh=" + TenChiNhanh + ", CongTrinh="
+				+ CongTrinh + ", TenNhaCungCap=" + TenNhaCungCap + ", NhaCungCap=" + NhaCungCap + ", MacBeTong="
+				+ MacBeTong + ", DonGiaCoThue=" + DonGiaCoThue + ", DonGiaKhongThue=" + DonGiaKhongThue
+				+ ", KhoiLuongDuKien=" + KhoiLuongDuKien + ", TuNgay=" + TuNgay + ", DenNgay=" + DenNgay
 				+ ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao
 				+ ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
 	}
+
 }

@@ -286,18 +286,8 @@ export default class CalendarConcreteDetail extends Component {
                                 {/*<Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>*/}
                             {/*</Right>*/}
                         {/*</CardItem>*/}
-                        <CardItem bordered>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
-                                                                      style={styles.icon}/> {Config.calendarConcrete.distance} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.cuLyVanChuyen}</Text>
-                            </Right>
-                        </CardItem>
 
-                        <CardItem>
+                        <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-pricetag"
                                                                       style={styles.icon}/> {Config.calendarConcrete.pumpType} :
@@ -309,25 +299,65 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-cash"
+                                <Text style={styles.titleMuted}><Icon note name="person-outline"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.employee} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenNhanVien}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="person-outline"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.technical} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.kyThuat}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem bordered>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="person-outline"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.cashier} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.nguoiThuTien}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="ios-speedometer-outline"
                                                                       style={styles.icon}/> {Config.calendarConcrete.exportReal} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {Utils._renderPriceFormat(this.state.contract.klthucXuat)}
+                                    {Utils._renderPriceFormat(this.state.contract.kldaXuat)}
                                 </Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
+                                                                      style={styles.icon}/> {Config.calendarConcrete.distance} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>{this.state.contract.cuLyVanChuyen}</Text>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-cash"
+                                <Text style={styles.titleMuted}><Icon note name="ios-speedometer-outline"
                                                                       style={styles.icon}/> {Config.calendarConcrete.exportPlan} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {Utils._renderPriceFormat(this.state.contract.klkhachHang)}
+                                    {Utils._renderPriceFormat(this.state.contract.kldaBan)}
                                 </Text>
                             </Right>
                         </CardItem>
@@ -353,6 +383,16 @@ export default class CalendarConcreteDetail extends Component {
                                 </Body>
                                 {/*</Right>*/}
                             </Left>
+                            <Right>
+                                <Body>
+                                <Text style={styles.muted}>{Config.calendarConcrete.exportHour}</Text>
+                                <Button transparent>
+                                    <Icon name="md-calendar" style={{}}/>
+                                    <Text
+                                        style={styles.date}>{this.state.contract.gioXuat}</Text>
+                                </Button>
+                                </Body>
+                            </Right>
                         </CardItem>
 
 

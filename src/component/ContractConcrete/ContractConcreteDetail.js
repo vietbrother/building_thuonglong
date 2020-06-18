@@ -226,7 +226,16 @@ export default class ContractConcreteDetail extends Component {
                                 <Text style={styles.titleBranch}>{this.state.contract.tenChiNhanh}</Text>
                             </Right>
                         </CardItem>
-
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.contractConcrete.contractNumber} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.soHD}</Text>
+                            </Right>
+                        </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-person"
@@ -244,9 +253,10 @@ export default class ContractConcreteDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenCongTrinh}</Text>
+                                <Text>{this.state.contract.congTrinh}</Text>
                             </Right>
                         </CardItem>
+
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-pricetag"
@@ -254,17 +264,17 @@ export default class ContractConcreteDetail extends Component {
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.tenMacBeTong}</Text>
+                                <Text style={styles.title}>{this.state.contract.macBeTong}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.contractConcrete.stoneType} :
+                                <Text style={styles.titleMuted}><Icon note name="ios-speedometer-outline"
+                                                                      style={styles.icon}/> {Config.contractConcrete.planWeight} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>
+                                <Text style={styles.title}>{Utils._renderPriceFormat(this.state.contract.khoiLuongDuKien)}</Text>
                             </Right>
                         </CardItem>
                         {/*<CardItem>*/}
@@ -291,12 +301,12 @@ export default class ContractConcreteDetail extends Component {
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cash"
-                                                                      style={styles.icon}/> {Config.contractConcrete.price} :
+                                                                      style={styles.icon}/> {Config.contractConcrete.priceVAT} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {Utils._renderPriceFormat(this.state.contract.donGiaThanhToan)}
+                                    {Utils._renderPriceFormat(this.state.contract.donGiaCoThue)}
                                 </Text>
                             </Right>
                         </CardItem>
@@ -304,12 +314,12 @@ export default class ContractConcreteDetail extends Component {
                         <CardItem bordered>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cash"
-                                                                      style={styles.icon}/> {Config.contractConcrete.priceBill} :
+                                                                      style={styles.icon}/> {Config.contractConcrete.priceNoVAT} :
                                 </Text>
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {Utils._renderPriceFormat(this.state.contract.donGiaHoaDon)}
+                                    {Utils._renderPriceFormat(this.state.contract.donGiaKhongThue)}
                                 </Text>
                             </Right>
                         </CardItem>
