@@ -37,7 +37,6 @@ import Colors from "../../Colors";
 import Config from "../../Config";
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
-import ContractConcretesItem from "../ContractConcrete/ContractConcretes";
 
 
 export default class StatisticDaily extends Component {
@@ -68,6 +67,7 @@ export default class StatisticDaily extends Component {
             fundCollection: 0,
             fundPay: 0,
             concreateOut: 0,
+            concreateMixed: 0,
             concretePlan: 0,
             bricks: [],
 
@@ -136,6 +136,7 @@ export default class StatisticDaily extends Component {
             fundCollection: 0,
             fundPay: 0,
             concreateOut: 0,
+            concreateMixed: 0,
             concretePlan: 0
         });
         try {
@@ -160,6 +161,7 @@ export default class StatisticDaily extends Component {
                 fundCollection: responseObj[0].congNoThu,
                 fundPay: responseObj[0].congNoTra,
                 concreateOut: responseObj[0].klbeTongBan,
+                concreateMixed: responseObj[0].klbeTongDaTron,
                 concretePlan: responseObj[0].klbeTongDuKien
             });
             // this.search(responseObj[0].id);
@@ -414,6 +416,14 @@ export default class StatisticDaily extends Component {
                             </CardItem>
                             <CardItem bordered>
                                 <Text style={styles.titleUnder}>{Config.statisticDaily.concreteOut}</Text>
+                            </CardItem>
+                            <CardItem>
+                                <Text style={[styles.boxTitleSecond, styles.labelMain]}>
+                                    {Utils.numberWithCommas(this.state.concreateMixed)} {Config.statisticDaily.concreteUnit}
+                                </Text>
+                            </CardItem>
+                            <CardItem bordered>
+                                <Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>
                             </CardItem>
 
                             {/*<CardItem>*/}

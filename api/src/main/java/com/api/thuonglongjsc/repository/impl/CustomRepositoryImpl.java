@@ -331,20 +331,44 @@ public class CustomRepositoryImpl implements CustomRepository {
 	@Override
 	public List<GiaBanVatLieu> getListGiaBanVatLieu(GiaBanVatLieuSearch entity) {
 		List<GiaBanVatLieu> res = new ArrayList<>();
-		String queryStr = " SELECT a.ID, g.TenChiNhanh,     \r\n"
-				+ "			      a.CongTrinh,b.TenNhaCungCap AS NhaCungCap,     \r\n"
-				+ "               d.TenNhomVatLIeu AS NhomVatLieu,     \r\n"
-				+ "               e.TenLoaiVatLieu AS LoaiVatLieu,     \r\n"
-				+ "               f.TenDonViTinh AS DonViTinh, a.DonGiaCoThue,     \r\n"
-				+ "               a.DonGiaKhongThue, a.TuNgay,     \r\n"
-				+ "               a.DenNgay, a.TrangThaiText,     \r\n"
-				+ "               a.NguoiTao, a.NgayTao, a.TrangThai, a.IDChiNhanh    \r\n"
-				+ "        FROM tblGiaBanVatLieu AS a    \r\n"
-				+ "             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID    \r\n"
-				+ "             JOIN tblNhomVatLieu AS d ON a.IDNhomVatLieu = d.ID    \r\n"
-				+ "             JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID    \r\n"
-				+ "             JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID    \r\n"
-				+ "             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  WHERE 1 = 1 ";
+//		String queryStr = " SELECT a.ID, g.TenChiNhanh,     \r\n"
+//				+ "			      a.CongTrinh,b.TenNhaCungCap AS NhaCungCap,     \r\n"
+//				+ "               d.TenNhomVatLIeu AS NhomVatLieu,     \r\n"
+//				+ "               e.TenLoaiVatLieu AS LoaiVatLieu,     \r\n"
+//				+ "               f.TenDonViTinh AS DonViTinh, a.DonGiaCoThue,     \r\n"
+//				+ "               a.DonGiaKhongThue, a.TuNgay,     \r\n"
+//				+ "               a.DenNgay, a.TrangThaiText,     \r\n"
+//				+ "               a.NguoiTao, a.NgayTao, a.TrangThai, a.IDChiNhanh    \r\n"
+//				+ "        FROM tblGiaBanVatLieu AS a    \r\n"
+//				+ "             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID    \r\n"
+//				+ "             JOIN tblNhomVatLieu AS d ON a.IDNhomVatLieu = d.ID    \r\n"
+//				+ "             JOIN tblLoaiVatLieu AS e ON a.IDLoaiVatLieu = e.ID    \r\n"
+//				+ "             JOIN tblDonViTinh AS f ON a.IDDonViTinh = f.ID    \r\n"
+//				+ "             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID  WHERE 1 = 1 ";
+		
+		String queryStr = "SELECT a.ID,     \r\n" + 
+				"               a.SoHD,     \r\n" + 
+				"               g.TenChiNhanh,     \r\n" + 
+				"               --a.CongTrinh,     \r\n" + 
+				"               b.TenNhaCungCap AS NhaCungCap,     \r\n" + 
+				"               d.TenNhomVatLIeu AS NhomVatLieu,     \r\n" + 
+				"               e.TenLoaiVatLieu AS LoaiVatLieu,     \r\n" + 
+				"               f.TenDonViTinh AS DonViTinh,     \r\n" + 
+				"               h.DonGiaCoThue,     \r\n" + 
+				"               h.DonGiaKhongThue,     \r\n" + 
+				"               h.TuNgay,     \r\n" + 
+				"               h.DenNgay,     \r\n" + 
+				"               a.TrangThaiText,     \r\n" + 
+				"               a.NguoiTao,     \r\n" + 
+				"               a.NgayTao,    \r\n" + 
+				"               a.TrangThai, a.IDChiNhanh    \r\n" + 
+				"        FROM tblHopDongBanVatLieu AS a    \r\n" + 
+				"             JOIN tblHopDongBanVatLieu_ChiTiet AS h ON a.ID = h.IDHD    \r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID    \r\n" + 
+				"             JOIN tblNhomVatLieu AS d ON h.IDNhomVatLieu = d.ID    \r\n" + 
+				"             JOIN tblLoaiVatLieu AS e ON h.IDLoaiVatLieu = e.ID    \r\n" + 
+				"             JOIN tblDonViTinh AS f ON h.IDDonViTinh = f.ID    \r\n" + 
+				"             JOIN tblChiNhanh AS g ON a.IDChiNhanh = g.ID   WHERE 1 = 1  ";
 		/*
 		 * SELECT a.ID, g.TenChiNhanh, a.CongTrinh, b.TenNhaCungCap AS NhaCungCap,
 		 * d.TenNhomVatLIeu AS NhomVatLieu, e.TenLoaiVatLieu AS LoaiVatLieu,
@@ -365,7 +389,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
 		}
-		queryStr += " ORDER BY a.TuNgay desc";
+		queryStr += " ORDER BY a.NgayThang desc";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {

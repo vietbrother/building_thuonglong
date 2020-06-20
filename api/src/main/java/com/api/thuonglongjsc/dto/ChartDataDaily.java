@@ -12,13 +12,16 @@ public class ChartDataDaily {
 	private BigDecimal CongNoTra;
 	private Double KLBeTongBan;
 	private Double KLBeTongDuKien;
+	private Double KLBeTongDaTron;
 
 	public ChartDataDaily() {
 		super();
 	}
 
-	public ChartDataDaily(BigDecimal tongThu, BigDecimal tongChi, BigDecimal congNoThu, BigDecimal congNoTra, Double kLBeTongBan,
-			Double kLBeTongDuKien) {
+
+
+	public ChartDataDaily(BigDecimal tongThu, BigDecimal tongChi, BigDecimal congNoThu, BigDecimal congNoTra,
+			Double kLBeTongBan, Double kLBeTongDuKien, Double kLBeTongDaTron) {
 		super();
 		TongThu = tongThu;
 		TongChi = tongChi;
@@ -26,7 +29,10 @@ public class ChartDataDaily {
 		CongNoTra = congNoTra;
 		KLBeTongBan = kLBeTongBan;
 		KLBeTongDuKien = kLBeTongDuKien;
+		KLBeTongDaTron = kLBeTongDaTron;
 	}
+
+
 
 	public BigDecimal getTongThu() {
 		return TongThu;
@@ -75,12 +81,25 @@ public class ChartDataDaily {
 	public void setKLBeTongDuKien(Double kLBeTongDuKien) {
 		KLBeTongDuKien = kLBeTongDuKien;
 	}
+	
+
+	public Double getKLBeTongDaTron() {
+		return KLBeTongDaTron;
+	}
+
+
+
+	public void setKLBeTongDaTron(Double kLBeTongDaTron) {
+		KLBeTongDaTron = kLBeTongDaTron;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "ChartDataDaily [TongThu=" + TongThu + ", TongChi=" + TongChi + ", CongNoThu=" + CongNoThu
 				+ ", CongNoTra=" + CongNoTra + ", KLBeTongBan=" + KLBeTongBan + ", KLBeTongDuKien=" + KLBeTongDuKien
-				+ "]";
+				+ ", KLBeTongDaTron=" + KLBeTongDaTron + "]";
 	}
 
 }

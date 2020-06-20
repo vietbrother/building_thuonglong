@@ -107,13 +107,16 @@ const Utils = {
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+    _viewValue(value){
+        return (value == null || value == undefined ? '' : value);
+    },
     // _renderApproveButton(status, callback) {
     //     if (status == Config.state.wait) {
     //         return (
     //             <CardItem>
     //                 <Left>
     //                     <Button active onPress={() => Actions.pop()} transparent>
-    //                         <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+    //                         <Text style={styles.btnClose}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
     //                         </Text>
     //                     </Button>
     //                 </Left>
@@ -135,7 +138,7 @@ const Utils = {
     //             <CardItem>
     //                 <Body>
     //                     <Button active onPress={() => Actions.pop()} transparent>
-    //                         <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+    //                         <Text style={styles.btnClose}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
     //                         </Text>
     //                     </Button>
     //                 </Body>
@@ -146,7 +149,7 @@ const Utils = {
     //             <CardItem>
     //                 <Body>
     //                     <Button active onPress={() => Actions.pop()} transparent>
-    //                         <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+    //                         <Text style={styles.btnClose}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
     //                         </Text>
     //                     </Button>
     //                 </Body>

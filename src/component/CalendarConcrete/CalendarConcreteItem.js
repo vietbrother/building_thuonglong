@@ -11,7 +11,7 @@ import {
     TouchableOpacity,
     NativeModules,
     Dimensions,
-    AsyncStorage, Keyboard, StyleSheet
+    AsyncStorage, Keyboard, StyleSheet, ToastAndroid, Clipboard
 } from 'react-native';
 import {
     Container,
@@ -28,7 +28,7 @@ import {
     Grid,
     Col,
     Item,
-    Input, List, ListItem, Body,
+    Input, List, ListItem, Body, Toast,
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -43,6 +43,8 @@ import HTML from 'react-native-render-html';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
+
+import Utils from "../../utils/Utils";
 
 export default class CalendarConcreteItem extends Component {
     constructor(props) {
@@ -124,28 +126,28 @@ export default class CalendarConcreteItem extends Component {
                 <CardItem bordered>
                     <Left>
                         <Body>
-                            <Text style={styles.muted}><Icon note name="md-person"
-                                                             style={styles.icon}/> {Config.calendarConcrete.providerName} :
-                            </Text>
+                        <Text style={styles.muted}><Icon note name="md-person"
+                                                         style={styles.icon}/> {Config.calendarConcrete.providerName} :
+                        </Text>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                        <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
                         </Body>
                     </Right>
                 </CardItem>
                 <CardItem bordered>
                     <Left>
                         <Body>
-                            <Text style={styles.muted}><Icon note name="briefcase"
-                                                             style={styles.icon}/> {Config.calendarConcrete.projectName} :
-                            </Text>
+                        <Text style={styles.muted}><Icon note name="briefcase"
+                                                         style={styles.icon}/> {Config.calendarConcrete.projectName} :
+                        </Text>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                            <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                        <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
                         </Body>
                     </Right>
                 </CardItem>
@@ -166,25 +168,41 @@ export default class CalendarConcreteItem extends Component {
 
                 <CardItem>
                     <Left>
-                        {/*<Body>*/}
-                        {/*    <Text style={styles.muted}>{Config.common.fromDate}</Text>*/}
-                        {/*    <Button transparent>*/}
-                        {/*        <Icon name="md-calendar" style={{marginLeft: 0}}/>*/}
-                        {/*        <Text style={styles.date}>{this._renderDateFormat(this.state.contract.tuNgay)}</Text>*/}
-                        {/*    </Button>*/}
-                        {/*</Body>*/}
+                        <Body>
+                        <Text style={styles.muted}>{Config.calendarConcrete.exportDate}</Text>
+                        <Button transparent>
+                            <Icon name="md-calendar" style={{}}/>
+                            <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
+                        </Button>
+                        </Body>
                     </Left>
+
                     <Right>
                         <Body>
-                            <Text style={styles.muted}>{Config.calendarConcrete.exportDate}</Text>
-                            <Button transparent>
-                                <Icon name="md-calendar" style={{}}/>
-                                <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
-                            </Button>
+                        <Text style={styles.muted}>{Config.calendarConcrete.exportHour}</Text>
+                        <Button transparent>
+                            <Icon name="ios-time-outline" style={{}}/>
+                            <Text
+                                style={styles.date}>{this.state.contract.gioXuat}</Text>
+                        </Button>
                         </Body>
                     </Right>
                 </CardItem>
 
+                <CardItem>
+                    <Left></Left>
+                    <Right>
+                        <TouchableOpacity
+                            style={styles.btnApprove}
+                            onPress={() => this._copyToClipboard()}
+                            activeOpacity={0.9}
+                        >
+                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                    name='ios-copy-outline'/> {Config.btnCopy}
+                            </Text>
+                        </TouchableOpacity>
+                    </Right>
+                </CardItem>
             </TouchableOpacity>
         );
 
@@ -221,6 +239,38 @@ export default class CalendarConcreteItem extends Component {
             );
         }
 
+    }
+
+    _copyToClipboard() {
+        // ToastAndroid.showWithGravity(
+        //     'All Your Base Are Belong To Us',
+        //     ToastAndroid.SHORT,
+        //     ToastAndroid.CENTER
+        // );
+        var contentMsg =
+            'Ngày trộn: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
+            'Giờ trộn: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
+            'Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
+            //'SĐT khách hàng: 09878347\n' +
+            'Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +
+            'Mác bê tông: ' + Utils._viewValue(this.state.contract.tenMacBeTong)+ '\n' +
+            'Độ sụt : ' + Utils._viewValue(this.state.contract.tenDoSut) + '\n' +
+            'Khối lượng tạm tính:' + Utils._viewValue(this.state.contract.kldaBan) + '\n' +
+            'Kỹ thuật: ' + Utils._viewValue(this.state.contract.kyThuat) + '\n' +
+            'Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
+            'Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n';
+        //'Ghi chú';
+
+        Clipboard.setString(contentMsg);
+
+        Toast.show({
+            text: 'Đã sao chép thông tin',
+            position: 'bottom',
+            buttonText: 'Ẩn',
+            duration: 3000,
+            buttonTextStyle: {color: "#fff"},
+            buttonStyle: {backgroundColor: Config.mainColor}
+        });
     }
 }
 

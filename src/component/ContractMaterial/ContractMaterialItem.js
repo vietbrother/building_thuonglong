@@ -139,13 +139,13 @@ export default class ContractMaterialItem extends Component {
                     <Left>
                         <Body>
                         <Text style={styles.muted}><Icon note name="briefcase"
-                                                         style={styles.icon}/> {Config.contractMaterial.projectName} :
+                                                         style={styles.icon}/> {Config.contractMaterial.materialGroup} :
                         </Text>
                         </Body>
                     </Left>
                     <Right>
                         <Body>
-                        <Text style={styles.title}>{this.state.contract.congTrinh}</Text>
+                        <Text style={styles.title}>{this.state.contract.nhomVatLieu}</Text>
                         </Body>
                     </Right>
                 </CardItem>

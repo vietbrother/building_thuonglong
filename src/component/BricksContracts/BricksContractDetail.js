@@ -75,7 +75,7 @@ export default class BricksContractDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnReject}
                             </Text>
                         </Button>
                     </Left>
@@ -97,7 +97,7 @@ export default class BricksContractDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                         </Text>
                     </Button>
                     </Body>
@@ -108,7 +108,7 @@ export default class BricksContractDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                         </Text>
                     </Button>
                     </Body>

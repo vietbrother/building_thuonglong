@@ -145,7 +145,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			condition += " and IDChiNhanh = ? ";
 		}
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 5; i++) {
 			if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
 				lstParams.add(entity.getNgayThang());//table a
 			}
@@ -155,7 +155,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		}
 
 		
-		String queryStr = "select TongThu,TongChi,CongNoThu,CongNoTra,  KLBeTongBan, KLBeTongDuKien\r\n" + 
+		String queryStr = "select TongThu,TongChi,CongNoThu,CongNoTra,  KLBeTongBan, KLBeTongDuKien, KLBeTongDaTron\r\n" + 
 				"from \r\n" + 
 				"( SELECT  ISNULL(SUM(ISNULL(KLKhachHang, 0)), 0) AS KLBeTongBan, '1' as ID\r\n" + 
 				"  FROM tblXuatBeTong \r\n" + 
@@ -174,8 +174,16 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 				"                ISNULL(SUM(SoTienChi), 0) as TongChi, '1' as ID\r\n" + 
 				"        FROM tblPhieuThuChi\r\n" + 
 				"  where 1=1 " + condition + 
-				" ) d\r\n" + 
-				"where a.id = b.id  and b.id = c.id and c.id = d.id";
+				" ) d ,\r\n" + 
+				"(  SELECT KLBeTongDaTron = SUM(NumberofBatch), '1' as ID  \r\n" + 
+				"   FROM  \r\n" + 
+				"   (  \r\n" + 
+				"    SELECT DISTINCT DocketNumber, NumberofBatch  \r\n" + 
+				"    FROM tblDuLieuTramTron  \r\n" + 
+				"    WHERE 1 = 1 AND OrderID != 0  \r\n" + condition + 
+				"   ) temp " +
+				") e " + 
+				"where a.id = b.id  and b.id = c.id and c.id = d.id and d.id = e.id";
 //		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
 //			queryStr += " and a.TrangThai = ? ";
 //			lstParams.add(entity.getIdTrangThai());

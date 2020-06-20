@@ -124,13 +124,15 @@ const Config = {
         exportPlan: 'Khối lượng đã bán',
         exportDate: 'Ngày xuất',
         exportHour: 'Giờ xuất',
-        distance: 'Cự ly vận chuyển'
+        distance: 'Cự ly vận chuyển',
+        contractNumber: 'Số hợp đồng',
     },
 
     contractMaterial: {
-        title: 'HĐ giá bán vật liệu',
+        title: 'HĐ bán vật liệu',
         detail: 'Thông tin chi tiết',
         branch: 'Chi nhánh',
+        contractNumber: 'Số hợp đồng',
         providerName: 'Nhà cung cấp',
         projectName: 'Công trình',
         materialGroup: 'Nhóm vật liệu',
@@ -362,6 +364,7 @@ const Config = {
     btnApprove: 'Phê duyệt',
     btnReject: 'Từ chối',
     btnApply: 'Đồng ý',
+    btnCopy: 'Sao chép',
 
     //success
     success: 'Thành công',

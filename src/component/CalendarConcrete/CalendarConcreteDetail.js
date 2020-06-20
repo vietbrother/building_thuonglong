@@ -75,7 +75,7 @@ export default class CalendarConcreteDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnReject}
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnReject}
                             </Text>
                         </Button>
                     </Left>
@@ -97,7 +97,7 @@ export default class CalendarConcreteDetail extends Component {
                 <CardItem>
                     <Body>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}</Text>
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}</Text>
                         </Button>
                     </Body>
                 </CardItem>
@@ -107,7 +107,7 @@ export default class CalendarConcreteDetail extends Component {
                 <CardItem>
                     <Body>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                             </Text>
                         </Button>
                     </Body>
@@ -299,7 +299,7 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="person-outline"
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
                                                                       style={styles.icon}/> {Config.calendarConcrete.employee} :
                                 </Text>
                             </Left>
@@ -309,7 +309,7 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="person-outline"
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
                                                                       style={styles.icon}/> {Config.calendarConcrete.technical} :
                                 </Text>
                             </Left>
@@ -319,7 +319,7 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
                         <CardItem bordered>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="person-outline"
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
                                                                       style={styles.icon}/> {Config.calendarConcrete.cashier} :
                                 </Text>
                             </Left>
@@ -329,7 +329,7 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-speedometer-outline"
+                                <Text style={styles.titleMuted}><Icon note name="md-speedometer"
                                                                       style={styles.icon}/> {Config.calendarConcrete.exportReal} :
                                 </Text>
                             </Left>
@@ -351,7 +351,7 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
                         <CardItem bordered>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-speedometer-outline"
+                                <Text style={styles.titleMuted}><Icon note name="md-speedometer"
                                                                       style={styles.icon}/> {Config.calendarConcrete.exportPlan} :
                                 </Text>
                             </Left>
@@ -387,7 +387,7 @@ export default class CalendarConcreteDetail extends Component {
                                 <Body>
                                 <Text style={styles.muted}>{Config.calendarConcrete.exportHour}</Text>
                                 <Button transparent>
-                                    <Icon name="md-calendar" style={{}}/>
+                                    <Icon name="ios-time-outline" style={{}}/>
                                     <Text
                                         style={styles.date}>{this.state.contract.gioXuat}</Text>
                                 </Button>

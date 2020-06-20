@@ -146,7 +146,7 @@ export default class ContractConcreteItem extends Component {
                     </Left>
                     <Right>
                         <Body>
-                        <Text style={styles.title}>{this.state.contract.tenCongTrinh}</Text>
+                        <Text style={styles.title}>{this.state.contract.congTrinh}</Text>
                         </Body>
                     </Right>
                 </CardItem>

@@ -118,7 +118,7 @@ export default class ContractMaterialDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                             </Text>
                         </Button>
                     </Left>
@@ -140,7 +140,7 @@ export default class ContractMaterialDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                         </Text>
                     </Button>
                     </Body>
@@ -151,7 +151,7 @@ export default class ContractMaterialDetail extends Component {
                 <CardItem>
                     <Body>
                     <Button active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnClose}><Icon style={styles.icon} name='ios-close'/> {Config.btnClose}
+                        <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                         </Text>
                     </Button>
                     </Body>
@@ -280,16 +280,27 @@ export default class ContractMaterialDetail extends Component {
                                 <Text style={styles.title}>{this.state.contract.nhaCungCap}</Text>
                             </Right>
                         </CardItem>
+                        {/*<CardItem>*/}
+                            {/*<Left>*/}
+                                {/*<Text style={styles.titleMuted}><Icon note name="briefcase"*/}
+                                                                      {/*style={styles.icon}/> {Config.contractMaterial.projectName} :*/}
+                                {/*</Text>*/}
+                            {/*</Left>*/}
+                            {/*<Right>*/}
+                                {/*<Text>{this.state.contract.congTrinh}</Text>*/}
+                            {/*</Right>*/}
+                        {/*</CardItem>*/}
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="briefcase"
-                                                                      style={styles.icon}/> {Config.contractMaterial.projectName} :
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.contractMaterial.contractNumber} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.congTrinh}</Text>
+                                <Text style={styles.title}>{this.state.contract.soHD}</Text>
                             </Right>
                         </CardItem>
+
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-pricetag"
