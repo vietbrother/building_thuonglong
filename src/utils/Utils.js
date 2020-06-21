@@ -80,6 +80,9 @@ const Utils = {
     },
 
     _nFormatter(num, digits) {
+        if(num == null || num == undefined){
+            return '';
+        }
         /*var si = [
           { value: 1, symbol: "" },
           { value: 1E3, symbol: "k" },
@@ -105,6 +108,9 @@ const Utils = {
         return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
     },
     numberWithCommas(x) {
+        if(x == null || x == undefined){
+            return '';
+        }
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     _viewValue(value){

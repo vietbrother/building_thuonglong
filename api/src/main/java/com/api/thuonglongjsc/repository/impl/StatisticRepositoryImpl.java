@@ -175,7 +175,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 				"        FROM tblPhieuThuChi\r\n" + 
 				"  where 1=1 " + condition + 
 				" ) d ,\r\n" + 
-				"(  SELECT KLBeTongDaTron = SUM(NumberofBatch), '1' as ID  \r\n" + 
+				"(  SELECT ISNULL(SUM(NumberofBatch), 0) as KLBeTongDaTron, '1' as ID  \r\n" + 
 				"   FROM  \r\n" + 
 				"   (  \r\n" + 
 				"    SELECT DISTINCT DocketNumber, NumberofBatch  \r\n" + 
