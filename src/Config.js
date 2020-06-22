@@ -366,7 +366,7 @@ const Config = {
     btnReject: 'Từ chối',
     btnApply: 'Đồng ý',
     btnCopy: 'Sao chép',
-    btnCopyAll: 'Sao chép toàn bộ',
+    btnCopyAll: 'Sao chép tất cả',
     btnHide: 'Ẩn',
 
     //success

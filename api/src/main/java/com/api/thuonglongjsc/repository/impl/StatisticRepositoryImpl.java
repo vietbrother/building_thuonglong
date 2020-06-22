@@ -175,13 +175,46 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 				"        FROM tblPhieuThuChi\r\n" + 
 				"  where 1=1 " + condition + 
 				" ) d ,\r\n" + 
-				"(  SELECT ISNULL(SUM(NumberofBatch), 0) as KLBeTongDaTron, '1' as ID  \r\n" + 
-				"   FROM  \r\n" + 
-				"   (  \r\n" + 
-				"    SELECT DISTINCT DocketNumber, NumberofBatch  \r\n" + 
-				"    FROM tblDuLieuTramTron  \r\n" + 
-				"    WHERE 1 = 1 AND OrderID != 0  \r\n" + condition + 
-				"   ) temp " +
+				"( SELECT ISNULL(\r\n" + 
+				"	SUM(CASE\r\n" + 
+				"		WHEN(MAgg1 + MAgg2 + MAgg3 + MAgg4 + MAgg5 + MCem1 + MCem2 + MCem3 + MCem4 + MWater + MAdd + MAdd2) != 0\r\n" + 
+				"		THEN(Agg1 + Agg2 + Agg3 + Agg4 + Agg5 + Cem1 + Cem2 + Cem3 + Cem4 + Water + Add1 + Add2) / (MAgg1 + MAgg2 + MAgg3 + MAgg4 + MAgg5 + MCem1 + MCem2 + MCem3 + MCem4 + MWater + MAdd + MAdd2)\r\n" + 
+				"	ELSE 0\r\n" + 
+				"	END), 0) as KLBeTongDaTron , '1' as ID \r\n" + 
+				" FROM\r\n" + 
+				"        (\r\n" + 
+				"            SELECT DISTINCT \r\n" + 
+				"                   DocketNumber, \r\n" + 
+				"                   NumberofBatch, \r\n" + 
+				"                   MAgg1, \r\n" + 
+				"                   MAgg2, \r\n" + 
+				"                   MAgg3, \r\n" + 
+				"                   MAgg4, \r\n" + 
+				"                   MAgg5, \r\n" + 
+				"                   MCem1, \r\n" + 
+				"                   MCem2, \r\n" + 
+				"                   MCem3, \r\n" + 
+				"                   MCem4, \r\n" + 
+				"                   MWater, \r\n" + 
+				"                   MAdd, \r\n" + 
+				"                   MAdd2, \r\n" + 
+				"                   BatchNo, \r\n" + 
+				"                   Agg1, \r\n" + 
+				"                   Agg2, \r\n" + 
+				"                   Agg3, \r\n" + 
+				"                   Agg4, \r\n" + 
+				"                   Agg5, \r\n" + 
+				"                   Cem1, \r\n" + 
+				"                   Cem2, \r\n" + 
+				"                   Cem3, \r\n" + 
+				"                   Cem4, \r\n" + 
+				"                   Water, \r\n" + 
+				"                   Add1, \r\n" + 
+				"                   Add2\r\n" + 
+				"            FROM tblDuLieuTramTron\r\n" + 
+				"            WHERE 1 = 1\r\n" + condition + 
+				"                  AND OrderID != 0\r\n" + 
+				"        ) AS temp " +
 				") e " + 
 				"where a.id = b.id  and b.id = c.id and c.id = d.id and d.id = e.id";
 //		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {

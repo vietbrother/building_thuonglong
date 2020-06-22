@@ -111,7 +111,11 @@ const Utils = {
         if(x == null || x == undefined){
             return '';
         }
+        x = this._roundNumber(x);
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    _roundNumber(num) {
+        return +(Math.round(num + "e+2")  + "e-2");
     },
     _viewValue(value){
         return (value == null || value == undefined ? '' : value);

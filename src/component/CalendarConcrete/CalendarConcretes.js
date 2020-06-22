@@ -26,7 +26,7 @@ import {
     Icon,
     Card,
     CardItem,
-    Tab, Tabs, TabHeading, Badge
+    Tab, Tabs, TabHeading, Badge, Toast
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -170,7 +170,7 @@ export default class CalendarConcretes extends Component {
         var contentMsgDetail = '';
         for (var i = 0; i < this.state.contractsActive.length; i++) {
             var item = this.state.contractsActive[i];
-            contentMsgDetail +=
+            contentMsgDetail += (i + 1) + '.' +
                 ' 📅 Ngày trộn: ' + Utils._renderDateFormat(item.ngayThang) + '\n' +
                 '   ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
                 '   👨 Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
@@ -182,7 +182,7 @@ export default class CalendarConcretes extends Component {
                 '   👨 Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
                 '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
                 '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
-                '----------------------------------------------------------- \n\n'
+                ' \n\n'
             ;
         }
         if(contentMsgDetail == '' || contentMsgDetail == null){
@@ -195,7 +195,7 @@ export default class CalendarConcretes extends Component {
                 buttonStyle: {backgroundColor: Config.mainColor}
             });
         } else {
-            Clipboard.setString(contentMsg);
+            Clipboard.setString(contentMsgDetail);
 
             Toast.show({
                 text: Config.successCopyToClipboard,
