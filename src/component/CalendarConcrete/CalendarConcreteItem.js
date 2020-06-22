@@ -248,25 +248,27 @@ export default class CalendarConcreteItem extends Component {
         //     ToastAndroid.CENTER
         // );
         var contentMsg =
-            'Ngày trộn: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
-            'Giờ trộn: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
-            'Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
+            ' 📅 Ngày trộn: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
+            '   ⏰ Giờ trộn: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
+            '   👨 Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
             //'SĐT khách hàng: 09878347\n' +
-            'Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +
-            'Mác bê tông: ' + Utils._viewValue(this.state.contract.tenMacBeTong)+ '\n' +
-            'Độ sụt : ' + Utils._viewValue(this.state.contract.tenDoSut) + '\n' +
-            'Khối lượng tạm tính:' + Utils._viewValue(this.state.contract.kldaBan) + '\n' +
-            'Kỹ thuật: ' + Utils._viewValue(this.state.contract.kyThuat) + '\n' +
-            'Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
-            'Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n';
+            '   ⛳ Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +
+            '   ✔ Mác bê tông: ' + Utils._viewValue(this.state.contract.tenMacBeTong)+ '\n' +
+            '   ✔ Độ sụt : ' + Utils._viewValue(this.state.contract.tenDoSut) + '\n' +
+            '   ✔ Khối lượng tạm tính:' + Utils._viewValue(this.state.contract.kldaBan) + '\n' +
+            '   👨 Kỹ thuật: ' + Utils._viewValue(this.state.contract.kyThuat) + '\n' +
+            '   👨 Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
+            '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n'
+            '⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊ \n\n'
+        ;
         //'Ghi chú';
 
         Clipboard.setString(contentMsg);
 
         Toast.show({
-            text: 'Đã sao chép thông tin',
+            text: Config.successCopyToClipboard,
             position: 'bottom',
-            buttonText: 'Ẩn',
+            buttonText: Config.btnHide,
             duration: 3000,
             buttonTextStyle: {color: "#fff"},
             buttonStyle: {backgroundColor: Config.mainColor}

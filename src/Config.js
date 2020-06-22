@@ -33,7 +33,8 @@ const Config = {
         apiStatisticBricks: '/api/main/v1/statistic/daily/bricks',
         apiStatisticDetail: '/api/main/v1/statistic/detail'
     },
-    sessionTime: 3600*24*7*1000,
+    // sessionTime: 3600*24*7*1000,
+    sessionTime: 3600*3*1000,
     url: 'http://103.94.18.249/jstore',
     ssl: false,
     // consumerKey: 'ck_155068b58dd6614b3ace920437df62399bb94503',
@@ -365,10 +366,13 @@ const Config = {
     btnReject: 'Từ chối',
     btnApply: 'Đồng ý',
     btnCopy: 'Sao chép',
+    btnCopyAll: 'Sao chép toàn bộ',
+    btnHide: 'Ẩn',
 
     //success
     success: 'Thành công',
     successApprove: 'Phê duyệt thành công',
+    successCopyToClipboard: 'Đã sao chép thông tin',
 
     //error
     err_login: 'Tên đăng nhập hoặc mật khẩu không đúng',
@@ -382,6 +386,7 @@ const Config = {
     err_device_code_not_valid: 'Mã bình phải có 6 hoặc 7 ký tự',
     err_device_code_exist: 'Mã bình đã được nhập',
     err_approve: 'Phê duyệt thất bại',
+    err_no_data: 'Không có dữ liệu',
 
     //confirm
     confirm_title: 'Thông báo',

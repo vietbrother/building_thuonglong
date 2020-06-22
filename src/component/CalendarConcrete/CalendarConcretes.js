@@ -14,7 +14,7 @@ import {
     NativeModules,
     Dimensions,
     Alert,
-    FlatList, Picker
+    FlatList, Picker, Clipboard
 } from 'react-native';
 import {
     Container,
@@ -39,6 +39,7 @@ import Config from "../../Config";
 // import HTML from 'react-native-render-html';
 import CalendarConcretesItem from "./CalendarConcreteItem";
 import styles from "../../styles/ContractStyles";
+import Utils from "../../utils/Utils";
 
 
 export default class CalendarConcretes extends Component {
@@ -165,6 +166,49 @@ export default class CalendarConcretes extends Component {
         }
     }
 
+    _copyToClipboard() {
+        var contentMsgDetail = '';
+        for (var i = 0; i < this.state.contractsActive.length; i++) {
+            var item = this.state.contractsActive[i];
+            contentMsgDetail +=
+                ' 📅 Ngày trộn: ' + Utils._renderDateFormat(item.ngayThang) + '\n' +
+                '   ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
+                '   👨 Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
+                //'SĐT khách hàng: 09878347\n' +
+                '   ⛳ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
+                '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
+                '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
+                '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.kldaBan) + '\n' +
+                '   👨 Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
+                '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
+                '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
+                '----------------------------------------------------------- \n\n'
+            ;
+        }
+        if(contentMsgDetail == '' || contentMsgDetail == null){
+            Toast.show({
+                text: Config.err_no_data,
+                position: 'bottom',
+                buttonText: 'Ẩn',
+                duration: 3000,
+                buttonTextStyle: {color: "#fff"},
+                buttonStyle: {backgroundColor: Config.mainColor}
+            });
+        } else {
+            Clipboard.setString(contentMsg);
+
+            Toast.show({
+                text: Config.successCopyToClipboard,
+                position: 'bottom',
+                buttonText: Config.btnHide,
+                duration: 3000,
+                buttonTextStyle: {color: "#fff"},
+                buttonStyle: {backgroundColor: Config.mainColor}
+            });
+        }
+
+    }
+
     render() {
         var left = (
             <Left style={{flex: 1}}>
@@ -260,6 +304,21 @@ export default class CalendarConcretes extends Component {
                                                 />
                                             </View>
                                             : <Text></Text>}
+                                        <CardItem>
+                                            <Left></Left>
+                                            <Right>
+                                                <TouchableOpacity
+                                                    style={styles.btnApprove}
+                                                    onPress={() => this._copyToClipboard()}
+                                                    activeOpacity={0.9}
+                                                >
+                                                    <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                                            name='ios-copy-outline'/> {Config.btnCopyAll}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </Right>
+                                        </CardItem>
+
                                         <FlatList
                                             style={{width: '100%'}}
                                             data={this.state.contractsActive}

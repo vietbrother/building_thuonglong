@@ -52,6 +52,7 @@ export default class Login extends Component {
 
     componentWillMount() {
         this.removeSessionKey();
+        this._fingerprintLogin();
     }
 
     async checkLogin() {
