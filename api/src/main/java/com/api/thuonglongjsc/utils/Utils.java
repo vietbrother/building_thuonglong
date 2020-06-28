@@ -57,7 +57,13 @@ public class Utils {
 			newState.setCode(Constants.APPROVE_STATE.NONE);
 			newState.setMessage(Constants.APPROVE_STATE_NAME.NONE);
 		} else if (Constants.APPROVE_STATE.APPROVE_DELETE.equals(stateId)) {
-
+			
+		} else if (Constants.APPROVE_STATE.COMPLETE.equals(stateId)) {
+			newState.setCode(Constants.APPROVE_STATE.COMPLETE);
+			newState.setMessage(Constants.APPROVE_STATE_NAME.COMPLETE);
+		} else if (Constants.APPROVE_STATE.UN_COMPLETE.equals(stateId)) {
+			newState.setCode(Constants.APPROVE_STATE.UN_COMPLETE);
+			newState.setMessage(Constants.APPROVE_STATE_NAME.UN_COMPLETE);
 		}
 		return newState;
 	}

@@ -87,6 +87,10 @@ public class MainController {
 		return bricksRepository.getBricksOrders(entity);
 	}
 	
+	@PostMapping("/v1/lichbangach")
+	public List<LichBanGach> getListLichBanGach(@RequestBody LichBanGachSearch entity) {
+		return userRepository.getListLichBanGach(entity);
+	}
 	
 	@PostMapping("/v1/approve")
 	public ResultDTO approve(@Valid @RequestBody ApproveInputDTO param) {

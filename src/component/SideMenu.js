@@ -450,6 +450,12 @@ const menusSecondaryItems = [
         icon: 'ios-grid',
         key: 'bricksContracts'
     },
+    {
+        id: 18,
+        title: Config.titleLichBanGach,
+        icon: 'md-calendar',
+        key: 'calendarBricks'
+    },
     // {
     //     id: 17,
     //     title: Config.titleGachXayDung,

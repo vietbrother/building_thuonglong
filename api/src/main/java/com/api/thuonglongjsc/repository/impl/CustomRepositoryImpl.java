@@ -30,6 +30,8 @@ import com.api.thuonglongjsc.dto.GiaBanVatLieu;
 import com.api.thuonglongjsc.dto.GiaBanVatLieuSearch;
 import com.api.thuonglongjsc.dto.HopDongBeTong;
 import com.api.thuonglongjsc.dto.HopDongBeTongSearch;
+import com.api.thuonglongjsc.dto.LichBanGach;
+import com.api.thuonglongjsc.dto.LichBanGachSearch;
 import com.api.thuonglongjsc.dto.LichXuatBeTong;
 import com.api.thuonglongjsc.dto.LichXuatBeTongSearch;
 import com.api.thuonglongjsc.dto.ResultDTO;
@@ -213,6 +215,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               a.TrangThaiText, \r\n" + 
 				"               a.NguoiTao, \r\n" + 
 				"               a.NgayTao,\r\n" + 
+				"               a.TrangThaiHoanThanh,\r\n" + 
 				"               a.TrangThai, a.IDChiNhanh\r\n" + 
 				"        FROM tblLichXuatBeTong AS a\r\n" + 
 				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
@@ -230,6 +233,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
+			
+			if(Constants.APPROVE_STATE.APPROVED.equals(entity.getIdTrangThai()) ) {
+				queryStr += " and a.TrangThaiHoanThanh != ? ";
+				lstParams.add(Constants.APPROVE_STATE_NAME.COMPLETE);
+			}
 		}
 		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
 		/*
@@ -292,18 +300,27 @@ public class CustomRepositoryImpl implements CustomRepository {
 				queryStr += " tblGiaBanGach ";
 			} else if (Constants.APPROVE_TYPE.CONTRACT_BRICK_TICKET.equals(approveType)) {
 				queryStr += " tblBanGach ";
+			} else if (Constants.APPROVE_TYPE.CALENDAR_BRICK.equals(approveType)) {
+				queryStr += " tblLichBanGach ";
 			} else {
 				message = "Invalid Approve Type";
 				res.setMessage(message);
 				return res;
 			}
+			
+			if (Constants.APPROVE_STATE.COMPLETE.equals(stateId) || Constants.APPROVE_STATE.UN_COMPLETE.equals(stateId)) {
+				queryStr += " set TrangThaiHoanThanh = ?  where id = ?";
+				lstParams.add(newState.getMessage());
+				lstParams.add(contractId);
+			} else {
+				queryStr += " set TrangThai = ?, TrangThaiText = ? , NguoiDuyet = ?  where id = ?";
 
-			queryStr += " set TrangThai = ?, TrangThaiText = ? , NguoiDuyet = ?  where id = ?";
+				lstParams.add(newState.getCode());
+				lstParams.add(newState.getMessage());
+				lstParams.add(username);
+				lstParams.add(contractId);
+			}
 
-			lstParams.add(newState.getCode());
-			lstParams.add(newState.getMessage());
-			lstParams.add(username);
-			lstParams.add(contractId);
 
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -579,6 +596,68 @@ public class CustomRepositoryImpl implements CustomRepository {
 			}
 			res = query.unwrap(org.hibernate.query.Query.class)
 					.setResultTransformer(Transformers.aliasToBean(GachXayDung.class)).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
+		return res;
+	}
+
+	@Override
+	public List<LichBanGach> getListLichBanGach(LichBanGachSearch entity) {
+		List<LichBanGach> res = new ArrayList<>();
+		String queryStr = "SELECT a.ID, \r\n" + 
+				"               a.NgayThang, \r\n" + 
+				"               a.GioXuat, \r\n" + 
+				"               i.TenChiNhanh, \r\n" + 
+				"               TenCongTrinh = h.CongTrinh, \r\n" + 
+				"               a.HangMuc, \r\n" + 
+				"               b.TenNhaCungCap, \r\n" + 
+				"               c.TenLoaiVatLieu, \r\n" + 
+				"               dv.TenDonViTinh, \r\n" + 
+				"               j.TenNhanVien, \r\n" + 
+				"               NguoiThuTien, \r\n" + 
+				"               a.KLThucXuat, \r\n" + 
+				"               a.KLKhachHang, \r\n" + 
+				"               a.CuLyVanChuyen, \r\n" + 
+				"               a.TrangThaiHoanThanh, \r\n" + 
+				"               a.TrangThaiText, \r\n" + 
+				"               a.KLDaBan, \r\n" + 
+				"               a.KLDaXuat, \r\n" + 
+				"               a.NguoiTao, \r\n" + 
+				"               a.NgayTao,\r\n" + 
+				"               a.TrangThai,a.IDChiNhanh " +
+				"        FROM tblLichBanGach AS a\r\n" + 
+				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
+				"             JOIN tblLoaiVatLieu AS c ON a.IDLoaiVatLieu = c.ID\r\n" + 
+				"             JOIN tblGiaBanGach AS h ON a.IDCongTrinh = h.ID\r\n" + 
+				"             JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID\r\n" + 
+				"             JOIN tblNhanSu AS j ON j.ID = a.IDNVKD\r\n" + 
+				"             JOIN tblDonViTinh AS dv ON dv.ID = a.IDDonViTinh " + 
+				" WHERE 1 = 1 ";
+		List<String> lstParams = new ArrayList<>();
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
+			queryStr += " and a.TrangThai = ? ";
+			lstParams.add(entity.getIdTrangThai());
+			
+			if(Constants.APPROVE_STATE.APPROVED.equals(entity.getIdTrangThai()) ) {
+				queryStr += " and a.TrangThaiHoanThanh != ? ";
+				lstParams.add(Constants.APPROVE_STATE_NAME.COMPLETE);
+			}
+		}
+		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			res = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(LichBanGach.class)).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("error ", e);

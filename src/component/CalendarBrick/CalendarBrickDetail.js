@@ -37,7 +37,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
 
-export default class ContractBrickDetail extends Component {
+export default class CalendarBrickDetail extends Component {
 
     constructor(props) {
         super(props);
@@ -74,7 +74,7 @@ export default class ContractBrickDetail extends Component {
             return (
                 <CardItem>
                     <Left>
-                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
+                        <TouchableOpacity onPress={() => Actions.pop()}>
                             <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnReject}
                             </Text>
                         </TouchableOpacity>
@@ -95,11 +95,14 @@ export default class ContractBrickDetail extends Component {
         } else if (status == Config.state.approved) {
             return (
                 <CardItem>
-                    <Body>
+                    <Left>
                         <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                             <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}</Text>
                         </TouchableOpacity>
-                    </Body>
+                    </Left>
+                    <Right>
+                        {this._renderCompleteButton()}
+                    </Right>
                 </CardItem>
             );
         } else {
@@ -141,7 +144,7 @@ export default class ContractBrickDetail extends Component {
             var param = {
                 approveStateId: Utils._getStatusCode(this.state.contract.trangThaiText),
                 contractId: this.state.contract.id,
-                type: Config.APPROVE_TYPE.CONTRACT_BRICK,
+                type: Config.APPROVE_TYPE.CALENDAR_BRICK,
                 username: this.state.username
             };
             // var res = Api.login(param);
@@ -160,7 +163,7 @@ export default class ContractBrickDetail extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 Utils._alert(Config.successApprove);
-                Actions.contractBricks({branchId: this.state.contract.idchiNhanh});
+                Actions.calendarBricks({branchId: this.state.contract.idchiNhanh});
             } else {
                 Utils._alert(Config.err_approve + " : " + responseObj.message);
             }
@@ -170,7 +173,76 @@ export default class ContractBrickDetail extends Component {
         }
     }
 
+    _renderCompleteButton() {
+        if (this.state.contract.trangThaiHoanThanh == Config.state.unComplete) {
+            return (
+                <TouchableOpacity
+                    style={styles.btnComplete}
+                    onPress={() => this._preComplete()}
+                    activeOpacity={0.9}
+                >
+                    <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                            name='md-power'/> {Config.btnComplete}
+                    </Text>
+                </TouchableOpacity>
+            );
+        }
+        return (<Text></Text>);
+    }
 
+    _preComplete() {
+        Alert.alert(
+            '',
+            Config.confirm_complete, // <- this part is optional, you can pass an empty string
+            [
+                {
+                    text: Config.btnApply, onPress: () => this._actionComplete()
+                },
+                {
+                    text: Config.btnCancel,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+            ],
+            {cancelable: false},
+        );
+    }
+
+    async _actionComplete() {
+        try {
+            this.setState({isLoading: true});
+
+            var param = {
+                approveStateId: Utils._getStatusComplateCode(this.state.contract.trangThaiHoanThanh),
+                contractId: this.state.contract.id,
+                type: Config.APPROVE_TYPE.CALENDAR_BRICK,
+                username: this.state.username
+            };
+            // var res = Api.login(param);
+            // this._getResLogin(res);
+
+            let response = await fetch(global.hostAPI[0] + Config.api.apiApprove, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            this.setState({isLoading: false});
+            console.log(responseObj);
+            if (responseObj != null && responseObj.code == Config.resCode.success) {
+                Utils._alert(Config.successComplete);
+                Actions.calendarBricks({branchId: this.state.contract.idchiNhanh});
+            } else {
+                Utils._alert(Config.err_complete + " : " + responseObj.message);
+            }
+        } catch (error) {
+            console.error(error);
+            this.setState({isLoading: false});
+        }
+    }
     render() {
         var left = (
             <Left style={{flex: 1}}>
@@ -199,14 +271,14 @@ export default class ContractBrickDetail extends Component {
                     //Text style of the Spinner Text
                     textStyle={styles.spinnerTextStyle}
                 />
-                <Navbar left={left} right={right} title={Config.brick.detail}/>
+                <Navbar left={left} right={right} title={Config.calendarBrick.detail}/>
                 <Content contentContainerStyle={{
                     paddingHorizontal: 10,
                     backgroundColor: '#f3f9ff'
                 }}>
                     <Card transparent>
                         <CardItem header bordered>
-                            <H3>{Config.brick.title}</H3>
+                            <H3>{Config.calendarBrick.title}</H3>
                         </CardItem>
 
                         <CardItem>
@@ -218,7 +290,7 @@ export default class ContractBrickDetail extends Component {
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-cube"
-                                                                      style={styles.icon}/> {Config.brick.branch} :
+                                                                      style={styles.icon}/> {Config.calendarBrick.branch} :
                                 </Text>
                             </Left>
                             <Right>
@@ -226,80 +298,113 @@ export default class ContractBrickDetail extends Component {
                             </Right>
                         </CardItem>
 
-
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
+                                                                      style={styles.icon}/> {Config.calendarBrick.providerName} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenNhaCungCap}</Text>
+                            </Right>
+                        </CardItem>
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="briefcase"
-                                                                      style={styles.icon}/> {Config.brick.TenLoaiVatLieu} :
+                                                                      style={styles.icon}/> {Config.calendarBrick.projectName} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text>{this.state.contract.tenLoaiVatLieu}</Text>
+                                <Text>{this.state.contract.tenCongTrinh}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brick.SoMeTron} :
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.calendarBrick.subsidence} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.soMeTron}</Text>
+                                <Text style={styles.title}>{this.state.contract.hangMuc}</Text>
                             </Right>
                         </CardItem>
                         <CardItem>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brick.KLXiMang} :
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.calendarBrick.materialType} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.title}>{this.state.contract.klxiMang}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brick.KLCat} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.klcat}</Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-grid"
-                                                                      style={styles.icon}/> {Config.brick.KLDaMat} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.kldaMat}</Text>
-                            </Right>
-                        </CardItem>
-
-
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="ios-bookmark"
-                                                                      style={styles.icon}/> {Config.brick.KLVLKhac} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.klvlkhac}</Text>
+                                <Text style={styles.title}>{this.state.contract.tenLoaiVatLieu}</Text>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
                             <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
-                                                                      style={styles.icon}/> {Config.brick.GhiChu} :
+                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
+                                                                      style={styles.icon}/> {Config.calendarBrick.unit} :
                                 </Text>
                             </Left>
                             <Right>
-                                <Text style={styles.statusRed}>{this.state.contract.ghiChu}</Text>
+                                <Text style={styles.title}>{this.state.contract.tenDonViTinh}</Text>
                             </Right>
                         </CardItem>
 
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
+                                                                      style={styles.icon}/> {Config.calendarBrick.employee} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.tenNhanVien}</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem bordered>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-person"
+                                                                      style={styles.icon}/> {Config.calendarBrick.cashier} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.title}>{this.state.contract.nguoiThuTien}</Text>
+                            </Right>
+                        </CardItem>
+
+                        <CardItem>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-speedometer"
+                                                                      style={styles.icon}/> {Config.calendarBrick.exportReal} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>
+                                    {Utils._renderPriceFormat(this.state.contract.klthucXuat)}
+                                </Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem >
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-speedometer"
+                                                                      style={styles.icon}/> {Config.calendarBrick.exportCustomer} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>
+                                    {Utils._renderPriceFormat(this.state.contract.klkhachHang)}
+                                </Text>
+                            </Right>
+                        </CardItem>
+
+                        <CardItem bordered>
+                            <Left>
+                                <Text style={styles.titleMuted}><Icon note name="md-star-outline"
+                                                                      style={styles.icon}/> {Config.calendarBrick.distance} :
+                                </Text>
+                            </Left>
+                            <Right>
+                                <Text style={styles.statusRed}>{this.state.contract.cuLyVanChuyen}</Text>
+                            </Right>
+                        </CardItem>
 
                         <CardItem>
                             <Left>
@@ -313,7 +418,7 @@ export default class ContractBrickDetail extends Component {
 
                                 {/*<Right>*/}
                                 <Body>
-                                <Text style={styles.muted}>{Config.common.date}</Text>
+                                <Text style={styles.muted}>{Config.calendarBrick.exportDate}</Text>
                                 <Button transparent>
                                     <Icon name="md-calendar" style={{}}/>
                                     <Text
@@ -322,6 +427,16 @@ export default class ContractBrickDetail extends Component {
                                 </Body>
                                 {/*</Right>*/}
                             </Left>
+                            <Right>
+                                <Body>
+                                <Text style={styles.muted}>{Config.calendarBrick.exportHour}</Text>
+                                <Button transparent>
+                                    <Icon name="ios-time-outline" style={{}}/>
+                                    <Text
+                                        style={styles.date}>{this.state.contract.gioXuat}</Text>
+                                </Button>
+                                </Body>
+                            </Right>
                         </CardItem>
 
 

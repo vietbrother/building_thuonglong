@@ -67,6 +67,29 @@ const Utils = {
         }
 
     },
+    _renderStatusComplete(status) {
+        if (status == Config.state.unComplete) {
+            return (
+                <Text style={styles.statusRed}>
+                    <Icon active name="md-lock" style={styles.statusRed}/> {Config.state.unComplete.toUpperCase()}
+                </Text>
+            );
+        } else if (status == Config.state.complete) {
+            return (
+                <Text style={styles.statusSuccess}>
+                    <Icon active name="md-checkmark"
+                          style={styles.statusSuccess}/> {Config.state.complete.toUpperCase()}
+                </Text>
+            );
+        } else {
+            return (
+                <Text style={styles.statusOther}>
+                    <Icon active name="md-trash" style={styles.statusOther}/> {status}
+                </Text>
+            );
+        }
+
+    },
     _getStatusCode(statusName) {
         if (statusName == Config.state.wait) {
             return Config.stateCode.wait;
@@ -74,6 +97,15 @@ const Utils = {
             return Config.stateCode.approved;
         } else if (statusName == Config.state.approve_delete) {
             return Config.stateCode.approve_delete;
+        }
+        return statusName;
+
+    },
+    _getStatusComplateCode(statusName) {
+        if (statusName == Config.state.complete) {
+            return Config.stateCode.unComplete;
+        } else if (statusName == Config.state.unComplete) {
+            return Config.stateCode.complete;
         }
         return statusName;
 

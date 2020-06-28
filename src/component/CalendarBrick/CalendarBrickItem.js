@@ -46,7 +46,7 @@ import styles from '../../styles/ContractStyles';
 
 import Utils from "../../utils/Utils";
 
-export default class CalendarConcreteItem extends Component {
+export default class CalendarBrickItem extends Component {
     constructor(props) {
         super(props);
 
@@ -71,45 +71,18 @@ export default class CalendarConcreteItem extends Component {
 
     render() {
         return (
-            // <View style={{
-            //     // flex: 1,
-            //     width: '100%', color: Config.mainColor, fontSize: 16,
-            //     // borderBottomColor: Colors.navbarBackgroundColor, borderBottomWidth: 1,
-            //     // paddingLeft: 10,
-            //     // paddingTop: 20, paddingBottom: 20
-            // }}>
-            //     <Spinner
-            //         //visibility of Overlay Loading Spinner
-            //         visible={this.state.isLoading}
-            //         //Text with the Spinner
-            //         //textContent={'Đang đăng nhập ...'}
-            //         //Text style of the Spinner Text
-            //         textStyle={styles.spinnerTextStyle}
-            //     />
-            // </View>
             <Card style={{flex: 1}}>
                 {this._renderMainContent()}
             </Card>
         );
     }
 
-    _renderDateFormat(date) {
-        if (date != null && date != undefined) {
-            var dateStr = date.substring(0, 10);
-            console.log(date);
-            dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
-                return d + '/' + m + '/' + y;
-            });
-            return dateStr;
-        } else {
-            return '';
-        }
-    }
+
 
     _renderMainContent() {
         return (
             <TouchableOpacity
-                onPress={() => Actions.calendarConcreteDetail({contract: this.props.contract})}
+                onPress={() => Actions.calendarBrickDetail({contract: this.props.contract})}
                 activeOpacity={0.9}
             >
                 <CardItem header>
@@ -120,7 +93,7 @@ export default class CalendarConcreteItem extends Component {
                         </Text>
                     </Left>
                     <Right>
-                        {this._renderStatus(this.state.contract.trangThaiText)}
+                        {Utils._renderStatus(this.state.contract.trangThaiText)}
                     </Right>
                 </CardItem>
                 <CardItem bordered>
@@ -137,11 +110,11 @@ export default class CalendarConcreteItem extends Component {
                         </Body>
                     </Right>
                 </CardItem>
-                <CardItem>
+                <CardItem bordered>
                     <Left>
                         <Body>
                         <Text style={styles.muted}><Icon note name="briefcase"
-                                                         style={styles.icon}/> {Config.calendarConcrete.projectName} :
+                                                         style={styles.icon}/> {Config.calendarBrick.projectName} :
                         </Text>
                         </Body>
                     </Left>
@@ -151,49 +124,21 @@ export default class CalendarConcreteItem extends Component {
                         </Body>
                     </Right>
                 </CardItem>
-                <CardItem bordered>
-                    <Left>
-                        <Body>
-                        <Text style={styles.muted}><Icon note name="md-information-circle"
-                                                         style={styles.icon}/> {Config.calendarConcrete.completeState} :
-                        </Text>
-                        </Body>
-                    </Left>
-                    <Right>
-                        <Body>
-                        {Utils._renderStatusComplete(this.state.contract.trangThaiHoanThanh)}
-                        </Body>
-                    </Right>
-                </CardItem>
-                {/*<CardItem bordered>*/}
-                {/*    <Left>*/}
-                {/*        <Body>*/}
-                {/*            <Text note><Icon note name="md-person" style={{fontSize: 16}}/> Nha cung cap : </Text>*/}
-                {/*            <Text>{this.state.contract.tenNhaCungCap}</Text>*/}
-                {/*        </Body>*/}
-                {/*    </Left>*/}
-                {/*    <Right>*/}
-                {/*        <Body>*/}
-                {/*            <Text note><Icon note name="md-business" style={{fontSize: 16}}/> Cong trinh : </Text>*/}
-                {/*            <Text>San van dong </Text>*/}
-                {/*        </Body>*/}
-                {/*    </Right>*/}
-                {/*</CardItem>*/}
 
                 <CardItem>
                     <Left>
                         <Body>
-                        <Text style={styles.muted}>{Config.calendarConcrete.exportDate}</Text>
+                        <Text style={styles.muted}>{Config.calendarBrick.exportDate}</Text>
                         <Button transparent>
                             <Icon name="md-calendar" style={{}}/>
-                            <Text style={styles.date}>{this._renderDateFormat(this.state.contract.ngayThang)}</Text>
+                            <Text style={styles.date}>{Utils._renderDateFormat(this.state.contract.ngayThang)}</Text>
                         </Button>
                         </Body>
                     </Left>
 
                     <Right>
                         <Body>
-                        <Text style={styles.muted}>{Config.calendarConcrete.exportHour}</Text>
+                        <Text style={styles.muted}>{Config.calendarBrick.exportHour}</Text>
                         <Button transparent>
                             <Icon name="ios-time-outline" style={{}}/>
                             <Text
@@ -267,13 +212,11 @@ export default class CalendarConcreteItem extends Component {
             '   👨 Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
             //'SĐT khách hàng: 09878347\n' +
             '   ⛳ Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +
-            '   ✔ Mác bê tông: ' + Utils._viewValue(this.state.contract.tenMacBeTong)+ '\n' +
-            '   ✔ Độ sụt : ' + Utils._viewValue(this.state.contract.tenDoSut) + '\n' +
-            '   ✔ Khối lượng tạm tính:' + Utils._viewValue(this.state.contract.kldaBan) + '\n' +
-            '   👨 Kỹ thuật: ' + Utils._viewValue(this.state.contract.kyThuat) + '\n' +
+            '   ✔ Tên loại vật liệu: ' + Utils._viewValue(this.state.contract.tenLoaiVatLieu)+ '\n' +
+            '   ✔ Khối lượng thực xuất:' + Utils._viewValue(this.state.contract.klthucXuat) + ' ' + this.state.contract.tenDonViTinh + '\n' +
             '   👨 Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
             '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n'
-            '⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊ \n\n'
+            ' \n\n'
         ;
         //'Ghi chú';
 

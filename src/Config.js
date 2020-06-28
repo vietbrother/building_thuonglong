@@ -27,6 +27,7 @@ const Config = {
         apiBricksContract: '/api/main/v1/brickscontracts',
         apiBricksTicket: '/api/main/v1/brickstickets',
         apiBricksOrders: '/api/main/v1/bricksorders',
+        apiLichBanGach: '/api/main/v1/lichbangach',
         apiApprove: '/api/main/v1/approve',
         apiStatisticTotal: '/api/main/v1/statistic/sumary',
         apiStatisticDaily: '/api/main/v1/statistic/daily',
@@ -73,6 +74,7 @@ const Config = {
     titleLichXuatBeTong: 'Lịch trộn bê tông',
     titleHopDongBanNVL: 'Hợp đồng bán NVL',
     titleHopDongBanGach: 'Hợp đồng bán gạch',
+    titleLichBanGach: 'Lịch bán gạch',
     titleGachMenBong: 'Hợp đồng gạch men bóng',
     titleGachTerrazo: 'Hợp đồng gạch terrazo',
     titleGachXayDung: 'Hợp đồng gạch xây dựng',
@@ -87,6 +89,7 @@ const Config = {
         CONTRACT_BRICK: '6',//duyet hop dong gach
         CONTRACT_BRICKS_SELL: '7',//duyet hop dong gach
         CONTRACT_BRICKS_TICKET: '8',//duyet hop dong gach
+        CALENDAR_BRICK : '9',//duyet lich gach
     },
 
     contractConcrete: {
@@ -127,6 +130,29 @@ const Config = {
         exportHour: 'Giờ xuất',
         distance: 'Cự ly vận chuyển',
         contractNumber: 'Số hợp đồng',
+        completeState: 'Trạng thái hoàn thành',
+
+    },
+
+    calendarBrick: {
+        title: 'Lịch bán gạch',
+        detail: 'Thông tin chi tiết',
+        branch: 'Chi nhánh',
+        providerName: 'Nhà cung cấp',
+        projectName: 'Công trình',
+        subsidence: 'Hạng mục',
+        materialType: 'Tên loại vật liệu',
+        unit: 'Đơn vị tính',
+        employee: 'Nhân viên',
+        technical: 'Kỹ thuật',
+        cashier: 'Thu ngân',
+        exportReal: 'Khối lượng thực xuất',
+        exportCustomer: 'Khối lượng khách hàng',
+        distance: 'Cự ly vận chuyển',
+        exportPlan: 'Khối lượng đã bán',
+        exportDate: 'Ngày xuất',
+        exportHour: 'Giờ xuất',
+        completeState: 'Trạng thái hoàn thành'
     },
 
     contractMaterial: {
@@ -320,12 +346,16 @@ const Config = {
         wait: 'Chờ duyệt',
         approved: 'Đã duyệt',
         approve_delete: 'Chờ duyệt xóa',
-        active: 'Đang thực hiện'
+        active: 'Đang thực hiện',
+        complete: 'Đã hoàn thành',
+        unComplete: 'Chưa hoàn thành',
     },
     stateCode: {
         wait: '1',
         approved: '2',
         approve_delete: '3',
+        complete: '4',
+        unComplete: '5',
     },
     resCode: {
         success: '0',
@@ -363,6 +393,7 @@ const Config = {
     btnSave: 'Lưu',
     btnClose: 'Đóng',
     btnApprove: 'Phê duyệt',
+    btnComplete: 'Hoàn thành',
     btnReject: 'Từ chối',
     btnApply: 'Đồng ý',
     btnCopy: 'Sao chép',
@@ -372,6 +403,7 @@ const Config = {
     //success
     success: 'Thành công',
     successApprove: 'Phê duyệt thành công',
+    successComplete: 'Hoàn thành thành công',
     successCopyToClipboard: 'Đã sao chép thông tin',
 
     //error
@@ -386,11 +418,13 @@ const Config = {
     err_device_code_not_valid: 'Mã bình phải có 6 hoặc 7 ký tự',
     err_device_code_exist: 'Mã bình đã được nhập',
     err_approve: 'Phê duyệt thất bại',
+    err_complete: 'Hoàn thành thất bại',
     err_no_data: 'Không có dữ liệu',
 
     //confirm
     confirm_title: 'Thông báo',
     confirm_approve: 'Bạn có chắc chắn phê duyệt hợp đồng này?',
+    confirm_complete: 'Bạn có chắc chắn hoàn thành lịch này?',
 
     //stage
     stage0KhongXacDinh: '0',

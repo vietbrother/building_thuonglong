@@ -110,6 +110,22 @@ export default StyleSheet.create({
         backgroundColor: Config.mainColor,
         color: 'white',
         padding: 10,
+        margin: 10,
+    },
+    btnComplete: {
+        borderBottomColor: Config.mainColor,
+        borderBottomWidth: 0.5,
+        borderTopColor: Config.mainColor,
+        borderTopWidth: 0.5,
+        borderLeftColor: Config.mainColor,
+        borderLeftWidth: 0.5,
+        borderRightColor: Config.mainColor,
+        borderRightWidth: 0.5,
+        borderRadius: 5,
+        backgroundColor: 'green',
+        color: 'white',
+        padding: 10,
+        margin: 10,
     },
     btnReject: {
         borderBottomColor: Config.warning,
@@ -124,6 +140,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         color: 'red',
         padding: 10,
+        margin: 10,
         fontSize: 18
     },
     titleApprove: {

@@ -117,10 +117,10 @@ export default class ContractMaterialDetail extends Component {
             return (
                 <CardItem>
                     <Left>
-                        <Button active onPress={() => Actions.pop()} transparent>
+                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                             <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                             </Text>
-                        </Button>
+                        </TouchableOpacity>
                     </Left>
                     <Right>
                         <TouchableOpacity
@@ -139,10 +139,10 @@ export default class ContractMaterialDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                    <Button active onPress={() => Actions.pop()} transparent>
+                    <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                         <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                         </Text>
-                    </Button>
+                    </TouchableOpacity>
                     </Body>
                 </CardItem>
             );
@@ -150,10 +150,10 @@ export default class ContractMaterialDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                    <Button active onPress={() => Actions.pop()} transparent>
+                    <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                         <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
                         </Text>
-                    </Button>
+                    </TouchableOpacity>
                     </Body>
                 </CardItem>
             );

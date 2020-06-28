@@ -21,6 +21,8 @@ public interface CustomRepository {
 	public List<GachTerrazo> getListGachTerrazo(GachTerrazoSearch entity);
 
 	public List<GachXayDung> getListGachXayDung(GachXayDungSearch entity);
+	
+	public List<LichBanGach> getListLichBanGach(LichBanGachSearch entity);
 
 	public ResultDTO approveContract(String contractId, String username, String approveType, String stateId);
 }

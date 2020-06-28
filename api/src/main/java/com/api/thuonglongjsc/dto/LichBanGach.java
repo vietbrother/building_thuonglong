@@ -3,75 +3,82 @@ package com.api.thuonglongjsc.dto;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-public class LichXuatBeTong {
+public class LichBanGach {
 	private String ID;
-	private Timestamp NgayThang;
-	private Time GioXuat;
-	private String TenChiNhanh;
-	private String TenCongTrinh;
-	private String TenNhaCungCap;
-	private String TenMacBeTong;
 
-	private String TenHinhThucBom;
+	private Timestamp NgayThang;
+
+	private Time GioXuat;
+
+	private String TenChiNhanh;
+
+	private String TenCongTrinh;
+
+	private String HangMuc;
+
+	private String TenNhaCungCap;
+
+	private String TenLoaiVatLieu;
+
+	private String TenDonViTinh;
+
 	private String TenNhanVien;
-	private String KyThuat;
+
 	private String NguoiThuTien;
 
-	private String TenLoaiDa;
-	private String TenDoSut;
-	private String TenYCDB;
-
 	private Double KLThucXuat;
+
 	private Double KLKhachHang;
+
 	private Double CuLyVanChuyen;
-	private Double KLDaBan;
-	private Double KLDaXuat;
+
+	private String TrangThaiHoanThanh;
 
 	private String TrangThaiText;
+
+	private Double KLDaBan;
+
+	private Double KLDaXuat;
+
 	private String NguoiTao;
+
 	private Timestamp NgayTao;
-	
 
 	private String IDChiNhanh;
 	private Integer TrangThai;
-	
-	private String TrangThaiHoanThanh;
 
-	public LichXuatBeTong() {
+	public LichBanGach() {
 		super();
 	}
 
-	public LichXuatBeTong(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
-			String tenNhaCungCap, String TenMacBeTong, String tenHinhThucBom, String tenNhanVien, String kyThuat,
-			String nguoiThuTien, String tenLoaiDa, String tenDoSut, String tenYCDB, Double kLThucXuat,
-			Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat, String trangThaiText,
-			String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai, String trangThaiHoanThanh) {
+	public LichBanGach(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
+			String hangMuc, String tenNhaCungCap, String tenLoaiVatLieu, String tenDonViTinh, String tenNhanVien,
+			String nguoiThuTien, Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, String trangThaiHoanThanh,
+			String trangThaiText, Double kLDaBan, Double kLDaXuat, String nguoiTao, Timestamp ngayTao,
+			String iDChiNhanh, Integer trangThai) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
 		GioXuat = gioXuat;
 		TenChiNhanh = tenChiNhanh;
 		TenCongTrinh = tenCongTrinh;
+		HangMuc = hangMuc;
 		TenNhaCungCap = tenNhaCungCap;
-		TenMacBeTong = TenMacBeTong;
-		TenHinhThucBom = tenHinhThucBom;
+		TenLoaiVatLieu = tenLoaiVatLieu;
+		TenDonViTinh = tenDonViTinh;
 		TenNhanVien = tenNhanVien;
-		KyThuat = kyThuat;
 		NguoiThuTien = nguoiThuTien;
-		TenLoaiDa = tenLoaiDa;
-		TenDoSut = tenDoSut;
-		TenYCDB = tenYCDB;
 		KLThucXuat = kLThucXuat;
 		KLKhachHang = kLKhachHang;
 		CuLyVanChuyen = cuLyVanChuyen;
+		TrangThaiHoanThanh = trangThaiHoanThanh;
+		TrangThaiText = trangThaiText;
 		KLDaBan = kLDaBan;
 		KLDaXuat = kLDaXuat;
-		TrangThaiText = trangThaiText;
 		NguoiTao = nguoiTao;
 		NgayTao = ngayTao;
 		IDChiNhanh = iDChiNhanh;
 		TrangThai = trangThai;
-		TrangThaiHoanThanh =  trangThaiHoanThanh;
 	}
 
 	public String getID() {
@@ -114,6 +121,14 @@ public class LichXuatBeTong {
 		TenCongTrinh = tenCongTrinh;
 	}
 
+	public String getHangMuc() {
+		return HangMuc;
+	}
+
+	public void setHangMuc(String hangMuc) {
+		HangMuc = hangMuc;
+	}
+
 	public String getTenNhaCungCap() {
 		return TenNhaCungCap;
 	}
@@ -122,20 +137,20 @@ public class LichXuatBeTong {
 		TenNhaCungCap = tenNhaCungCap;
 	}
 
-	public String getTenMacBeTong() {
-		return TenMacBeTong;
+	public String getTenLoaiVatLieu() {
+		return TenLoaiVatLieu;
 	}
 
-	public void setTenMacBeTong(String TenMacBeTong) {
-		TenMacBeTong = TenMacBeTong;
+	public void setTenLoaiVatLieu(String tenLoaiVatLieu) {
+		TenLoaiVatLieu = tenLoaiVatLieu;
 	}
 
-	public String getTenHinhThucBom() {
-		return TenHinhThucBom;
+	public String getTenDonViTinh() {
+		return TenDonViTinh;
 	}
 
-	public void setTenHinhThucBom(String tenHinhThucBom) {
-		TenHinhThucBom = tenHinhThucBom;
+	public void setTenDonViTinh(String tenDonViTinh) {
+		TenDonViTinh = tenDonViTinh;
 	}
 
 	public String getTenNhanVien() {
@@ -146,44 +161,12 @@ public class LichXuatBeTong {
 		TenNhanVien = tenNhanVien;
 	}
 
-	public String getKyThuat() {
-		return KyThuat;
-	}
-
-	public void setKyThuat(String kyThuat) {
-		KyThuat = kyThuat;
-	}
-
 	public String getNguoiThuTien() {
 		return NguoiThuTien;
 	}
 
 	public void setNguoiThuTien(String nguoiThuTien) {
 		NguoiThuTien = nguoiThuTien;
-	}
-
-	public String getTenLoaiDa() {
-		return TenLoaiDa;
-	}
-
-	public void setTenLoaiDa(String tenLoaiDa) {
-		TenLoaiDa = tenLoaiDa;
-	}
-
-	public String getTenDoSut() {
-		return TenDoSut;
-	}
-
-	public void setTenDoSut(String tenDoSut) {
-		TenDoSut = tenDoSut;
-	}
-
-	public String getTenYCDB() {
-		return TenYCDB;
-	}
-
-	public void setTenYCDB(String tenYCDB) {
-		TenYCDB = tenYCDB;
 	}
 
 	public Double getKLThucXuat() {
@@ -210,6 +193,22 @@ public class LichXuatBeTong {
 		CuLyVanChuyen = cuLyVanChuyen;
 	}
 
+	public String getTrangThaiHoanThanh() {
+		return TrangThaiHoanThanh;
+	}
+
+	public void setTrangThaiHoanThanh(String trangThaiHoanThanh) {
+		TrangThaiHoanThanh = trangThaiHoanThanh;
+	}
+
+	public String getTrangThaiText() {
+		return TrangThaiText;
+	}
+
+	public void setTrangThaiText(String trangThaiText) {
+		TrangThaiText = trangThaiText;
+	}
+
 	public Double getKLDaBan() {
 		return KLDaBan;
 	}
@@ -224,14 +223,6 @@ public class LichXuatBeTong {
 
 	public void setKLDaXuat(Double kLDaXuat) {
 		KLDaXuat = kLDaXuat;
-	}
-
-	public String getTrangThaiText() {
-		return TrangThaiText;
-	}
-
-	public void setTrangThaiText(String trangThaiText) {
-		TrangThaiText = trangThaiText;
 	}
 
 	public String getNguoiTao() {
@@ -266,24 +257,15 @@ public class LichXuatBeTong {
 		TrangThai = trangThai;
 	}
 
-	public String getTrangThaiHoanThanh() {
-		return TrangThaiHoanThanh;
-	}
-
-	public void setTrangThaiHoanThanh(String trangThaiHoanThanh) {
-		TrangThaiHoanThanh = trangThaiHoanThanh;
-	}
-
 	@Override
 	public String toString() {
-		return "LichXuatBeTong [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
-				+ TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh + ", TenNhaCungCap=" + TenNhaCungCap
-				+ ", TenMacBeTong=" + TenMacBeTong + ", TenHinhThucBom=" + TenHinhThucBom + ", TenNhanVien="
-				+ TenNhanVien + ", KyThuat=" + KyThuat + ", NguoiThuTien=" + NguoiThuTien + ", TenLoaiDa=" + TenLoaiDa
-				+ ", TenDoSut=" + TenDoSut + ", TenYCDB=" + TenYCDB + ", KLThucXuat=" + KLThucXuat + ", KLKhachHang="
-				+ KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen + ", KLDaBan=" + KLDaBan + ", KLDaXuat=" + KLDaXuat
-				+ ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao
-				+ ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
+		return "LichBanGach [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
+				+ TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh + ", HangMuc=" + HangMuc + ", TenNhaCungCap="
+				+ TenNhaCungCap + ", TenLoaiVatLieu=" + TenLoaiVatLieu + ", TenDonViTinh=" + TenDonViTinh
+				+ ", TenNhanVien=" + TenNhanVien + ", NguoiThuTien=" + NguoiThuTien + ", KLThucXuat=" + KLThucXuat
+				+ ", KLKhachHang=" + KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen + ", TrangThaiHoanThanh="
+				+ TrangThaiHoanThanh + ", TrangThaiText=" + TrangThaiText + ", KLDaBan=" + KLDaBan + ", KLDaXuat="
+				+ KLDaXuat + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh
+				+ ", TrangThai=" + TrangThai + "]";
 	}
-
 }

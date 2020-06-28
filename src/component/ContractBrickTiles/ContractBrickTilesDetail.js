@@ -74,11 +74,11 @@ export default class ContractBrickTilesDetail extends Component {
             return (
                 <CardItem>
                     <Left>
-                        <Button active onPress={() => Actions.pop()} transparent>
+                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                             <Text style={styles.btnReject}><Icon style={styles.icon}
                                                                  name='ios-close'/> {Config.btnReject}
                             </Text>
-                        </Button>
+                        </TouchableOpacity>
                     </Left>
                     <Right>
                         <TouchableOpacity
@@ -97,10 +97,10 @@ export default class ContractBrickTilesDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
+                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                             <Text style={styles.btnReject}><Icon style={styles.icon}
                                                                  name='ios-close'/> {Config.btnClose}</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </Body>
                 </CardItem>
             );
@@ -108,11 +108,11 @@ export default class ContractBrickTilesDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
+                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
                             <Text style={styles.btnReject}><Icon style={styles.icon}
                                                                  name='ios-close'/> {Config.btnClose}
                             </Text>
-                        </Button>
+                        </TouchableOpacity>
                     </Body>
                 </CardItem>
             );

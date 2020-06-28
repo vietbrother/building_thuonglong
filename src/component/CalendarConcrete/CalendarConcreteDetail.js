@@ -75,7 +75,8 @@ export default class CalendarConcreteDetail extends Component {
                 <CardItem>
                     <Left>
                         <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnReject}
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}
+                                                                 name='ios-close-circle-outline'/> {Config.btnReject}
                             </Text>
                         </Button>
                     </Left>
@@ -95,27 +96,35 @@ export default class CalendarConcreteDetail extends Component {
         } else if (status == Config.state.approved) {
             return (
                 <CardItem>
-                    <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}</Text>
-                        </Button>
-                    </Body>
+                    <Left>
+                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}
+                                                                 name='ios-close-circle-outline'/> {Config.btnClose}
+                            </Text>
+                        </TouchableOpacity>
+                    </Left>
+                    <Right>
+                        {this._renderCompleteButton()}
+                    </Right>
+
                 </CardItem>
             );
         } else {
             return (
                 <CardItem>
                     <Body>
-                        <Button active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-close-circle-outline'/> {Config.btnClose}
-                            </Text>
-                        </Button>
+                    <TouchableOpacity active onPress={() => Actions.pop()} transparent>
+                        <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}
+                                                             name='ios-close-circle-outline'/> {Config.btnClose}
+                        </Text>
+                    </TouchableOpacity>
                     </Body>
                 </CardItem>
             );
         }
 
     }
+
     _preApprove() {
         Alert.alert(
             '',
@@ -170,6 +179,76 @@ export default class CalendarConcreteDetail extends Component {
         }
     }
 
+    _renderCompleteButton() {
+        if (this.state.contract.trangThaiHoanThanh == Config.state.unComplete) {
+            return (
+                <TouchableOpacity
+                    style={styles.btnComplete}
+                    onPress={() => this._preComplete()}
+                    activeOpacity={0.9}
+                >
+                    <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                            name='md-power'/> {Config.btnComplete}
+                    </Text>
+                </TouchableOpacity>
+            );
+        }
+        return (<Text></Text>);
+    }
+
+    _preComplete() {
+        Alert.alert(
+            '',
+            Config.confirm_complete, // <- this part is optional, you can pass an empty string
+            [
+                {
+                    text: Config.btnApply, onPress: () => this._actionComplete()
+                },
+                {
+                    text: Config.btnCancel,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+            ],
+            {cancelable: false},
+        );
+    }
+
+    async _actionComplete() {
+        try {
+            this.setState({isLoading: true});
+
+            var param = {
+                approveStateId: Utils._getStatusComplateCode(this.state.contract.trangThaiHoanThanh),
+                contractId: this.state.contract.id,
+                type: Config.APPROVE_TYPE.CALENDAR_CONCRETE,
+                username: this.state.username
+            };
+            // var res = Api.login(param);
+            // this._getResLogin(res);
+
+            let response = await fetch(global.hostAPI[0] + Config.api.apiApprove, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            this.setState({isLoading: false});
+            console.log(responseObj);
+            if (responseObj != null && responseObj.code == Config.resCode.success) {
+                Utils._alert(Config.successComplete);
+                Actions.calendarConcretes({branchId: this.state.contract.idchiNhanh});
+            } else {
+                Utils._alert(Config.err_complete + " : " + responseObj.message);
+            }
+        } catch (error) {
+            console.error(error);
+            this.setState({isLoading: false});
+        }
+    }
 
     render() {
         var left = (
@@ -210,9 +289,11 @@ export default class CalendarConcreteDetail extends Component {
                         </CardItem>
 
                         <CardItem>
-                            <Left></Left>
-                            <Right>
+                            <Left>
                                 {Utils._renderStatus(this.state.contract.trangThaiText)}
+                            </Left>
+                            <Right>
+                                {Utils._renderStatusComplete(this.state.contract.trangThaiHoanThanh)}
                             </Right>
                         </CardItem>
                         <CardItem>
@@ -257,34 +338,34 @@ export default class CalendarConcreteDetail extends Component {
                             </Right>
                         </CardItem>
                         {/*<CardItem>*/}
-                            {/*<Left>*/}
-                                {/*<Text style={styles.titleMuted}><Icon note name="md-grid"*/}
-                                                                      {/*style={styles.icon}/> {Config.calendarConcrete.stoneType} :*/}
-                                {/*</Text>*/}
-                            {/*</Left>*/}
-                            {/*<Right>*/}
-                                {/*<Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>*/}
-                            {/*</Right>*/}
+                        {/*<Left>*/}
+                        {/*<Text style={styles.titleMuted}><Icon note name="md-grid"*/}
+                        {/*style={styles.icon}/> {Config.calendarConcrete.stoneType} :*/}
+                        {/*</Text>*/}
+                        {/*</Left>*/}
+                        {/*<Right>*/}
+                        {/*<Text style={styles.title}>{this.state.contract.tenLoaiDa}</Text>*/}
+                        {/*</Right>*/}
                         {/*</CardItem>*/}
                         {/*<CardItem>*/}
-                            {/*<Left>*/}
-                                {/*<Text style={styles.titleMuted}><Icon note name="ios-bookmark"*/}
-                                                                      {/*style={styles.icon}/> {Config.calendarConcrete.subsidence} :*/}
-                                {/*</Text>*/}
-                            {/*</Left>*/}
-                            {/*<Right>*/}
-                                {/*<Text style={styles.title}>{this.state.contract.tenDoSut}</Text>*/}
-                            {/*</Right>*/}
+                        {/*<Left>*/}
+                        {/*<Text style={styles.titleMuted}><Icon note name="ios-bookmark"*/}
+                        {/*style={styles.icon}/> {Config.calendarConcrete.subsidence} :*/}
+                        {/*</Text>*/}
+                        {/*</Left>*/}
+                        {/*<Right>*/}
+                        {/*<Text style={styles.title}>{this.state.contract.tenDoSut}</Text>*/}
+                        {/*</Right>*/}
                         {/*</CardItem>*/}
                         {/*<CardItem bordered>*/}
-                            {/*<Left>*/}
-                                {/*<Text style={styles.titleMuted}><Icon note name="md-star-outline"*/}
-                                                                      {/*style={styles.icon}/> {Config.calendarConcrete.specialRequire} :*/}
-                                {/*</Text>*/}
-                            {/*</Left>*/}
-                            {/*<Right>*/}
-                                {/*<Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>*/}
-                            {/*</Right>*/}
+                        {/*<Left>*/}
+                        {/*<Text style={styles.titleMuted}><Icon note name="md-star-outline"*/}
+                        {/*style={styles.icon}/> {Config.calendarConcrete.specialRequire} :*/}
+                        {/*</Text>*/}
+                        {/*</Left>*/}
+                        {/*<Right>*/}
+                        {/*<Text style={styles.statusRed}>{this.state.contract.tenYCDB}</Text>*/}
+                        {/*</Right>*/}
                         {/*</CardItem>*/}
 
                         <CardItem bordered>
@@ -335,7 +416,7 @@ export default class CalendarConcreteDetail extends Component {
                             </Left>
                             <Right>
                                 <Text style={styles.statusRed}>
-                                    {Utils._renderPriceFormat(this.state.contract.kldaXuat)}
+                                    {Utils._renderPriceFormat(this.state.contract.klthucXuat)}
                                 </Text>
                             </Right>
                         </CardItem>
