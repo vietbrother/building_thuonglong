@@ -282,9 +282,11 @@ export default class CalendarBrickDetail extends Component {
                         </CardItem>
 
                         <CardItem>
-                            <Left></Left>
-                            <Right>
+                            <Left>
                                 {Utils._renderStatus(this.state.contract.trangThaiText)}
+                            </Left>
+                            <Right>
+                                {Utils._renderStatusComplete(this.state.contract.trangThaiHoanThanh)}
                             </Right>
                         </CardItem>
                         <CardItem>
