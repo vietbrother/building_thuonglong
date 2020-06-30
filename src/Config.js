@@ -146,10 +146,10 @@ const Config = {
         employee: 'Nhân viên',
         technical: 'Kỹ thuật',
         cashier: 'Thu ngân',
-        exportReal: 'Khối lượng thực xuất',
-        exportCustomer: 'Khối lượng khách hàng',
+        exportReal: 'Số lượng thực xuất',
+        exportCustomer: 'Số lượng khách hàng',
         distance: 'Cự ly vận chuyển',
-        exportPlan: 'Khối lượng đã bán',
+        exportPlan: 'Số lượng đã bán',
         exportDate: 'Ngày xuất',
         exportHour: 'Giờ xuất',
         completeState: 'Trạng thái hoàn thành'

@@ -241,6 +241,8 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		// TODO Auto-generated method stub
 		List<ChartDataBricksDaily> res = new ArrayList<>();
 		List<String> lstParams = new ArrayList<>();
+		
+		/*
 		String condition = ""; 
 		
 		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
@@ -273,7 +275,24 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 //			queryStr += " and a.TrangThai = ? ";
 //			lstParams.add(entity.getIdTrangThai());
 //		}
+		*/
 		
+		String queryStr = "   SELECT c.TenLoaiVatLieu as name,   \r\n" + 
+				"           ISNULL(SUM(b.SoLuongNhan), 0) as value  \r\n" + 
+				"        FROM tblBanGach AS a  \r\n" + 
+				"             JOIN tblBanGach_ChiTiet AS b ON a.ID = b.IDBan  \r\n" + 
+				"			 join tblLoaiVatLieu as c on c.ID = b.IDLoaiVatLieu\r\n" + 
+				"        where 1 = 1 ";
+		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+			queryStr += " AND CONVERT(DATETIME, CONVERT(DATE, a.NgayThang)) = convert(date, ? , 103) ";
+			lstParams.add(entity.getNgayThang());//table a
+		}
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}
+		
+		queryStr += " GROUP BY c.TenLoaiVatLieu ";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {

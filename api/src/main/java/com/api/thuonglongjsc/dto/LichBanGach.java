@@ -8,7 +8,7 @@ public class LichBanGach {
 
 	private Timestamp NgayThang;
 
-	private Time GioXuat;
+	private String GioXuat;
 
 	private String TenChiNhanh;
 
@@ -51,7 +51,7 @@ public class LichBanGach {
 		super();
 	}
 
-	public LichBanGach(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
+	public LichBanGach(String iD, Timestamp ngayThang, String gioXuat, String tenChiNhanh, String tenCongTrinh,
 			String hangMuc, String tenNhaCungCap, String tenLoaiVatLieu, String tenDonViTinh, String tenNhanVien,
 			String nguoiThuTien, Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, String trangThaiHoanThanh,
 			String trangThaiText, Double kLDaBan, Double kLDaXuat, String nguoiTao, Timestamp ngayTao,
@@ -97,11 +97,11 @@ public class LichBanGach {
 		NgayThang = ngayThang;
 	}
 
-	public Time getGioXuat() {
+	public String getGioXuat() {
 		return GioXuat;
 	}
 
-	public void setGioXuat(Time gioXuat) {
+	public void setGioXuat(String gioXuat) {
 		GioXuat = gioXuat;
 	}
 

@@ -198,7 +198,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		List<LichXuatBeTong> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID, \r\n" + 
 				"               a.NgayThang, \r\n" + 
-				"               a.GioXuat, \r\n" + 
+				"               convert(varchar, a.GioXuat, 24) as GioXuat, \r\n" + 
 				"               i.TenChiNhanh, \r\n" + 
 				"               TenCongTrinh = h.CongTrinh, \r\n" + 
 				"               b.TenNhaCungCap, \r\n" + 
@@ -239,7 +239,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				lstParams.add(Constants.APPROVE_STATE_NAME.COMPLETE);
 			}
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc, a.GioXuat desc ";
 		/*
 		 * SELECT a.ID, a.NgayThang, a.GioXuat, i.TenChiNhanh, h.TenCongTrinh,
 		 * b.TenNhaCungCap, TenMacBeTong = c.TenLoaiVatLieu, TenLoaiDa =
@@ -608,7 +608,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		List<LichBanGach> res = new ArrayList<>();
 		String queryStr = "SELECT a.ID, \r\n" + 
 				"               a.NgayThang, \r\n" + 
-				"               a.GioXuat, \r\n" + 
+				"               convert(varchar, a.GioXuat, 24) as GioXuat, \r\n" + 
 				"               i.TenChiNhanh, \r\n" + 
 				"               TenCongTrinh = h.CongTrinh, \r\n" + 
 				"               a.HangMuc, \r\n" + 
@@ -649,7 +649,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				lstParams.add(Constants.APPROVE_STATE_NAME.COMPLETE);
 			}
 		}
-		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc";
+		queryStr += " ORDER BY a.TrangThaiText asc, a.NgayThang desc, a.GioXuat desc ";
 
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);

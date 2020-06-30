@@ -161,6 +161,7 @@ export default StyleSheet.create({
         borderTopColor: Config.mainColor,
         borderLeftColor: Config.mainColor,
         borderRightColor: Config.mainColor,
+        borderRadius: 10,
     },
     branchPickerItem: {
         borderWidth: 0.5,

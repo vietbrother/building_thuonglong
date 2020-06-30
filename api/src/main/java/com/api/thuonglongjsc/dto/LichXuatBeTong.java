@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 public class LichXuatBeTong {
 	private String ID;
 	private Timestamp NgayThang;
-	private Time GioXuat;
+	private String GioXuat;
 	private String TenChiNhanh;
 	private String TenCongTrinh;
 	private String TenNhaCungCap;
@@ -41,7 +41,7 @@ public class LichXuatBeTong {
 		super();
 	}
 
-	public LichXuatBeTong(String iD, Timestamp ngayThang, Time gioXuat, String tenChiNhanh, String tenCongTrinh,
+	public LichXuatBeTong(String iD, Timestamp ngayThang, String gioXuat, String tenChiNhanh, String tenCongTrinh,
 			String tenNhaCungCap, String TenMacBeTong, String tenHinhThucBom, String tenNhanVien, String kyThuat,
 			String nguoiThuTien, String tenLoaiDa, String tenDoSut, String tenYCDB, Double kLThucXuat,
 			Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat, String trangThaiText,
@@ -90,11 +90,11 @@ public class LichXuatBeTong {
 		NgayThang = ngayThang;
 	}
 
-	public Time getGioXuat() {
+	public String getGioXuat() {
 		return GioXuat;
 	}
 
-	public void setGioXuat(Time gioXuat) {
+	public void setGioXuat(String gioXuat) {
 		GioXuat = gioXuat;
 	}
 

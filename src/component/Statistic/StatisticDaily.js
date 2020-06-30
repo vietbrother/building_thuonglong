@@ -25,7 +25,7 @@ import {
     Card,
     CardItem,
     Row,
-    CardBody, H3, Body, Label, Grid, Col, Item, List, ListItem, Text
+    CardBody, H3, Body, Label, Grid, Col, Item, List, ListItem, Text, DatePicker
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 
@@ -71,8 +71,10 @@ export default class StatisticDaily extends Component {
             concretePlan: 0,
             bricks: [],
 
-            currentDate: new Date().toISOString().split('T')[0],
+            // currentDate: new Date().toISOString().split('T')[0],
+            currentDate: new Date(new Date().getTime() + +1000*60*60*24),
             isSearchingBricks: false,
+            chosenDate: new Date()
         };
     }
 
@@ -140,10 +142,13 @@ export default class StatisticDaily extends Component {
             concretePlan: 0
         });
         try {
-            var temp = new Date().toISOString().split('T')[0];
-            var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+            //var temp = new Date().toISOString().split('T')[0];
+            //var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+
+            var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
             console.log(currentDate);
             var param = {ngayThang: currentDate, idchiNhanh: branchId};
+            console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
                 method: 'POST',
                 headers: {
@@ -177,10 +182,12 @@ export default class StatisticDaily extends Component {
             bricks: []
         });
         try {
-            var temp = new Date().toISOString().split('T')[0];
-            var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+            //var temp = new Date().toISOString().split('T')[0];
+            //var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
+            var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
             console.log(currentDate);
             var param = {ngayThang: currentDate, idchiNhanh: branchId};
+            console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticBricks, {
                 method: 'POST',
                 headers: {
@@ -260,6 +267,22 @@ export default class StatisticDaily extends Component {
         this._loadDataBricks(itemValue);
     }
 
+    setDate(newDate) {
+        //alert(newDate);
+        this.setState({currentDate: new Date(newDate.getTime() + 1000*60*60*24)});
+        console.log('select date ' + newDate);
+        console.log('select branch ' + this.state.branchSelected);
+        this._loadData(this.state.branchSelected);
+        this._loadDataBricks(this.state.branchSelected);
+    }
+
+    formatDate(date) {
+        console.log(date);
+        var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+        console.log(nDate);
+        return nDate;
+    }
+
     render() {
         //var data = this.state.summaryData;
 
@@ -294,7 +317,35 @@ export default class StatisticDaily extends Component {
                     <Navbar left={left} right={right} title={Config.statisticDaily.title}/>
                     <Content style={styles.main}>
                         {/*<Card style={styles.bgMain}>*/}
-                            <CardItem>
+                        <Grid>
+                            <Col size={1} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
+                                <Text style={styles.muted}><Icon name="md-calendar"
+                                                                 style={styles.muted}/> {Config.calendarConcrete.exportDate}
+                                </Text>
+                                <DatePicker
+                                    defaultDate={new Date(this.state.currentDate.getTime() - 1000*60*60*24)}
+                                    //minimumDate={new Date()}
+                                    //maximumDate={new Date()}
+                                    locale={'en'}
+                                    timeZoneOffsetInMinutes={undefined}
+                                    modalTransparent={false}
+                                    animationType={'fade'}
+                                    androidMode={'default'}
+                                    placeHolderText={this.formatDate(this.state.currentDate.toISOString().split('T')[0])}
+                                    textStyle={{color: 'green'}}
+                                    placeHolderTextStyle={{color: Config.mainColor}}
+                                    onDateChange={(date) => {this.setDate(date)}}
+                                    disabled={false}
+                                    formatChosenDate={(date) => {
+                                        return this.formatDate(new Date(date.getTime()+1000*60*60*24).toISOString().split('T')[0]);
+                                    }}
+                                >
+                                </DatePicker>
+                            </Col>
+                            <Col size={1} style={{textAlign: 'center', padding: 5}}>
+                                <Text style={styles.muted}><Icon name="cube"
+                                                                 style={styles.muted}/> {Config.calendarConcrete.branch}
+                                </Text>
                                 <Picker
                                     style={[styles.branchPicker]}
                                     itemStyle={styles.branchPickerItem}
@@ -302,7 +353,8 @@ export default class StatisticDaily extends Component {
                                     onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
                                     {this._renderBranch()}
                                 </Picker>
-                            </CardItem>
+                            </Col>
+                        </Grid>
                         {/*</Card>*/}
 
                         <View style={[styles.header, styles.bgMain]}>
@@ -427,11 +479,11 @@ export default class StatisticDaily extends Component {
                             </CardItem>
 
                             {/*<CardItem>*/}
-                                {/*<Text*/}
-                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>*/}
+                            {/*<Text*/}
+                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>*/}
                             {/*</CardItem>*/}
                             {/*<CardItem bordered>*/}
-                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>*/}
+                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>*/}
                             {/*</CardItem>*/}
 
                             <CardItem>
@@ -491,27 +543,27 @@ export default class StatisticDaily extends Component {
 
                             <Text style={styles.labelHeader}></Text>
                             {/*<CardItem>*/}
-                                {/*<Text*/}
-                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
+                            {/*<Text*/}
+                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
                             {/*</CardItem>*/}
                             {/*<CardItem bordered>*/}
-                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo2040}</Text>*/}
+                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo2040}</Text>*/}
                             {/*</CardItem>*/}
 
                             {/*<CardItem>*/}
-                                {/*<Text*/}
-                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
+                            {/*<Text*/}
+                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
                             {/*</CardItem>*/}
                             {/*<CardItem bordered>*/}
-                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo3030}</Text>*/}
+                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo3030}</Text>*/}
                             {/*</CardItem>*/}
 
                             {/*<CardItem>*/}
-                                {/*<Text*/}
-                                    {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
+                            {/*<Text*/}
+                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
                             {/*</CardItem>*/}
                             {/*<CardItem bordered>*/}
-                                {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo5020}</Text>*/}
+                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo5020}</Text>*/}
                             {/*</CardItem>*/}
                         </List>
 

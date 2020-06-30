@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 
 public class ChartDataBricksDaily {
 	private String name;
-	private Integer value;
+	private Double value;
 	private String type;
 
 	public ChartDataBricksDaily() {
 		super();
 	}
 
-	public ChartDataBricksDaily(String name, Integer value, String type) {
+	public ChartDataBricksDaily(String name, Double value, String type) {
 		super();
 		this.name = name;
 		this.value = value;
@@ -29,11 +29,11 @@ public class ChartDataBricksDaily {
 		this.name = name;
 	}
 
-	public Integer getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 
