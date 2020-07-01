@@ -72,7 +72,7 @@ export default class StatisticDaily extends Component {
             bricks: [],
 
             // currentDate: new Date().toISOString().split('T')[0],
-            currentDate: new Date(new Date().getTime() + +1000*60*60*24),
+            currentDate: new Date(new Date().getTime() ),
             isSearchingBricks: false,
             chosenDate: new Date()
         };
@@ -116,7 +116,7 @@ export default class StatisticDaily extends Component {
                 Actions.login({sessionLoginKey: '123'});
             } else {
                 let lastLoginTime = await AsyncStorage.getItem('lastLoginTime');
-                var currentTime = new Date().valueOf();
+                var currentTime = new Date().getTime();
                 if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined && currentTime > parseInt(lastLoginTime) + Config.sessionTime) {
                     Actions.login({sessionLoginKey: '123'});
                 }
@@ -269,7 +269,7 @@ export default class StatisticDaily extends Component {
 
     setDate(newDate) {
         //alert(newDate);
-        this.setState({currentDate: new Date(newDate.getTime() + 1000*60*60*24)});
+        this.setState({currentDate: new Date(newDate.getTime() )});
         console.log('select date ' + newDate);
         console.log('select branch ' + this.state.branchSelected);
         this._loadData(this.state.branchSelected);
@@ -323,7 +323,7 @@ export default class StatisticDaily extends Component {
                                                                  style={styles.muted}/> {Config.calendarConcrete.exportDate}
                                 </Text>
                                 <DatePicker
-                                    defaultDate={new Date(this.state.currentDate.getTime() - 1000*60*60*24)}
+                                    defaultDate={new Date(this.state.currentDate}
                                     //minimumDate={new Date()}
                                     //maximumDate={new Date()}
                                     locale={'en'}
@@ -337,7 +337,7 @@ export default class StatisticDaily extends Component {
                                     onDateChange={(date) => {this.setDate(date)}}
                                     disabled={false}
                                     formatChosenDate={(date) => {
-                                        return this.formatDate(new Date(date.getTime()+1000*60*60*24).toISOString().split('T')[0]);
+                                        return this.formatDate(new Date(date.getTime()).toISOString().split('T')[0]);
                                     }}
                                 >
                                 </DatePicker>

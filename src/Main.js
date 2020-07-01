@@ -259,7 +259,7 @@ export default class Main extends Component {
                         <Scene key="orderDetail" component={OrderDetail} hideNavBar/>
 
                         <Scene key="bill" component={Bill} modal hideNavBar/>
-                        <Scene initial key="statistic" component={Statistic} hideNavBar/>
+                        <Scene initial type="reset"  key="statistic" component={Statistic} hideNavBar/>
 
                         <Scene key="manualScannerList" component={ManualScannerList} hideNavBar/>
                         <Scene key="stockInList" component={StockInList} hideNavBar/>

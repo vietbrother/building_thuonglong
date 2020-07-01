@@ -242,7 +242,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		List<ChartDataBricksDaily> res = new ArrayList<>();
 		List<String> lstParams = new ArrayList<>();
 		
-		/*
+		
 		String condition = ""; 
 		
 		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
@@ -275,10 +275,10 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 //			queryStr += " and a.TrangThai = ? ";
 //			lstParams.add(entity.getIdTrangThai());
 //		}
-		*/
 		
-		String queryStr = "   SELECT c.TenLoaiVatLieu as name,   \r\n" + 
-				"           ISNULL(SUM(b.SoLuongNhan), 0) as value  \r\n" + 
+		queryStr += " UNION ALL \r\n";
+		queryStr += "   SELECT c.TenLoaiVatLieu as name,   \r\n" + 
+				"           ISNULL(SUM(b.SoLuongNhan), 0) as value , 'BanGach' as type \r\n" + 
 				"        FROM tblBanGach AS a  \r\n" + 
 				"             JOIN tblBanGach_ChiTiet AS b ON a.ID = b.IDBan  \r\n" + 
 				"			 join tblLoaiVatLieu as c on c.ID = b.IDLoaiVatLieu\r\n" + 
