@@ -70,9 +70,11 @@ export default class StatisticDaily extends Component {
             concreateMixed: 0,
             concretePlan: 0,
             bricks: [],
+            bricksManufacture: [],
+            materialIn: [],
 
             // currentDate: new Date().toISOString().split('T')[0],
-            currentDate: new Date(new Date().getTime() ),
+            currentDate: new Date(new Date().getTime()),
             isSearchingBricks: false,
             chosenDate: new Date()
         };
@@ -178,8 +180,13 @@ export default class StatisticDaily extends Component {
 
     async _loadDataBricks(branchId) {
         this.setState({isSearchingBricks: true});
+        var bricks = [];
+        var bricksManufacture = [];
+        var materialIn = [];
         this.setState({
-            bricks: []
+            bricks: bricks,
+            bricksManufacture: bricksManufacture,
+            materialIn: materialIn,
         });
         try {
             //var temp = new Date().toISOString().split('T')[0];
@@ -199,8 +206,21 @@ export default class StatisticDaily extends Component {
             var responseObj = await response.json();
             console.log(responseObj);
             this.setState({isSearchingBricks: false});
+            if (responseObj != null && responseObj.length > 0) {
+                for (var i = 0; i < responseObj.length; i++) {
+                    if (responseObj[i].type == 'BanGach') {
+                        bricks.push(responseObj[i]);
+                    } else if (responseObj[i].type == 'NKVL') {
+                        materialIn.push(responseObj[i]);
+                    } else {
+                        bricksManufacture.push(responseObj[i]);
+                    }
+                }
+            }
             this.setState({
-                bricks: responseObj
+                bricks: bricks,
+                bricksManufacture: bricksManufacture,
+                materialIn: materialIn
             });
             // this.search(responseObj[0].id);
         } catch (e) {
@@ -269,7 +289,7 @@ export default class StatisticDaily extends Component {
 
     setDate(newDate) {
         //alert(newDate);
-        this.setState({currentDate: new Date(newDate.getTime() )});
+        this.setState({currentDate: new Date(newDate.getTime())});
         console.log('select date ' + newDate);
         console.log('select branch ' + this.state.branchSelected);
         this._loadData(this.state.branchSelected);
@@ -323,7 +343,7 @@ export default class StatisticDaily extends Component {
                                                                  style={styles.muted}/> {Config.calendarConcrete.exportDate}
                                 </Text>
                                 <DatePicker
-                                    defaultDate={new Date(this.state.currentDate}
+                                    defaultDate={new Date(this.state.currentDate)}
                                     //minimumDate={new Date()}
                                     //maximumDate={new Date()}
                                     locale={'en'}
@@ -334,7 +354,9 @@ export default class StatisticDaily extends Component {
                                     placeHolderText={this.formatDate(this.state.currentDate.toISOString().split('T')[0])}
                                     textStyle={{color: 'green'}}
                                     placeHolderTextStyle={{color: Config.mainColor}}
-                                    onDateChange={(date) => {this.setDate(date)}}
+                                    onDateChange={(date) => {
+                                        this.setDate(date)
+                                    }}
                                     disabled={false}
                                     formatChosenDate={(date) => {
                                         return this.formatDate(new Date(date.getTime()).toISOString().split('T')[0]);
@@ -541,6 +563,27 @@ export default class StatisticDaily extends Component {
                                 renderItem={({item}) => this._renderItemResult(item)}
                             />
 
+                            {this.state.bricksManufacture.length > 0 ?
+                                <ListItem itemDivider>
+                                    <Text style={styles.labelHeader}>{Config.statisticDaily.brickManufacture}</Text>
+                                </ListItem>
+                                : <Text></Text>}
+                            <FlatList
+                                key={'statisticDailyBricksManufactureId'}
+                                style={{width: '100%'}}
+                                data={this.state.bricksManufacture}
+                                renderItem={({item}) => this._renderItemResult(item)}
+                            />
+
+                            <ListItem itemDivider>
+                                <Text style={styles.labelHeader}>{Config.statisticDaily.materialIn}</Text>
+                            </ListItem>
+                            <FlatList
+                                key={'statisticDailyMaterialInId'}
+                                style={{width: '100%'}}
+                                data={this.state.materialIn}
+                                renderItem={({item}) => this._renderItemResult(item)}
+                            />
                             <Text style={styles.labelHeader}></Text>
                             {/*<CardItem>*/}
                             {/*<Text*/}

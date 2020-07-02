@@ -323,7 +323,8 @@ const Config = {
         fundTotalOut: 'Tổng Chi',
         fundLiabilitiesCollection: 'Công nợ phải thu',
         fundLiabilitiesPay: 'Công nợ phải trả',
-        brick: 'Gạch',
+        brick: 'Bán gạch',
+        brickManufacture: 'Gạch sản xuất',
         brickTazo3030: 'Số lượng gạch Tazo 30x30',
         brickTazo2040: 'Số lượng gạch Tazo 20x40',
         brickTazo5020: 'Số lượng gạch Tazo 50x20',
@@ -333,6 +334,7 @@ const Config = {
         concreteMix: 'Khối lượng bê tông đã trộn',
         concretePlan: 'Khối lượng bê tông dự kiến đổ',
         concreteUnit: 'm3',
+        materialIn: 'Nhập kho vật liệu'
     },
 
     common: {
