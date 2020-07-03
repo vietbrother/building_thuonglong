@@ -52,6 +52,7 @@ https://medium.com/skyshidigital/make-chart-in-react-native-671910254e9b
 https://medium.com/the-react-native-log/animated-charts-in-react-native-using-d3-and-art-21cd9ccf6c58
 https://snack.expo.io/embedded/@aboutreact/react-native-chart-kit?preview=true&platform=ios&iframeId=t099o2svbu&theme=dark
 https://stackoverflow.com/questions/40145301/preventing-hardware-back-button-android-for-react-native
+https://aboutreact.com/react-native-get-current-date-time/
 
 ## Documentation
 

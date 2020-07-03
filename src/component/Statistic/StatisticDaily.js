@@ -37,6 +37,7 @@ import Colors from "../../Colors";
 import Config from "../../Config";
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
+import moment from 'moment';
 
 
 export default class StatisticDaily extends Component {
@@ -74,9 +75,9 @@ export default class StatisticDaily extends Component {
             materialIn: [],
 
             // currentDate: new Date().toISOString().split('T')[0],
-            currentDate: new Date(new Date().getTime()),
+            currentDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),
             isSearchingBricks: false,
-            chosenDate: new Date()
+            chosenDate: moment().utcOffset('+07:00').format('DD/MM/YYYY')
         };
     }
 
@@ -147,6 +148,7 @@ export default class StatisticDaily extends Component {
             //var temp = new Date().toISOString().split('T')[0];
             //var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
 
+            console.log(this.state.currentDate);
             var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
             console.log(currentDate);
             var param = {ngayThang: currentDate, idchiNhanh: branchId};
@@ -245,6 +247,22 @@ export default class StatisticDaily extends Component {
         );
     }
 
+    _renderItemMaterialInResult(item) {
+        var key = new Date().valueOf().toString();
+        return (
+            <Card transparent>
+                <CardItem>
+                    <Text style={[styles.boxTitleSecond, styles.labelMain]}>
+                        {Utils.numberWithCommas(item.value)}
+                    </Text>
+                </CardItem>
+                <CardItem bordered>
+                    <Text style={styles.titleUnder}>{item.name}</Text>
+                </CardItem>
+            </Card>
+        );
+    }
+
 
     async _loadBranchData() {
         this.setState({isSearching: true});
@@ -289,7 +307,7 @@ export default class StatisticDaily extends Component {
 
     setDate(newDate) {
         //alert(newDate);
-        this.setState({currentDate: new Date(newDate.getTime())});
+        this.setState({currentDate: new Date(newDate.getTime() + 1000*60*60*24)});
         console.log('select date ' + newDate);
         console.log('select branch ' + this.state.branchSelected);
         this._loadData(this.state.branchSelected);
@@ -297,9 +315,8 @@ export default class StatisticDaily extends Component {
     }
 
     formatDate(date) {
-        console.log(date);
         var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-        console.log(nDate);
+        console.log('formatDate ' + nDate);
         return nDate;
     }
 
@@ -343,7 +360,7 @@ export default class StatisticDaily extends Component {
                                                                  style={styles.muted}/> {Config.calendarConcrete.exportDate}
                                 </Text>
                                 <DatePicker
-                                    defaultDate={new Date(this.state.currentDate)}
+                                    defaultDate={new Date()}
                                     //minimumDate={new Date()}
                                     //maximumDate={new Date()}
                                     locale={'en'}
@@ -351,7 +368,7 @@ export default class StatisticDaily extends Component {
                                     modalTransparent={false}
                                     animationType={'fade'}
                                     androidMode={'default'}
-                                    placeHolderText={this.formatDate(this.state.currentDate.toISOString().split('T')[0])}
+                                    placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
                                     textStyle={{color: 'green'}}
                                     placeHolderTextStyle={{color: Config.mainColor}}
                                     onDateChange={(date) => {
@@ -359,12 +376,13 @@ export default class StatisticDaily extends Component {
                                     }}
                                     disabled={false}
                                     formatChosenDate={(date) => {
-                                        return this.formatDate(new Date(date.getTime()).toISOString().split('T')[0]);
+                                        // return this.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                        return moment(date).format('DD/MM/YYYY');
                                     }}
                                 >
                                 </DatePicker>
                             </Col>
-                            <Col size={1} style={{textAlign: 'center', padding: 5}}>
+                            <Col size={2} style={{textAlign: 'center', padding: 5}}>
                                 <Text style={styles.muted}><Icon name="cube"
                                                                  style={styles.muted}/> {Config.calendarConcrete.branch}
                                 </Text>
@@ -582,7 +600,7 @@ export default class StatisticDaily extends Component {
                                 key={'statisticDailyMaterialInId'}
                                 style={{width: '100%'}}
                                 data={this.state.materialIn}
-                                renderItem={({item}) => this._renderItemResult(item)}
+                                renderItem={({item}) => this._renderItemMaterialInResult(item)}
                             />
                             <Text style={styles.labelHeader}></Text>
                             {/*<CardItem>*/}

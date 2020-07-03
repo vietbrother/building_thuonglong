@@ -320,16 +320,16 @@ export default class CalendarBrickDetail extends Component {
                                 <Text>{this.state.contract.tenCongTrinh}</Text>
                             </Right>
                         </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Text style={styles.titleMuted}><Icon note name="md-pricetag"
-                                                                      style={styles.icon}/> {Config.calendarBrick.subsidence} :
-                                </Text>
-                            </Left>
-                            <Right>
-                                <Text style={styles.title}>{this.state.contract.hangMuc}</Text>
-                            </Right>
-                        </CardItem>
+                        {/*<CardItem>*/}
+                            {/*<Left>*/}
+                                {/*<Text style={styles.titleMuted}><Icon note name="md-pricetag"*/}
+                                                                      {/*style={styles.icon}/> {Config.calendarBrick.subsidence} :*/}
+                                {/*</Text>*/}
+                            {/*</Left>*/}
+                            {/*<Right>*/}
+                                {/*<Text style={styles.title}>{this.state.contract.hangMuc}</Text>*/}
+                            {/*</Right>*/}
+                        {/*</CardItem>*/}
                         <CardItem>
                             <Left>
                                 <Text style={styles.titleMuted}><Icon note name="md-pricetag"

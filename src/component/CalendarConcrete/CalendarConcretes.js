@@ -26,7 +26,7 @@ import {
     Icon,
     Card,
     CardItem,
-    Tab, Tabs, TabHeading, Badge, Toast
+    Tab, Tabs, TabHeading, Badge, Toast, DatePicker, Col, Body
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -40,6 +40,7 @@ import Config from "../../Config";
 import CalendarConcretesItem from "./CalendarConcreteItem";
 import styles from "../../styles/ContractStyles";
 import Utils from "../../utils/Utils";
+import moment from "moment";
 
 
 export default class CalendarConcretes extends Component {
@@ -60,7 +61,8 @@ export default class CalendarConcretes extends Component {
             extractedText: "",
             searchText: '',
             branchSelected: '',
-            componentKey: new Date()
+            componentKey: new Date(),
+            copyDate: moment().utcOffset('+07:00').format('DD/MM/YYYY')
         };
     }
 
@@ -112,7 +114,6 @@ export default class CalendarConcretes extends Component {
 
 
     _renderItemResult(item) {
-        console.log(item);
         var key = new Date().valueOf();
         return (
             /*            <View style={{
@@ -168,22 +169,29 @@ export default class CalendarConcretes extends Component {
 
     _copyToClipboard() {
         var contentMsgDetail = '';
+        console.log(this.state.copyDate);
+        // var copyDate = Utils.formatDate(this.state.copyDate.toISOString().split('T')[0]);
+        var copyDate = this.state.copyDate;
+        //alert(copyDate);
+        var index = 0;
         for (var i = 0; i < this.state.contractsActive.length; i++) {
             var item = this.state.contractsActive[i];
-            contentMsgDetail += (i + 1) + '.' +
-                ' 📅 Ngày trộn: ' + Utils._renderDateFormat(item.ngayThang) + '\n' +
-                '   ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
-                '   👨 Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
-                //'SĐT khách hàng: 09878347\n' +
-                '   ⛳ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
-                '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
-                '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
-                '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.kldaBan) + '\n' +
-                '   👨 Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
-                '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
-                '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
-                ' \n\n'
-            ;
+            if (copyDate == Utils._renderDateFormat(item.ngayThang)) {
+                index++;
+                contentMsgDetail += index + '.' +
+                    '   ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
+                    '   👨 Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
+                    //'SĐT khách hàng: 09878347\n' +
+                    '   ⛳ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
+                    '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
+                    '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
+                    '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.kldaBan) + '\n' +
+                    '   👨 Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
+                    '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
+                    '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
+                    ' \n'
+                ;
+            }
         }
         if(contentMsgDetail == '' || contentMsgDetail == null){
             Toast.show({
@@ -195,6 +203,7 @@ export default class CalendarConcretes extends Component {
                 buttonStyle: {backgroundColor: Config.mainColor}
             });
         } else {
+            contentMsgDetail = Config.calendarConcrete.title + ' 📅 Ngày trộn: ' + copyDate + '\n\n' + contentMsgDetail;
             Clipboard.setString(contentMsgDetail);
 
             Toast.show({
@@ -207,6 +216,12 @@ export default class CalendarConcretes extends Component {
             });
         }
 
+    }
+
+    setDate(newDate) {
+        //alert(newDate);
+        this.setState({copyDate: moment(newDate).format('DD/MM/YYYY')});
+        console.log('select date ' + newDate);
     }
 
     render() {
@@ -305,7 +320,35 @@ export default class CalendarConcretes extends Component {
                                             </View>
                                             : <Text></Text>}
                                         <CardItem>
-                                            <Left></Left>
+                                            <Left>
+                                                <Body>
+                                                <Text style={styles.muted}><Icon name="md-calendar"
+                                                                                 style={styles.muted}/> {Config.common.copyDate}
+                                                </Text>
+                                                <DatePicker
+                                                    defaultDate={new Date()}
+                                                    //minimumDate={new Date()}
+                                                    //maximumDate={new Date()}
+                                                    locale={'en'}
+                                                    timeZoneOffsetInMinutes={undefined}
+                                                    modalTransparent={false}
+                                                    animationType={'fade'}
+                                                    androidMode={'default'}
+                                                    placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
+                                                    textStyle={{color: 'green'}}
+                                                    placeHolderTextStyle={{color: Config.mainColor}}
+                                                    onDateChange={(date) => {
+                                                        this.setDate(date)
+                                                    }}
+                                                    disabled={false}
+                                                    formatChosenDate={(date) => {
+                                                        // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                                        return moment(date).format('DD/MM/YYYY');
+                                                    }}
+                                                >
+                                                </DatePicker>
+                                                </Body>
+                                            </Left>
                                             <Right>
                                                 <TouchableOpacity
                                                     style={styles.btnApprove}
@@ -313,7 +356,7 @@ export default class CalendarConcretes extends Component {
                                                     activeOpacity={0.9}
                                                 >
                                                     <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                                            name='ios-copy-outline'/> {Config.btnCopyAll}
+                                                                                            name='ios-copy-outline'/> {Config.btnCopyByDate}
                                                     </Text>
                                                 </TouchableOpacity>
                                             </Right>

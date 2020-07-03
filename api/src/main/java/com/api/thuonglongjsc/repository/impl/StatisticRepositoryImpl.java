@@ -290,9 +290,26 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
-		}
-		
+		}		
 		queryStr += " GROUP BY c.TenLoaiVatLieu ";
+		
+		
+		queryStr += " UNION ALL \r\n";
+		queryStr += " SELECT b.TenLoaiVatLieu as name,     \r\n" + 
+				"               ISNULL(SUM(a.KLMua), 0)  as value , 'NKVL' as type   \r\n" + 
+				"        FROM tblNhapKhoVatLieu AS a    \r\n" + 
+				"    join tblLoaiVatLieu as b on b.ID = a.IDLoaiVatLieu  \r\n" + 
+				"        WHERE 1 = 1  \r\n" ;
+		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+			queryStr += " AND CONVERT(DATETIME, CONVERT(DATE, a.NgayThang)) = convert(date, ? , 103) ";
+			lstParams.add(entity.getNgayThang());//table a
+		}
+		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
+			queryStr += " and a.IDChiNhanh = ? ";
+			lstParams.add(entity.getIDChiNhanh());
+		}	
+		queryStr += "	and Loai = 1 \r\n" +
+				"  GROUP BY b.TenLoaiVatLieu  ";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {

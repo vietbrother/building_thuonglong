@@ -341,7 +341,8 @@ const Config = {
         fromDate: 'Từ ngày',
         toDate: 'Đến ngày',
         createDate: 'Ngày tạo',
-        date: 'Ngày tháng'
+        date: 'Ngày tháng',
+        copyDate: 'Ngày sao chép'
     },
     state: {
         name: 'Trạng thái',
@@ -400,6 +401,7 @@ const Config = {
     btnApply: 'Đồng ý',
     btnCopy: 'Sao chép',
     btnCopyAll: 'Sao chép tất cả',
+    btnCopyByDate: 'Sao chép theo ngày',
     btnHide: 'Ẩn',
 
     //success

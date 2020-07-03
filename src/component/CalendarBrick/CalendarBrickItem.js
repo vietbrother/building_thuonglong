@@ -207,8 +207,8 @@ export default class CalendarBrickItem extends Component {
         //     ToastAndroid.CENTER
         // );
         var contentMsg =
-            ' 📅 Ngày trộn: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
-            '   ⏰ Giờ trộn: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
+            ' 📅 Ngày xuất: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
+            '   ⏰ Giờ xuất: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
             '   👨 Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
             //'SĐT khách hàng: 09878347\n' +
             '   ⛳ Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +

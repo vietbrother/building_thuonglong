@@ -267,25 +267,24 @@ export default class Main extends Component {
                         <Scene key="billList" component={BillList} hideNavBar/>
 
 
-                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
-                        <Scene key="contractConcretes" component={ContractConcretes} hideNavBar/>
+                        <Scene type="reset" key="contractConcretes" component={ContractConcretes} hideNavBar/>
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
-                        <Scene key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
+                        <Scene type="reset" key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>
-                        <Scene key="contractMaterials" component={ContractMaterials} hideNavBar/>
+                        <Scene type="reset" key="contractMaterials" component={ContractMaterials} hideNavBar/>
                         <Scene key="contractMaterialDetail" component={ContractMaterialDetail} hideNavBar/>
 
-                        <Scene key="contractBricks" component={ContractBricks} hideNavBar/>
+                        <Scene type="reset" key="contractBricks" component={ContractBricks} hideNavBar/>
                         <Scene key="contractBrickDetail" component={ContractBrickDetail} hideNavBar/>
-                        <Scene key="contractBrickTerrazos" component={ContractBrickTerrazos} hideNavBar/>
+                        <Scene type="reset" key="contractBrickTerrazos" component={ContractBrickTerrazos} hideNavBar/>
                         <Scene key="contractBrickTerrazoDetail" component={ContractBrickTerrazoDetail} hideNavBar/>
-                        <Scene key="contractBrickTiles" component={ContractBrickTiles} hideNavBar/>
+                        <Scene type="reset" key="contractBrickTiles" component={ContractBrickTiles} hideNavBar/>
                         <Scene key="contractBrickTilesDetail" component={ContractBrickTilesDetail} hideNavBar/>
 
-                        <Scene key="bricksContracts" component={BricksContracts} hideNavBar/>
+                        <Scene type="reset" key="bricksContracts" component={BricksContracts} hideNavBar/>
                         <Scene key="bricksContractDetail" component={BricksContractDetail} hideNavBar/>
 
-                        <Scene key="calendarBricks" component={CalendarBricks} hideNavBar/>
+                        <Scene type="reset" key="calendarBricks" component={CalendarBricks} hideNavBar/>
                         <Scene key="calendarBrickDetail" component={CalendarBrickDetail} hideNavBar/>
 
                     </Scene>

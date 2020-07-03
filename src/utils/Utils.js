@@ -34,6 +34,12 @@ const Utils = {
             return '';
         }
     },
+    formatDate(date) {
+        console.log(date);
+        var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+        console.log(nDate);
+        return nDate;
+    },
     _renderPriceFormat(price) {
         return parseInt(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },

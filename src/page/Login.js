@@ -226,7 +226,7 @@ export default class Login extends Component {
                                    secureTextEntry={true} placeholderTextColor="#687373"/>
                         </Item>
                         {this.state.hasError ? <Text style={{
-                            color: Config.mainColor,
+                            color: 'red',
                             textAlign: 'center',
                             marginTop: 10
                         }}>{this.state.errorText}</Text> : null}
