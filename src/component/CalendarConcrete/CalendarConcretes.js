@@ -184,8 +184,8 @@ export default class CalendarConcretes extends Component {
                     //'SĐT khách hàng: 09878347\n' +
                     '   ⛳ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
                     '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
-                    '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
-                    '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.kldaBan) + '\n' +
+                    // '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
+                    '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.klthucXuat) + '\n' +
                     '   👨 Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
                     '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
                     '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +

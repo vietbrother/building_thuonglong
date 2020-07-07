@@ -211,7 +211,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               a.KLThucXuat, \r\n" + 
 				"               a.KLKhachHang, \r\n" + 
 				"               a.CuLyVanChuyen, \r\n" + 
-				"               a.KLDaBan, \r\n" + 
+//				"               a.KLDaBan, \r\n" + 
+				"               a.KLThucXuat as KLDaBan, \r\n" + 
 				"               a.KLDaXuat, \r\n" + 
 				"               a.TrangThaiText, \r\n" + 
 				"               a.NguoiTao, \r\n" + 

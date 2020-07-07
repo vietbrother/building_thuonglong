@@ -148,8 +148,8 @@ export default class StatisticDaily extends Component {
             //var temp = new Date().toISOString().split('T')[0];
             //var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
 
-            console.log(this.state.currentDate);
-            var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
+            // var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
+            var currentDate = this.state.currentDate;
             console.log(currentDate);
             var param = {ngayThang: currentDate, idchiNhanh: branchId};
             console.log(param);
@@ -193,7 +193,8 @@ export default class StatisticDaily extends Component {
         try {
             //var temp = new Date().toISOString().split('T')[0];
             //var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
-            var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
+            // var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
+            var currentDate = this.state.currentDate;
             console.log(currentDate);
             var param = {ngayThang: currentDate, idchiNhanh: branchId};
             console.log(param);
@@ -307,7 +308,8 @@ export default class StatisticDaily extends Component {
 
     setDate(newDate) {
         //alert(newDate);
-        this.setState({currentDate: new Date(newDate.getTime() + 1000*60*60*24)});
+        // this.setState({currentDate: new Date(newDate.getTime() + 1000*60*60*24)});
+        this.setState({currentDate: moment(newDate).format('DD/MM/YYYY')});
         console.log('select date ' + newDate);
         console.log('select branch ' + this.state.branchSelected);
         this._loadData(this.state.branchSelected);

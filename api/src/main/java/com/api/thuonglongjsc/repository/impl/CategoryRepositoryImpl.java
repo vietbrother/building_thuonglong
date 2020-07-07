@@ -68,7 +68,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 		String queryStr = "";
 		try {
 			if (Constants.CATEGORY_TYPE.PROVIDER.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT a.IDNhaCungCap as ID, " + " 	b.TenNhaCungCap as name \n"
+				queryStr += " select DISTINCT a.IDNhaCungCap as id, " + " 	b.TenNhaCungCap as name \n"
 						+ " FROM tblHopDongBanBeTong as a \n"
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblNhaCungCap as b on a.IDNhaCungCap = b.id \\n";
@@ -84,9 +84,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				// queryStr += " and a.TrangThai = ? ";
 				// lstParams.add(entity.getIdTrangThai());
 				// }
-
+				queryStr += " ORDER BY b.TenNhaCungCap ";
 			} else if (Constants.CATEGORY_TYPE.CONG_TRINH.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT a.ID as ID, " + " 	a.CongTrinh as name \n"
+				queryStr += " select DISTINCT a.ID as id, " + " 	a.CongTrinh as name \n"
 						+ " FROM tblHopDongBanBeTong as a \n"
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n";
 				queryStr += " where 1 = 1 ";
@@ -101,8 +101,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 					lstParams.add(entity.getIDNhaCungCap());
 				}
 				queryStr += " and a.TrangThai = 2 ";
+				queryStr += " ORDER BY a.CongTrinh ";
 			} else if (Constants.CATEGORY_TYPE.HINH_THUC_BOM.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.HinhThucBom as ID, " + " 	b.TenHinhThucBom as name \n"
+				queryStr += " select DISTINCT i.HinhThucBom as id, " + " 	b.TenHinhThucBom as name \n"
 						+ " FROM tblHopDongBanBeTong_Bom as i \n"
 						+ " 	JOIN tblHinhThucBom as b on i.HinhThucBom = b.ID \n";
 				queryStr += " where 1 = 1 ";
@@ -115,7 +116,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				queryStr += " and i.TrangThai = 2 ";
 
 			} else if (Constants.CATEGORY_TYPE.MAC_BE_TONG.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.MacBeTong as ID, " + " 	b.TenLoaiVatLieu as name \n"
+				queryStr += " select DISTINCT i.MacBeTong as id, " + " 	b.TenLoaiVatLieu as name \n"
 						+ " FROM tblHopDongBanBeTong as a \n"
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblLoaiVatLieu as b on i.MacBeTong = b.ID \n";
@@ -129,7 +130,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				queryStr += " and a.TrangThai = 2 ";
 
 			} else if (Constants.CATEGORY_TYPE.EMPLOYEE.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDNhanVien as ID, " + " 	b.TenNhanVien as name \n"
+				queryStr += " select DISTINCT i.IDNhanVien as id, " + " 	b.TenNhanVien as name \n"
 						+ " FROM tblHopDongBanBeTong as a \n"
 						+ " 	JOIN tblHopDongBanBeTong_NVKD as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblNhanSu as b on i.IDNhanVien = b.ID \n";
@@ -146,9 +147,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				return res;
 			}
 
-			queryStr += " ORDER BY name ";
+			
 
-			Query query = entityManager.createNativeQuery(queryStr, CategoryDTO.class);
+			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
 				query.setParameter(i + 1, lstParams.get(i));
 			}
@@ -205,7 +206,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 		String queryStr = "";
 		try {
 			if (Constants.CATEGORY_TYPE.PROVIDER.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT a.IDNhaCungCap as ID, " + " 	b.TenNhaCungCap as name \n"
+				queryStr += " select DISTINCT a.IDNhaCungCap as id, " + " 	b.TenNhaCungCap as name \n"
 						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_ChiTiet as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblNhaCungCap as b on a.IDNhaCungCap = b.id \\n";
 				queryStr += " where 1 = 1 ";
@@ -222,7 +223,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				// }
 
 			} else if (Constants.CATEGORY_TYPE.CONG_TRINH.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT a.ID as ID, " + " 	a.CongTrinh as name \n"
+				queryStr += " select DISTINCT a.ID as id, " + " 	a.CongTrinh as name \n"
 						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_ChiTiet as i on a.id = i.IDHD \n";
 				queryStr += " where 1 = 1 ";
 
@@ -237,7 +238,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				}
 				queryStr += " and a.TrangThai = 2 ";
 			} else if (Constants.CATEGORY_TYPE.DON_VI_TINH.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDDonViTinh as ID, " + " 	b.TenDonViTinh as name \n"
+				queryStr += " select DISTINCT i.IDDonViTinh as id, " + " 	b.TenDonViTinh as name \n"
 						+ " FROM tblGiaBanGach as a \n"
 						+ " 	JOIN tblGiaBanGach_ChiTiet as i on a.ID = i.IDHD \n"
 				+ " 	JOIN tblDonViTinh as b on i.IDDonViTinh = b.ID \n";
@@ -257,7 +258,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				queryStr += " and a.TrangThai = 2 ";
 
 			} else if (Constants.CATEGORY_TYPE.NHOM_VAT_LIEU.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDNhomVatLieu as ID, " + " 	b.TenNhomVatLieu as name \n"
+				queryStr += " select DISTINCT i.IDNhomVatLieu as id, " + " 	b.TenNhomVatLieu as name \n"
 						+ " FROM tblGiaBanGach as a \n"
 						+ " 	JOIN tblGiaBanGach_ChiTiet as i on a.ID = i.IDHD \n"
 				+ " 	JOIN tblNhomVatLieu as b on i.IDNhomVatLieu = b.ID \n";
@@ -271,7 +272,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				
 				queryStr += " and a.TrangThai = 2 ";
 			} else if (Constants.CATEGORY_TYPE.LOAI_VAT_LIEU.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDLoaiVatLieu as ID, " + " 	b.TenLoaiVatLieu as name \n"
+				queryStr += " select DISTINCT i.IDLoaiVatLieu as id, " + " 	b.TenLoaiVatLieu as name \n"
 						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_ChiTiet as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblLoaiVatLieu as b on i.IDLoaiVatLieu = b.ID \n";
 				queryStr += " where 1 = 1 ";
@@ -289,7 +290,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				queryStr += " and a.TrangThai = 2 ";
 
 			} else if (Constants.CATEGORY_TYPE.EMPLOYEE.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDNhanVien as ID, " + " 	b.TenNhanVien as name \n"
+				queryStr += " select DISTINCT i.IDNhanVien as id, " + " 	b.TenNhanVien as name \n"
 						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_NVKD as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblNhanSu as b on i.IDNhanVien = b.ID \n";
 				queryStr += " where 1 = 1 ";

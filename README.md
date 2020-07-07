@@ -53,6 +53,7 @@ https://medium.com/the-react-native-log/animated-charts-in-react-native-using-d3
 https://snack.expo.io/embedded/@aboutreact/react-native-chart-kit?preview=true&platform=ios&iframeId=t099o2svbu&theme=dark
 https://stackoverflow.com/questions/40145301/preventing-hardware-back-button-android-for-react-native
 https://aboutreact.com/react-native-get-current-date-time/
+https://stackoverflow.com/questions/51040637/datepicker-nativebase-format-of-the-picked-date
 
 ## Documentation
 
