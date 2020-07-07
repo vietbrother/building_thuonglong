@@ -17,6 +17,8 @@ public class LichBanGach {
 	private String HangMuc;
 
 	private String TenNhaCungCap;
+	private String DiaChi;
+	private String SoDienThoai;
 
 	private String TenLoaiVatLieu;
 
@@ -52,10 +54,10 @@ public class LichBanGach {
 	}
 
 	public LichBanGach(String iD, Timestamp ngayThang, String gioXuat, String tenChiNhanh, String tenCongTrinh,
-			String hangMuc, String tenNhaCungCap, String tenLoaiVatLieu, String tenDonViTinh, String tenNhanVien,
-			String nguoiThuTien, Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, String trangThaiHoanThanh,
-			String trangThaiText, Double kLDaBan, Double kLDaXuat, String nguoiTao, Timestamp ngayTao,
-			String iDChiNhanh, Integer trangThai) {
+			String hangMuc, String tenNhaCungCap, String diaChi, String soDienThoai, String tenLoaiVatLieu,
+			String tenDonViTinh, String tenNhanVien, String nguoiThuTien, Double kLThucXuat, Double kLKhachHang,
+			Double cuLyVanChuyen, String trangThaiHoanThanh, String trangThaiText, Double kLDaBan, Double kLDaXuat,
+			String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -64,6 +66,8 @@ public class LichBanGach {
 		TenCongTrinh = tenCongTrinh;
 		HangMuc = hangMuc;
 		TenNhaCungCap = tenNhaCungCap;
+		DiaChi = diaChi;
+		SoDienThoai = soDienThoai;
 		TenLoaiVatLieu = tenLoaiVatLieu;
 		TenDonViTinh = tenDonViTinh;
 		TenNhanVien = tenNhanVien;
@@ -135,6 +139,22 @@ public class LichBanGach {
 
 	public void setTenNhaCungCap(String tenNhaCungCap) {
 		TenNhaCungCap = tenNhaCungCap;
+	}
+
+	public String getDiaChi() {
+		return DiaChi;
+	}
+
+	public void setDiaChi(String diaChi) {
+		DiaChi = diaChi;
+	}
+
+	public String getSoDienThoai() {
+		return SoDienThoai;
+	}
+
+	public void setSoDienThoai(String soDienThoai) {
+		SoDienThoai = soDienThoai;
 	}
 
 	public String getTenLoaiVatLieu() {

@@ -10,6 +10,8 @@ public class LichXuatBeTong {
 	private String TenChiNhanh;
 	private String TenCongTrinh;
 	private String TenNhaCungCap;
+	private String DiaChi;
+	private String SoDienThoai;
 	private String TenMacBeTong;
 
 	private String TenHinhThucBom;
@@ -30,11 +32,10 @@ public class LichXuatBeTong {
 	private String TrangThaiText;
 	private String NguoiTao;
 	private Timestamp NgayTao;
-	
 
 	private String IDChiNhanh;
 	private Integer TrangThai;
-	
+
 	private String TrangThaiHoanThanh;
 
 	public LichXuatBeTong() {
@@ -42,10 +43,11 @@ public class LichXuatBeTong {
 	}
 
 	public LichXuatBeTong(String iD, Timestamp ngayThang, String gioXuat, String tenChiNhanh, String tenCongTrinh,
-			String tenNhaCungCap, String TenMacBeTong, String tenHinhThucBom, String tenNhanVien, String kyThuat,
-			String nguoiThuTien, String tenLoaiDa, String tenDoSut, String tenYCDB, Double kLThucXuat,
-			Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat, String trangThaiText,
-			String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai, String trangThaiHoanThanh) {
+			String tenNhaCungCap, String diaChi, String soDienThoai, String tenMacBeTong, String tenHinhThucBom,
+			String tenNhanVien, String kyThuat, String nguoiThuTien, String tenLoaiDa, String tenDoSut, String tenYCDB,
+			Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat,
+			String trangThaiText, String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai,
+			String trangThaiHoanThanh) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -53,7 +55,9 @@ public class LichXuatBeTong {
 		TenChiNhanh = tenChiNhanh;
 		TenCongTrinh = tenCongTrinh;
 		TenNhaCungCap = tenNhaCungCap;
-		TenMacBeTong = TenMacBeTong;
+		DiaChi = diaChi;
+		SoDienThoai = soDienThoai;
+		TenMacBeTong = tenMacBeTong;
 		TenHinhThucBom = tenHinhThucBom;
 		TenNhanVien = tenNhanVien;
 		KyThuat = kyThuat;
@@ -71,7 +75,7 @@ public class LichXuatBeTong {
 		NgayTao = ngayTao;
 		IDChiNhanh = iDChiNhanh;
 		TrangThai = trangThai;
-		TrangThaiHoanThanh =  trangThaiHoanThanh;
+		TrangThaiHoanThanh = trangThaiHoanThanh;
 	}
 
 	public String getID() {
@@ -274,16 +278,33 @@ public class LichXuatBeTong {
 		TrangThaiHoanThanh = trangThaiHoanThanh;
 	}
 
+	public String getDiaChi() {
+		return DiaChi;
+	}
+
+	public void setDiaChi(String diaChi) {
+		DiaChi = diaChi;
+	}
+
+	public String getSoDienThoai() {
+		return SoDienThoai;
+	}
+
+	public void setSoDienThoai(String soDienThoai) {
+		SoDienThoai = soDienThoai;
+	}
+
 	@Override
 	public String toString() {
 		return "LichXuatBeTong [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
-				+ TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh + ", TenNhaCungCap=" + TenNhaCungCap
-				+ ", TenMacBeTong=" + TenMacBeTong + ", TenHinhThucBom=" + TenHinhThucBom + ", TenNhanVien="
-				+ TenNhanVien + ", KyThuat=" + KyThuat + ", NguoiThuTien=" + NguoiThuTien + ", TenLoaiDa=" + TenLoaiDa
-				+ ", TenDoSut=" + TenDoSut + ", TenYCDB=" + TenYCDB + ", KLThucXuat=" + KLThucXuat + ", KLKhachHang="
-				+ KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen + ", KLDaBan=" + KLDaBan + ", KLDaXuat=" + KLDaXuat
-				+ ", TrangThaiText=" + TrangThaiText + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao
-				+ ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + "]";
+				+ TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh + ", TenNhaCungCap=" + TenNhaCungCap + ", DiaChi="
+				+ DiaChi + ", SoDienThoai=" + SoDienThoai + ", TenMacBeTong=" + TenMacBeTong + ", TenHinhThucBom="
+				+ TenHinhThucBom + ", TenNhanVien=" + TenNhanVien + ", KyThuat=" + KyThuat + ", NguoiThuTien="
+				+ NguoiThuTien + ", TenLoaiDa=" + TenLoaiDa + ", TenDoSut=" + TenDoSut + ", TenYCDB=" + TenYCDB
+				+ ", KLThucXuat=" + KLThucXuat + ", KLKhachHang=" + KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen
+				+ ", KLDaBan=" + KLDaBan + ", KLDaXuat=" + KLDaXuat + ", TrangThaiText=" + TrangThaiText + ", NguoiTao="
+				+ NguoiTao + ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai
+				+ ", TrangThaiHoanThanh=" + TrangThaiHoanThanh + "]";
 	}
 
 }

@@ -202,6 +202,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               i.TenChiNhanh, \r\n" + 
 				"               TenCongTrinh = h.CongTrinh, \r\n" + 
 				"               b.TenNhaCungCap, \r\n" + 
+				"               b.DiaChi, b.SoDienThoai, \r\n" + 
 				"               TenMacBeTong = c.TenLoaiVatLieu, \r\n" + 
 				"               g.TenHinhThucBom, \r\n" + 
 				"               j.TenNhanVien, \r\n" + 
@@ -613,6 +614,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               TenCongTrinh = h.CongTrinh, \r\n" + 
 				"               a.HangMuc, \r\n" + 
 				"               b.TenNhaCungCap, \r\n" + 
+				"               b.DiaChi, b.SoDienThoai, \r\n" + 
 				"               c.TenLoaiVatLieu, \r\n" + 
 				"               dv.TenDonViTinh, \r\n" + 
 				"               j.TenNhanVien, \r\n" + 

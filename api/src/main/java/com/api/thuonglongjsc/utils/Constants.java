@@ -35,4 +35,15 @@ public class Constants {
 		public static String UN_COMPLETE = "Chưa hoàn thành";//hoan thanh
 	}
 	
+	public static interface CATEGORY_TYPE {
+		public static String PROVIDER = "PROVIDER";
+		public static String CONG_TRINH = "CONG_TRINH";
+		public static String HINH_THUC_BOM = "HINH_THUC_BOM";
+		public static String MAC_BE_TONG = "MAC_BE_TONG";
+		public static String EMPLOYEE = "EMPLOYEE";
+		
+		public static String NHOM_VAT_LIEU = "NHOM_VAT_LIEU";
+		public static String LOAI_VAT_LIEU = "LOAI_VAT_LIEU";
+		public static String DON_VI_TINH = "DON_VI_TINH";
+	}
 }
