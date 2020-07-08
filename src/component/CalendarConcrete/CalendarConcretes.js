@@ -180,15 +180,15 @@ export default class CalendarConcretes extends Component {
                 index++;
                 contentMsgDetail += index + '.' +
                     '   ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
-                    '   👨 Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
+                    '   ✔ Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
                     //'SĐT khách hàng: 09878347\n' +
-                    '   ⛳ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
+                    '   ✔ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
                     '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
                     // '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
                     '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.klthucXuat) + '\n' +
-                    '   👨 Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
-                    '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
-                    '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
+                    '   ✔ Kỹ thuật: ' + Utils._viewValue(item.kyThuat) + '\n' +
+                    '   ✔ Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
+                    '   ✔ Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
                     ' \n'
                 ;
             }

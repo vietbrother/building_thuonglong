@@ -118,7 +118,7 @@ const Utils = {
     },
 
     _nFormatter(num, digits) {
-        if(num == null || num == undefined){
+        if (num == null || num == undefined) {
             return '';
         }
         /*var si = [
@@ -146,16 +146,25 @@ const Utils = {
         return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
     },
     numberWithCommas(x) {
-        if(x == null || x == undefined){
+        if (x == null || x == undefined) {
             return '';
         }
         x = this._roundNumber(x);
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    _roundNumber(num) {
-        return +(Math.round(num + "e+2")  + "e-2");
+    //show leading 0 example 001
+    _pad(n, width, z) {
+        if (n == null || n == undefined) {
+            return '';
+        }
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     },
-    _viewValue(value){
+    _roundNumber(num) {
+        return +(Math.round(num + "e+2") + "e-2");
+    },
+    _viewValue(value) {
         return (value == null || value == undefined ? '' : value);
     },
     // _renderApproveButton(status, callback) {

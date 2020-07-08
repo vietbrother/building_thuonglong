@@ -32,7 +32,22 @@ const Config = {
         apiStatisticTotal: '/api/main/v1/statistic/sumary',
         apiStatisticDaily: '/api/main/v1/statistic/daily',
         apiStatisticBricks: '/api/main/v1/statistic/daily/bricks',
-        apiStatisticDetail: '/api/main/v1/statistic/detail'
+        apiStatisticDetail: '/api/main/v1/statistic/detail',
+
+        apiLichXuatBeTongNhaCungCap: '/api/cat/v1/lichxuatbetong/nhacungcap',
+        apiLichXuatBeTongCongTrinh: '/api/cat/v1/lichxuatbetong/congtrinh',
+        apiLichXuatBeTongHinhThucBom: '/api/cat/v1/lichxuatbetong/hinhthucbom',
+        apiLichXuatBeTongMacBeTong: '/api/cat/v1/lichxuatbetong/macbetong',
+        apiLichXuatBeTongEmployee: '/api/cat/v1/lichxuatbetong/employee',
+        apiLichXuatBeTongSave: '/api/main/v1/lichxuatbetong/save',
+
+        apiLichBanGachNhaCungCap: '/api/cat/v1/lichbangach/nhacungcap',
+        apiLichBanGachCongTrinh: '/api/cat/v1/lichbangach/congtrinh',
+        apiLichBanGachNhomVatLieu: '/api/cat/v1/lichbangach/nhomvatlieu',
+        apiLichBanGachLoaiVatLieu: '/api/cat/v1/lichbangach/loaivatlieu',
+        apiLichBanGachDonViTinh: '/api/cat/v1/lichbangach/donvitinh',
+        apiLichBanGachEmployee: '/api/cat/v1/lichbangach/employee',
+        apiLichBanGachSave: '/api/main/v1/lichbangach/save',
     },
     // sessionTime: 3600*24*7*1000,
     sessionTime: 3600*3*1000,
@@ -113,6 +128,7 @@ const Config = {
     calendarConcrete: {
         title: 'Lịch trộn bê tông',
         detail: 'Thông tin chi tiết',
+        add: 'Thêm mới lịch trộn bê tông',
         branch: 'Chi nhánh',
         providerName: 'Nhà cung cấp',
         projectName: 'Công trình',
@@ -131,7 +147,9 @@ const Config = {
         distance: 'Cự ly vận chuyển',
         contractNumber: 'Số hợp đồng',
         completeState: 'Trạng thái hoàn thành',
-
+        hangMuc: 'Hạng mục',
+        khoiLuongTamTinh: 'Khối lượng tạm tính',
+        khoiLuongKhachHang: 'Khối lượng khách hàng',
     },
 
     calendarBrick: {
@@ -409,6 +427,7 @@ const Config = {
     successApprove: 'Phê duyệt thành công',
     successComplete: 'Hoàn thành thành công',
     successCopyToClipboard: 'Đã sao chép thông tin',
+    successSave: 'Lưu thành công',
 
     //error
     err_login: 'Tên đăng nhập hoặc mật khẩu không đúng',
@@ -424,11 +443,13 @@ const Config = {
     err_approve: 'Phê duyệt thất bại',
     err_complete: 'Hoàn thành thất bại',
     err_no_data: 'Không có dữ liệu',
+    err_save: 'Lưu thất bại',
 
     //confirm
     confirm_title: 'Thông báo',
     confirm_approve: 'Bạn có chắc chắn phê duyệt hợp đồng này?',
     confirm_complete: 'Bạn có chắc chắn hoàn thành lịch này?',
+    confirm_save: 'Bạn có chắc chắn lưu thông tin này?',
 
     //stage
     stage0KhongXacDinh: '0',
