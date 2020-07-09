@@ -4,7 +4,16 @@
 
 // React native and others libraries imports
 import React, {Component} from 'react';
-import {Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage, Alert, TimePickerAndroid, Picker} from 'react-native';
+import {
+    Image,
+    Dimensions,
+    TouchableWithoutFeedback,
+    TouchableOpacity,
+    AsyncStorage,
+    Alert,
+    TimePickerAndroid,
+    Picker
+} from 'react-native';
 import {
     View,
     Container,
@@ -107,7 +116,8 @@ export default class CalendarConcreteAdd extends Component {
         this.setState({outDate: moment(newDate).format('DD/MM/YYYY')});
         console.log('select date ' + newDate);
     }
-    async setOutTime(){
+
+    async setOutTime() {
         try {
             var currentOutTime = this.state.outTime;
             const {action, hour, minute} = await TimePickerAndroid.open({
@@ -123,6 +133,7 @@ export default class CalendarConcreteAdd extends Component {
             console.warn('Cannot open time picker', message);
         }
     }
+
     async _loadBranchData() {
         this.setState({isSearching: true});
         try {
@@ -208,6 +219,7 @@ export default class CalendarConcreteAdd extends Component {
             this.setState({isSearching: false});
         }
     }
+
     async _loadEmployeeData() {
         this.setState({isSearching: true});
         try {
@@ -234,6 +246,7 @@ export default class CalendarConcreteAdd extends Component {
             this.setState({isSearching: false});
         }
     }
+
     async _loadConcreteTypeData() {
         this.setState({isSearching: true});
         try {
@@ -260,6 +273,7 @@ export default class CalendarConcreteAdd extends Component {
             this.setState({isSearching: false});
         }
     }
+
     async _loadPumpTypeData() {
         this.setState({isSearching: true});
         try {
@@ -289,27 +303,32 @@ export default class CalendarConcreteAdd extends Component {
 
     onChangedCategory(value) {
         // code to remove non-numeric characters from text
-        this.setState({ category: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '') });
+        this.setState({category: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
     }
+
     onChangedDistance(value) {
         // code to remove non-numeric characters from text
-        this.setState({ distance: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '') });
+        this.setState({distance: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
     }
+
     onChangedKhoiLuongTamTinh(value) {
         // code to remove non-numeric characters from text
-        this.setState({ khoiLuongTamTinh: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '') });
+        this.setState({khoiLuongTamTinh: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
     }
+
     onChangedKhoiLuongKhachHang(value) {
         // code to remove non-numeric characters from text
-        this.setState({ khoiLuongKhachHang: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '') });
+        this.setState({khoiLuongKhachHang: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
     }
+
     onChangedTechnical(value) {
         // code to remove non-numeric characters from text
-        this.setState({ technical: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '') });
+        this.setState({technical: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
     }
+
     onChangedCashier(value) {
         // code to remove non-numeric characters from text
-        this.setState({ cashier: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '') });
+        this.setState({cashier: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
     }
 
     render() {
@@ -354,31 +373,31 @@ export default class CalendarConcreteAdd extends Component {
                             <CardItem>
                                 <Left>
                                     <Body>
-                                    <Text style={styles.muted}><Icon name="md-calendar"
-                                                                     style={styles.muted}/> {Config.calendarConcrete.exportDate}
-                                    </Text>
-                                    <DatePicker
-                                        defaultDate={new Date()}
-                                        //minimumDate={new Date()}
-                                        //maximumDate={new Date()}
-                                        locale={'en'}
-                                        timeZoneOffsetInMinutes={undefined}
-                                        modalTransparent={false}
-                                        animationType={'fade'}
-                                        androidMode={'default'}
-                                        placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
-                                        textStyle={{color: 'green'}}
-                                        placeHolderTextStyle={{color: Config.mainColor}}
-                                        onDateChange={(date) => {
-                                            this.setOutDate(date)
-                                        }}
-                                        disabled={false}
-                                        formatChosenDate={(date) => {
-                                            // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
-                                            return moment(date).format('DD/MM/YYYY');
-                                        }}
-                                    >
-                                    </DatePicker>
+                                        <Text style={styles.muted}><Icon name="md-calendar"
+                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate}
+                                        </Text>
+                                        <DatePicker
+                                            defaultDate={new Date()}
+                                            //minimumDate={new Date()}
+                                            //maximumDate={new Date()}
+                                            locale={'en'}
+                                            timeZoneOffsetInMinutes={undefined}
+                                            modalTransparent={false}
+                                            animationType={'fade'}
+                                            androidMode={'default'}
+                                            placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            textStyle={{color: 'green'}}
+                                            placeHolderTextStyle={{color: Config.mainColor}}
+                                            onDateChange={(date) => {
+                                                this.setOutDate(date)
+                                            }}
+                                            disabled={false}
+                                            formatChosenDate={(date) => {
+                                                // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                                return moment(date).format('DD/MM/YYYY');
+                                            }}
+                                        >
+                                        </DatePicker>
                                     </Body>
                                 </Left>
                                 <Right>
@@ -396,66 +415,66 @@ export default class CalendarConcreteAdd extends Component {
 
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.branch}</Label>
-                                <Input />
+                                <Input/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.providerName} </Label>
-                                <Input />
+                                <Input/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.projectName} </Label>
-                                <Input />
+                                <Input/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.hangMuc} </Label>
                                 <Input style={}
                                        onChangeText={value => this.onChangedTechnical(value)}
-                                       value={this.state.category} />
+                                       value={this.state.category}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.employee} </Label>
-                                <Input />
+                                <Input/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.concreteType} </Label>
-                                <Input />
+                                <Input/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.pumpType} </Label>
-                                <Input />
+                                <Input/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.khoiLuongTamTinh} </Label>
                                 <Input style={}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
-                                       value={this.state.khoiLuongTamTinh} />
+                                       value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.khoiLuongKhachHang} </Label>
                                 <Input style={}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
-                                       value={this.state.khoiLuongKhachHang} />
+                                       value={this.state.khoiLuongKhachHang}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.distance} </Label>
                                 <Input style={}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
-                                       value={this.state.distance} />
+                                       value={this.state.distance}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.technical} </Label>
                                 <Input style={}
                                        onChangeText={value => this.onChangedTechnical(value)}
-                                       value={this.state.technical} />
+                                       value={this.state.technical}/>
                             </Item>
                             <Item floatingLabel last>
                                 <Label>{Config.calendarConcrete.cashier}</Label>
                                 <Input style={}
                                        onChangeText={value => this.onChangedCashier(value)}
-                                       value={this.state.cashier} />
+                                       value={this.state.cashier}/>
                             </Item>
                         </Form>
 
@@ -497,6 +516,30 @@ export default class CalendarConcreteAdd extends Component {
 
     async _actionSave() {
         try {
+            if (this.state.outDate == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.exportDate});
+                return;
+            }
+            if (this.state.branchSelected == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.branch});
+                return;
+            }
+            if (this.state.providerSelected == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.providerName});
+                return;
+            }
+            if (this.state.concreteTypeSelected == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
+                return;
+            }
+            if (this.state.khoiLuongTamTinh == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.exportReal});
+                return;
+            }
+            if (this.state.khoiLuongKhachHang == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.khoiLuongKhachHang});
+                return;
+            }
             this.setState({isLoading: true});
 
             var param = {
