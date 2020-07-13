@@ -20,32 +20,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.thuonglongjsc.dto.CategoryDTO;
-import com.api.thuonglongjsc.dto.CategorySearch;
-import com.api.thuonglongjsc.dto.ChartData;
-import com.api.thuonglongjsc.dto.ChartDataBricksDaily;
-import com.api.thuonglongjsc.dto.ChartDataDaily;
-import com.api.thuonglongjsc.dto.ChartDataDetail;
-import com.api.thuonglongjsc.dto.ChartSearch;
-import com.api.thuonglongjsc.dto.GiaBanVatLieu;
-import com.api.thuonglongjsc.dto.GiaBanVatLieuSearch;
-import com.api.thuonglongjsc.dto.HopDongBeTong;
-import com.api.thuonglongjsc.dto.HopDongBeTongSearch;
-import com.api.thuonglongjsc.dto.LichBanGach;
-import com.api.thuonglongjsc.dto.LichXuatBeTong;
-import com.api.thuonglongjsc.dto.LichXuatBeTongSearch;
-import com.api.thuonglongjsc.dto.ResultDTO;
-import com.api.thuonglongjsc.model.TblChiNhanh;
-import com.api.thuonglongjsc.dto.TblLichBanGach;
-import com.api.thuonglongjsc.dto.TblLichXuatBeTong;
-import com.api.thuonglongjsc.model.TblUserAccount;
+import com.api.thuonglongjsc.dto.*;
 import com.api.thuonglongjsc.repository.CalendarRepository;
-import com.api.thuonglongjsc.repository.CategoryRepository;
-import com.api.thuonglongjsc.repository.StatisticRepository;
 import com.api.thuonglongjsc.utils.Constants;
 import com.api.thuonglongjsc.utils.Utils;
-
-import ch.qos.logback.classic.pattern.Util;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -373,9 +351,142 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
-	boolean checkPermisionAdd() {
-		boolean res = false;
+	public String checkPermisionAdd(TblLichXuatBeTong entity) {
+		String res = "";
+		String queryStr = "SELECT COUNT(IDCongTrinh) \r\n" + 
+				"        FROM tblLichXuatBeTong\r\n" + 
+				"        WHERE IDCongTrinh = ? \r\n" + 
+				"              AND IDChiNhanh = ? \r\n" + 
+				"              AND MacBeTong = ? \r\n" + 
+				"              AND HinhThucBom = ? \r\n" + 
+				"              AND CONVERT(DATETIME, CONVERT(DATE, NgayThang)) = convert(date, ? , 103) \r\n" + 
+				"              AND HangMuc = ? ";
+
+		List<String> lstParams = new ArrayList<>();
+		lstParams.add(entity.getIDCongTrinh());
+		lstParams.add(entity.getIDChiNhanh());
+		lstParams.add(entity.getMacBeTong());
+		lstParams.add(entity.getHinhThucBom());
+		lstParams.add(entity.getNgayThang());
+		lstParams.add(entity.getHangMuc());
 		
+		try {
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			List<String> resCount = query.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(String.class)).getResultList();
+			if(resCount != null && resCount.size() > 0) {
+				Long count = Long.valueOf(resCount.get(0));
+				if(count > 0){
+					return "Không được thiết lập 2 lịch bán bê tông giống nhau trong cùng 1 ngày.";
+				}
+			}
+			
+			//check gia ban be tong
+			queryStr = "SELECT TrangThai = b.TrangThai, \r\n" + 
+					"                       IDHopDong = b.ID\r\n" + 
+					"                FROM tblHopDongBanBeTong AS a\r\n" + 
+					"                     JOIN tblHopDongBanBeTong_ChiTiet AS b ON a.ID = b.IDHD\r\n" + 
+					"                WHERE IDChiNhanh = ? \r\n" + 
+					"                      AND a.ID = ? \r\n" + 
+					"                      AND b.MacBeTong = ? \r\n" + 
+					"                      AND convert(date, ? , 103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+
+			lstParams = new ArrayList<>();
+			lstParams.add(entity.getIDChiNhanh());
+			lstParams.add(entity.getIDCongTrinh());
+			lstParams.add(entity.getMacBeTong());
+			lstParams.add(entity.getNgayThang());
+			
+			
+			Query queryGiaBan = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				queryGiaBan.setParameter(i + 1, lstParams.get(i));
+			}
+			List<LichXuatBeTongDuyet> resGiaBanBeTong = queryGiaBan.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(LichXuatBeTongDuyet.class)).getResultList();
+			if(resGiaBanBeTong != null && resGiaBanBeTong.size() > 0) {
+				LichXuatBeTongDuyet duyet = resGiaBanBeTong.get(0);
+				if(duyet.getTrangThai() == null) {
+					return "Thời gian này bạn chưa thiết lập giá bán bê tông cho thông tin vừa chọn";
+				}
+				if(duyet.getTrangThai() != 2) {
+					return "Thông tin giá bán bê tông đang chờ duyệt";
+				}
+			}
+			
+			//check hinh thuc bom
+			if(entity.getHinhThucBom() != "2862C6F2-0AE1-499B-93B7-6E2B0AB46B83") {
+				queryStr = "SELECT TrangThai = b.TrangThai, \r\n" + 
+						"                       IDHopDong = b.ID\r\n" + 
+						"                FROM tblHopDongBanBeTong_Bom AS b\r\n" + 
+						"                WHERE b.IDHD = ? \r\n" + 
+						"                      AND b.HinhThucBom = ? \r\n" + 
+						"                      AND convert(date, ? , 103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+
+				lstParams = new ArrayList<>();
+				
+				lstParams.add(entity.getIDCongTrinh());
+				lstParams.add(entity.getHinhThucBom());
+				lstParams.add(entity.getNgayThang());
+				
+				
+				Query queryCheckHinhThucBom = entityManager.createNativeQuery(queryStr);
+				for (int i = 0; i < lstParams.size(); i++) {
+					queryCheckHinhThucBom.setParameter(i + 1, lstParams.get(i));
+				}
+				List<LichXuatBeTongDuyet> resHinhThucBom = queryCheckHinhThucBom.unwrap(org.hibernate.query.Query.class)
+						.setResultTransformer(Transformers.aliasToBean(LichXuatBeTongDuyet.class)).getResultList();
+				if(resHinhThucBom != null && resHinhThucBom.size() > 0) {
+					LichXuatBeTongDuyet duyet = resHinhThucBom.get(0);
+					if(duyet.getTrangThai() == null) {
+						return "Thời gian này bạn chưa thiết lập giá thuê bơm bê tông cho thông tin vừa chọn";
+					}
+					if(duyet.getTrangThai() != 2) {
+						return "Thông tin giá thuê bơm bê tông đang chờ duyệt";
+					}
+				}
+			}
+			
+			
+			//check nhan vien kinh doanh
+			queryStr = "SELECT TrangThai = b.TrangThai, \r\n" + 
+					"                       IDHopDong = b.ID\r\n" + 
+					"                FROM tblHopDongBanBeTong AS a\r\n" + 
+					"                     JOIN tblHopDongBanBeTong_NVKD AS b ON a.ID = b.IDHD\r\n" + 
+					"                WHERE IDChiNhanh = ? \r\n" + 
+					"                      AND a.ID = ? \r\n" + 
+					"                      AND b.IDNhanVien = ?\r\n" + 
+					"                      AND convert(date, ? , 103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+
+			lstParams = new ArrayList<>();
+			lstParams.add(entity.getIDChiNhanh());
+			lstParams.add(entity.getIDCongTrinh());
+			lstParams.add(entity.getIDNVKD());
+			lstParams.add(entity.getNgayThang());
+			
+			
+			Query queryCheckNVKD = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				queryGiaBan.setParameter(i + 1, lstParams.get(i));
+			}
+			List<LichXuatBeTongDuyet> resCheckNVKD = queryGiaBan.unwrap(org.hibernate.query.Query.class)
+					.setResultTransformer(Transformers.aliasToBean(LichXuatBeTongDuyet.class)).getResultList();
+			if(resGiaBanBeTong != null && resGiaBanBeTong.size() > 0) {
+				LichXuatBeTongDuyet duyet = resGiaBanBeTong.get(0);
+				if(duyet.getTrangThai() == null) {
+					return "Thời gian này bạn chưa thiết lập nhân viên kinh doanh cho thông tin vừa chọn";
+				}
+				if(duyet.getTrangThai() != 2) {
+					return "Thông tin nhân viên kinh doanh đang chờ duyệt";
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+		}
 		return res;
 	}
 	
