@@ -34,7 +34,6 @@ import {
     Body, Input, H3, Form, Label
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 // Our custom files and classes import
 import Config from '../../Config';
@@ -121,13 +120,16 @@ export default class CalendarConcreteAdd extends Component {
         try {
             var currentOutTime = this.state.outTime;
             const {action, hour, minute} = await TimePickerAndroid.open({
-                hour: Utils._pad(currentOutTime.split(":")[0], 2),
-                minute: Utils._pad(currentOutTime.split(":")[1], 2),
+                // hour: Utils._pad(currentOutTime.split(":")[0], 2),
+                // minute: Utils._pad(currentOutTime.split(":")[1], 2),
+
+                hour: parseInt(currentOutTime.split(":")[0]),
+                minute: parseInt(currentOutTime.split(":")[1]),
                 is24Hour: true, // Will display '2 PM'
             });
             if (action !== TimePickerAndroid.dismissedAction) {
                 // Selected hour (0-23), minute (0-59)
-                this.setState({outTime: hour + ':' + minute});
+                this.setState({outTime: hour + ':' + Utils._pad(minute, 2)});
             }
         } catch ({code, message}) {
             console.warn('Cannot open time picker', message);
@@ -427,7 +429,7 @@ export default class CalendarConcreteAdd extends Component {
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.hangMuc} </Label>
-                                <Input style={}
+                                <Input style={{}}
                                        onChangeText={value => this.onChangedTechnical(value)}
                                        value={this.state.category}/>
                             </Item>
@@ -445,34 +447,34 @@ export default class CalendarConcreteAdd extends Component {
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.khoiLuongTamTinh} </Label>
-                                <Input style={}
+                                <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
                                        value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.khoiLuongKhachHang} </Label>
-                                <Input style={}
+                                <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
                                        value={this.state.khoiLuongKhachHang}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.distance} </Label>
-                                <Input style={}
+                                <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
                                        value={this.state.distance}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.technical} </Label>
-                                <Input style={}
+                                <Input style={{}}
                                        onChangeText={value => this.onChangedTechnical(value)}
                                        value={this.state.technical}/>
                             </Item>
                             <Item floatingLabel last>
                                 <Label>{Config.calendarConcrete.cashier}</Label>
-                                <Input style={}
+                                <Input style={{}}
                                        onChangeText={value => this.onChangedCashier(value)}
                                        value={this.state.cashier}/>
                             </Item>

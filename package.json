@@ -28,6 +28,7 @@
     "react-native-image-picker": "^0.28.0",
     "react-native-image-resizer": "^1.0.1",
     "react-native-loading-spinner-overlay": "1.0.1",
+    "react-native-modal-filter-picker": "^2.0.0",
     "react-native-odoo": "^0.5.0",
     "react-native-pure-chart": "0.0.24",
     "react-native-render-html": "^4.1.2",
@@ -39,7 +40,8 @@
     "react-native-svg": "^6.5.2",
     "react-native-svg-charts": "^5.4.0",
     "react-native-touch-id": "^4.4.1",
-    "react-native-woocommerce-api": "^1.0.12"
+    "react-native-woocommerce-api": "^1.0.12",
+    "rn-modal-picker": "^0.2.9"
   },
   "devDependencies": {
     "babel-jest": "23.4.0",

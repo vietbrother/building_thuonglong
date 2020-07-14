@@ -74,6 +74,7 @@ import BricksContracts from "./component/BricksContracts/BricksContracts";
 import BricksContractDetail from "./component/BricksContracts/BricksContractDetail";
 import CalendarBricks from "./component/CalendarBrick/CalendarBricks";
 import CalendarBrickDetail from "./component/CalendarBrick/CalendarBrickDetail";
+import CalendarConcreteAdd from "./component/CalendarConcrete/CalendarConcreteAdd";
 
 export default class Main extends Component {
 
@@ -271,6 +272,7 @@ export default class Main extends Component {
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene type="reset" key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>
+                        <Scene key="calendarConcreteAdd" component={CalendarConcreteAdd} hideNavBar/>
                         <Scene type="reset" key="contractMaterials" component={ContractMaterials} hideNavBar/>
                         <Scene key="contractMaterialDetail" component={ContractMaterialDetail} hideNavBar/>
 

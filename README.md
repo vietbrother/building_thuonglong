@@ -54,6 +54,7 @@ https://snack.expo.io/embedded/@aboutreact/react-native-chart-kit?preview=true&p
 https://stackoverflow.com/questions/40145301/preventing-hardware-back-button-android-for-react-native
 https://aboutreact.com/react-native-get-current-date-time/
 https://stackoverflow.com/questions/51040637/datepicker-nativebase-format-of-the-picked-date
+https://github.com/vishaldhanotiya/react-native-modal-picker
 
 ## Documentation
 

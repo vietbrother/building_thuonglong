@@ -26,7 +26,7 @@ import {
     Icon,
     Card,
     CardItem,
-    Tab, Tabs, TabHeading, Badge, Toast, DatePicker, Col, Body
+    Tab, Tabs, TabHeading, Badge, Toast, DatePicker, Col, Body, Grid
     // Text
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -260,8 +260,19 @@ export default class CalendarConcretes extends Component {
                             // paddingLeft: 10,
                             // paddingRight: 10
                         }}>
-                            <Card>
-                                <CardItem>
+                            {/*<Card>*/}
+                                {/*<CardItem>*/}
+                                    {/*<Picker*/}
+                                        {/*style={styles.branchPicker}*/}
+                                        {/*itemStyle={styles.branchPickerItem}*/}
+                                        {/*selectedValue={this.state.branchSelected}*/}
+                                        {/*onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>*/}
+                                        {/*{this._renderBranch()}*/}
+                                    {/*</Picker>*/}
+                                {/*</CardItem>*/}
+                            {/*</Card>*/}
+                            <Grid>
+                                <Col size={2} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
                                     <Picker
                                         style={styles.branchPicker}
                                         itemStyle={styles.branchPickerItem}
@@ -269,8 +280,19 @@ export default class CalendarConcretes extends Component {
                                         onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
                                         {this._renderBranch()}
                                     </Picker>
-                                </CardItem>
-                            </Card>
+                                </Col>
+                                <Col size={2} style={{textAlign: 'center', padding: 5}}>
+                                    <TouchableOpacity
+                                        style={styles.btnApprove}
+                                        onPress={() => Actions.calendarConcreteAdd({})}
+                                        activeOpacity={0.9}
+                                    >
+                                        <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                                name='md-add'/> {Config.btnAdd}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </Col>
+                            </Grid>
                             <Tabs tabBarUnderlineStyle={styles.tabActive}>
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>

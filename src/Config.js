@@ -421,6 +421,7 @@ const Config = {
     btnCopyAll: 'Sao chép tất cả',
     btnCopyByDate: 'Sao chép theo ngày',
     btnHide: 'Ẩn',
+    btnAdd: 'Thêm mới',
 
     //success
     success: 'Thành công',

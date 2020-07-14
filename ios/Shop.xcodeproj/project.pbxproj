@@ -64,6 +64,7 @@
 		0ED0271CA5AB4519AB990796 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B0EACE2E20245BC921BC99F /* libRNSVG.a */; };
 		F26699AE2AFB4029970184E2 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1984579CC8C04F6BA1FBD964 /* libRNSVG-tvOS.a */; };
 		4FB34940EEDF4B00AF407171 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8E052F8DAC84842A9523703 /* libTouchID.a */; };
+		6456EB278C41481A83A26113 /* RNModalPicker.app in Resources */ = {isa = PBXBuildFile; fileRef = 477F2333F4AA462A8C9AF6E7 /* RNModalPicker.app */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -325,6 +326,8 @@
 		1984579CC8C04F6BA1FBD964 /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		E6B99101A8C942D8AEF0C743 /* TouchID.xcodeproj */ = {isa = PBXFileReference; name = "TouchID.xcodeproj"; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		B8E052F8DAC84842A9523703 /* libTouchID.a */ = {isa = PBXFileReference; name = "libTouchID.a"; path = "libTouchID.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		DD6789BE20A34327815D1C8A /* RNModalPicker.xcodeproj */ = {isa = PBXFileReference; name = "RNModalPicker.xcodeproj"; path = "../node_modules/rn-modal-picker/ios/RNModalPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		477F2333F4AA462A8C9AF6E7 /* RNModalPicker.app */ = {isa = PBXFileReference; name = "RNModalPicker.app"; path = "RNModalPicker.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +367,7 @@
 				F20444F41DCD4D28A82A65A4 /* libRCTImageResizer.a in Frameworks */,
 				0ED0271CA5AB4519AB990796 /* libRNSVG.a in Frameworks */,
 				4FB34940EEDF4B00AF407171 /* libTouchID.a in Frameworks */,
+				6456EB278C41481A83A26113 /* RNModalPicker.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +549,7 @@
 				920766BD79364C9FBF1CF5B7 /* RCTImageResizer.xcodeproj */,
 				C27393888A7648F78BFE9C6B /* RNSVG.xcodeproj */,
 				E6B99101A8C942D8AEF0C743 /* TouchID.xcodeproj */,
+				DD6789BE20A34327815D1C8A /* RNModalPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1124,6 +1129,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1140,6 +1146,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-image-resizer\ios\RCTImageResizer",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
+					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker/**",
 				);
 			};
 			name = Debug;
@@ -1175,6 +1182,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1191,6 +1199,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-image-resizer\ios\RCTImageResizer",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
+					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker/**",
 				);
 			};
 			name = Release;
@@ -1225,6 +1234,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-image-resizer\ios\RCTImageResizer",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
+					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker/**",
 				);
 			};
 			name = Debug;
@@ -1258,6 +1268,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-image-resizer\ios\RCTImageResizer",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
+					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker/**",
 				);
 			};
 			name = Release;
@@ -1302,6 +1313,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1318,6 +1330,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-image-resizer\ios\RCTImageResizer",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
+					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker/**",
 				);
 			};
 			name = Debug;
@@ -1362,6 +1375,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1378,6 +1392,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-image-resizer\ios\RCTImageResizer",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
+					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker/**",
 				);
 			};
 			name = Release;
@@ -1417,6 +1432,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1441,6 +1457,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
