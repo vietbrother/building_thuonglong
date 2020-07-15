@@ -71,7 +71,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				queryStr += " select DISTINCT a.IDNhaCungCap as id, " + " 	b.TenNhaCungCap as name \n"
 						+ " FROM tblHopDongBanBeTong as a \n"
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n"
-						+ " 	JOIN tblNhaCungCap as b on a.IDNhaCungCap = b.id \\n";
+						+ " 	JOIN tblNhaCungCap as b on a.IDNhaCungCap = b.id \n";
 				queryStr += " where 1 = 1 ";
 
 				if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {

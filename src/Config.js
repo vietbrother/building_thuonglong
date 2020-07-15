@@ -422,6 +422,7 @@ const Config = {
     btnCopyByDate: 'Sao chép theo ngày',
     btnHide: 'Ẩn',
     btnAdd: 'Thêm mới',
+    btnSearch: 'Tìm kiếm',
 
     //success
     success: 'Thành công',

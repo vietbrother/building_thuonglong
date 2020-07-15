@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -24,6 +25,9 @@ public class TblChiNhanh {
 	private Integer LoaiChiNhanh;
 	private Date NgayTao;
 	private String NguoiTao;
+	
+	@Transient
+	private String name;
 
 	@Column(name = "IDCha")
 	public String getIDCha() {
@@ -41,6 +45,7 @@ public class TblChiNhanh {
 
 	public void setTenChiNhanh(String tenChiNhanh) {
 		TenChiNhanh = tenChiNhanh;
+		setName(tenChiNhanh);
 	}
 
 	@Column(name = "diachi")
@@ -97,6 +102,15 @@ public class TblChiNhanh {
 		LoaiChiNhanh = loaiChiNhanh;
 	}
 
+	@Transient
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public TblChiNhanh() {
 		super();
 	}	
@@ -114,6 +128,7 @@ public class TblChiNhanh {
 		ID = iD;
 		IDCha = iDCha;
 		TenChiNhanh = tenChiNhanh;
+		name = tenChiNhanh;
 		DiaChi = diaChi;
 		Email = email;
 		PhoneNumber = phoneNumber;

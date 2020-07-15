@@ -21,6 +21,7 @@ import com.api.thuonglongjsc.dto.*;
 import com.api.thuonglongjsc.exception.ResourceNotFoundException;
 import com.api.thuonglongjsc.model.TblUserAccount;
 import com.api.thuonglongjsc.repository.BricksRepository;
+import com.api.thuonglongjsc.repository.CalendarRepository;
 import com.api.thuonglongjsc.repository.StatisticRepository;
 import com.api.thuonglongjsc.repository.UserRepository;
 
@@ -35,6 +36,9 @@ public class MainController {
 	
 	@Autowired
 	private BricksRepository bricksRepository;
+	
+	@Autowired
+	private CalendarRepository calendarRepository;
 
 	@PostMapping("/v1/login")
 	public ResultDTO login(@Valid @RequestBody TblUserAccount user) {
@@ -116,5 +120,17 @@ public class MainController {
 	@PostMapping("/v1/statistic/daily/bricks")
 	public List<ChartDataBricksDaily> getChartBricksDaily(@Valid @RequestBody ChartSearch entity) {
 		return statisticRepository.getChartBricksDaily(entity);
+	}
+	
+	@PostMapping("/v1/lichxuatbetong/save")
+	public ResultDTO getLichXuatBeTongSave(@Valid @RequestBody TblLichXuatBeTong model) {
+		ResultDTO res = calendarRepository.lichXuatBeTongSave(model);
+		return res;
+	}
+	
+	@PostMapping("/v1/lichbangach/save")
+	public ResultDTO getLichBanGachSave(@Valid @RequestBody TblLichBanGach model) {
+		ResultDTO res = calendarRepository.lichBanGachSave(model);
+		return res;
 	}
 }

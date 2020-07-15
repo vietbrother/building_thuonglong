@@ -317,5 +317,71 @@ export default StyleSheet.create({
     },
     mainTitle: {
         marginTop: -20
-    }
+    },
+
+
+    searchBarContainerStyle: {
+        marginBottom: 10,
+        flexDirection: "row",
+        height: 40,
+        shadowOpacity: 1.0,
+        shadowRadius: 5,
+        shadowOffset: {
+            width: 1,
+            height: 1
+        },
+        backgroundColor: "rgba(255,255,255,1)",
+        shadowColor: "#d3d3d3",
+        borderRadius: 10,
+        elevation: 3,
+        marginLeft: 10,
+        marginRight: 10
+    },
+
+    selectLabelTextStyle: {
+        color: "#000",
+        textAlign: "left",
+        width: "99%",
+        padding: 10,
+        flexDirection: "row"
+    },
+    placeHolderTextStyle: {
+        color: "#D3D3D3",
+        padding: 10,
+        textAlign: "left",
+        width: "99%",
+        flexDirection: "row"
+    },
+    dropDownImageStyle: {
+        marginLeft: 10,
+        width: 10,
+        height: 10,
+        alignSelf: "center"
+    },
+    listTextViewStyle: {
+        color: "#000",
+        marginVertical: 10,
+        flex: 0.9,
+        marginLeft: 20,
+        marginHorizontal: 10,
+        textAlign: "left"
+    },
+    pickerStyle: {
+        marginLeft: 18,
+        elevation:3,
+        paddingRight: 25,
+        marginRight: 10,
+        marginBottom: 2,
+        shadowOpacity: 1.0,
+        shadowOffset: {
+            width: 1,
+            height: 1
+        },
+        borderWidth:0.5,
+        shadowRadius: 10,
+        backgroundColor: "rgba(255,255,255,1)",
+        shadowColor: "#d3d3d3",
+        borderRadius: 5,
+        flexDirection: "row"
+    },
 });

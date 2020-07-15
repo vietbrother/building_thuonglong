@@ -65,7 +65,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.PROVIDER);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichXuatBeTong(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -76,7 +76,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.CONG_TRINH);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichXuatBeTong(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -87,7 +87,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.HINH_THUC_BOM);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichXuatBeTong(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -98,7 +98,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.MAC_BE_TONG);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichXuatBeTong(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -109,7 +109,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.EMPLOYEE);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichXuatBeTong(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -124,7 +124,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.EMPLOYEE);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichBanGach(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 	
@@ -135,7 +135,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.PROVIDER);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichBanGach(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -146,7 +146,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.CONG_TRINH);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichBanGach(entity);
-		res.add(0, new CategoryDTO("None", ""));
+		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
