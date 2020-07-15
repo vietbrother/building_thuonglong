@@ -73,7 +73,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblNhaCungCap as b on a.IDNhaCungCap = b.id \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 					queryStr += " and a.IDChiNhanh = ? ";
 					lstParams.add(entity.getIDChiNhanh());
@@ -90,7 +93,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 						+ " FROM tblHopDongBanBeTong as a \n"
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 					queryStr += " and a.IDChiNhanh = ? ";
 					lstParams.add(entity.getIDChiNhanh());
@@ -107,7 +113,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 						+ " FROM tblHopDongBanBeTong_Bom as i \n"
 						+ " 	JOIN tblHinhThucBom as b on i.HinhThucBom = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and i.IDHD = ? ";
@@ -121,7 +130,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 						+ " 	JOIN tblHopDongBanBeTong_ChiTiet as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblLoaiVatLieu as b on i.MacBeTong = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and a.ID = ? ";
@@ -135,7 +147,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 						+ " 	JOIN tblHopDongBanBeTong_NVKD as i on a.id = i.IDHD \n"
 						+ " 	JOIN tblNhanSu as b on i.IDNhanVien = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and a.ID = ? ";
@@ -146,8 +161,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 			} else {
 				return res;
 			}
-
-			
 
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -206,11 +219,17 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 		String queryStr = "";
 		try {
 			if (Constants.CATEGORY_TYPE.PROVIDER.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT a.IDNhaCungCap as id, " + " 	b.TenNhaCungCap as name \n"
-						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_ChiTiet as i on a.id = i.IDHD \n"
-						+ " 	JOIN tblNhaCungCap as b on a.IDNhaCungCap = b.id \\n";
+				queryStr += "         SELECT DISTINCT \r\n" + 
+						"               id = a.IDNhaCungCap, \r\n" + 
+						"               name = b.TenNhaCungCap\r\n" + 
+						"        FROM tblGiaBanGach AS a\r\n" + 
+						"             JOIN tblGiaBanGach_ChiTiet AS i ON a.ID = i.IDHD \r\n" + 
+						"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 					queryStr += " and a.IDChiNhanh = ? ";
 					lstParams.add(entity.getIDChiNhanh());
@@ -223,10 +242,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				// }
 
 			} else if (Constants.CATEGORY_TYPE.CONG_TRINH.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT a.ID as id, " + " 	a.CongTrinh as name \n"
-						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_ChiTiet as i on a.id = i.IDHD \n";
+				queryStr += "         SELECT DISTINCT \r\n" + 
+						"               id = a.ID, \r\n" + 
+						"               name = a.CongTrinh\r\n" + 
+						"        FROM tblGiaBanGach AS a\r\n" + 
+						"             JOIN tblGiaBanGach_ChiTiet AS i ON a.ID = i.IDHD \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 					queryStr += " and a.IDChiNhanh = ? ";
 					lstParams.add(entity.getIDChiNhanh());
@@ -238,45 +263,61 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				}
 				queryStr += " and a.TrangThai = 2 ";
 			} else if (Constants.CATEGORY_TYPE.DON_VI_TINH.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDDonViTinh as id, " + " 	b.TenDonViTinh as name \n"
-						+ " FROM tblGiaBanGach as a \n"
-						+ " 	JOIN tblGiaBanGach_ChiTiet as i on a.ID = i.IDHD \n"
-				+ " 	JOIN tblDonViTinh as b on i.IDDonViTinh = b.ID \n";
+				queryStr += "         SELECT DISTINCT   \r\n" + 
+						"               id = i.IDDonViTinh,   \r\n" + 
+						"               name = b.TenDonViTinh  \r\n" + 
+						"        FROM tblGiaBanGach AS a  \r\n" + 
+						"             JOIN tblGiaBanGach_ChiTiet AS i ON a.ID = i.IDHD  \r\n" + 
+						"             JOIN tblDonViTinh AS b ON i.IDDonViTinh = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and a.ID = ? ";
 					lstParams.add(entity.getIDCongTrinh());
 				}
-				
+
 				if (!Utils.isNullOrEmpty(entity.getIDLoaiVatLieu())
 						&& !"LoaiVatLieuIdAll".equals(entity.getIDLoaiVatLieu())) {
-					queryStr += " and a.ID = ? ";
+					queryStr += " and a.IDLoaiVatLieu = ? ";
 					lstParams.add(entity.getIDLoaiVatLieu());
 				}
 				queryStr += " and a.TrangThai = 2 ";
 
 			} else if (Constants.CATEGORY_TYPE.NHOM_VAT_LIEU.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDNhomVatLieu as id, " + " 	b.TenNhomVatLieu as name \n"
-						+ " FROM tblGiaBanGach as a \n"
-						+ " 	JOIN tblGiaBanGach_ChiTiet as i on a.ID = i.IDHD \n"
-				+ " 	JOIN tblNhomVatLieu as b on i.IDNhomVatLieu = b.ID \n";
+				queryStr += "         SELECT DISTINCT \r\n" + 
+						"               id = i.IDNhomVatLieu, \r\n" + 
+						"               name = b.TenNhomVatLieu\r\n" + 
+						"        FROM tblGiaBanGach AS a\r\n" + 
+						"             JOIN tblGiaBanGach_ChiTiet AS i ON a.ID = i.IDHD\r\n" + 
+						"             JOIN tblNhomVatLieu AS b ON i.IDNhomVatLieu = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and a.ID = ? ";
 					lstParams.add(entity.getIDCongTrinh());
 				}
-				
+
 				queryStr += " and a.TrangThai = 2 ";
 			} else if (Constants.CATEGORY_TYPE.LOAI_VAT_LIEU.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDLoaiVatLieu as id, " + " 	b.TenLoaiVatLieu as name \n"
-						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_ChiTiet as i on a.id = i.IDHD \n"
-						+ " 	JOIN tblLoaiVatLieu as b on i.IDLoaiVatLieu = b.ID \n";
+				queryStr += "         SELECT DISTINCT \r\n" + 
+						"               id = i.IDLoaiVatLieu, \r\n" + 
+						"               name = b.TenLoaiVatLieu\r\n" + 
+						"        FROM tblGiaBanGach AS a\r\n" + 
+						"             JOIN tblGiaBanGach_ChiTiet AS i ON a.ID = i.IDHD\r\n" + 
+						"             JOIN tblLoaiVatLieu AS b ON i.IDLoaiVatLieu = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and a.ID = ? ";
@@ -290,11 +331,17 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				queryStr += " and a.TrangThai = 2 ";
 
 			} else if (Constants.CATEGORY_TYPE.EMPLOYEE.equals(entity.getCategoryType())) {
-				queryStr += " select DISTINCT i.IDNhanVien as id, " + " 	b.TenNhanVien as name \n"
-						+ " FROM tblGiaBanGach as a \n" + " 	JOIN tblGiaBanGach_NVKD as i on a.id = i.IDHD \n"
-						+ " 	JOIN tblNhanSu as b on i.IDNhanVien = b.ID \n";
+				queryStr += "         SELECT DISTINCT \r\n" + 
+						"               id = i.IDNhanVien, \r\n" + 
+						"               name = b.TenNhanVien\r\n" + 
+						"        FROM tblGiaBanGach AS a\r\n" + 
+						"             JOIN tblGiaBanGach_NVKD AS i ON a.ID = i.IDHD\r\n" + 
+						"             JOIN tblNhanSu AS b ON i.IDNhanVien = b.ID \n";
 				queryStr += " where 1 = 1 ";
-
+				if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
+					queryStr += " and convert(datetime,?,103) BETWEEN TuNgay AND ISNULL(DenNgay, '6/6/2079') ";
+					lstParams.add(entity.getNgayThang());
+				}
 				if (!Utils.isNullOrEmpty(entity.getIDCongTrinh())
 						&& !"CongTrinhIdAll".equals(entity.getIDCongTrinh())) {
 					queryStr += " and a.ID = ? ";

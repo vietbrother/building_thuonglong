@@ -319,7 +319,12 @@ export default StyleSheet.create({
         marginTop: -20
     },
 
-
+    itemSeparatorStyle:{
+        height: 1,
+        width: "90%",
+        alignSelf: "center",
+        backgroundColor: "#D3D3D3"
+    },
     searchBarContainerStyle: {
         marginBottom: 10,
         flexDirection: "row",

@@ -116,6 +116,7 @@ export default class CalendarConcreteAdd extends Component {
         //alert(newDate);
         this.setState({outDate: moment(newDate).format('DD/MM/YYYY')});
         console.log('select date ' + newDate);
+        this._resetComboBoxData();
     }
 
     async setOutTime() {
@@ -161,20 +162,12 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    _renderBranch() {
-        var items = [];
-        for (var i = 0; i < this.state.branchs.length; i++) {
-            var branchItem = this.state.branchs[i];
-            items.push(<Picker.Item key={branchItem.id} label={branchItem.tenChiNhanh} value={branchItem.id}/>);
-        }
-        return items;
-    }
-
     async _loadProviderData(idchiNhanh) {
         this.setState({isSearching: true});
         try {
             var param = {
-                idchiNhanh: idchiNhanh
+                idchiNhanh: idchiNhanh,
+                ngayThang: this.state.outDate
             };
 
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongNhaCungCap, {
@@ -203,6 +196,7 @@ export default class CalendarConcreteAdd extends Component {
             var param = {
                 idchiNhanh: this.state.branchSelected.id,
                 idnhaCungCap: idnhaCungCap,
+                ngayThang: this.state.outDate
             };
 
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongCongTrinh, {
@@ -230,6 +224,7 @@ export default class CalendarConcreteAdd extends Component {
         try {
             var param = {
                 idcongTrinh: idcongTrinh,
+                ngayThang: this.state.outDate
             };
 
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongEmployee, {
@@ -257,6 +252,7 @@ export default class CalendarConcreteAdd extends Component {
         try {
             var param = {
                 idcongTrinh: idcongTrinh,
+                ngayThang: this.state.outDate
             };
 
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongMacBeTong, {
@@ -286,6 +282,7 @@ export default class CalendarConcreteAdd extends Component {
                 // username: this.state.username,
                 idchiNhanh: this.state.projectSelected.id,
                 idcongTrinh: idcongTrinh,
+                ngayThang: this.state.outDate
             };
 
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongHinhThucBom, {
@@ -311,11 +308,22 @@ export default class CalendarConcreteAdd extends Component {
     _selectedBranch(index, item) {
         this.setState({branchSelected: item});
         this._loadProviderData(item.id);
+        this.setState({
+            providerSelected: {},
+            projectSelected: {},
+            employeeSelected: {},
+            concreteTypeSelected: {},
+            pumpTypeSelected: {}});
     }
 
     _selectedProvider(index, item) {
         this.setState({providerSelected: item});
         this._loadProjectData();
+        this.setState({
+            projectSelected: {},
+            employeeSelected: {},
+            concreteTypeSelected: {},
+            pumpTypeSelected: {}});
     }
 
     _selectedProject(index, item) {
@@ -326,7 +334,7 @@ export default class CalendarConcreteAdd extends Component {
     }
 
     _selectedEmployee(index, item) {
-        this.setState({projectSelected: item});
+        this.setState({employeeSelected: item});
     }
 
     _selectedConcreteType(index, item) {
@@ -417,7 +425,7 @@ export default class CalendarConcreteAdd extends Component {
                             <H3>{Config.calendarConcrete.title}</H3>
                         </CardItem>
 
-                        <Form>
+                        <Form style={{backgroundColor: "#ffffff"}}>
                             <CardItem>
                                 <Left>
                                     <Body>
@@ -463,154 +471,156 @@ export default class CalendarConcreteAdd extends Component {
 
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.branch}</Label>
-                                <RNPicker
-                                    dataSource={this.state.branchs}
-                                    dummyDataSource={this.state.branchs}
-                                    defaultValue={false}
-                                    pickerTitle={Config.calendarConcrete.branch}
-                                    showSearchBar={true}
-                                    disablePicker={false}
-                                    changeAnimation={"none"}
-                                    searchBarPlaceHolder={Config.btnSearch}
-                                    showPickerTitle={true}
-                                    searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                    pickerStyle={styles.pickerStyle}
-                                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                                    pickerItemTextStyle={styles.listTextViewStyle}
-                                    selectedLabel={this.state.branchSelected.name}
-                                    placeHolderLabel={this.state.placeHolderText}
-                                    selectLabelTextStyle={styles.selectLabelTextStyle}
-                                    placeHolderTextStyle={styles.placeHolderTextStyle}
-                                    dropDownImageStyle={styles.dropDownImageStyle}
-                                    selectedValue={(index, item) => this._selectedBranch(index, item)}
-                                />
                             </Item>
+                            <RNPicker
+                                dataSource={this.state.branchs}
+                                dummyDataSource={this.state.branchs}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarConcrete.branch}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.branchSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedBranch(index, item)}
+                            />
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.providerName} </Label>
-                                <RNPicker
-                                    dataSource={this.state.providers}
-                                    dummyDataSource={this.state.providers}
-                                    defaultValue={false}
-                                    pickerTitle={Config.calendarConcrete.providerName}
-                                    showSearchBar={true}
-                                    disablePicker={false}
-                                    changeAnimation={"none"}
-                                    searchBarPlaceHolder={Config.btnSearch}
-                                    showPickerTitle={true}
-                                    searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                    pickerStyle={styles.pickerStyle}
-                                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                                    pickerItemTextStyle={styles.listTextViewStyle}
-                                    selectedLabel={this.state.providerSelected.name}
-                                    placeHolderLabel={this.state.placeHolderText}
-                                    selectLabelTextStyle={styles.selectLabelTextStyle}
-                                    placeHolderTextStyle={styles.placeHolderTextStyle}
-                                    dropDownImageStyle={styles.dropDownImageStyle}
-                                    selectedValue={(index, item) => this._selectedProvider(index, item)}
-                                />
                             </Item>
+                            <RNPicker
+                                dataSource={this.state.providers}
+                                dummyDataSource={this.state.providers}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarConcrete.providerName}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.providerSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedProvider(index, item)}
+                            />
+
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.projectName} </Label>
-                                <RNPicker
-                                    dataSource={this.state.projects}
-                                    dummyDataSource={this.state.projects}
-                                    defaultValue={false}
-                                    pickerTitle={Config.calendarConcrete.projectName}
-                                    showSearchBar={true}
-                                    disablePicker={false}
-                                    changeAnimation={"none"}
-                                    searchBarPlaceHolder={Config.btnSearch}
-                                    showPickerTitle={true}
-                                    searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                    pickerStyle={styles.pickerStyle}
-                                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                                    pickerItemTextStyle={styles.listTextViewStyle}
-                                    selectedLabel={this.state.projectSelected.name}
-                                    placeHolderLabel={this.state.placeHolderText}
-                                    selectLabelTextStyle={styles.selectLabelTextStyle}
-                                    placeHolderTextStyle={styles.placeHolderTextStyle}
-                                    dropDownImageStyle={styles.dropDownImageStyle}
-                                    selectedValue={(index, item) => this._selectedProject(index, item)}
-                                />
                             </Item>
+                            <RNPicker
+                                dataSource={this.state.projects}
+                                dummyDataSource={this.state.projects}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarConcrete.projectName}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.projectSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedProject(index, item)}
+                            />
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.hangMuc} </Label>
                                 <Input style={{}}
-                                       onChangeText={value => this.onChangedTechnical(value)}
+                                       onChangeText={value => this.onChangedCategory(value)}
                                        value={this.state.category}/>
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.employee} </Label>
-                                <RNPicker
-                                    dataSource={this.state.employees}
-                                    dummyDataSource={this.state.employees}
-                                    defaultValue={false}
-                                    pickerTitle={Config.calendarConcrete.employee}
-                                    showSearchBar={true}
-                                    disablePicker={false}
-                                    changeAnimation={"none"}
-                                    searchBarPlaceHolder={Config.btnSearch}
-                                    showPickerTitle={true}
-                                    searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                    pickerStyle={styles.pickerStyle}
-                                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                                    pickerItemTextStyle={styles.listTextViewStyle}
-                                    selectedLabel={this.state.employeeSelected.name}
-                                    placeHolderLabel={this.state.placeHolderText}
-                                    selectLabelTextStyle={styles.selectLabelTextStyle}
-                                    placeHolderTextStyle={styles.placeHolderTextStyle}
-                                    dropDownImageStyle={styles.dropDownImageStyle}
-                                    selectedValue={(index, item) => this._selectedEmployee(index, item)}
-                                />
                             </Item>
+                            <RNPicker
+                                dataSource={this.state.employees}
+                                dummyDataSource={this.state.employees}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarConcrete.employee}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.employeeSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedEmployee(index, item)}
+                            />
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.concreteType} </Label>
-                                <RNPicker
-                                    dataSource={this.state.concreteTypes}
-                                    dummyDataSource={this.state.concreteTypes}
-                                    defaultValue={false}
-                                    pickerTitle={Config.calendarConcrete.concreteType}
-                                    showSearchBar={true}
-                                    disablePicker={false}
-                                    changeAnimation={"none"}
-                                    searchBarPlaceHolder={Config.btnSearch}
-                                    showPickerTitle={true}
-                                    searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                    pickerStyle={styles.pickerStyle}
-                                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                                    pickerItemTextStyle={styles.listTextViewStyle}
-                                    selectedLabel={this.state.concreteTypeSelected.name}
-                                    placeHolderLabel={this.state.placeHolderText}
-                                    selectLabelTextStyle={styles.selectLabelTextStyle}
-                                    placeHolderTextStyle={styles.placeHolderTextStyle}
-                                    dropDownImageStyle={styles.dropDownImageStyle}
-                                    selectedValue={(index, item) => this._selectedConcreteType(index, item)}
-                                />
                             </Item>
+                            <RNPicker
+                                dataSource={this.state.concreteTypes}
+                                dummyDataSource={this.state.concreteTypes}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarConcrete.concreteType}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.concreteTypeSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedConcreteType(index, item)}
+                            />
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.pumpType} </Label>
-                                <RNPicker
-                                    dataSource={this.state.pumpTypes}
-                                    dummyDataSource={this.state.pumpTypes}
-                                    defaultValue={false}
-                                    pickerTitle={Config.calendarConcrete.pumpType}
-                                    showSearchBar={true}
-                                    disablePicker={false}
-                                    changeAnimation={"none"}
-                                    searchBarPlaceHolder={Config.btnSearch}
-                                    showPickerTitle={true}
-                                    searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                    pickerStyle={styles.pickerStyle}
-                                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                                    pickerItemTextStyle={styles.listTextViewStyle}
-                                    selectedLabel={this.state.pumpTypeSelected.name}
-                                    placeHolderLabel={this.state.placeHolderText}
-                                    selectLabelTextStyle={styles.selectLabelTextStyle}
-                                    placeHolderTextStyle={styles.placeHolderTextStyle}
-                                    dropDownImageStyle={styles.dropDownImageStyle}
-                                    selectedValue={(index, item) => this._selectedPumpType(index, item)}
-                                />
                             </Item>
+                            <RNPicker
+                                dataSource={this.state.pumpTypes}
+                                dummyDataSource={this.state.pumpTypes}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarConcrete.pumpType}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.pumpTypeSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedPumpType(index, item)}
+                            />
+
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.khoiLuongTamTinh} </Label>
                                 <Input style={{}}
@@ -664,7 +674,7 @@ export default class CalendarConcreteAdd extends Component {
                             <Right>
                                 <TouchableOpacity
                                     style={styles.btnApprove}
-                                    onPress={() => this._preApprove()}
+                                    onPress={() => this._actionSave()}
                                     activeOpacity={0.9}
                                 >
                                     <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
@@ -682,6 +692,14 @@ export default class CalendarConcreteAdd extends Component {
         );
     }
 
+    _resetComboBoxData(){
+        this.setState({branchSelected: {},
+            providerSelected: {},
+            projectSelected: {},
+            employeeSelected: {},
+            concreteTypeSelected: {},
+            pumpTypeSelected: {}});
+    }
     async _actionSave() {
         try {
             if (this.state.outDate == '') {
@@ -719,10 +737,10 @@ export default class CalendarConcreteAdd extends Component {
                 hangMuc: this.state.hangMuc,
                 hinhThucBom: this.state.pumpTypeSelected.id,
                 idchiNhanh: this.state.branchSelected.id,
-                idchiTietKinhDoanh: string,
+                idchiTietKinhDoanh: '',
                 idcongTrinh: this.state.projectSelected.id,
-                idhopDong: string,
-                idhopDongBom: string,
+                idhopDong: new Date().getTime(),
+                idhopDongBom: new Date().getTime(),
                 idnhaCungCap: this.state.providerSelected.id,
                 idnvkd: this.state.employeeSelected.id,
                 kldaBan: this.state.khoiLuongKhachHang,
@@ -735,9 +753,10 @@ export default class CalendarConcreteAdd extends Component {
                 nguoiTao: this.state.username,
                 nguoiThuTien: this.state.cashier,
                 trangThai: Config.stateCode.wait,
-                trangThaiHoanThanh: "",
+                trangThaiHoanThanh: Config.state.unComplete,
                 trangThaiText: Config.state.wait
-            }
+            };
+            console.log(JSON.stringify(param));
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongSave, {
                 method: 'POST',
                 headers: {

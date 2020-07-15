@@ -67,18 +67,43 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			String queryStr = "";
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
-				queryStr = "insert into tblLichXuatBeTong (\r\n" + "		ID,\r\n" + "		GioXuat,\r\n"
-						+ "		NgayThang,\r\n" + "		IDChiNhanh,\r\n" + "		IDNhaCungCap,\r\n"
-						+ "		IDCongTrinh,\r\n" + "		MacBeTong,\r\n" + "		IDHopDong,\r\n"
-						+ "		HangMuc,\r\n" + "		HinhThucBom,\r\n" + "		IDHopDongBom,\r\n"
-						+ "		KLThucXuat,\r\n" + "		KLKhachHang,\r\n" + "		CuLyVanChuyen,\r\n"
+				String checkPermission = checkPermisionAddLXBT(model);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
+				
+				queryStr = "insert into tblLichXuatBeTong (\r\n" 
+						+ "		ID,\r\n" 
+						+ "		GioXuat,\r\n"
+						+ "		NgayThang,\r\n" 
+						+ "		IDChiNhanh,\r\n" 
+						+ "		IDNhaCungCap,\r\n"
+						+ "		IDCongTrinh,\r\n" 
+						+ "		MacBeTong,\r\n" 
+						+ "		IDHopDong,\r\n"
+						+ "		HangMuc,\r\n" 
+						+ "		HinhThucBom,\r\n" 
+						+ "		IDHopDongBom,\r\n"
+						+ "		KLThucXuat,\r\n" 
+						+ "		KLKhachHang,\r\n" + "		CuLyVanChuyen,\r\n"
 						+ "		TrangThai,\r\n" + "		TrangThaiText,\r\n" + "		NguoiDuyet,\r\n"
 						+ "		NguoiXoa,\r\n" + "		NgayTao,\r\n" + "		NguoiTao,\r\n" + "		MoTa,\r\n"
 						+ "		TrangThaiHoanThanh,\r\n" + "		KLDaXuat,\r\n" + "		KLDaBan,\r\n"
 						+ "		IDNVKD,\r\n" + "		IDChiTietKinhDoanh,\r\n" + "		KyThuat,\r\n"
-						+ "		NguoiThuTien) \r\n" + " VALUES ( \r\n" + "		newID(),\r\n" + "		?,\r\n"
-						+ "		convert(datetime,?,103),--dd/mm/yyyy\r\n" + "		?,\r\n" + "		?,\r\n"
-						+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
+						+ "		NguoiThuTien) \r\n" 
+						+ " VALUES ( \r\n" 
+						+ "		newID(),\r\n" 
+						+ "		?,\r\n"
+						+ "		convert(datetime,?,103),--dd/mm/yyyy\r\n" 
+						+ "		?,\r\n" 
+						+ "		?,\r\n"
+						+ "		?,\r\n" 
+						+ "		?,\r\n" 
+						+ "		newID(),\r\n" 
+						+ "		?,\r\n" 
+						+ "		?,\r\n" 
+						+ "		newID(),\r\n"
 						+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
 						+ "		?,\r\n" + "		GETDATE(),\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
 						+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?) ";
@@ -89,10 +114,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhaCungCap());
 				lstParams.add(model.getIDCongTrinh());
 				lstParams.add(model.getMacBeTong());
-				lstParams.add(model.getIDHopDong());
+//				lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getHinhThucBom());
-				lstParams.add(model.getIDHopDongBom());
+//				lstParams.add(model.getIDHopDongBom());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
 				lstParams.add(model.getCuLyVanChuyen());
@@ -110,6 +135,12 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getKyThuat());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
+				String checkPermission = checkPermisionEditLXBT(model);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
+				
 				queryStr = " UPDATE tblLichXuatBeTong SET\r\n" + "		GioXuat = ?,\r\n" + "		NgayThang = ?,\r\n"
 						+ "		IDChiNhanh = ?,\r\n" + "		IDNhaCungCap = ?,\r\n" + "		IDCongTrinh = ?,\r\n"
 						+ "		MacBeTong = ?,\r\n" + "		IDHopDong = ?,\r\n" + "		HangMuc = ?,\r\n"
@@ -196,6 +227,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			String queryStr = "";
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
+
 				queryStr = "insert into tblLichBanGach (\r\n" + 
 						"		ID,\r\n" + 
 						"		GioXuat,\r\n" + 
@@ -351,7 +383,8 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
-	public String checkPermisionAdd(TblLichXuatBeTong entity) {
+//	{"cuLyVanChuyen":"10","gioXuat":"09:00","idchiNhanh":"0A70374D-C820-406E-AB11-F13CDE69D22B","idchiTietKinhDoanh":"","idcongTrinh":"C34D15FC-142F-4F71-A530-760DD7BBC4A3","idhopDong":1594836004121,"idhopDongBom":1594836004121,"idnhaCungCap":"E6B8C11A-765C-4A44-99C9-B56604CC63D9","idnvkd":"93E83567-8AB2-4FAC-A4A8-0E000D1A5DDA","kldaBan":"10","kldaXuat":"10","klkhachHang":"10","klthucXuat":"10","kyThuat":"123","macBeTong":"B4B9E95F-1A66-4B56-BBF1-54D7B07E188F","ngayThang":"16/07/2020","nguoiTao":"viethau89nd","nguoiThuTien":"abc","trangThai":"1","trangThaiHoanThanh":"Chưa hoàn thành","trangThaiText":"Chờ duyệt"}
+	public String checkPermisionAddLXBT(TblLichXuatBeTong entity) {
 		String res = "";
 		String queryStr = "SELECT COUNT(IDCongTrinh) \r\n" + 
 				"        FROM tblLichXuatBeTong\r\n" + 
@@ -375,13 +408,13 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			for (int i = 0; i < lstParams.size(); i++) {
 				query.setParameter(i + 1, lstParams.get(i));
 			}
-			List<String> resCount = query.unwrap(org.hibernate.query.Query.class)
-					.setResultTransformer(Transformers.aliasToBean(String.class)).getResultList();
-			if(resCount != null && resCount.size() > 0) {
-				Long count = Long.valueOf(resCount.get(0));
-				if(count > 0){
-					return "Không được thiết lập 2 lịch bán bê tông giống nhau trong cùng 1 ngày.";
-				}
+			Integer count = (Integer) query.getSingleResult();
+//			unwrap(org.hibernate.query.Query.class)
+//					.setResultTransformer(Transformers.aliasToBean(String.class)).getResultList();
+			
+
+			if(count > 0){
+				return "Không được thiết lập 2 lịch bán bê tông giống nhau trong cùng 1 ngày.";
 			}
 			
 			//check gia ban be tong
@@ -490,8 +523,8 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 	
-	boolean checkPermisionEdit() {
-		boolean res = false;
+	public String checkPermisionEditLXBT(TblLichXuatBeTong entity) {
+		String res = "";
 		
 		return res;
 	}
