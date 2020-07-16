@@ -49,6 +49,14 @@ public class LichBanGach {
 	private String IDChiNhanh;
 	private Integer TrangThai;
 
+	private String IDNhaCungCap;
+	private String IDLoaiVatLieu;
+	private String IDCongTrinh;
+	private String IDNVKD;
+	private String IDDonViTinh;
+	private String IDNhomVatLieu;
+	private String TenNhomVatLieu;
+
 	public LichBanGach() {
 		super();
 	}
@@ -57,7 +65,9 @@ public class LichBanGach {
 			String hangMuc, String tenNhaCungCap, String diaChi, String soDienThoai, String tenLoaiVatLieu,
 			String tenDonViTinh, String tenNhanVien, String nguoiThuTien, Double kLThucXuat, Double kLKhachHang,
 			Double cuLyVanChuyen, String trangThaiHoanThanh, String trangThaiText, Double kLDaBan, Double kLDaXuat,
-			String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai) {
+			String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai, String iDNhaCungCap,
+			String iDLoaiVatLieu, String iDCongTrinh, String iDNVKD, String iDDonViTinh, String iDNhomVatLieu,
+			String tenNhomVatLieu) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -83,6 +93,13 @@ public class LichBanGach {
 		NgayTao = ngayTao;
 		IDChiNhanh = iDChiNhanh;
 		TrangThai = trangThai;
+		IDNhaCungCap = iDNhaCungCap;
+		IDLoaiVatLieu = iDLoaiVatLieu;
+		IDCongTrinh = iDCongTrinh;
+		IDNVKD = iDNVKD;
+		IDDonViTinh = iDDonViTinh;
+		IDNhomVatLieu = iDNhomVatLieu;
+		TenNhomVatLieu = tenNhomVatLieu;
 	}
 
 	public String getID() {
@@ -277,15 +294,74 @@ public class LichBanGach {
 		TrangThai = trangThai;
 	}
 
+	public String getIDNhaCungCap() {
+		return IDNhaCungCap;
+	}
+
+	public void setIDNhaCungCap(String iDNhaCungCap) {
+		IDNhaCungCap = iDNhaCungCap;
+	}
+
+	public String getIDLoaiVatLieu() {
+		return IDLoaiVatLieu;
+	}
+
+	public void setIDLoaiVatLieu(String iDLoaiVatLieu) {
+		IDLoaiVatLieu = iDLoaiVatLieu;
+	}
+
+	public String getIDCongTrinh() {
+		return IDCongTrinh;
+	}
+
+	public void setIDCongTrinh(String iDCongTrinh) {
+		IDCongTrinh = iDCongTrinh;
+	}
+
+	public String getIDNVKD() {
+		return IDNVKD;
+	}
+
+	public void setIDNVKD(String iDNVKD) {
+		IDNVKD = iDNVKD;
+	}
+
+	public String getIDDonViTinh() {
+		return IDDonViTinh;
+	}
+
+	public void setIDDonViTinh(String iDDonViTinh) {
+		IDDonViTinh = iDDonViTinh;
+	}
+
+	public String getIDNhomVatLieu() {
+		return IDNhomVatLieu;
+	}
+
+	public void setIDNhomVatLieu(String iDNhomVatLieu) {
+		IDNhomVatLieu = iDNhomVatLieu;
+	}
+
+	public String getTenNhomVatLieu() {
+		return TenNhomVatLieu;
+	}
+
+	public void setTenNhomVatLieu(String tenNhomVatLieu) {
+		TenNhomVatLieu = tenNhomVatLieu;
+	}
+
 	@Override
 	public String toString() {
 		return "LichBanGach [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
 				+ TenChiNhanh + ", TenCongTrinh=" + TenCongTrinh + ", HangMuc=" + HangMuc + ", TenNhaCungCap="
-				+ TenNhaCungCap + ", TenLoaiVatLieu=" + TenLoaiVatLieu + ", TenDonViTinh=" + TenDonViTinh
-				+ ", TenNhanVien=" + TenNhanVien + ", NguoiThuTien=" + NguoiThuTien + ", KLThucXuat=" + KLThucXuat
-				+ ", KLKhachHang=" + KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen + ", TrangThaiHoanThanh="
-				+ TrangThaiHoanThanh + ", TrangThaiText=" + TrangThaiText + ", KLDaBan=" + KLDaBan + ", KLDaXuat="
-				+ KLDaXuat + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh
-				+ ", TrangThai=" + TrangThai + "]";
+				+ TenNhaCungCap + ", DiaChi=" + DiaChi + ", SoDienThoai=" + SoDienThoai + ", TenLoaiVatLieu="
+				+ TenLoaiVatLieu + ", TenDonViTinh=" + TenDonViTinh + ", TenNhanVien=" + TenNhanVien + ", NguoiThuTien="
+				+ NguoiThuTien + ", KLThucXuat=" + KLThucXuat + ", KLKhachHang=" + KLKhachHang + ", CuLyVanChuyen="
+				+ CuLyVanChuyen + ", TrangThaiHoanThanh=" + TrangThaiHoanThanh + ", TrangThaiText=" + TrangThaiText
+				+ ", KLDaBan=" + KLDaBan + ", KLDaXuat=" + KLDaXuat + ", NguoiTao=" + NguoiTao + ", NgayTao=" + NgayTao
+				+ ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai + ", IDNhaCungCap=" + IDNhaCungCap
+				+ ", IDLoaiVatLieu=" + IDLoaiVatLieu + ", IDCongTrinh=" + IDCongTrinh + ", IDNVKD=" + IDNVKD
+				+ ", IDDonViTinh=" + IDDonViTinh + ", IDNhomVatLieu=" + IDNhomVatLieu + ", TenNhomVatLieu="
+				+ TenNhomVatLieu + "]";
 	}
 }

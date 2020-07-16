@@ -39,8 +39,9 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 	private EntityManager entityManager;
 
 	private static final Logger logger = LoggerFactory.getLogger(CalendarRepositoryImpl.class.getName());
-
+	
 	@Override
+	@Transactional
 	public ResultDTO lichXuatBeTongSave(TblLichXuatBeTong model) {
 		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
 		try {
@@ -73,7 +74,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 					return res;
 				}
 				
-				queryStr = "insert into tblLichXuatBeTong (\r\n" 
+				queryStr = "insert into TblLichXuatBeTong (\r\n" 
 						+ "		ID,\r\n" 
 						+ "		GioXuat,\r\n"
 						+ "		NgayThang,\r\n" 
@@ -93,20 +94,34 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						+ "		IDNVKD,\r\n" + "		IDChiTietKinhDoanh,\r\n" + "		KyThuat,\r\n"
 						+ "		NguoiThuTien) \r\n" 
 						+ " VALUES ( \r\n" 
-						+ "		newID(),\r\n" 
+						+ "		CONVERT(uniqueidentifier,newID()),\r\n" 
 						+ "		?,\r\n"
-						+ "		convert(datetime,?,103),--dd/mm/yyyy\r\n" 
+						+ "		convert(datetime,?,103), \n" 
+						+ "		CONVERT(uniqueidentifier, ? ), \r\n" 
+						+ "		CONVERT(uniqueidentifier, ? ), \r\n"
+						+ "		CONVERT(uniqueidentifier, ? ), \r\n" 
+						+ "		CONVERT(uniqueidentifier, ? ),\r\n" 
+						+ "		CONVERT(uniqueidentifier,newID()),\r\n" 
+						+ "		?,\r\n" 
+						+ "		CONVERT(uniqueidentifier, ? ),\r\n" 
+						+ "		CONVERT(uniqueidentifier,newID()),\r\n"
+						+ "		?,\r\n" 
+						+ "		?,\r\n" 
+						+ "		?,\r\n" 
+						+ "		?,\r\n" 
+						+ "		?,\r\n" 
+						+ "		?,\r\n"
+						+ "		?,\r\n" 
+						+ "		GETDATE(),\r\n" 
+						+ "		?,\r\n" 
 						+ "		?,\r\n" 
 						+ "		?,\r\n"
 						+ "		?,\r\n" 
 						+ "		?,\r\n" 
-						+ "		newID(),\r\n" 
+						+ "		CONVERT(uniqueidentifier, ? ),\r\n" 
+						+ "		CONVERT(uniqueidentifier,newID()),\r\n" 
 						+ "		?,\r\n" 
-						+ "		?,\r\n" 
-						+ "		newID(),\r\n"
-						+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
-						+ "		?,\r\n" + "		GETDATE(),\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
-						+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?) ";
+						+ "		?) ";
 
 				lstParams.add(model.getGioXuat());
 				lstParams.add(model.getNgayThang());
@@ -131,7 +146,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getKLDaXuat());
 				lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-				lstParams.add(model.getIDChiTietKinhDoanh());
+//				lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getKyThuat());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
@@ -199,7 +214,9 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
+	
 	@Override
+	@Transactional
 	public ResultDTO lichBanGachSave(TblLichBanGach model) {
 		// TODO Auto-generated method stub
 		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
@@ -228,7 +245,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
 
-				queryStr = "insert into tblLichBanGach (\r\n" + 
+				queryStr = "insert into TblLichBanGach (\r\n" + 
 						"		ID,\r\n" + 
 						"		GioXuat,\r\n" + 
 						"		NgayThang,\r\n" + 
@@ -260,13 +277,13 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						"		newID(),\r\n" + 
 						"		?,\r\n" + 
 						"		convert(datetime,?,103),--dd/mm/yyyy\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		newID(),\r\n" + 
 						"		?,\r\n" + 
 						"		?,\r\n" + 
 						"		?,\r\n" + 
@@ -279,10 +296,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						"		?,\r\n" + 
 						"		?,\r\n" + 
 						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
-						"		?,\r\n" + 
+						"		0,\r\n" + 
+						"		0,\r\n" + 
+						"		CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		newID(),\r\n" + 
 						"		?\r\n" + 
 						")";
 
@@ -305,10 +322,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getNguoiTao());
 				lstParams.add(model.getMoTa());
 				lstParams.add(model.getTrangThaiHoanThanh());
-				lstParams.add(model.getKLDaXuat());
-				lstParams.add(model.getKLDaBan());
+//				lstParams.add(model.getKLDaXuat());
+//				lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-				lstParams.add(model.getIDChiTietKinhDoanh());
+//				lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
 				queryStr = " UPDATE tblLichBanGach SET\r\n" + 
@@ -327,11 +344,11 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						"		CuLyVanChuyen = ?,\r\n" + 
 						"		TrangThai = ?,\r\n" + 
 						"		TrangThaiText = ?,\r\n" + 
-						"		MoTa = ?,\r\n" + 
-						"		KLDaXuat = ?,\r\n" + 
-						"		KLDaBan = ?,\r\n" + 
+//						"		MoTa = ?,\r\n" + 
+//						"		KLDaXuat = ?,\r\n" + 
+//						"		KLDaBan = ?,\r\n" + 
 						"		IDNVKD = ?,\r\n" + 
-						"		IDChiTietKinhDoanh = ?,\r\n" + 
+//						"		IDChiTietKinhDoanh = ?,\r\n" + 
 						"		NguoiThuTien = ?\r\n" + 
 						"where ID = ? ";
 
@@ -350,11 +367,11 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getCuLyVanChuyen());
 				lstParams.add(model.getTrangThai());
 				lstParams.add(model.getTrangThaiText());
-				lstParams.add(model.getMoTa());
-				lstParams.add(model.getKLDaXuat());
-				lstParams.add(model.getKLDaBan());
+//				lstParams.add(model.getMoTa());
+//				lstParams.add(model.getKLDaXuat());
+//				lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-				lstParams.add(model.getIDChiTietKinhDoanh());
+//				lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getNguoiThuTien());
 				lstParams.add(model.getID());
 			}

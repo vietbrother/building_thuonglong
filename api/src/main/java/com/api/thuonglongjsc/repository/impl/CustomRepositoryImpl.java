@@ -218,7 +218,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               a.NguoiTao, \r\n" + 
 				"               a.NgayTao,\r\n" + 
 				"               a.TrangThaiHoanThanh,\r\n" + 
-				"               a.TrangThai, a.IDChiNhanh\r\n" + 
+				"               a.TrangThai, a.IDChiNhanh, \r\n" + 
+				"               a.IDCongTrinh, a.IDNhaCungCap as IDNhaCungCap, " +
+				"				a.MacBeTong as IDMacBeTong, " +
+				"				a.HinhThucBom as IDHinhThucBom, a.IDNVKD as IDNhanVien \r\n" + 
 				"        FROM tblLichXuatBeTong AS a\r\n" + 
 				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
 				"             JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID\r\n" + 
@@ -629,7 +632,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               a.KLDaXuat, \r\n" + 
 				"               a.NguoiTao, \r\n" + 
 				"               a.NgayTao,\r\n" + 
-				"               a.TrangThai,a.IDChiNhanh " +
+				"               a.TrangThai,a.IDChiNhanh, " +
+				"               a.IDNhaCungCap, a.IDLoaiVatLieu, a.IDCongTrinh, " +
+				"               a.IDNVKD as IDNVKD, a.IDDonViTinh " +
+				"				, a.IDNhomVatLieu, nvl.TenNhomVatLieu " +
 				"        FROM tblLichBanGach AS a\r\n" + 
 				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
 				"             JOIN tblLoaiVatLieu AS c ON a.IDLoaiVatLieu = c.ID\r\n" + 
@@ -637,6 +643,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"             JOIN tblChiNhanh AS i ON a.IDChiNhanh = i.ID\r\n" + 
 				"             JOIN tblNhanSu AS j ON j.ID = a.IDNVKD\r\n" + 
 				"             JOIN tblDonViTinh AS dv ON dv.ID = a.IDDonViTinh " + 
+				"     		  JOIN tblNhomVatLieu AS nvl ON a.IDNhomVatLieu = nvl.ID " +
 				" WHERE 1 = 1 ";
 		List<String> lstParams = new ArrayList<>();
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {

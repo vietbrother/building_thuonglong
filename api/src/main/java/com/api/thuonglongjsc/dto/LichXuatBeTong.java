@@ -38,6 +38,12 @@ public class LichXuatBeTong {
 
 	private String TrangThaiHoanThanh;
 
+	private String IDCongTrinh;
+	private String IDNhaCungCap;
+	private String IDMacBeTong;
+	private String IDHinhThucBom;
+	private String IDNhanVien;
+
 	public LichXuatBeTong() {
 		super();
 	}
@@ -47,7 +53,8 @@ public class LichXuatBeTong {
 			String tenNhanVien, String kyThuat, String nguoiThuTien, String tenLoaiDa, String tenDoSut, String tenYCDB,
 			Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat,
 			String trangThaiText, String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai,
-			String trangThaiHoanThanh) {
+			String trangThaiHoanThanh, String iDCongTrinh, String iDNhaCungCap, String iDMacBeTong,
+			String iDHinhThucBom, String iDNhanVien) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -76,6 +83,11 @@ public class LichXuatBeTong {
 		IDChiNhanh = iDChiNhanh;
 		TrangThai = trangThai;
 		TrangThaiHoanThanh = trangThaiHoanThanh;
+		IDCongTrinh = iDCongTrinh;
+		IDNhaCungCap = iDNhaCungCap;
+		IDMacBeTong = iDMacBeTong;
+		IDHinhThucBom = iDHinhThucBom;
+		IDNhanVien = iDNhanVien;
 	}
 
 	public String getID() {
@@ -294,6 +306,46 @@ public class LichXuatBeTong {
 		SoDienThoai = soDienThoai;
 	}
 
+	public String getIDCongTrinh() {
+		return IDCongTrinh;
+	}
+
+	public void setIDCongTrinh(String iDCongTrinh) {
+		IDCongTrinh = iDCongTrinh;
+	}
+
+	public String getIDNhaCungCap() {
+		return IDNhaCungCap;
+	}
+
+	public void setIDNhaCungCap(String iDNhaCungCap) {
+		IDNhaCungCap = iDNhaCungCap;
+	}
+
+	public String getIDMacBeTong() {
+		return IDMacBeTong;
+	}
+
+	public void setIDMacBeTong(String iDMacBeTong) {
+		IDMacBeTong = iDMacBeTong;
+	}
+
+	public String getIDHinhThucBom() {
+		return IDHinhThucBom;
+	}
+
+	public void setIDHinhThucBom(String iDHinhThucBom) {
+		IDHinhThucBom = iDHinhThucBom;
+	}
+
+	public String getIDNhanVien() {
+		return IDNhanVien;
+	}
+
+	public void setIDNhanVien(String iDNhanVien) {
+		IDNhanVien = iDNhanVien;
+	}
+
 	@Override
 	public String toString() {
 		return "LichXuatBeTong [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
@@ -304,7 +356,9 @@ public class LichXuatBeTong {
 				+ ", KLThucXuat=" + KLThucXuat + ", KLKhachHang=" + KLKhachHang + ", CuLyVanChuyen=" + CuLyVanChuyen
 				+ ", KLDaBan=" + KLDaBan + ", KLDaXuat=" + KLDaXuat + ", TrangThaiText=" + TrangThaiText + ", NguoiTao="
 				+ NguoiTao + ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai
-				+ ", TrangThaiHoanThanh=" + TrangThaiHoanThanh + "]";
+				+ ", TrangThaiHoanThanh=" + TrangThaiHoanThanh + ", IDCongTrinh=" + IDCongTrinh + ", IDNhaCungCap="
+				+ IDNhaCungCap + ", IDMacBeTong=" + IDMacBeTong + ", IDHinhThucBom=" + IDHinhThucBom + ", IDNhanVien="
+				+ IDNhanVien + "]";
 	}
 
 }

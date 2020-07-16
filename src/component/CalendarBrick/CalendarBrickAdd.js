@@ -47,12 +47,12 @@ import Utils from "../../utils/Utils";
 import moment from "moment";
 import RNPicker from "rn-modal-picker";
 
-export default class CalendarConcreteAdd extends Component {
+export default class CalendarBrickAdd extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            title: Config.calendarConcrete.add,
+            title: Config.calendarBrick.add,
             hasError: false,
             errorText: '',
             isLoading: false,
@@ -62,8 +62,9 @@ export default class CalendarConcreteAdd extends Component {
             providers: [],
             projects: [],
             employees: [],
-            concreteTypes: [],
-            pumpTypes: [],
+            nhomvatlieus: [],
+            loaivatlieus: [],
+            donvitinhs: [],
             calendarId: '',
             outDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),
             outTime: '09:00',
@@ -72,8 +73,9 @@ export default class CalendarConcreteAdd extends Component {
             projectSelected: {},
             category: '',
             employeeSelected: {},
-            concreteTypeSelected: {},
-            pumpTypeSelected: {},
+            nhomvatlieuSelected: {},
+            loaivatlieuSelected: {},
+            donvitinhSelected: {},
             khoiLuongTamTinh: 0,
             khoiLuongKhachHang: 0,
             distance: 0,
@@ -93,24 +95,6 @@ export default class CalendarConcreteAdd extends Component {
     }
 
     async componentDidMount() {
-        // this.setState({
-        //     contract: this.props.contract,
-        //     outDate: this.props.contract.ngayThang,
-        //     outTime: this.props.contract.gioXuat,
-        //     branchSelected: this.props.contract.chiNhanh,
-        //     providerSelected: this.props.contract.nhaCungCap,
-        //     projectSelected: this.props.contract.congTrinh,
-        //     category: this.props.contract.hangMuc,
-        //     employeeSelected: this.props.contract.nvkinhDoanh,
-        //     concreteTypeSelected: this.props.contract.macBeTong,
-        //     pumpTypeSelected: this.props.contract.hinhThucBom,
-        //     khoiLuongTamTinh: this.props.contract.klthucxuat,
-        //     khoiLuongKhachHang: this.props.contract.klkhachHang,
-        //     distance: this.props.contract.cuLyVanChuyen,
-        //     technical: this.props.contract.kyThuat,
-        //     cashier: this.props.contract.nguoiThuTien,
-        // });
-        // console.log(this.props.contract);
         let username = await AsyncStorage.getItem('userId');
         this.setState({
             username: username,
@@ -176,7 +160,7 @@ export default class CalendarConcreteAdd extends Component {
                 ngayThang: this.state.outDate
             };
 
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongNhaCungCap, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachNhaCungCap, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -205,7 +189,7 @@ export default class CalendarConcreteAdd extends Component {
                 ngayThang: this.state.outDate
             };
 
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongCongTrinh, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachCongTrinh, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -233,7 +217,7 @@ export default class CalendarConcreteAdd extends Component {
                 ngayThang: this.state.outDate
             };
 
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongEmployee, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachEmployee, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -253,7 +237,7 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    async _loadConcreteTypeData(idcongTrinh) {
+    async _loadNhomVatLieuData(idcongTrinh) {
         this.setState({isSearching: true});
         try {
             var param = {
@@ -261,7 +245,7 @@ export default class CalendarConcreteAdd extends Component {
                 ngayThang: this.state.outDate
             };
 
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongMacBeTong, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachNhomVatLieu, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -271,7 +255,7 @@ export default class CalendarConcreteAdd extends Component {
             });
             var responseObj = await response.json();
             this.setState({isSearching: false});
-            this.setState({concreteTypes: responseObj});
+            this.setState({nhomvatlieus: responseObj});
             if (responseObj != null && responseObj.length > 0) {
                 //this.setState({branchSelected: responseObj[0].id});
             }
@@ -291,7 +275,7 @@ export default class CalendarConcreteAdd extends Component {
                 ngayThang: this.state.outDate
             };
 
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongHinhThucBom, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachHinhThucBom, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -318,7 +302,7 @@ export default class CalendarConcreteAdd extends Component {
             providerSelected: {},
             projectSelected: {},
             employeeSelected: {},
-            concreteTypeSelected: {},
+            BrickTypeSelected: {},
             pumpTypeSelected: {}
         });
     }
@@ -329,7 +313,7 @@ export default class CalendarConcreteAdd extends Component {
         this.setState({
             projectSelected: {},
             employeeSelected: {},
-            concreteTypeSelected: {},
+            BrickTypeSelected: {},
             pumpTypeSelected: {}
         });
     }
@@ -337,7 +321,7 @@ export default class CalendarConcreteAdd extends Component {
     _selectedProject(index, item) {
         this.setState({projectSelected: item});
         this._loadPumpTypeData(item.id);
-        this._loadConcreteTypeData(item.id);
+        this._loadBrickTypeData(item.id);
         this._loadEmployeeData(item.id);
     }
 
@@ -345,8 +329,8 @@ export default class CalendarConcreteAdd extends Component {
         this.setState({employeeSelected: item});
     }
 
-    _selectedConcreteType(index, item) {
-        this.setState({concreteTypeSelected: item});
+    _selectedBrickType(index, item) {
+        this.setState({BrickTypeSelected: item});
     }
 
     _selectedPumpType(index, item) {
@@ -430,7 +414,7 @@ export default class CalendarConcreteAdd extends Component {
                 }}>
                     <Card transparent>
                         <CardItem header bordered>
-                            <H3>{Config.calendarConcrete.title}</H3>
+                            <H3>{Config.calendarBrick.title}</H3>
                         </CardItem>
 
                         <Form style={{backgroundColor: "#ffffff"}}>
@@ -438,7 +422,7 @@ export default class CalendarConcreteAdd extends Component {
                                 <Left>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportHour}
+                                                                         style={styles.muted}/> {Config.calendarBrick.exportHour}
                                         </Text>
                                         <TouchableOpacity onPress={() => this.setOutTime()}>
                                             <Text style={styles.title}>{this.state.outTime}</Text>
@@ -449,7 +433,7 @@ export default class CalendarConcreteAdd extends Component {
                                 <Right>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate}
+                                                                         style={styles.muted}/> {Config.calendarBrick.exportDate}
                                         </Text>
                                         <DatePicker
                                             defaultDate={new Date()}
@@ -478,13 +462,13 @@ export default class CalendarConcreteAdd extends Component {
                             </CardItem>
 
                             <Item>
-                                <Label>{Config.calendarConcrete.branch}</Label>
+                                <Label>{Config.calendarBrick.branch}</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.branchs}
                                 dummyDataSource={this.state.branchs}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarConcrete.branch}
+                                pickerTitle={Config.calendarBrick.branch}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -502,13 +486,13 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedBranch(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.providerName} </Label>
+                                <Label>{Config.calendarBrick.providerName} </Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.providers}
                                 dummyDataSource={this.state.providers}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarConcrete.providerName}
+                                pickerTitle={Config.calendarBrick.providerName}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -527,13 +511,13 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.projectName} </Label>
+                                <Label>{Config.calendarBrick.projectName} </Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.projects}
                                 dummyDataSource={this.state.projects}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarConcrete.projectName}
+                                pickerTitle={Config.calendarBrick.projectName}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -551,19 +535,19 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedProject(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.hangMuc} </Label>
+                                <Label>{Config.calendarBrick.hangMuc} </Label>
                                 <Input style={{}}
                                        onChangeText={value => this.onChangedCategory(value)}
                                        value={this.state.category}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.employee} </Label>
+                                <Label>{Config.calendarBrick.employee} </Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.employees}
                                 dummyDataSource={this.state.employees}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarConcrete.employee}
+                                pickerTitle={Config.calendarBrick.employee}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -581,13 +565,13 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedEmployee(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.concreteType} </Label>
+                                <Label>{Config.calendarBrick.BrickType} </Label>
                             </Item>
                             <RNPicker
-                                dataSource={this.state.concreteTypes}
-                                dummyDataSource={this.state.concreteTypes}
+                                dataSource={this.state.BrickTypes}
+                                dummyDataSource={this.state.BrickTypes}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarConcrete.concreteType}
+                                pickerTitle={Config.calendarBrick.BrickType}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -597,21 +581,21 @@ export default class CalendarConcreteAdd extends Component {
                                 pickerStyle={styles.pickerStyle}
                                 itemSeparatorStyle={styles.itemSeparatorStyle}
                                 pickerItemTextStyle={styles.listTextViewStyle}
-                                selectedLabel={this.state.concreteTypeSelected.name}
+                                selectedLabel={this.state.BrickTypeSelected.name}
                                 placeHolderLabel={this.state.placeHolderText}
                                 selectLabelTextStyle={styles.selectLabelTextStyle}
                                 placeHolderTextStyle={styles.placeHolderTextStyle}
                                 dropDownImageStyle={styles.dropDownImageStyle}
-                                selectedValue={(index, item) => this._selectedConcreteType(index, item)}
+                                selectedValue={(index, item) => this._selectedBrickType(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.pumpType} </Label>
+                                <Label>{Config.calendarBrick.pumpType} </Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.pumpTypes}
                                 dummyDataSource={this.state.pumpTypes}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarConcrete.pumpType}
+                                pickerTitle={Config.calendarBrick.pumpType}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -630,34 +614,34 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongTamTinh} </Label>
+                                <Label>{Config.calendarBrick.khoiLuongTamTinh} </Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
                                        value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongKhachHang} </Label>
+                                <Label>{Config.calendarBrick.khoiLuongKhachHang} </Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
                                        value={this.state.khoiLuongKhachHang}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.distance} </Label>
+                                <Label>{Config.calendarBrick.distance} </Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
                                        value={this.state.distance}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.technical} </Label>
+                                <Label>{Config.calendarBrick.technical} </Label>
                                 <Input style={{}}
                                        onChangeText={value => this.onChangedTechnical(value)}
                                        value={this.state.technical}/>
                             </Item>
                             <Item floatingLabel last>
-                                <Label>{Config.calendarConcrete.cashier}</Label>
+                                <Label>{Config.calendarBrick.cashier}</Label>
                                 <Input style={{}}
                                        onChangeText={value => this.onChangedCashier(value)}
                                        value={this.state.cashier}/>
@@ -707,11 +691,11 @@ export default class CalendarConcreteAdd extends Component {
             this._loadProviderData(this.props.contract.idchiNhanh);
             this._loadProjectData(this.props.contract.idnhaCungCap);
             this._loadPumpTypeData(this.props.contract.idcongTrinh);
-            this._loadConcreteTypeData(this.props.contract.idcongTrinh);
+            this._loadBrickTypeData(this.props.contract.idcongTrinh);
             this._loadEmployeeData(this.props.contract.idcongTrinh);
             this.setState({
                 calendarId : this.props.contract.id,
-                title: Config.calendarConcrete.edit,
+                title: Config.calendarBrick.edit,
                 contract: this.props.contract,
                 outDate: this.props.contract.ngayThang,
                 outTime: this.props.contract.gioXuat,
@@ -732,7 +716,7 @@ export default class CalendarConcreteAdd extends Component {
                     id: this.props.contract.idnhanVien,
                     name: this.props.contract.tenNhanVien
                 },
-                concreteTypeSelected: {
+                BrickTypeSelected: {
                     id: this.props.contract.idmacBeTong,
                     name: this.props.contract.tenMacBeTong
                 },
@@ -755,7 +739,7 @@ export default class CalendarConcreteAdd extends Component {
                 projectSelected: {},
                 category: '',
                 employeeSelected: {},
-                concreteTypeSelected: {},
+                BrickTypeSelected: {},
                 pumpTypeSelected: {},
                 khoiLuongTamTinh: 0,
                 khoiLuongKhachHang: 0,
@@ -774,7 +758,7 @@ export default class CalendarConcreteAdd extends Component {
             providerSelected: {},
             projectSelected: {},
             employeeSelected: {},
-            concreteTypeSelected: {},
+            BrickTypeSelected: {},
             pumpTypeSelected: {}
         });
     }
@@ -800,29 +784,29 @@ export default class CalendarConcreteAdd extends Component {
     async _actionSave() {
         try {
             if (this.state.outDate == '') {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.exportDate});
+                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.exportDate});
                 return;
             }
             if (this.state.branchSelected.name == '' || this.state.branchSelected.name == undefined) {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.branch});
+                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.branch});
                 return;
             }
             if (this.state.providerSelected.name == '') {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.providerName});
+                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.providerName});
                 return;
             }
-            if (this.state.concreteTypeSelected.name == '') {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
+            if (this.state.BrickTypeSelected.name == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.BrickType});
                 return;
             }
             if (this.state.khoiLuongTamTinh == '') {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.exportReal});
+                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.exportReal});
                 return;
             }
             if (this.state.khoiLuongKhachHang == '') {
                 this.setState({
                     hasError: true,
-                    errorText: Config.required + Config.calendarConcrete.khoiLuongKhachHang
+                    errorText: Config.required + Config.calendarBrick.khoiLuongKhachHang
                 });
                 return;
             }
@@ -846,7 +830,7 @@ export default class CalendarConcreteAdd extends Component {
                 klkhachHang: this.state.khoiLuongKhachHang,
                 klthucXuat: this.state.khoiLuongTamTinh,
                 kyThuat: this.state.technical,
-                macBeTong: this.state.concreteTypeSelected.id,
+                macBeTong: this.state.BrickTypeSelected.id,
                 ngayThang: this.state.outDate,
                 nguoiTao: this.state.username,
                 nguoiThuTien: this.state.cashier,
@@ -855,7 +839,7 @@ export default class CalendarConcreteAdd extends Component {
                 trangThaiText: Config.state.wait
             };
             console.log(JSON.stringify(param));
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongSave, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachSave, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -868,7 +852,7 @@ export default class CalendarConcreteAdd extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 Utils._alert(Config.successSave);
-                Actions.calendarConcretes({branchId: this.state.contract.idchiNhanh});
+                Actions.calendarBricks({branchId: this.state.contract.idchiNhanh});
             } else {
                 Utils._alert(Config.err_save + " : " + responseObj.message);
             }
