@@ -75,6 +75,7 @@ import BricksContractDetail from "./component/BricksContracts/BricksContractDeta
 import CalendarBricks from "./component/CalendarBrick/CalendarBricks";
 import CalendarBrickDetail from "./component/CalendarBrick/CalendarBrickDetail";
 import CalendarConcreteAdd from "./component/CalendarConcrete/CalendarConcreteAdd";
+import CalendarBrickAdd from "./component/CalendarBrick/CalendarBrickAdd";
 
 export default class Main extends Component {
 
@@ -272,7 +273,7 @@ export default class Main extends Component {
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene type="reset" key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>
-                        <Scene key="calendarConcreteAdd" component={CalendarConcreteAdd} hideNavBar/>
+                        <Scene type="reset" key="calendarConcreteAdd" component={CalendarConcreteAdd} hideNavBar/>
                         <Scene type="reset" key="contractMaterials" component={ContractMaterials} hideNavBar/>
                         <Scene key="contractMaterialDetail" component={ContractMaterialDetail} hideNavBar/>
 
@@ -288,7 +289,7 @@ export default class Main extends Component {
 
                         <Scene type="reset" key="calendarBricks" component={CalendarBricks} hideNavBar/>
                         <Scene key="calendarBrickDetail" component={CalendarBrickDetail} hideNavBar/>
-
+                        <Scene type="reset" key="calendarBrickAdd" component={CalendarBrickAdd} hideNavBar/>
                     </Scene>
                 </Router>
             </Root>

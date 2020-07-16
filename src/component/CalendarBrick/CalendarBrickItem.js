@@ -149,7 +149,17 @@ export default class CalendarBrickItem extends Component {
                 </CardItem>
 
                 <CardItem>
-                    <Left></Left>
+                    <Left>
+                        <TouchableOpacity
+                            style={styles.btnApprove}
+                            onPress={() => Actions.calendarBrickAdd({contract: this.props.contract})}
+                            activeOpacity={0.9}
+                        >
+                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
+                                                                    name='ios-create-outline'/> {Config.btnEdit}
+                            </Text>
+                        </TouchableOpacity>
+                    </Left>
                     <Right>
                         <TouchableOpacity
                             style={styles.btnApprove}

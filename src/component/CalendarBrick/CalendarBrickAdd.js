@@ -265,17 +265,18 @@ export default class CalendarBrickAdd extends Component {
         }
     }
 
-    async _loadPumpTypeData(idcongTrinh) {
+    async _loadLoaiVatLieuData(idnhomVatLieu) {
         this.setState({isSearching: true});
         try {
             var param = {
                 // username: this.state.username,
-                idchiNhanh: this.state.projectSelected.id,
-                idcongTrinh: idcongTrinh,
+                // idchiNhanh: this.state.branchSelected.id,
+                idcongTrinh: this.state.projectSelected.id,
+                idnhomVatLieu: idnhomVatLieu,
                 ngayThang: this.state.outDate
             };
 
-            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachHinhThucBom, {
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachLoaiVatLieu, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -285,7 +286,38 @@ export default class CalendarBrickAdd extends Component {
             });
             var responseObj = await response.json();
             this.setState({isSearching: false});
-            this.setState({pumpTypes: responseObj});
+            this.setState({loaivatlieus: responseObj});
+            if (responseObj != null && responseObj.length > 0) {
+                //this.setState({branchSelected: responseObj[0].id});
+            }
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearching: false});
+        }
+    }
+
+    async _loadDonViTinhData(idloaiVatLieu) {
+        this.setState({isSearching: true});
+        try {
+            var param = {
+                // username: this.state.username,
+                // idchiNhanh: this.state.branchSelected.id,
+                idcongTrinh: this.state.projectSelected.id,
+                idloaiVatLieu: idloaiVatLieu,
+                ngayThang: this.state.outDate
+            };
+
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichBanGachDonViTinh, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            this.setState({isSearching: false});
+            this.setState({donvitinhs: responseObj});
             if (responseObj != null && responseObj.length > 0) {
                 //this.setState({branchSelected: responseObj[0].id});
             }
@@ -302,8 +334,9 @@ export default class CalendarBrickAdd extends Component {
             providerSelected: {},
             projectSelected: {},
             employeeSelected: {},
-            BrickTypeSelected: {},
-            pumpTypeSelected: {}
+            nhomvatlieuSelected: {},
+            loaivatlieuSelected: {},
+            donvitinhSelected: {},
         });
     }
 
@@ -313,16 +346,40 @@ export default class CalendarBrickAdd extends Component {
         this.setState({
             projectSelected: {},
             employeeSelected: {},
-            BrickTypeSelected: {},
-            pumpTypeSelected: {}
+            nhomvatlieuSelected: {},
+            loaivatlieuSelected: {},
+            donvitinhSelected: {},
         });
     }
 
     _selectedProject(index, item) {
         this.setState({projectSelected: item});
-        this._loadPumpTypeData(item.id);
-        this._loadBrickTypeData(item.id);
+        this.setState({
+            employeeSelected: {},
+            nhomvatlieuSelected: {},
+            loaivatlieuSelected: {},
+            donvitinhSelected: {},
+        });
         this._loadEmployeeData(item.id);
+        this._loadNhomVatLieuData(item.id);
+    }
+    _selectedNhomVatLieu(index, item) {
+        this.setState({nhomvatlieuSelected: item});
+        this.setState({
+            loaivatlieuSelected: {},
+            donvitinhSelected: {},
+        });
+        this._loadLoaiVatLieuData(item.id);
+    }
+    _selectedLoaiVatLieu(index, item) {
+        this.setState({loaivatlieuSelected: item});
+        this.setState({
+            donvitinhSelected: {},
+        });
+        this._loadDonViTinhData(item.id);
+    }
+    _selectedDonViTinh(index, item) {
+        this.setState({donvitinhSelected: item});
     }
 
     _selectedEmployee(index, item) {
@@ -565,13 +622,13 @@ export default class CalendarBrickAdd extends Component {
                                 selectedValue={(index, item) => this._selectedEmployee(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.BrickType} </Label>
+                                <Label>{Config.calendarBrick.nhomVatLieu} </Label>
                             </Item>
                             <RNPicker
-                                dataSource={this.state.BrickTypes}
-                                dummyDataSource={this.state.BrickTypes}
+                                dataSource={this.state.nhomvatlieus}
+                                dummyDataSource={this.state.nhomvatlieus}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarBrick.BrickType}
+                                pickerTitle={Config.calendarBrick.nhomVatLieu}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -581,21 +638,21 @@ export default class CalendarBrickAdd extends Component {
                                 pickerStyle={styles.pickerStyle}
                                 itemSeparatorStyle={styles.itemSeparatorStyle}
                                 pickerItemTextStyle={styles.listTextViewStyle}
-                                selectedLabel={this.state.BrickTypeSelected.name}
+                                selectedLabel={this.state.nhomvatlieuSelected.name}
                                 placeHolderLabel={this.state.placeHolderText}
                                 selectLabelTextStyle={styles.selectLabelTextStyle}
                                 placeHolderTextStyle={styles.placeHolderTextStyle}
                                 dropDownImageStyle={styles.dropDownImageStyle}
-                                selectedValue={(index, item) => this._selectedBrickType(index, item)}
+                                selectedValue={(index, item) => this._selectedNhomVatLieu(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.pumpType} </Label>
+                                <Label>{Config.calendarBrick.loaiVatLieu} </Label>
                             </Item>
                             <RNPicker
-                                dataSource={this.state.pumpTypes}
-                                dummyDataSource={this.state.pumpTypes}
+                                dataSource={this.state.loaivatlieus}
+                                dummyDataSource={this.state.loaivatlieus}
                                 defaultValue={false}
-                                pickerTitle={Config.calendarBrick.pumpType}
+                                pickerTitle={Config.calendarBrick.loaiVatLieu}
                                 showSearchBar={true}
                                 disablePicker={false}
                                 changeAnimation={"none"}
@@ -605,12 +662,36 @@ export default class CalendarBrickAdd extends Component {
                                 pickerStyle={styles.pickerStyle}
                                 itemSeparatorStyle={styles.itemSeparatorStyle}
                                 pickerItemTextStyle={styles.listTextViewStyle}
-                                selectedLabel={this.state.pumpTypeSelected.name}
+                                selectedLabel={this.state.loaivatlieuSelected.name}
                                 placeHolderLabel={this.state.placeHolderText}
                                 selectLabelTextStyle={styles.selectLabelTextStyle}
                                 placeHolderTextStyle={styles.placeHolderTextStyle}
                                 dropDownImageStyle={styles.dropDownImageStyle}
-                                selectedValue={(index, item) => this._selectedPumpType(index, item)}
+                                selectedValue={(index, item) => this._selectedLoaiVatLieu(index, item)}
+                            />
+                            <Item floatingLabel>
+                                <Label>{Config.calendarBrick.unit} </Label>
+                            </Item>
+                            <RNPicker
+                                dataSource={this.state.donvitinhs}
+                                dummyDataSource={this.state.donvitinhs}
+                                defaultValue={false}
+                                pickerTitle={Config.calendarBrick.loaiVatLieu}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={Config.btnSearch}
+                                showPickerTitle={true}
+                                searchBarContainerStyle={this.props.searchBarContainerStyle}
+                                pickerStyle={styles.pickerStyle}
+                                itemSeparatorStyle={styles.itemSeparatorStyle}
+                                pickerItemTextStyle={styles.listTextViewStyle}
+                                selectedLabel={this.state.donvitinhSelected.name}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(index, item) => this._selectedDonViTinh(index, item)}
                             />
 
                             <Item floatingLabel>
@@ -670,7 +751,7 @@ export default class CalendarBrickAdd extends Component {
                                     activeOpacity={0.9}
                                 >
                                     <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                            name='md-save'/> {Config.btnSave}
+                                                                            name='md-checkmark'/> {Config.btnSave}
                                     </Text>
                                 </TouchableOpacity>
                             </Right>
@@ -687,12 +768,6 @@ export default class CalendarBrickAdd extends Component {
     _initData() {
         console.log(this.props.contract);
         if (this.props.contract != null && this.props.contract != undefined) {
-            this._loadBranchData();
-            this._loadProviderData(this.props.contract.idchiNhanh);
-            this._loadProjectData(this.props.contract.idnhaCungCap);
-            this._loadPumpTypeData(this.props.contract.idcongTrinh);
-            this._loadBrickTypeData(this.props.contract.idcongTrinh);
-            this._loadEmployeeData(this.props.contract.idcongTrinh);
             this.setState({
                 calendarId : this.props.contract.id,
                 title: Config.calendarBrick.edit,
@@ -716,13 +791,17 @@ export default class CalendarBrickAdd extends Component {
                     id: this.props.contract.idnhanVien,
                     name: this.props.contract.tenNhanVien
                 },
-                BrickTypeSelected: {
-                    id: this.props.contract.idmacBeTong,
-                    name: this.props.contract.tenMacBeTong
+                nhomvatlieuSelected: {
+                    id: this.props.contract.idnhomVatLieu,
+                    name: this.props.contract.tenNhomVatLieu
                 },
-                pumpTypeSelected: {
-                    id: this.props.contract.idhinhThucBom,
-                    name: this.props.contract.hinhThucBom
+                loaivatlieuSelected: {
+                    id: this.props.contract.idloaiVatLieu,
+                    name: this.props.contract.tenLoaiVatLieu
+                },
+                donvitinhSelected: {
+                    id: this.props.contract.iddonViTinh,
+                    name: this.props.contract.tenDonViTinh
                 },
                 khoiLuongTamTinh: this.props.contract.klthucxuat,
                 khoiLuongKhachHang: this.props.contract.klkhachHang,
@@ -730,6 +809,15 @@ export default class CalendarBrickAdd extends Component {
                 technical: this.props.contract.kyThuat,
                 cashier: this.props.contract.nguoiThuTien,
             });
+
+            this._loadBranchData();
+            this._loadProviderData(this.props.contract.idchiNhanh);
+            this._loadProjectData(this.props.contract.idnhaCungCap);
+            this._loadEmployeeData(this.props.contract.idcongTrinh);
+            this._loadNhomVatLieuData(this.props.contract.idcongTrinh);
+            this._loadLoaiVatLieuData(this.props.contract.idnhomVatLieu);
+            this._loadDonViTinhData(this.props.contract.idloaiVatLieu);
+
         } else {
             this.setState({
                 outDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),
@@ -739,8 +827,9 @@ export default class CalendarBrickAdd extends Component {
                 projectSelected: {},
                 category: '',
                 employeeSelected: {},
-                BrickTypeSelected: {},
-                pumpTypeSelected: {},
+                nhomvatlieuSelected: {},
+                loaivatlieuSelected: {},
+                donvitinhSelected: {},
                 khoiLuongTamTinh: 0,
                 khoiLuongKhachHang: 0,
                 distance: 0,
@@ -795,8 +884,8 @@ export default class CalendarBrickAdd extends Component {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.providerName});
                 return;
             }
-            if (this.state.BrickTypeSelected.name == '') {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.BrickType});
+            if (this.state.projectSelected.name == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.projectName});
                 return;
             }
             if (this.state.khoiLuongTamTinh == '') {
@@ -813,24 +902,24 @@ export default class CalendarBrickAdd extends Component {
             this.setState({isLoading: true});
 
             var param = {
-                id: this.state.calendarId,
-                cuLyVanChuyen: this.state.distance,
+                cuLyVanChuyen: this.state.distance == '' ? 0 : this.state.distance,
                 gioXuat: this.state.outTime,
                 hangMuc: this.state.hangMuc,
-                hinhThucBom: this.state.pumpTypeSelected.id,
+                id: this.state.calendarId,
                 idchiNhanh: this.state.branchSelected.id,
                 idchiTietKinhDoanh: '',
                 idcongTrinh: this.state.projectSelected.id,
+                iddonViTinh: this.state.donvitinhSelected.id,
                 idhopDong: new Date().getTime(),
-                idhopDongBom: new Date().getTime(),
+                idloaiVatLieu: this.state.loaivatlieuSelected.id,
                 idnhaCungCap: this.state.providerSelected.id,
+                idnhomVatLieu: this.state.nhomvatlieuSelected.id,
                 idnvkd: this.state.employeeSelected.id,
-                kldaBan: this.state.khoiLuongKhachHang,
-                kldaXuat: this.state.khoiLuongTamTinh,
+                kldaBan: 0,
+                kldaXuat: 0,
                 klkhachHang: this.state.khoiLuongKhachHang,
                 klthucXuat: this.state.khoiLuongTamTinh,
-                kyThuat: this.state.technical,
-                macBeTong: this.state.BrickTypeSelected.id,
+                moTa: '',
                 ngayThang: this.state.outDate,
                 nguoiTao: this.state.username,
                 nguoiThuTien: this.state.cashier,

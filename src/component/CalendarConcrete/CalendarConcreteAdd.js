@@ -286,7 +286,7 @@ export default class CalendarConcreteAdd extends Component {
         try {
             var param = {
                 // username: this.state.username,
-                idchiNhanh: this.state.projectSelected.id,
+                // idchiNhanh: this.state.projectSelected.id,
                 idcongTrinh: idcongTrinh,
                 ngayThang: this.state.outDate
             };
@@ -336,6 +336,11 @@ export default class CalendarConcreteAdd extends Component {
 
     _selectedProject(index, item) {
         this.setState({projectSelected: item});
+        this.setState({
+            employeeSelected: {},
+            concreteTypeSelected: {},
+            pumpTypeSelected: {}
+        });
         this._loadPumpTypeData(item.id);
         this._loadConcreteTypeData(item.id);
         this._loadEmployeeData(item.id);
@@ -686,7 +691,7 @@ export default class CalendarConcreteAdd extends Component {
                                     activeOpacity={0.9}
                                 >
                                     <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                            name='md-save'/> {Config.btnSave}
+                                                                            name='md-checkmark'/> {Config.btnSave}
                                     </Text>
                                 </TouchableOpacity>
                             </Right>
@@ -703,12 +708,6 @@ export default class CalendarConcreteAdd extends Component {
     _initData() {
         console.log(this.props.contract);
         if (this.props.contract != null && this.props.contract != undefined) {
-            this._loadBranchData();
-            this._loadProviderData(this.props.contract.idchiNhanh);
-            this._loadProjectData(this.props.contract.idnhaCungCap);
-            this._loadPumpTypeData(this.props.contract.idcongTrinh);
-            this._loadConcreteTypeData(this.props.contract.idcongTrinh);
-            this._loadEmployeeData(this.props.contract.idcongTrinh);
             this.setState({
                 calendarId : this.props.contract.id,
                 title: Config.calendarConcrete.edit,
@@ -746,6 +745,51 @@ export default class CalendarConcreteAdd extends Component {
                 technical: this.props.contract.kyThuat,
                 cashier: this.props.contract.nguoiThuTien,
             });
+
+            this._loadBranchData();
+            this._loadProviderData(this.props.contract.idchiNhanh);
+            this._loadProjectData(this.props.contract.idnhaCungCap);
+            this._loadPumpTypeData(this.props.contract.idcongTrinh);
+            this._loadConcreteTypeData(this.props.contract.idcongTrinh);
+            this._loadEmployeeData(this.props.contract.idcongTrinh);
+            this.setState({
+                calendarId : this.props.contract.id,
+                title: Config.calendarConcrete.edit,
+                contract: this.props.contract,
+                outDate: this.props.contract.ngayThang,
+                outTime: this.props.contract.gioXuat,
+                branchSelected: {
+                    id: this.props.contract.idchiNhanh,
+                    name: this.props.contract.chiNhanh
+                },
+                providerSelected: {
+                    id: this.props.contract.idnhaCungCap,
+                    name: this.props.contract.nhaCungCap
+                },
+                projectSelected: {
+                    id: this.props.contract.idcongTrinh,
+                    name: this.props.contract.congTrinh
+                },
+                category: this.props.contract.hangMuc,
+                employeeSelected: {
+                    id: this.props.contract.idnhanVien,
+                    name: this.props.contract.tenNhanVien
+                },
+                concreteTypeSelected: {
+                    id: this.props.contract.idmacBeTong,
+                    name: this.props.contract.tenMacBeTong
+                },
+                pumpTypeSelected: {
+                    id: this.props.contract.idhinhThucBom,
+                    name: this.props.contract.hinhThucBom
+                },
+                khoiLuongTamTinh: this.props.contract.klthucXuat,
+                khoiLuongKhachHang: this.props.contract.klkhachHang,
+                distance: this.props.contract.cuLyVanChuyen,
+                technical: this.props.contract.kyThuat,
+                cashier: this.props.contract.nguoiThuTien,
+            });
+
         } else {
             this.setState({
                 outDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),

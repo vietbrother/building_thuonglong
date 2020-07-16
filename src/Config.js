@@ -155,6 +155,8 @@ const Config = {
 
     calendarBrick: {
         title: 'Lịch bán gạch',
+        add: 'Thêm mới lịch bán gạch',
+        edit: 'Sửa lịch trộn bán gạch',
         detail: 'Thông tin chi tiết',
         branch: 'Chi nhánh',
         providerName: 'Nhà cung cấp',
@@ -165,13 +167,16 @@ const Config = {
         employee: 'Nhân viên',
         technical: 'Kỹ thuật',
         cashier: 'Thu ngân',
+        hangMuc: 'Hạng mục',
         exportReal: 'Số lượng thực xuất',
         exportCustomer: 'Số lượng khách hàng',
         distance: 'Cự ly vận chuyển',
         exportPlan: 'Số lượng đã bán',
         exportDate: 'Ngày xuất',
         exportHour: 'Giờ xuất',
-        completeState: 'Trạng thái hoàn thành'
+        completeState: 'Trạng thái hoàn thành',
+        nhomVatLieu: 'Nhóm vật liệu',
+        loaiVatLieu: 'Loại vật liệu',
     },
 
     contractMaterial: {
