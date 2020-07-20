@@ -74,9 +74,9 @@ export default class CalendarConcreteAdd extends Component {
             employeeSelected: {},
             concreteTypeSelected: {},
             pumpTypeSelected: {},
-            khoiLuongTamTinh: 0,
-            khoiLuongKhachHang: 0,
-            distance: 0,
+            khoiLuongTamTinh: '0',
+            khoiLuongKhachHang: '0',
+            distance: '0',
             technical: '',
             cashier: '',
         };
@@ -361,42 +361,42 @@ export default class CalendarConcreteAdd extends Component {
     onChangedCategory(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({category: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({category: value});
         }
     }
 
     onChangedDistance(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({distance: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({distance: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedKhoiLuongTamTinh(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({khoiLuongTamTinh: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({khoiLuongTamTinh: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedKhoiLuongKhachHang(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({khoiLuongKhachHang: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({khoiLuongKhachHang: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedTechnical(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({technical: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({technical: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedCashier(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({cashier: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({cashier: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
@@ -457,7 +457,7 @@ export default class CalendarConcreteAdd extends Component {
                                                                          style={styles.muted}/> {Config.calendarConcrete.exportDate}
                                         </Text>
                                         <DatePicker
-                                            defaultDate={new Date()}
+                                            defaultDate={this.state.outDate}
                                             //minimumDate={new Date()}
                                             //maximumDate={new Date()}
                                             locale={'en'}
@@ -650,7 +650,7 @@ export default class CalendarConcreteAdd extends Component {
                             </Item>
                             <Item floatingLabel>
                                 <Label>{Config.calendarConcrete.distance} </Label>
-                                <Input style={{}}
+                                <Input style={{color: Config.mainColor}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
                                        value={this.state.distance}/>
@@ -708,11 +708,37 @@ export default class CalendarConcreteAdd extends Component {
     _initData() {
         console.log(this.props.contract);
         if (this.props.contract != null && this.props.contract != undefined) {
+            var branchSelectedTemp = {
+                id: this.props.contract.idchiNhanh,
+                name: this.props.contract.tenChiNhanh
+            };
+            var providerSelectedTemp = {
+                id: this.props.contract.idnhaCungCap,
+                name: this.props.contract.tenNhaCungCap
+            };
+            var projectSelectedTemp = {
+                id: this.props.contract.idcongTrinh,
+                name: this.props.contract.tenCongTrinh
+            };
+            var employeeSelectedTemp = {
+                ...this.state.employeeSelected,
+                id: this.props.contract.idnhanVien,
+                name: this.props.contract.tenNhanVien
+            };
+            var concreteTypeSelectedTemp = {
+                id: this.props.contract.idmacBeTong,
+                name: this.props.contract.tenMacBeTong
+            };
+            var pumpTypeSelectedTemp = {
+                id: this.props.contract.idhinhThucBom,
+                name: this.props.contract.hinhThucBom
+            };
+            var ngayThangTemp = moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY');
             this.setState({
                 calendarId : this.props.contract.id,
                 title: Config.calendarConcrete.edit,
                 contract: this.props.contract,
-                outDate: this.props.contract.ngayThang,
+                outDate: moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY'),
                 outTime: this.props.contract.gioXuat,
                 branchSelected: {
                     id: this.props.contract.idchiNhanh,
@@ -727,10 +753,7 @@ export default class CalendarConcreteAdd extends Component {
                     name: this.props.contract.congTrinh
                 },
                 category: this.props.contract.hangMuc,
-                employeeSelected: {
-                    id: this.props.contract.idnhanVien,
-                    name: this.props.contract.tenNhanVien
-                },
+                employeeSelected: employeeSelectedTemp,
                 concreteTypeSelected: {
                     id: this.props.contract.idmacBeTong,
                     name: this.props.contract.tenMacBeTong
@@ -739,12 +762,19 @@ export default class CalendarConcreteAdd extends Component {
                     id: this.props.contract.idhinhThucBom,
                     name: this.props.contract.hinhThucBom
                 },
-                khoiLuongTamTinh: this.props.contract.klthucxuat,
-                khoiLuongKhachHang: this.props.contract.klkhachHang,
-                distance: this.props.contract.cuLyVanChuyen,
+                khoiLuongTamTinh: this.props.contract.klthucXuat.toString(),
+                khoiLuongKhachHang: this.props.contract.klkhachHang.toString(),
+                distance: this.props.contract.cuLyVanChuyen.toString(),
                 technical: this.props.contract.kyThuat,
-                cashier: this.props.contract.nguoiThuTien,
+                cashier: this.props.contract.nguoiThuTien
             });
+            console.log('========================================================');
+            this.setState({outDate : ngayThangTemp});
+            this.setState({employeeSelected : employeeSelectedTemp});
+            console.log(employeeSelectedTemp);
+            console.log(this.state.employeeSelected);
+            console.log(ngayThangTemp);
+            console.log(this.state.outDate);
 
             this._loadBranchData();
             this._loadProviderData(this.props.contract.idchiNhanh);
@@ -752,45 +782,46 @@ export default class CalendarConcreteAdd extends Component {
             this._loadPumpTypeData(this.props.contract.idcongTrinh);
             this._loadConcreteTypeData(this.props.contract.idcongTrinh);
             this._loadEmployeeData(this.props.contract.idcongTrinh);
-            this.setState({
-                calendarId : this.props.contract.id,
-                title: Config.calendarConcrete.edit,
-                contract: this.props.contract,
-                outDate: this.props.contract.ngayThang,
-                outTime: this.props.contract.gioXuat,
-                branchSelected: {
-                    id: this.props.contract.idchiNhanh,
-                    name: this.props.contract.chiNhanh
-                },
-                providerSelected: {
-                    id: this.props.contract.idnhaCungCap,
-                    name: this.props.contract.nhaCungCap
-                },
-                projectSelected: {
-                    id: this.props.contract.idcongTrinh,
-                    name: this.props.contract.congTrinh
-                },
-                category: this.props.contract.hangMuc,
-                employeeSelected: {
-                    id: this.props.contract.idnhanVien,
-                    name: this.props.contract.tenNhanVien
-                },
-                concreteTypeSelected: {
-                    id: this.props.contract.idmacBeTong,
-                    name: this.props.contract.tenMacBeTong
-                },
-                pumpTypeSelected: {
-                    id: this.props.contract.idhinhThucBom,
-                    name: this.props.contract.hinhThucBom
-                },
-                khoiLuongTamTinh: this.props.contract.klthucXuat,
-                khoiLuongKhachHang: this.props.contract.klkhachHang,
-                distance: this.props.contract.cuLyVanChuyen,
-                technical: this.props.contract.kyThuat,
-                cashier: this.props.contract.nguoiThuTien,
-            });
+            // this.setState({
+            //     calendarId : this.props.contract.id,
+            //     title: Config.calendarConcrete.edit,
+            //     contract: this.props.contract,
+            //     outDate: moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY'),
+            //     outTime: this.props.contract.gioXuat,
+            //     branchSelected: {
+            //         id: this.props.contract.idchiNhanh,
+            //         name: this.props.contract.tenChiNhanh
+            //     },
+            //     providerSelected: {
+            //         id: this.props.contract.idnhaCungCap,
+            //         name: this.props.contract.tenNhaCungCap
+            //     },
+            //     projectSelected: {
+            //         id: this.props.contract.idcongTrinh,
+            //         name: this.props.contract.tenCongTrinh
+            //     },
+            //     category: this.props.contract.hangMuc,
+            //     employeeSelected: {
+            //         id: this.props.contract.idnhanVien,
+            //         name: this.props.contract.tenNhanVien
+            //     },
+            //     concreteTypeSelected: {
+            //         id: this.props.contract.idmacBeTong,
+            //         name: this.props.contract.tenMacBeTong
+            //     },
+            //     pumpTypeSelected: {
+            //         id: this.props.contract.idhinhThucBom,
+            //         name: this.props.contract.hinhThucBom
+            //     },
+            //     khoiLuongTamTinh: this.props.contract.klthucXuat.toString(),
+            //     khoiLuongKhachHang: this.props.contract.klkhachHang.toString(),
+            //     distance: this.props.contract.cuLyVanChuyen.toString(),
+            //     technical: this.props.contract.kyThuat,
+            //     cashier: this.props.contract.nguoiThuTien
+            // });
 
         } else {
+            console.log('Add');
             this.setState({
                 outDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),
                 outTime: '09:00',
@@ -801,9 +832,9 @@ export default class CalendarConcreteAdd extends Component {
                 employeeSelected: {},
                 concreteTypeSelected: {},
                 pumpTypeSelected: {},
-                khoiLuongTamTinh: 0,
-                khoiLuongKhachHang: 0,
-                distance: 0,
+                khoiLuongTamTinh: '0',
+                khoiLuongKhachHang: '0',
+                distance: '0',
                 technical: '',
                 cashier: '',
             });

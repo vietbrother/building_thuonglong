@@ -177,6 +177,9 @@ const Config = {
         completeState: 'Trạng thái hoàn thành',
         nhomVatLieu: 'Nhóm vật liệu',
         loaiVatLieu: 'Loại vật liệu',
+        contractNumber: 'Số hợp đồng',
+        khoiLuongTamTinh: 'Khối lượng tạm tính',
+        khoiLuongKhachHang: 'Khối lượng khách hàng',
     },
 
     contractMaterial: {

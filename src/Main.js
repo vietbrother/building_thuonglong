@@ -273,7 +273,7 @@ export default class Main extends Component {
                         <Scene key="contractConcreteDetail" component={ContractConcreteDetail} hideNavBar/>
                         <Scene type="reset" key="calendarConcretes" component={CalendarConcretes} hideNavBar/>
                         <Scene key="calendarConcreteDetail" component={CalendarConcreteDetail} hideNavBar/>
-                        <Scene type="reset" key="calendarConcreteAdd" component={CalendarConcreteAdd} hideNavBar/>
+                        <Scene key="calendarConcreteAdd" component={CalendarConcreteAdd} hideNavBar/>
                         <Scene type="reset" key="contractMaterials" component={ContractMaterials} hideNavBar/>
                         <Scene key="contractMaterialDetail" component={ContractMaterialDetail} hideNavBar/>
 

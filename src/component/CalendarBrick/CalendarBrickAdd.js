@@ -803,9 +803,9 @@ export default class CalendarBrickAdd extends Component {
                     id: this.props.contract.iddonViTinh,
                     name: this.props.contract.tenDonViTinh
                 },
-                khoiLuongTamTinh: this.props.contract.klthucxuat,
-                khoiLuongKhachHang: this.props.contract.klkhachHang,
-                distance: this.props.contract.cuLyVanChuyen,
+                khoiLuongTamTinh: this.props.contract.klthucXuat.toString(),
+                khoiLuongKhachHang: this.props.contract.klkhachHang.toString(),
+                distance: this.props.contract.cuLyVanChuyen.toString(),
                 technical: this.props.contract.kyThuat,
                 cashier: this.props.contract.nguoiThuTien,
             });
