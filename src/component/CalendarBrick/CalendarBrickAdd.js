@@ -495,7 +495,7 @@ export default class CalendarBrickAdd extends Component {
                                             modalTransparent={false}
                                             animationType={'fade'}
                                             androidMode={'default'}
-                                            placeHolderText={moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            placeHolderText={this.state.outDate}
                                             textStyle={{color: 'green'}}
                                             placeHolderTextStyle={{color: Config.mainColor}}
                                             onDateChange={(date) => {
@@ -901,7 +901,6 @@ export default class CalendarBrickAdd extends Component {
                 cuLyVanChuyen: this.state.distance == '' ? 0 : this.state.distance,
                 gioXuat: this.state.outTime,
                 hangMuc: this.state.hangMuc,
-                id: this.state.calendarId,
                 idchiNhanh: this.state.branchSelected.id,
                 idchiTietKinhDoanh: '',
                 idcongTrinh: this.state.projectSelected.id,

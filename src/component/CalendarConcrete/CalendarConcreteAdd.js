@@ -465,7 +465,7 @@ export default class CalendarConcreteAdd extends Component {
                                             modalTransparent={false}
                                             animationType={'fade'}
                                             androidMode={'default'}
-                                            placeHolderText={moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            placeHolderText={moment(this.state.outDate).utcOffset('+07:00').format('DD/MM/YYYY')}
                                             textStyle={{color: 'green'}}
                                             placeHolderTextStyle={{color: Config.mainColor}}
                                             onDateChange={(date) => {

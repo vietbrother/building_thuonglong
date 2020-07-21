@@ -214,7 +214,11 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
-	
+	/**
+	  {"id":"","cuLyVanChuyen":"10","gioXuat":"09:00","idchiNhanh":"0A70374D-C820-406E-AB11-F13CDE69D22B","idchiTietKinhDoanh":"","idcongTrinh":"8FEB04FC-370A-4C83-91E5-7245CCB2590F","idhopDong":1595353854237,"idloaiVatLieu":"372F25D5-5D9D-4339-A44A-EC966493B95B","idnhaCungCap":"DB31C043-14CD-44E4-99D2-57B6EE767E32","idnhomVatLieu":"97CF73BB-E552-4A07-9F8B-5DD5C68F7287","idnvkd":"93E83567-8AB2-4FAC-A4A8-0E000D1A5DDA","kldaBan":0,"kldaXuat":0,"klkhachHang":"10","klthucXuat":"10","moTa":"","ngayThang":"22/07/2020","nguoiTao":"viethau89nd","nguoiThuTien":"test","trangThai":"1","trangThaiHoanThanh":"Chưa hoàn thành","trangThaiText":"Chờ duyệt"}
+07-22 00:50:55.425  6939  7083 I ReactNativeJS: { timestamp: '2020-07-21T17:50:48.585+0000',
+07-22 00:50:55.425  6939  7083 I ReactNativeJS:   message: 'Transaction silently rolled back because it has been marked as rollback-only',
+	 */
 	@Override
 	@Transactional
 	public ResultDTO lichBanGachSave(TblLichBanGach model) {

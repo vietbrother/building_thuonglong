@@ -282,7 +282,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
 				if (!Utils.isNullOrEmpty(entity.getIDLoaiVatLieu())
 						&& !"LoaiVatLieuIdAll".equals(entity.getIDLoaiVatLieu())) {
-					queryStr += " and a.IDLoaiVatLieu = ? ";
+					queryStr += " and i.IDLoaiVatLieu = ? ";
 					lstParams.add(entity.getIDLoaiVatLieu());
 				}
 				queryStr += " and a.TrangThai = 2 ";
