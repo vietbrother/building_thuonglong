@@ -76,9 +76,9 @@ export default class CalendarBrickAdd extends Component {
             nhomvatlieuSelected: {},
             loaivatlieuSelected: {},
             donvitinhSelected: {},
-            khoiLuongTamTinh: 0,
-            khoiLuongKhachHang: 0,
-            distance: 0,
+            khoiLuongTamTinh: '0',
+            khoiLuongKhachHang: '0',
+            distance: '0',
             technical: '',
             cashier: '',
         };
@@ -386,53 +386,47 @@ export default class CalendarBrickAdd extends Component {
         this.setState({employeeSelected: item});
     }
 
-    _selectedBrickType(index, item) {
-        this.setState({BrickTypeSelected: item});
-    }
 
-    _selectedPumpType(index, item) {
-        this.setState({pumpTypeSelected: item});
-    }
 
     onChangedCategory(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({category: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({category: value});
         }
     }
 
     onChangedDistance(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({distance: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({distance: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedKhoiLuongTamTinh(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({khoiLuongTamTinh: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({khoiLuongTamTinh: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedKhoiLuongKhachHang(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({khoiLuongKhachHang: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({khoiLuongKhachHang: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedTechnical(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({technical: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({technical: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
     onChangedCashier(value) {
         // code to remove non-numeric characters from text
         if (value != null) {
-            this.setState({cashier: value.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, '')});
+            this.setState({cashier: value.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '')});
         }
     }
 
@@ -493,7 +487,7 @@ export default class CalendarBrickAdd extends Component {
                                                                          style={styles.muted}/> {Config.calendarBrick.exportDate}
                                         </Text>
                                         <DatePicker
-                                            defaultDate={new Date()}
+                                            defaultDate={this.state.outDate}
                                             //minimumDate={new Date()}
                                             //maximumDate={new Date()}
                                             locale={'en'}
@@ -501,7 +495,7 @@ export default class CalendarBrickAdd extends Component {
                                             modalTransparent={false}
                                             animationType={'fade'}
                                             androidMode={'default'}
-                                            placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            placeHolderText={moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY')}
                                             textStyle={{color: 'green'}}
                                             placeHolderTextStyle={{color: Config.mainColor}}
                                             onDateChange={(date) => {
@@ -524,7 +518,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.branchs}
                                 dummyDataSource={this.state.branchs}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.branch}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -548,7 +542,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.providers}
                                 dummyDataSource={this.state.providers}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.providerName}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -573,7 +567,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.projects}
                                 dummyDataSource={this.state.projects}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.projectName}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -603,7 +597,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.employees}
                                 dummyDataSource={this.state.employees}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.employee}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -627,7 +621,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.nhomvatlieus}
                                 dummyDataSource={this.state.nhomvatlieus}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.nhomVatLieu}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -651,7 +645,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.loaivatlieus}
                                 dummyDataSource={this.state.loaivatlieus}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.loaiVatLieu}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -675,7 +669,7 @@ export default class CalendarBrickAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.donvitinhs}
                                 dummyDataSource={this.state.donvitinhs}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarBrick.loaiVatLieu}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -772,19 +766,19 @@ export default class CalendarBrickAdd extends Component {
                 calendarId : this.props.contract.id,
                 title: Config.calendarBrick.edit,
                 contract: this.props.contract,
-                outDate: this.props.contract.ngayThang,
+                outDate: moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY'),
                 outTime: this.props.contract.gioXuat,
                 branchSelected: {
                     id: this.props.contract.idchiNhanh,
-                    name: this.props.contract.chiNhanh
+                    name: this.props.contract.tenChiNhanh
                 },
                 providerSelected: {
                     id: this.props.contract.idnhaCungCap,
-                    name: this.props.contract.nhaCungCap
+                    name: this.props.contract.tenNhaCungCap
                 },
                 projectSelected: {
                     id: this.props.contract.idcongTrinh,
-                    name: this.props.contract.congTrinh
+                    name: this.props.contract.tenCongTrinh
                 },
                 category: this.props.contract.hangMuc,
                 employeeSelected: {
@@ -807,7 +801,7 @@ export default class CalendarBrickAdd extends Component {
                 khoiLuongKhachHang: this.props.contract.klkhachHang.toString(),
                 distance: this.props.contract.cuLyVanChuyen.toString(),
                 technical: this.props.contract.kyThuat,
-                cashier: this.props.contract.nguoiThuTien,
+                cashier: this.props.contract.nguoiThuTien
             });
 
             this._loadBranchData();
@@ -830,9 +824,9 @@ export default class CalendarBrickAdd extends Component {
                 nhomvatlieuSelected: {},
                 loaivatlieuSelected: {},
                 donvitinhSelected: {},
-                khoiLuongTamTinh: 0,
-                khoiLuongKhachHang: 0,
-                distance: 0,
+                khoiLuongTamTinh: '0',
+                khoiLuongKhachHang: '0',
+                distance: '0',
                 technical: '',
                 cashier: '',
             });
@@ -847,8 +841,9 @@ export default class CalendarBrickAdd extends Component {
             providerSelected: {},
             projectSelected: {},
             employeeSelected: {},
-            BrickTypeSelected: {},
-            pumpTypeSelected: {}
+            nhomvatlieuSelected: {},
+            loaivatlieuSelected: {},
+            donvitinhSelected: {}
         });
     }
 
@@ -902,6 +897,7 @@ export default class CalendarBrickAdd extends Component {
             this.setState({isLoading: true});
 
             var param = {
+                id: this.state.calendarId,
                 cuLyVanChuyen: this.state.distance == '' ? 0 : this.state.distance,
                 gioXuat: this.state.outTime,
                 hangMuc: this.state.hangMuc,

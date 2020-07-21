@@ -355,7 +355,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
 			queryStr += " ORDER BY name ";
 
-			Query query = entityManager.createNativeQuery(queryStr, CategoryDTO.class);
+			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
 				query.setParameter(i + 1, lstParams.get(i));
 			}

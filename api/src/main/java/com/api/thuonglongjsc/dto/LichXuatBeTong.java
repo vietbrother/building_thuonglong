@@ -43,6 +43,7 @@ public class LichXuatBeTong {
 	private String IDMacBeTong;
 	private String IDHinhThucBom;
 	private String IDNhanVien;
+	private String HangMuc;
 
 	public LichXuatBeTong() {
 		super();
@@ -54,7 +55,7 @@ public class LichXuatBeTong {
 			Double kLThucXuat, Double kLKhachHang, Double cuLyVanChuyen, Double kLDaBan, Double kLDaXuat,
 			String trangThaiText, String nguoiTao, Timestamp ngayTao, String iDChiNhanh, Integer trangThai,
 			String trangThaiHoanThanh, String iDCongTrinh, String iDNhaCungCap, String iDMacBeTong,
-			String iDHinhThucBom, String iDNhanVien) {
+			String iDHinhThucBom, String iDNhanVien, String hangMuc) {
 		super();
 		ID = iD;
 		NgayThang = ngayThang;
@@ -88,6 +89,7 @@ public class LichXuatBeTong {
 		IDMacBeTong = iDMacBeTong;
 		IDHinhThucBom = iDHinhThucBom;
 		IDNhanVien = iDNhanVien;
+		HangMuc = hangMuc;
 	}
 
 	public String getID() {
@@ -138,12 +140,28 @@ public class LichXuatBeTong {
 		TenNhaCungCap = tenNhaCungCap;
 	}
 
+	public String getDiaChi() {
+		return DiaChi;
+	}
+
+	public void setDiaChi(String diaChi) {
+		DiaChi = diaChi;
+	}
+
+	public String getSoDienThoai() {
+		return SoDienThoai;
+	}
+
+	public void setSoDienThoai(String soDienThoai) {
+		SoDienThoai = soDienThoai;
+	}
+
 	public String getTenMacBeTong() {
 		return TenMacBeTong;
 	}
 
-	public void setTenMacBeTong(String TenMacBeTong) {
-		TenMacBeTong = TenMacBeTong;
+	public void setTenMacBeTong(String tenMacBeTong) {
+		TenMacBeTong = tenMacBeTong;
 	}
 
 	public String getTenHinhThucBom() {
@@ -290,22 +308,6 @@ public class LichXuatBeTong {
 		TrangThaiHoanThanh = trangThaiHoanThanh;
 	}
 
-	public String getDiaChi() {
-		return DiaChi;
-	}
-
-	public void setDiaChi(String diaChi) {
-		DiaChi = diaChi;
-	}
-
-	public String getSoDienThoai() {
-		return SoDienThoai;
-	}
-
-	public void setSoDienThoai(String soDienThoai) {
-		SoDienThoai = soDienThoai;
-	}
-
 	public String getIDCongTrinh() {
 		return IDCongTrinh;
 	}
@@ -346,6 +348,14 @@ public class LichXuatBeTong {
 		IDNhanVien = iDNhanVien;
 	}
 
+	public String getHangMuc() {
+		return HangMuc;
+	}
+
+	public void setHangMuc(String hangMuc) {
+		HangMuc = hangMuc;
+	}
+
 	@Override
 	public String toString() {
 		return "LichXuatBeTong [ID=" + ID + ", NgayThang=" + NgayThang + ", GioXuat=" + GioXuat + ", TenChiNhanh="
@@ -358,7 +368,7 @@ public class LichXuatBeTong {
 				+ NguoiTao + ", NgayTao=" + NgayTao + ", IDChiNhanh=" + IDChiNhanh + ", TrangThai=" + TrangThai
 				+ ", TrangThaiHoanThanh=" + TrangThaiHoanThanh + ", IDCongTrinh=" + IDCongTrinh + ", IDNhaCungCap="
 				+ IDNhaCungCap + ", IDMacBeTong=" + IDMacBeTong + ", IDHinhThucBom=" + IDHinhThucBom + ", IDNhanVien="
-				+ IDNhanVien + "]";
+				+ IDNhanVien + ", HangMuc=" + HangMuc + "]";
 	}
 
 }

@@ -203,7 +203,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               TenCongTrinh = h.CongTrinh, \r\n" + 
 				"               b.TenNhaCungCap, \r\n" + 
 				"               b.DiaChi, b.SoDienThoai, \r\n" + 
-				"               TenMacBeTong = c.TenLoaiVatLieu, \r\n" + 
+				"               c.TenLoaiVatLieu as TenMacBeTong, \r\n" + 
 				"               g.TenHinhThucBom, \r\n" + 
 				"               j.TenNhanVien, \r\n" + 
 				"               KyThuat, \r\n" + 
@@ -221,7 +221,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               a.TrangThai, a.IDChiNhanh, \r\n" + 
 				"               a.IDCongTrinh, a.IDNhaCungCap as IDNhaCungCap, " +
 				"				a.MacBeTong as IDMacBeTong, " +
-				"				a.HinhThucBom as IDHinhThucBom, a.IDNVKD as IDNhanVien \r\n" + 
+				"				a.HinhThucBom as IDHinhThucBom, a.IDNVKD as IDNhanVien, a.HangMuc \r\n" + 
 				"        FROM tblLichXuatBeTong AS a\r\n" + 
 				"             JOIN tblNhaCungCap AS b ON a.IDNhaCungCap = b.ID\r\n" + 
 				"             JOIN tblLoaiVatLieu AS c ON a.MacBeTong = c.ID\r\n" + 

@@ -465,7 +465,7 @@ export default class CalendarConcreteAdd extends Component {
                                             modalTransparent={false}
                                             animationType={'fade'}
                                             androidMode={'default'}
-                                            placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            placeHolderText={moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY')}
                                             textStyle={{color: 'green'}}
                                             placeHolderTextStyle={{color: Config.mainColor}}
                                             onDateChange={(date) => {
@@ -488,7 +488,7 @@ export default class CalendarConcreteAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.branchs}
                                 dummyDataSource={this.state.branchs}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarConcrete.branch}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -512,7 +512,7 @@ export default class CalendarConcreteAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.providers}
                                 dummyDataSource={this.state.providers}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarConcrete.providerName}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -537,7 +537,7 @@ export default class CalendarConcreteAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.projects}
                                 dummyDataSource={this.state.projects}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarConcrete.projectName}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -567,7 +567,7 @@ export default class CalendarConcreteAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.employees}
                                 dummyDataSource={this.state.employees}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarConcrete.employee}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -591,7 +591,7 @@ export default class CalendarConcreteAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.concreteTypes}
                                 dummyDataSource={this.state.concreteTypes}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarConcrete.concreteType}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -615,7 +615,7 @@ export default class CalendarConcreteAdd extends Component {
                             <RNPicker
                                 dataSource={this.state.pumpTypes}
                                 dummyDataSource={this.state.pumpTypes}
-                                defaultValue={false}
+                                defaultValue={true}
                                 pickerTitle={Config.calendarConcrete.pumpType}
                                 showSearchBar={true}
                                 disablePicker={false}
@@ -742,25 +742,28 @@ export default class CalendarConcreteAdd extends Component {
                 outTime: this.props.contract.gioXuat,
                 branchSelected: {
                     id: this.props.contract.idchiNhanh,
-                    name: this.props.contract.chiNhanh
+                    name: this.props.contract.tenChiNhanh
                 },
                 providerSelected: {
                     id: this.props.contract.idnhaCungCap,
-                    name: this.props.contract.nhaCungCap
+                    name: this.props.contract.tenNhaCungCap
                 },
                 projectSelected: {
                     id: this.props.contract.idcongTrinh,
-                    name: this.props.contract.congTrinh
+                    name: this.props.contract.tenCongTrinh
                 },
                 category: this.props.contract.hangMuc,
-                employeeSelected: employeeSelectedTemp,
+                employeeSelected: {
+                    id: this.props.contract.idnhanVien,
+                    name: this.props.contract.tenNhanVien
+                },
                 concreteTypeSelected: {
                     id: this.props.contract.idmacBeTong,
                     name: this.props.contract.tenMacBeTong
                 },
                 pumpTypeSelected: {
                     id: this.props.contract.idhinhThucBom,
-                    name: this.props.contract.hinhThucBom
+                    name: this.props.contract.tenHinhThucBom
                 },
                 khoiLuongTamTinh: this.props.contract.klthucXuat.toString(),
                 khoiLuongKhachHang: this.props.contract.klkhachHang.toString(),
@@ -905,7 +908,7 @@ export default class CalendarConcreteAdd extends Component {
 
             var param = {
                 id: this.state.calendarId,
-                cuLyVanChuyen: this.state.distance,
+                cuLyVanChuyen: this.state.distance == '' ? 0 : this.state.distance,
                 gioXuat: this.state.outTime,
                 hangMuc: this.state.hangMuc,
                 hinhThucBom: this.state.pumpTypeSelected.id,
