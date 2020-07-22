@@ -87,6 +87,9 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.HINH_THUC_BOM);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichXuatBeTong(entity);
+		if(res != null && res.size() == 0) {
+			res.add(new CategoryDTO("2862C6F2-0AE1-499B-93B7-6E2B0AB46B83", "Không dùng bơm"));
+		}
 		//res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
@@ -159,7 +162,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.DON_VI_TINH);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichBanGach(entity);
-		res.add(0, new CategoryDTO("None", ""));
+//		res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -170,7 +173,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.NHOM_VAT_LIEU);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichBanGach(entity);
-		res.add(0, new CategoryDTO("None", ""));
+//		res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 
@@ -181,7 +184,7 @@ public class CategoryController {
 		}
 		entity.setCategoryType(Constants.CATEGORY_TYPE.LOAI_VAT_LIEU);
 		List<CategoryDTO> res = categoryRepository.getCategoryLichBanGach(entity);
-		res.add(0, new CategoryDTO("None", ""));
+//		res.add(0, new CategoryDTO("None", ""));
 		return res;
 	}
 }

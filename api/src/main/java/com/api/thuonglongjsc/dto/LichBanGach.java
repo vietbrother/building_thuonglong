@@ -364,4 +364,7 @@ public class LichBanGach {
 				+ ", IDDonViTinh=" + IDDonViTinh + ", IDNhomVatLieu=" + IDNhomVatLieu + ", TenNhomVatLieu="
 				+ TenNhomVatLieu + "]";
 	}
+
+	
+
 }

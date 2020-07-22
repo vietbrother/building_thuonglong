@@ -457,7 +457,7 @@ export default class CalendarConcreteAdd extends Component {
                                                                          style={styles.muted}/> {Config.calendarConcrete.exportDate}
                                         </Text>
                                         <DatePicker
-                                            defaultDate={this.state.outDate}
+                                            defaultDate={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
                                             //minimumDate={new Date()}
                                             //maximumDate={new Date()}
                                             locale={'en'}
@@ -465,7 +465,7 @@ export default class CalendarConcreteAdd extends Component {
                                             modalTransparent={false}
                                             animationType={'fade'}
                                             androidMode={'default'}
-                                            placeHolderText={moment(this.state.outDate).utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            placeHolderText={this.state.outDate}
                                             textStyle={{color: 'green'}}
                                             placeHolderTextStyle={{color: Config.mainColor}}
                                             onDateChange={(date) => {
@@ -771,13 +771,13 @@ export default class CalendarConcreteAdd extends Component {
                 technical: this.props.contract.kyThuat,
                 cashier: this.props.contract.nguoiThuTien
             });
-            console.log('========================================================');
-            this.setState({outDate : ngayThangTemp});
-            this.setState({employeeSelected : employeeSelectedTemp});
-            console.log(employeeSelectedTemp);
-            console.log(this.state.employeeSelected);
-            console.log(ngayThangTemp);
-            console.log(this.state.outDate);
+            // console.log('========================================================');
+            // this.setState({outDate : ngayThangTemp});
+            // this.setState({employeeSelected : employeeSelectedTemp});
+            // console.log(employeeSelectedTemp);
+            // console.log(this.state.employeeSelected);
+            // console.log(ngayThangTemp);
+            // console.log(this.state.outDate);
 
             this._loadBranchData();
             this._loadProviderData(this.props.contract.idchiNhanh);
@@ -893,6 +893,10 @@ export default class CalendarConcreteAdd extends Component {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
                 return;
             }
+            if (this.state.pumpTypeSelected.name == '') {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
+                return;
+            }
             if (this.state.khoiLuongTamTinh == '') {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.exportReal});
                 return;
@@ -910,7 +914,7 @@ export default class CalendarConcreteAdd extends Component {
                 id: this.state.calendarId,
                 cuLyVanChuyen: this.state.distance == '' ? 0 : this.state.distance,
                 gioXuat: this.state.outTime,
-                hangMuc: this.state.hangMuc,
+                hangMuc: this.state.category,
                 hinhThucBom: this.state.pumpTypeSelected.id,
                 idchiNhanh: this.state.branchSelected.id,
                 idchiTietKinhDoanh: '',

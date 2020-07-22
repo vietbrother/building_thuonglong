@@ -615,7 +615,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				"               a.NgayThang, \r\n" + 
 				"               convert(varchar, a.GioXuat, 24) as GioXuat, \r\n" + 
 				"               i.TenChiNhanh, \r\n" + 
-				"               TenCongTrinh = h.CongTrinh, \r\n" + 
+				"                h.CongTrinh as TenCongTrinh , \r\n" + 
 				"               a.HangMuc, \r\n" + 
 				"               b.TenNhaCungCap, \r\n" + 
 				"               b.DiaChi, b.SoDienThoai, \r\n" + 

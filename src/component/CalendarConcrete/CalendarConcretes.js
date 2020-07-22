@@ -272,7 +272,7 @@ export default class CalendarConcretes extends Component {
                                 {/*</CardItem>*/}
                             {/*</Card>*/}
                             <Grid>
-                                <Col size={2} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
+                                <Col size={3} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
                                     <Picker
                                         style={styles.branchPicker}
                                         itemStyle={styles.branchPickerItem}

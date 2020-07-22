@@ -156,14 +156,24 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 					return res;
 				}
 				
-				queryStr = " UPDATE tblLichXuatBeTong SET\r\n" + "		GioXuat = ?,\r\n" + "		NgayThang = ?,\r\n"
-						+ "		IDChiNhanh = ?,\r\n" + "		IDNhaCungCap = ?,\r\n" + "		IDCongTrinh = ?,\r\n"
-						+ "		MacBeTong = ?,\r\n" + "		IDHopDong = ?,\r\n" + "		HangMuc = ?,\r\n"
-						+ "		HinhThucBom = ?,\r\n" + "		IDHopDongBom = ?,\r\n" + "		KLThucXuat = ?,\r\n"
+				queryStr = " UPDATE tblLichXuatBeTong SET\r\n" 
+						+ "		GioXuat = ?,\r\n" 
+						+ "		NgayThang = convert(datetime,?,103),\r\n"
+						+ "		IDChiNhanh = CONVERT(uniqueidentifier, ? ),\r\n" 
+						+ "		IDNhaCungCap = CONVERT(uniqueidentifier, ? ),\r\n" 
+						+ "		IDCongTrinh = CONVERT(uniqueidentifier, ? ),\r\n"
+						+ "		MacBeTong = CONVERT(uniqueidentifier, ? ),\r\n" 
+//						+ "		IDHopDong = CONVERT(uniqueidentifier, ? ),\r\n" 
+						+ "		HangMuc = ?,\r\n"
+						+ "		HinhThucBom = CONVERT(uniqueidentifier, ? ),\r\n" 
+//						+ "		IDHopDongBom = ?,\r\n" 
+						+ "		KLThucXuat = ?,\r\n"
 						+ "		KLKhachHang = ?,\r\n" + "		CuLyVanChuyen = ?,\r\n" + "		TrangThai = ?,\r\n"
 						+ "		TrangThaiText = ?,\r\n" + "		MoTa = ?,\r\n" + "		KLDaXuat = ?,\r\n"
-						+ "		KLDaBan = ?,\r\n" + "		IDNVKD = ?,\r\n" + "		IDChiTietKinhDoanh = ?,\r\n"
-						+ "		KyThuat = ?,\r\n" + "		NguoiThuTien = ? \r\n" + " where ID = ? ";
+						+ "		KLDaBan = ?,\r\n" 
+						+ "		IDNVKD = CONVERT(uniqueidentifier, ? ),\r\n"
+						+ "		KyThuat = ?,\r\n" 
+						+ "		NguoiThuTien = ? \r\n" + " where ID = CONVERT(uniqueidentifier, ? ) ";
 
 				lstParams.add(model.getGioXuat());
 				lstParams.add(model.getNgayThang());
@@ -171,10 +181,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhaCungCap());
 				lstParams.add(model.getIDCongTrinh());
 				lstParams.add(model.getMacBeTong());
-				lstParams.add(model.getIDHopDong());
+//				lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getHinhThucBom());
-				lstParams.add(model.getIDHopDongBom());
+//				lstParams.add(model.getIDHopDongBom());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
 				lstParams.add(model.getCuLyVanChuyen());
@@ -184,7 +194,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getKLDaXuat());
 				lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-				lstParams.add(model.getIDChiTietKinhDoanh());
+//				lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getKyThuat());
 				lstParams.add(model.getNguoiThuTien());
 				lstParams.add(model.getID());
@@ -308,13 +318,14 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						")";
 
 				lstParams.add(model.getGioXuat());
+				lstParams.add(model.getNgayThang());
 				lstParams.add(model.getIDChiNhanh());
 				lstParams.add(model.getIDNhaCungCap());
 				lstParams.add(model.getIDCongTrinh());
 				lstParams.add(model.getIDNhomVatLieu());
 				lstParams.add(model.getIDLoaiVatLieu());
 				lstParams.add(model.getIDDonViTinh());
-				lstParams.add(model.getIDHopDong());
+//				lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
@@ -334,14 +345,14 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			} else {
 				queryStr = " UPDATE tblLichBanGach SET\r\n" + 
 						"		GioXuat = ?,\r\n" + 
-						"		NgayThang = ?,\r\n" + 
-						"		IDChiNhanh = ?,\r\n" + 
-						"		IDNhaCungCap = ?,\r\n" + 
-						"		IDCongTrinh = ?,\r\n" + 
-						"		IDNhomVatLieu = ?,\r\n" + 
-						"		IDLoaiVatLieu = ?,\r\n" + 
-						"		IDDonViTinh = ?,\r\n" + 
-						"		IDHopDong = ?,\r\n" + 
+						"		NgayThang = convert(datetime,?,103),\r\n" + 
+						"		IDChiNhanh = CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		IDNhaCungCap = CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		IDCongTrinh = CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		IDNhomVatLieu = CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		IDLoaiVatLieu = CONVERT(uniqueidentifier, ? ),\r\n" + 
+						"		IDDonViTinh = CONVERT(uniqueidentifier, ? ),\r\n" + 
+//						"		IDHopDong = CONVERT(uniqueidentifier, ? ),\r\n" + 
 						"		HangMuc = ?,\r\n" + 
 						"		KLThucXuat = ?,\r\n" + 
 						"		KLKhachHang = ?,\r\n" + 
@@ -351,10 +362,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 //						"		MoTa = ?,\r\n" + 
 //						"		KLDaXuat = ?,\r\n" + 
 //						"		KLDaBan = ?,\r\n" + 
-						"		IDNVKD = ?,\r\n" + 
+						"		IDNVKD = CONVERT(uniqueidentifier, ? ),\r\n" + 
 //						"		IDChiTietKinhDoanh = ?,\r\n" + 
 						"		NguoiThuTien = ?\r\n" + 
-						"where ID = ? ";
+						"where ID = CONVERT(uniqueidentifier, ? ) ";
 
 				lstParams.add(model.getGioXuat());
 				lstParams.add(model.getNgayThang());
@@ -364,7 +375,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhomVatLieu());
 				lstParams.add(model.getIDLoaiVatLieu());
 				lstParams.add(model.getIDDonViTinh());
-				lstParams.add(model.getIDHopDong());
+//				lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());

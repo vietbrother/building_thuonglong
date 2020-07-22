@@ -156,7 +156,7 @@ const Config = {
     calendarBrick: {
         title: 'Lịch bán gạch',
         add: 'Thêm mới lịch bán gạch',
-        edit: 'Sửa lịch trộn bán gạch',
+        edit: 'Sửa lịch bán gạch',
         detail: 'Thông tin chi tiết',
         branch: 'Chi nhánh',
         providerName: 'Nhà cung cấp',

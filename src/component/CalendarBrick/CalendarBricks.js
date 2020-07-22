@@ -114,7 +114,7 @@ export default class CalendarBricks extends Component {
 
 
     _renderItemResult(item) {
-        console.log(item);
+        // console.log(item);
         var key = new Date().valueOf();
         return (
             /*            <View style={{
@@ -271,7 +271,7 @@ export default class CalendarBricks extends Component {
                             {/*</Card>*/}
 
                             <Grid>
-                                <Col size={2} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
+                                <Col size={3} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
                                     <Picker
                                         style={styles.branchPicker}
                                         itemStyle={styles.branchPickerItem}

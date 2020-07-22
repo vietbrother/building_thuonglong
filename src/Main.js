@@ -289,7 +289,7 @@ export default class Main extends Component {
 
                         <Scene type="reset" key="calendarBricks" component={CalendarBricks} hideNavBar/>
                         <Scene key="calendarBrickDetail" component={CalendarBrickDetail} hideNavBar/>
-                        <Scene type="reset" key="calendarBrickAdd" component={CalendarBrickAdd} hideNavBar/>
+                        <Scene key="calendarBrickAdd" component={CalendarBrickAdd} hideNavBar/>
                     </Scene>
                 </Router>
             </Root>

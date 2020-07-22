@@ -709,12 +709,12 @@ export default class CalendarBrickAdd extends Component {
                                        onChangeText={value => this.onChangedDistance(value)}
                                        value={this.state.distance}/>
                             </Item>
-                            <Item floatingLabel>
-                                <Label>{Config.calendarBrick.technical} </Label>
-                                <Input style={{}}
-                                       onChangeText={value => this.onChangedTechnical(value)}
-                                       value={this.state.technical}/>
-                            </Item>
+                            {/*<Item floatingLabel>*/}
+                                {/*<Label>{Config.calendarBrick.technical} </Label>*/}
+                                {/*<Input style={{}}*/}
+                                       {/*onChangeText={value => this.onChangedTechnical(value)}*/}
+                                       {/*value={this.state.technical}/>*/}
+                            {/*</Item>*/}
                             <Item floatingLabel last>
                                 <Label>{Config.calendarBrick.cashier}</Label>
                                 <Input style={{}}
@@ -900,7 +900,7 @@ export default class CalendarBrickAdd extends Component {
                 id: this.state.calendarId,
                 cuLyVanChuyen: this.state.distance == '' ? 0 : this.state.distance,
                 gioXuat: this.state.outTime,
-                hangMuc: this.state.hangMuc,
+                hangMuc: this.state.category,
                 idchiNhanh: this.state.branchSelected.id,
                 idchiTietKinhDoanh: '',
                 idcongTrinh: this.state.projectSelected.id,
@@ -917,6 +917,7 @@ export default class CalendarBrickAdd extends Component {
                 moTa: '',
                 ngayThang: this.state.outDate,
                 nguoiTao: this.state.username,
+                kyThuat: this.state.technical,
                 nguoiThuTien: this.state.cashier,
                 trangThai: Config.stateCode.wait,
                 trangThaiHoanThanh: Config.state.unComplete,
