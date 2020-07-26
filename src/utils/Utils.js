@@ -35,9 +35,9 @@ const Utils = {
         }
     },
     formatDate(date) {
-        console.log(date);
+        //console.log(date);
         var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-        console.log(nDate);
+        // console.log(nDate);
         return nDate;
     },
     _renderPriceFormat(price) {

@@ -74,9 +74,9 @@ export default class CalendarConcreteAdd extends Component {
             employeeSelected: {},
             concreteTypeSelected: {},
             pumpTypeSelected: {},
-            khoiLuongTamTinh: '0',
-            khoiLuongKhachHang: '0',
-            distance: '0',
+            khoiLuongTamTinh: '',
+            khoiLuongKhachHang: '',
+            distance: '',
             technical: '',
             cashier: '',
         };
@@ -168,7 +168,7 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    async _loadProviderData(idchiNhanh) {
+    async _loadProviderData(idchiNhanh, loadDefault) {
         this.setState({isSearching: true});
         try {
             var param = {
@@ -187,7 +187,7 @@ export default class CalendarConcreteAdd extends Component {
             var responseObj = await response.json();
             this.setState({isSearching: false});
             this.setState({providers: responseObj});
-            if (responseObj != null && responseObj.length > 0) {
+            if (responseObj != null && responseObj.length > 0 && loadDefault == '1') {
                 //this.setState({branchSelected: responseObj[0].id});
             }
         } catch (e) {
@@ -196,7 +196,7 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    async _loadProjectData(idnhaCungCap) {
+    async _loadProjectData(idnhaCungCap, loadDefault) {
         this.setState({isSearching: true});
         try {
             var param = {
@@ -216,8 +216,9 @@ export default class CalendarConcreteAdd extends Component {
             var responseObj = await response.json();
             this.setState({isSearching: false});
             this.setState({projects: responseObj});
-            if (responseObj != null && responseObj.length > 0) {
-                //this.setState({branchSelected: responseObj[0].id});
+            if (responseObj != null && responseObj.length > 0 && loadDefault == '1') {
+                this.setState({projectSelected: responseObj[0]});
+                this._selectedProject(0, responseObj[0]);
             }
         } catch (e) {
             console.log(e);
@@ -225,7 +226,7 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    async _loadEmployeeData(idcongTrinh) {
+    async _loadEmployeeData(idcongTrinh, loadDefault) {
         this.setState({isSearching: true});
         try {
             var param = {
@@ -244,8 +245,8 @@ export default class CalendarConcreteAdd extends Component {
             var responseObj = await response.json();
             this.setState({isSearching: false});
             this.setState({employees: responseObj});
-            if (responseObj != null && responseObj.length > 0) {
-                //this.setState({branchSelected: responseObj[0].id});
+            if (responseObj != null && responseObj.length > 0 && loadDefault == '1') {
+                this.setState({employeeSelected: responseObj[0]});
             }
         } catch (e) {
             console.log(e);
@@ -253,7 +254,7 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    async _loadConcreteTypeData(idcongTrinh) {
+    async _loadConcreteTypeData(idcongTrinh, loadDefault) {
         this.setState({isSearching: true});
         try {
             var param = {
@@ -272,8 +273,8 @@ export default class CalendarConcreteAdd extends Component {
             var responseObj = await response.json();
             this.setState({isSearching: false});
             this.setState({concreteTypes: responseObj});
-            if (responseObj != null && responseObj.length > 0) {
-                //this.setState({branchSelected: responseObj[0].id});
+            if (responseObj != null && responseObj.length > 0 && loadDefault == '1') {
+                this.setState({concreteTypeSelected: responseObj[0]});
             }
         } catch (e) {
             console.log(e);
@@ -281,7 +282,7 @@ export default class CalendarConcreteAdd extends Component {
         }
     }
 
-    async _loadPumpTypeData(idcongTrinh) {
+    async _loadPumpTypeData(idcongTrinh, loadDefault) {
         this.setState({isSearching: true});
         try {
             var param = {
@@ -302,8 +303,8 @@ export default class CalendarConcreteAdd extends Component {
             var responseObj = await response.json();
             this.setState({isSearching: false});
             this.setState({pumpTypes: responseObj});
-            if (responseObj != null && responseObj.length > 0) {
-                //this.setState({branchSelected: responseObj[0].id});
+            if (responseObj != null && responseObj.length > 0 && loadDefault == '1') {
+                this.setState({pumpTypeSelected: responseObj[0]});
             }
         } catch (e) {
             console.log(e);
@@ -325,7 +326,7 @@ export default class CalendarConcreteAdd extends Component {
 
     _selectedProvider(index, item) {
         this.setState({providerSelected: item});
-        this._loadProjectData(item.id);
+        this._loadProjectData(item.id, '1');
         this.setState({
             projectSelected: {},
             employeeSelected: {},
@@ -341,9 +342,9 @@ export default class CalendarConcreteAdd extends Component {
             concreteTypeSelected: {},
             pumpTypeSelected: {}
         });
-        this._loadPumpTypeData(item.id);
-        this._loadConcreteTypeData(item.id);
-        this._loadEmployeeData(item.id);
+        this._loadPumpTypeData(item.id, '1');
+        this._loadConcreteTypeData(item.id, '1');
+        this._loadEmployeeData(item.id, '1');
     }
 
     _selectedEmployee(index, item) {
@@ -443,7 +444,7 @@ export default class CalendarConcreteAdd extends Component {
                                 <Left>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportHour}
+                                                                         style={styles.muted}/> {Config.calendarConcrete.exportHour} *
                                         </Text>
                                         <TouchableOpacity onPress={() => this.setOutTime()}>
                                             <Text style={styles.title}>{this.state.outTime}</Text>
@@ -454,10 +455,10 @@ export default class CalendarConcreteAdd extends Component {
                                 <Right>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate}
+                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate} *
                                         </Text>
                                         <DatePicker
-                                            defaultDate={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
+                                            defaultDate={new Date()}
                                             //minimumDate={new Date()}
                                             //maximumDate={new Date()}
                                             locale={'en'}
@@ -483,7 +484,7 @@ export default class CalendarConcreteAdd extends Component {
                             </CardItem>
 
                             <Item>
-                                <Label>{Config.calendarConcrete.branch}</Label>
+                                <Label>{Config.calendarConcrete.branch} *</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.branchs}
@@ -507,7 +508,7 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedBranch(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.providerName} </Label>
+                                <Label>{Config.calendarConcrete.providerName} *</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.providers}
@@ -532,7 +533,7 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.projectName} </Label>
+                                <Label>{Config.calendarConcrete.projectName} *</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.projects}
@@ -562,7 +563,7 @@ export default class CalendarConcreteAdd extends Component {
                                        value={this.state.category}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.employee} </Label>
+                                <Label>{Config.calendarConcrete.employee} *</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.employees}
@@ -586,7 +587,7 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedEmployee(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.concreteType} </Label>
+                                <Label>{Config.calendarConcrete.concreteType} *</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.concreteTypes}
@@ -610,7 +611,7 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedConcreteType(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.pumpType} </Label>
+                                <Label>{Config.calendarConcrete.pumpType} *</Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.pumpTypes}
@@ -635,21 +636,21 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongTamTinh} </Label>
+                                <Label>{Config.calendarConcrete.khoiLuongTamTinh} *</Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
                                        value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongKhachHang} </Label>
+                                <Label>{Config.calendarConcrete.khoiLuongKhachHang} *</Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
                                        value={this.state.khoiLuongKhachHang}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.distance} </Label>
+                                <Label>{Config.calendarConcrete.distance} *</Label>
                                 <Input style={{color: Config.mainColor}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
@@ -662,7 +663,7 @@ export default class CalendarConcreteAdd extends Component {
                                        value={this.state.technical}/>
                             </Item>
                             <Item floatingLabel last>
-                                <Label>{Config.calendarConcrete.cashier}</Label>
+                                <Label>{Config.calendarConcrete.cashier} *</Label>
                                 <Input style={{}}
                                        onChangeText={value => this.onChangedCashier(value)}
                                        value={this.state.cashier}/>
@@ -835,9 +836,9 @@ export default class CalendarConcreteAdd extends Component {
                 employeeSelected: {},
                 concreteTypeSelected: {},
                 pumpTypeSelected: {},
-                khoiLuongTamTinh: '0',
-                khoiLuongKhachHang: '0',
-                distance: '0',
+                khoiLuongTamTinh: '',
+                khoiLuongKhachHang: '',
+                distance: '',
                 technical: '',
                 cashier: '',
             });
@@ -885,15 +886,19 @@ export default class CalendarConcreteAdd extends Component {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.branch});
                 return;
             }
-            if (this.state.providerSelected.name == '') {
+            if (this.state.projectSelected.name == '' || this.state.projectSelected.name == undefined) {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.projectName});
+                return;
+            }
+            if (this.state.providerSelected.name == '' || this.state.providerSelected.name == undefined) {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.providerName});
                 return;
             }
-            if (this.state.concreteTypeSelected.name == '') {
+            if (this.state.concreteTypeSelected.name == '' || this.state.concreteTypeSelected.name == undefined) {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
                 return;
             }
-            if (this.state.pumpTypeSelected.name == '') {
+            if (this.state.pumpTypeSelected.name == '' || this.state.pumpTypeSelected.name == undefined) {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
                 return;
             }

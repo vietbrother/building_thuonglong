@@ -387,6 +387,8 @@ export default StyleSheet.create({
         backgroundColor: "rgba(255,255,255,1)",
         shadowColor: "#d3d3d3",
         borderRadius: 5,
-        flexDirection: "row"
+        flexDirection: "row",
+        padding : 5,
+        borderColor: '#d2d6de'
     },
 });

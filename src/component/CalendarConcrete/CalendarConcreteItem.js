@@ -205,15 +205,15 @@ export default class CalendarConcreteItem extends Component {
 
                 <CardItem>
                     <Left>
-                        <TouchableOpacity
-                            style={styles.btnApprove}
-                            onPress={() => Actions.calendarConcreteAdd({contract: this.props.contract})}
-                            activeOpacity={0.9}
-                        >
-                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                    name='ios-create-outline'/> {Config.btnEdit}
-                            </Text>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity*/}
+                            {/*style={styles.btnApprove}*/}
+                            {/*onPress={() => Actions.calendarConcreteAdd({contract: this.props.contract})}*/}
+                            {/*activeOpacity={0.9}*/}
+                        {/*>*/}
+                            {/*<Text style={styles.titleApprove}><Icon style={styles.titleApprove}*/}
+                                                                    {/*name='ios-create-outline'/> {Config.btnEdit}*/}
+                            {/*</Text>*/}
+                        {/*</TouchableOpacity>*/}
                     </Left>
                     <Right>
                         <TouchableOpacity
@@ -272,17 +272,18 @@ export default class CalendarConcreteItem extends Component {
         //     ToastAndroid.CENTER
         // );
         var contentMsg =
-            ' 📅 Ngày trộn: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
+            ' 👉 Ngày trộn: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
             '   ⏰ Giờ trộn: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
-            '   👨 Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
-            //'SĐT khách hàng: 09878347\n' +
-            '   ⛳ Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +
+            '   ✔ Tên KH: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
+            '   ✔ Điện thoại: '+ Utils._viewValue(this.state.contract.soDienThoai) + '\n' +
+            '   ✔ Địa chỉ: '+ Utils._viewValue(this.state.contract.diaChi) + '\n' +
+            '   ✔ Công trình: ' + Utils._viewValue(this.state.contract.tenCongTrinh) + '\n' +
             '   ✔ Mác bê tông: ' + Utils._viewValue(this.state.contract.tenMacBeTong)+ '\n' +
             // '   ✔ Độ sụt : ' + Utils._viewValue(this.state.contract.tenDoSut) + '\n' +
             '   ✔ Khối lượng tạm tính:' + Utils._viewValue(this.state.contract.klthucXuat) + '\n' +
-            '   👨 Kỹ thuật: ' + Utils._viewValue(this.state.contract.kyThuat) + '\n' +
-            '   👨 Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
-            '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n'
+            '   ✔ Kỹ thuật: ' + Utils._viewValue(this.state.contract.kyThuat) + '\n' +
+            '   ✔ Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
+            '   ✔ Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n'
             '⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊⚊ \n\n'
         ;
         //'Ghi chú';

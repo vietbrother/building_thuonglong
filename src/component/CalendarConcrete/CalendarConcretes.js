@@ -128,7 +128,7 @@ export default class CalendarConcretes extends Component {
     }
 
     _actionSelectBranch(itemValue) {
-        console.log("+++++++++++++++++++++++ " + itemValue);
+        // console.log("+++++++++++++++++++++++ " + itemValue);
         this.setState({branchSelected: itemValue});
         this.search(itemValue, Config.stateCode.wait);
         this.search(itemValue, Config.stateCode.approved);
@@ -169,20 +169,21 @@ export default class CalendarConcretes extends Component {
 
     _copyToClipboard() {
         var contentMsgDetail = '';
-        console.log(this.state.copyDate);
+        // console.log(this.state.copyDate);
         // var copyDate = Utils.formatDate(this.state.copyDate.toISOString().split('T')[0]);
         var copyDate = this.state.copyDate;
         //alert(copyDate);
         var index = 0;
-        for (var i = 0; i < this.state.contractsActive.length; i++) {
+        for (var i = this.state.contractsActive.length - 1; i >= 0; i--) {
             var item = this.state.contractsActive[i];
             if (copyDate == Utils._renderDateFormat(item.ngayThang)) {
                 index++;
                 contentMsgDetail += index + '.' +
-                    '   ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
-                    '   ✔ Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
-                    //'SĐT khách hàng: 09878347\n' +
-                    '   ✔ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
+                    '   👉 ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
+                    '   ✔ Tên KH: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
+                    '   ✔ Điện thoại: '+ Utils._viewValue(item.soDienThoai) + '\n' +
+                    '   ✔ Địa chỉ: '+ Utils._viewValue(item.diaChi) + '\n' +
+                    '   ✔ Công trình: ' + Utils._viewValue(item.tenCongTrinh) + '\n' +
                     '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
                     // '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
                     '   ✔ Khối lượng tạm tính:' + Utils._viewValue(item.klthucXuat) + '\n' +

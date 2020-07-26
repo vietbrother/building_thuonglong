@@ -72,8 +72,12 @@ export default class CalendarBricks extends Component {
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);
     }
+    //
+    // componentDidMount() {
+    //     this._loadBranchData();
+    // }
 
-    componentDidMount() {
+    componentWillMount() {
         this._loadBranchData();
     }
 
@@ -173,19 +177,20 @@ export default class CalendarBricks extends Component {
         // var copyDate = Utils.formatDate(this.state.copyDate.toISOString().split('T')[0]);
         var copyDate = this.state.copyDate;
         var index = 0;
-        for (var i = 0; i < this.state.contractsActive.length; i++) {
+        for (var i = this.state.contractsActive.length - 1; i >= 0; i--) {
             var item = this.state.contractsActive[i];
             if (copyDate == Utils._renderDateFormat(item.ngayThang)) {
                 index++;
                 contentMsgDetail += index + '.' +
-                    '   ⏰ Giờ xuất: ' + Utils._viewValue(item.gioXuat) + '\n' +
-                    '   👨 Tên khách hàng: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
-                    //'SĐT khách hàng: 09878347\n' +
-                    '   ⛳ Hạng mục công trình: ' + item.tenCongTrinh + '\n' +
+                    '   👉 ⏰ Giờ xuất: ' + Utils._viewValue(item.gioXuat) + '\n' +
+                    '   ✔ Tên KH: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
+                    '   ✔ Điện thoại: ' + Utils._viewValue(item.soDienThoai) + '\n' +
+                    '   ✔ Địa chỉ: ' + Utils._viewValue(item.diaChi) + '\n' +
+                    '   ✔ Công trình: ' + item.tenCongTrinh + '\n' +
                     '   ✔ Tên loại vật liệu: ' + Utils._viewValue(item.tenLoaiVatLieu) + '\n' +
                     '   ✔ Khối lượng thực xuất:' + Utils._viewValue(item.klthucXuat) + ' ' + item.tenDonViTinh + '\n' +
-                    '   👨 Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
-                    '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
+                    '   ✔ Thu ngân: ' + Utils._viewValue(item.nguoiThuTien) + '\n' +
+                    '   ✔ Nhân viên kinh doanh: ' + Utils._viewValue(item.tenNhanVien) + '\n' +
                     ' \n'
                 ;
             }

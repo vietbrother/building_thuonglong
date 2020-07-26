@@ -66,7 +66,7 @@ export default class CalendarBrickItem extends Component {
 
     componentDidMount(): void {
         this.setState({contract: this.props.contract});
-        console.log(this.props.contract);
+        // console.log(this.props.contract);
     }
 
     render() {
@@ -124,7 +124,20 @@ export default class CalendarBrickItem extends Component {
                         </Body>
                     </Right>
                 </CardItem>
-
+                <CardItem bordered>
+                    <Left>
+                        <Body>
+                        <Text style={styles.muted}><Icon note name="md-information-circle"
+                                                         style={styles.icon}/> {Config.calendarConcrete.completeState} :
+                        </Text>
+                        </Body>
+                    </Left>
+                    <Right>
+                        <Body>
+                        {Utils._renderStatusComplete(this.state.contract.trangThaiHoanThanh)}
+                        </Body>
+                    </Right>
+                </CardItem>
                 <CardItem>
                     <Left>
                         <Body>
@@ -150,15 +163,15 @@ export default class CalendarBrickItem extends Component {
 
                 <CardItem>
                     <Left>
-                        <TouchableOpacity
-                            style={styles.btnApprove}
-                            onPress={() => Actions.calendarBrickAdd({contract: this.props.contract})}
-                            activeOpacity={0.9}
-                        >
-                            <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                    name='ios-create-outline'/> {Config.btnEdit}
-                            </Text>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity*/}
+                            {/*style={styles.btnApprove}*/}
+                            {/*onPress={() => Actions.calendarBrickAdd({contract: this.props.contract})}*/}
+                            {/*activeOpacity={0.9}*/}
+                        {/*>*/}
+                            {/*<Text style={styles.titleApprove}><Icon style={styles.titleApprove}*/}
+                                                                    {/*name='ios-create-outline'/> {Config.btnEdit}*/}
+                            {/*</Text>*/}
+                        {/*</TouchableOpacity>*/}
                     </Left>
                     <Right>
                         <TouchableOpacity
@@ -217,15 +230,16 @@ export default class CalendarBrickItem extends Component {
         //     ToastAndroid.CENTER
         // );
         var contentMsg =
-            ' 📅 Ngày xuất: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
+            ' 👉 Ngày xuất: ' + Utils._renderDateFormat(this.state.contract.ngayThang) + '\n' +
             '   ⏰ Giờ xuất: ' + Utils._viewValue(this.state.contract.gioXuat) + '\n' +
-            '   👨 Tên khách hàng: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
-            //'SĐT khách hàng: 09878347\n' +
-            '   ⛳ Hạng mục công trình: ' + this.state.contract.tenCongTrinh + '\n' +
+            '   ✔ Tên KH: ' + Utils._viewValue(this.state.contract.tenNhaCungCap) + '\n' +
+            '   ✔ Điện thoại: ' + Utils._viewValue(this.state.contract.soDienThoai) + '\n' +
+            '   ✔ Địa chỉ: ' + Utils._viewValue(this.state.contract.diaChi) + '\n' +
+            '   ✔ Công trình: ' + Utils._viewValue(this.state.contract.tenCongTrinh) + '\n' +
             '   ✔ Tên loại vật liệu: ' + Utils._viewValue(this.state.contract.tenLoaiVatLieu)+ '\n' +
             '   ✔ Khối lượng thực xuất:' + Utils._viewValue(this.state.contract.klthucXuat) + ' ' + this.state.contract.tenDonViTinh + '\n' +
-            '   👨 Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
-            '   👨 Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n'
+            '   ✔ Thu ngân: ' + Utils._viewValue(this.state.contract.nguoiThuTien) + '\n' +
+            '   ✔ Nhân viên kinh doanh: ' + Utils._viewValue(this.state.contract.tenNhanVien) + '\n'
             ' \n\n'
         ;
         //'Ghi chú';

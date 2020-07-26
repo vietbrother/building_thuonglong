@@ -251,16 +251,23 @@ export default class CalendarBrickDetail extends Component {
                 </Button>
             </Left>
         );
-        var right = (
-            <Right style={{flex: 1}}>
-                {/*<Button onPress={() => Actions.search()} transparent>*/}
-                {/*<Icon name='ios-search-outline'/>*/}
-                {/*</Button>*/}
-                {/*<Button onPress={() => Actions.cart()} transparent>*/}
-                {/*<Icon name='ios-cart'/>*/}
-                {/*</Button>*/}
-            </Right>
-        );
+        var right = '';
+        if (this.props.contract != null && this.props.contract != undefined) {
+            right = (
+                <Right style={{flex: 1}}>
+                    <Button onPress={() => Actions.calendarBrickAdd({contract: this.props.contract})} transparent>
+                        <Icon name='md-create'/>
+                    </Button>
+                </Right>
+            );
+        } else {
+            right = (
+                <Right style={{flex: 1}}>
+
+                </Right>
+            );
+        }
+
         return (
             <Container style={{backgroundColor: '#fdfdfd'}}>
                 <Spinner
