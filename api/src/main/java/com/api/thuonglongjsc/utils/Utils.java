@@ -84,4 +84,12 @@ public class Utils {
 		return object;
 	}
 
+	public static String formatStr(String oldStr) {
+		String newStr = "";
+		if(oldStr != null && !"".equals(oldStr)) {
+			newStr = oldStr.replaceAll("\\<.*?\\>", "");
+			newStr = newStr.replaceAll("- ", "");
+		}
+		return newStr;
+	}
 }

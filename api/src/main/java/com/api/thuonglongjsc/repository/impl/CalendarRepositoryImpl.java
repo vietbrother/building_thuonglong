@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Objects;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -51,6 +52,7 @@ import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class CalendarRepositoryImpl implements CalendarRepository {
 
@@ -84,10 +86,16 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				return res;
 			}
 
+			String checkPermission = checkPermisionAction(model.getIDChiNhanh(), model.getNguoiTao(), "1", "1");
+			if (!Utils.isNullOrEmptyObj(checkPermission)) {
+				res.setMessage(checkPermission);
+				return res;
+			}
+
 			String queryStr = "";
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
-				String checkPermission = checkPermisionAddLXBT(model);
+				checkPermission = checkPermisionAddLXBT(model);
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
 					return res;
@@ -140,7 +148,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getKyThuat());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
-				String checkPermission = checkPermisionEditLXBT(model);
+				checkPermission = checkPermisionEditLXBT(model);
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
 					return res;
@@ -242,11 +250,20 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				res.setMessage(message);
 				return res;
 			}
+			String checkPermission = checkPermisionAction(model.getIDChiNhanh(), model.getNguoiTao(), "1", "1");
+			if (!Utils.isNullOrEmptyObj(checkPermission)) {
+				res.setMessage(checkPermission);
+				return res;
+			}
 
 			String queryStr = "";
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
-
+				checkPermission = checkPermisionAddLichBanGach(model);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
 				queryStr = "insert into TblLichBanGach (\r\n" + "		ID,\r\n" + "		GioXuat,\r\n"
 						+ "		NgayThang,\r\n" + "		IDChiNhanh,\r\n" + "		IDNhaCungCap,\r\n"
 						+ "		IDCongTrinh,\r\n" + "		IDNhomVatLieu,\r\n" + "		IDLoaiVatLieu,\r\n"
@@ -292,7 +309,9 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 //				lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
-				String checkPermission = checkPermisionEditLichBanGach(model);
+				checkPermission = checkPermisionEditLichBanGach(model);
+				// checkPermission = checkPermisionAction(model.getIDChiNhanh(),
+				// model.getNguoiTao(), "1", "1");
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
 					return res;
@@ -489,197 +508,383 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
+	@Transactional
 	public String checkPermisionEditLXBT(TblLichXuatBeTong entity) {
 		String res = "";
 		try {
-			StoredProcedureQuery storedProcedure = entityManager
-					.createStoredProcedureQuery("dbo.sp_GiaBanVatLieu_ListDuyet");
-			// set parameters
-			storedProcedure.registerStoredProcedureParameter("ID", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("NgayThang", Date.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDChiNhanh", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDCongTrinh", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("HangMuc", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDNVKD", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("MacBeTong", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("HinhThucBom", String.class, ParameterMode.IN);
-			
-			storedProcedure.registerStoredProcedureParameter("IDHopDong", String.class, ParameterMode.OUT);
-			storedProcedure.registerStoredProcedureParameter("IDHopDongBom", String.class, ParameterMode.OUT);
-			storedProcedure.registerStoredProcedureParameter("IDChiTietKinhDoanh", String.class, ParameterMode.OUT);
-			storedProcedure.registerStoredProcedureParameter("Error", String.class, ParameterMode.OUT);
-			
-			storedProcedure.setParameter("ID", entity.getID());
-			storedProcedure.setParameter("NgayThang", entity.getNgayThang());
-			storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
-			storedProcedure.setParameter("IDCongTrinh", entity.getIDCongTrinh());
-			storedProcedure.setParameter("HangMuc", entity.getHangMuc());
-			storedProcedure.setParameter("IDNVKD", entity.getIDNVKD());
-			storedProcedure.setParameter("MacBeTong", entity.getMacBeTong());
-			storedProcedure.setParameter("HinhThucBom", entity.getHinhThucBom());
-			storedProcedure.execute(); // res = storedProcedure.getResultList();
-
-			Object obj = storedProcedure.getOutputParameterValue("Error");
-			// Load all fields in the class (private included)
-			//List<Object[]> lst = storedProcedure.getResultList();
-
+			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
+			try (CallableStatement stmt = con
+					.prepareCall("{CALL dbo.sp_LichXuatBeTong_CheckSua(?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)}")) {
+				stmt.setString(1, entity.getID());
+				SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+				java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
+				stmt.setDate(2, date);
+				stmt.setString(3, entity.getIDChiNhanh());
+				stmt.setString(4, entity.getIDCongTrinh());
+				stmt.setString(5, entity.getHangMuc());
+				stmt.setString(6, entity.getIDNVKD());
+				stmt.setString(7, entity.getMacBeTong());
+				stmt.setString(8, entity.getHinhThucBom());
+				stmt.registerOutParameter(9, Types.NVARCHAR);
+				stmt.registerOutParameter(10, Types.NVARCHAR);
+				stmt.registerOutParameter(11, Types.NVARCHAR);
+				stmt.registerOutParameter(12, Types.NVARCHAR);
+				boolean resultCall = stmt.execute();
+				String id = stmt.getString(9);
+				String idHopDongBom = stmt.getString(10);
+				String IDChiTietKinhDoanh = stmt.getString(11);
+				String error = stmt.getString(12);
+				res = Utils.formatStr(error);
+				if (stmt.wasNull()) {
+					// geroubrinde = null;
+					// mensagem = null;
+				}
+			}
 
 			// System.out.println(res);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			res = e.getMessage();
 		}
 		return res;
 	}
-	
+
 	@Transactional
-	public String checkPermisionEditLichBanGach(TblLichBanGach entity) {
+	public String checkPermisionAddLichBanGach(TblLichBanGach entity) {
 		String res = "";
 		try {
-			/*
-			SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
-			StoredProcedureQuery storedProcedure = entityManager
-					.createStoredProcedureQuery("dbo.sp_LichBanGach_CheckSua");
-			// set parameters
-			storedProcedure.registerStoredProcedureParameter("ID", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("NgayThang", Date.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDChiNhanh", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDCongTrinh", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("HangMuc", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDNVKD", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDLoaiVatLieu", String.class, ParameterMode.IN);
-			storedProcedure.registerStoredProcedureParameter("IDDonViTinh", String.class, ParameterMode.IN);
-			
-			storedProcedure.registerStoredProcedureParameter("IDHopDong", String.class, ParameterMode.OUT);
-			storedProcedure.registerStoredProcedureParameter("IDHopDongBom", String.class, ParameterMode.OUT);
-			storedProcedure.registerStoredProcedureParameter("IDChiTietKinhDoanh", String.class, ParameterMode.OUT);
-			storedProcedure.registerStoredProcedureParameter("Error", String.class, ParameterMode.OUT);
-			
-			storedProcedure.setParameter("ID", entity.getID());
-			storedProcedure.setParameter("NgayThang", sp.parse(entity.getNgayThang()));
-			storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
-			storedProcedure.setParameter("IDCongTrinh", entity.getIDCongTrinh());
-			storedProcedure.setParameter("HangMuc", entity.getHangMuc());
-			storedProcedure.setParameter("IDNVKD", entity.getIDNVKD());
-			storedProcedure.setParameter("IDLoaiVatLieu", entity.getIDLoaiVatLieu());
-			storedProcedure.setParameter("IDDonViTinh", entity.getIDDonViTinh());
-			boolean queryResult = storedProcedure.execute(); // res = storedProcedure.getResultList();
-			
-			//Object temp = storedProcedure.getOutputParameterValue("@return_value");
-			Object obj = storedProcedure.getOutputParameterValue("Error");
-			// Load all fields in the class (private included)
-			//List<Object[]> lst = storedProcedure.getResultList();
-			
- 
-			{
-	"id": "39075479-7ACA-4039-AA1B-72920CDB5604",
-	"cuLyVanChuyen": "10",
-	"gioXuat": "09:00:00",
-	"hangMuc": "test",
-	"idchiNhanh": "0A70374D-C820-406E-AB11-F13CDE69D22B",
-	"idchiTietKinhDoanh": "",
-	"idcongTrinh": "2E5F3B72-B60C-46B2-89FA-4BE5857F6D87",
-	"iddonViTinh": "56226266-0CD8-496D-B28C-9CABB1AC0F30",
-	"idhopDong": 1595671495047,
-	"idloaiVatLieu": "E124BBF4-127E-42E6-9EF7-CAB62443D8C1",
-	"idnhaCungCap": "577B63D3-FDA1-4CB5-9CB3-D32466BAE308",
-	"nhomVatLieu": "97CF73BB-E552-4A07-9F8B-5DD5C68F7287",
-	"kldaBan": 0,
-	"kldaXuat": 0,
-	"klkhachHang": "10",
-	"klthucXuat": "10",
-	"moTa": "",
-	"ngayThang": "25/07/2020",
-	"nguoiTao": "viethau89nd",
-	"nguoiThuTien": "test",
-	"trangThai": "1",
-	"trangThaiHoanThanh": "Chưa hoàn thành",
-	"trangThaiText": "Chờ duyệt",
-"idnhomVatLieu" : "123123"
-}
-			try {
-		            MyStoredProc storedProc = new MyStoredProc(entity);
-		            entityManager.unwrap(Session.class).doWork(storedProc);
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-			
-
-			 Session session = entityManager.unwrap(Session.class);
-			 session.doWork(new Work() {
-			     
-				    @Override
-				    public void execute(Connection con)  {
-				        // do something useful
-				    	
-				    	try (CallableStatement stmt = 
-								con.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?1, ?2, ?3,  ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)}")) {
-				              stmt.setString(1, entity.getID());
-				              SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
-				              java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
-				              stmt.setDate(2, date) ;
-				              stmt.setString(3, entity.getIDChiNhanh());
-				              stmt.setString(4, entity.getIDCongTrinh());
-				              stmt.setString(5, entity.getHangMuc());
-				              stmt.setString(6, entity.getIDNVKD());
-				              stmt.setString(7, entity.getIDLoaiVatLieu());
-				              stmt.setString(8, entity.getIDDonViTinh());
-				              stmt.registerOutParameter(9, Types.NVARCHAR);
-				              stmt.registerOutParameter(10, Types.NVARCHAR);
-				              stmt.registerOutParameter(11, Types.NVARCHAR);
-				              stmt.registerOutParameter(12, Types.NVARCHAR);
-				              stmt.executeUpdate();
-				              String mensagem = stmt.getString(9);
-				              String geroubrinde = stmt.getString(10);
-				              String tea = stmt.getString(11);
-				              String te = stmt.getString(12);
-				              if (stmt.wasNull()) {
-				                  geroubrinde = null;
-				                  mensagem = null;
-				              }
-				          } catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						 System.out.println(obj.toString());
-
-					
-				    }
-				});
-			 
 			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
-			try (CallableStatement stmt = 
-					con.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?1, ?2, ?3,  ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)}")) {
-	              stmt.setString(1, entity.getID());
-	              stmt.setDate(2, (java.sql.Date) sp.parse(entity.getNgayThang()));
-	              stmt.setString(3, entity.getIDChiNhanh());
-	              stmt.setString(4, entity.getIDCongTrinh());
-	              stmt.setString(5, entity.getHangMuc());
-	              stmt.setString(6, entity.getIDNVKD());
-	              stmt.setString(7, entity.getIDLoaiVatLieu());
-	              stmt.setString(8, entity.getIDDonViTinh());
-	              stmt.registerOutParameter(9, Types.NVARCHAR);
-	              stmt.registerOutParameter(10, Types.NVARCHAR);
-	              stmt.registerOutParameter(11, Types.NVARCHAR);
-	              stmt.registerOutParameter(12, Types.NVARCHAR);
-	              stmt.executeUpdate();
-	              String mensagem = stmt.getString(9);
-	              String geroubrinde = stmt.getString(10);
-	              String tea = stmt.getString(11);
-	              String te = stmt.getString(12);
-	              if (stmt.wasNull()) {
-	                  geroubrinde = null;
-	                  mensagem = null;
-	              }
-	          }
-			
-			 System.out.println(obj.toString());
-			 */
+			try (CallableStatement stmt = con
+					.prepareCall("{CALL dbo.sp_LichBanGach_CheckThem( ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)}")) {
+//	              stmt.setString(1, entity.getID());
+				SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+				java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
+				stmt.setDate(1, date);
+				stmt.setString(2, entity.getIDChiNhanh());
+				stmt.setString(3, entity.getIDCongTrinh());
+				stmt.setString(4, entity.getHangMuc());
+				stmt.setString(5, entity.getIDNVKD());
+				stmt.setString(6, entity.getIDLoaiVatLieu());
+				stmt.setString(7, entity.getIDDonViTinh());
+				stmt.registerOutParameter(8, Types.NVARCHAR);
+				stmt.registerOutParameter(9, Types.NVARCHAR);
+				stmt.registerOutParameter(10, Types.NVARCHAR);
+				stmt.registerOutParameter(11, Types.NVARCHAR);
+				boolean resultCall = stmt.execute();
+				String id = stmt.getString(8);
+				String idHopDongBom = stmt.getString(9);
+				String IDChiTietKinhDoanh = stmt.getString(10);
+				String error = stmt.getString(11);
+				if (stmt.wasNull()) {
+					// geroubrinde = null;
+					// mensagem = null;
+				}
+			}
+
+			// System.out.println(res);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			res = e.getMessage();
+		}
+		return res;
+	}
+
+	@Transactional
+	public String checkPermisionEditLichBanGach(TblLichBanGach entity) {
+		String res = "0";
+		try {
+
+			SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
+			try (CallableStatement stmt = con
+					.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)}")) {
+				stmt.setString(1, entity.getID());
+//	              SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+				java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
+				stmt.setDate(2, date);
+				stmt.setString(3, entity.getIDChiNhanh());
+				stmt.setString(4, entity.getIDCongTrinh());
+				stmt.setString(5, entity.getHangMuc());
+				stmt.setString(6, entity.getIDNVKD());
+				stmt.setString(7, entity.getIDLoaiVatLieu());
+				stmt.setString(8, entity.getIDDonViTinh());
+				stmt.registerOutParameter(9, Types.NVARCHAR);
+				stmt.registerOutParameter(10, Types.NVARCHAR);
+				stmt.registerOutParameter(11, Types.NVARCHAR);
+				stmt.registerOutParameter(12, Types.NVARCHAR);
+				boolean resultCall = stmt.execute();
+				String id = stmt.getString(9);
+				String idHopDongBom = stmt.getString(10);
+				String IDChiTietKinhDoanh = stmt.getString(11);
+				String error = stmt.getString(12);
+				res = Utils.formatStr(error);
+				if (stmt.wasNull()) {
+					// geroubrinde = null;
+					// mensagem = null;
+				}
+			}
+
+			// System.out.println(obj.toString());
 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			res = e.getMessage();
+		}
+		return res;
+	}
+
+	@Override
+	public ResultDTO lichXuatBeTongDelete(TblLichBanGach model) {
+		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
+		try {
+			String message = "";
+			if (Utils.isNullOrEmpty(model.getID())) {
+				message = "Input empty";
+				res.setMessage(message);
+				return res;
+			}
+
+			if (Utils.isNullOrEmptyObj(model.getNguoiTao())) {
+				message = "user empty";
+				res.setMessage(message);
+				return res;
+			}
+
+			String queryStr = "";
+			List<String> lstParams = new ArrayList<>();
+			String checkPermission = checkPermisionDelete("TblLichXuatBeTong", model.getID());
+			if (!Utils.isNullOrEmptyObj(checkPermission)) {
+				res.setMessage(checkPermission);
+				return res;
+			}
+
+			queryStr = "insert into TblLichXuatBeTong (\r\n" + "		ID,\r\n" + "		GioXuat,\r\n"
+					+ "		NgayThang,\r\n" + "		IDChiNhanh,\r\n" + "		IDNhaCungCap,\r\n"
+					+ "		IDCongTrinh,\r\n" + "		MacBeTong,\r\n" + "		IDHopDong,\r\n" + "		HangMuc,\r\n"
+					+ "		HinhThucBom,\r\n" + "		IDHopDongBom,\r\n" + "		KLThucXuat,\r\n"
+					+ "		KLKhachHang,\r\n" + "		CuLyVanChuyen,\r\n" + "		TrangThai,\r\n"
+					+ "		TrangThaiText,\r\n" + "		NguoiDuyet,\r\n" + "		NguoiXoa,\r\n"
+					+ "		NgayTao,\r\n" + "		NguoiTao,\r\n" + "		MoTa,\r\n" + "		TrangThaiHoanThanh,\r\n"
+					+ "		KLDaXuat,\r\n" + "		KLDaBan,\r\n" + "		IDNVKD,\r\n"
+					+ "		IDChiTietKinhDoanh,\r\n" + "		KyThuat,\r\n" + "		NguoiThuTien) \r\n"
+					+ " VALUES ( \r\n" + "		CONVERT(uniqueidentifier,newID()),\r\n" + "		?,\r\n"
+					+ "		convert(datetime,?,103), \n" + "		CONVERT(uniqueidentifier, ? ), \r\n"
+					+ "		CONVERT(uniqueidentifier, ? ), \r\n" + "		CONVERT(uniqueidentifier, ? ), \r\n"
+					+ "		CONVERT(uniqueidentifier, ? ),\r\n" + "		CONVERT(uniqueidentifier,newID()),\r\n"
+					+ "		?,\r\n" + "		CONVERT(uniqueidentifier, ? ),\r\n"
+					+ "		CONVERT(uniqueidentifier,newID()),\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
+					+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		GETDATE(),\r\n"
+					+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
+					+ "		CONVERT(uniqueidentifier, ? ),\r\n" + "		CONVERT(uniqueidentifier,newID()),\r\n"
+					+ "		?,\r\n" + "		?) ";
+
+			lstParams.add(model.getGioXuat());
+
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			int resUpdate = query.executeUpdate();
+			logger.info("update result :  " + resUpdate);
+			if (resUpdate == 1) {
+				message = Constants.ERROR_CODE.SUCCESS;
+				res.setCode(Constants.ERROR_CODE.SUCCESS);
+			} else {
+				res.setCode(String.valueOf(resUpdate));
+			}
+
+			res.setId(String.valueOf(System.currentTimeMillis()));
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+			res.setMessage(e.getMessage());
+		}
+		return res;
+	}
+
+	@Override
+	public ResultDTO lichBanGachDelete(TblLichBanGach model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Transactional
+	public String checkPermisionAction(String idChiNhanh, String idUser, String loaiThaoTac, String tag) {
+		String res = "";
+		try {
+			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
+			try (CallableStatement stmt = con.prepareCall("{CALL dbo.sp_PhanQuyen_CheckQuyenThaoTac(?, ?, ?, ?)}")) {
+				stmt.setString(1, idChiNhanh);
+				stmt.setString(2, idUser);
+				stmt.setInt(3, Integer.valueOf(loaiThaoTac));
+				stmt.setString(4, tag);
+//				stmt.registerOutParameter(5, Types.NVARCHAR);
+//				stmt.registerOutParameter(6, Types.NVARCHAR);
+				boolean resultCall = stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					res = rs.getString("ThongBao");
+					String url = rs.getString("Url");
+				}
+			}
+
+			// System.out.println(res);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			res = e.getMessage();
+		}
+		return res;
+	}
+
+	public String checkPermisionDelete(String type, String id) {
+		String res = "";
+		try {
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			res = e.getMessage();
 		}
 		return res;
 	}
 }
+
+//
+//StoredProcedureQuery storedProcedure = entityManager
+//		.createStoredProcedureQuery("dbo.sp_LichBanGach_CheckSua");
+//// set parameters
+////storedProcedure.registerStoredProcedureParameter("ID", String.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("NgayThang", Date.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("IDChiNhanh", String.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("IDCongTrinh", String.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("HangMuc", String.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("IDNVKD", String.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("IDLoaiVatLieu", String.class, ParameterMode.IN);
+////storedProcedure.registerStoredProcedureParameter("IDDonViTinh", String.class, ParameterMode.IN);
+////
+////storedProcedure.registerStoredProcedureParameter("IDHopDong", String.class, ParameterMode.OUT);
+////storedProcedure.registerStoredProcedureParameter("IDHopDongBom", String.class, ParameterMode.OUT);
+////storedProcedure.registerStoredProcedureParameter("IDChiTietKinhDoanh", String.class, ParameterMode.OUT);
+////storedProcedure.registerStoredProcedureParameter("Error", String.class, ParameterMode.OUT);
+//
+//storedProcedure.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(2, Date.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(5, String.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(6, String.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);
+//storedProcedure.registerStoredProcedureParameter(8, String.class, ParameterMode.IN);
+//
+//storedProcedure.registerStoredProcedureParameter(9, String.class, ParameterMode.OUT);
+//storedProcedure.registerStoredProcedureParameter(10, String.class, ParameterMode.OUT);
+//storedProcedure.registerStoredProcedureParameter(11, String.class, ParameterMode.OUT);
+//storedProcedure.registerStoredProcedureParameter(12, String.class, ParameterMode.OUT);
+//
+////storedProcedure.setParameter("ID", entity.getID());
+////storedProcedure.setParameter("NgayThang", sp.parse(entity.getNgayThang()));
+////storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
+////storedProcedure.setParameter("IDCongTrinh", entity.getIDCongTrinh());
+////storedProcedure.setParameter("HangMuc", entity.getHangMuc());
+////storedProcedure.setParameter("IDNVKD", entity.getIDNVKD());
+////storedProcedure.setParameter("IDLoaiVatLieu", entity.getIDLoaiVatLieu());
+////storedProcedure.setParameter("IDDonViTinh", entity.getIDDonViTinh());
+//storedProcedure.setParameter(1, entity.getID());
+//storedProcedure.setParameter(2, sp.parse(entity.getNgayThang()));
+//storedProcedure.setParameter(3, entity.getIDChiNhanh());
+//storedProcedure.setParameter(4, entity.getIDCongTrinh());
+//storedProcedure.setParameter(5, entity.getHangMuc());
+//storedProcedure.setParameter(6, entity.getIDNVKD());
+//storedProcedure.setParameter(7, entity.getIDLoaiVatLieu());
+//storedProcedure.setParameter(8, entity.getIDDonViTinh());
+//boolean queryResult = storedProcedure.execute(); // res = storedProcedure.getResultList();
+//
+////Object temp = storedProcedure.getOutputParameterValue("@return_value");
+////Object obj = storedProcedure.getOutputParameterValue("Error");
+//Object obj = storedProcedure.getOutputParameterValue(12);
+//// Load all fields in the class (private included)
+////List<Object[]> lst = storedProcedure.getResultList();
+//
+//
+//{
+//"id": "39075479-7ACA-4039-AA1B-72920CDB5604",
+//"cuLyVanChuyen": "10",
+//"gioXuat": "09:00:00",
+//"hangMuc": "test",
+//"idchiNhanh": "0A70374D-C820-406E-AB11-F13CDE69D22B",
+//"idchiTietKinhDoanh": "",
+//"idcongTrinh": "2E5F3B72-B60C-46B2-89FA-4BE5857F6D87",
+//"iddonViTinh": "56226266-0CD8-496D-B28C-9CABB1AC0F30",
+//"idhopDong": 1595671495047,
+//"idloaiVatLieu": "E124BBF4-127E-42E6-9EF7-CAB62443D8C1",
+//"idnhaCungCap": "577B63D3-FDA1-4CB5-9CB3-D32466BAE308",
+//"nhomVatLieu": "97CF73BB-E552-4A07-9F8B-5DD5C68F7287",
+//"kldaBan": 0,
+//"kldaXuat": 0,
+//"klkhachHang": "10",
+//"klthucXuat": "10",
+//"moTa": "",
+//"ngayThang": "25/07/2020",
+//"nguoiTao": "viethau89nd",
+//"nguoiThuTien": "test",
+//"trangThai": "1",
+//"trangThaiHoanThanh": "Chưa hoàn thành",
+//"trangThaiText": "Chờ duyệt",
+//"idnhomVatLieu" : "123123"
+//}
+//
+//try {
+//        MyStoredProc storedProc = new MyStoredProc(entity);
+//        entityManager.unwrap(Session.class).doWork(storedProc);
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//    }
+//
+//
+//// Session session = entityManager.unwrap(Session.class);
+//// session.doWork(new Work() {
+////     
+////	    @Override
+////	    public void execute(Connection con)  {
+////	        // do something useful
+////	    	
+////	    	try (CallableStatement stmt = 
+////					con.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?1, ?2, ?3,  ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)}")) {
+////	              stmt.setString(1, entity.getID());
+////	              SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+////	              java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
+////	              stmt.setDate(2, date) ;
+////	              stmt.setString(3, entity.getIDChiNhanh());
+////	              stmt.setString(4, entity.getIDCongTrinh());
+////	              stmt.setString(5, entity.getHangMuc());
+////	              stmt.setString(6, entity.getIDNVKD());
+////	              stmt.setString(7, entity.getIDLoaiVatLieu());
+////	              stmt.setString(8, entity.getIDDonViTinh());
+////	              stmt.registerOutParameter(9, Types.NVARCHAR);
+////	              stmt.registerOutParameter(10, Types.NVARCHAR);
+////	              stmt.registerOutParameter(11, Types.NVARCHAR);
+////	              stmt.registerOutParameter(12, Types.NVARCHAR);
+////	              stmt.executeUpdate();
+////	              String mensagem = stmt.getString(9);
+////	              String geroubrinde = stmt.getString(10);
+////	              String tea = stmt.getString(11);
+////	              String te = stmt.getString(12);
+////	              if (stmt.wasNull()) {
+////	                  geroubrinde = null;
+////	                  mensagem = null;
+////	              }
+////	          } catch (Exception e) {
+////				// TODO Auto-generated catch block
+////				e.printStackTrace();
+////			}
+////			
+////			 System.out.println(obj.toString());
+////
+////		
+////	    }
+////	});			
