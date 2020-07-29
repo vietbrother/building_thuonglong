@@ -86,15 +86,16 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				return res;
 			}
 
-			String checkPermission = checkPermisionAction(model.getIDChiNhanh(), model.getNguoiTao(), "1", "1");
-			if (!Utils.isNullOrEmptyObj(checkPermission)) {
-				res.setMessage(checkPermission);
-				return res;
-			}
-
 			String queryStr = "";
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
+				String checkPermission = checkPermisionUserAction(model.getIDChiNhanh(), model.getNguoiTao(),
+						Constants.PERMISSION.ACTION_ADD, Constants.PERMISSION.TAG_LICH_XUAT_BE_TONG);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
+
 				checkPermission = checkPermisionAddLXBT(model);
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
@@ -127,10 +128,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhaCungCap());
 				lstParams.add(model.getIDCongTrinh());
 				lstParams.add(model.getMacBeTong());
-//				lstParams.add(model.getIDHopDong());
+				// lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getHinhThucBom());
-//				lstParams.add(model.getIDHopDongBom());
+				// lstParams.add(model.getIDHopDongBom());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
 				lstParams.add(model.getCuLyVanChuyen());
@@ -144,10 +145,17 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getKLDaXuat());
 				lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-//				lstParams.add(model.getIDChiTietKinhDoanh());
+				// lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getKyThuat());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
+				String checkPermission = checkPermisionUserAction(model.getIDChiNhanh(), model.getNguoiTao(),
+						Constants.PERMISSION.ACTION_EDIT, Constants.PERMISSION.TAG_LICH_XUAT_BE_TONG);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
+
 				checkPermission = checkPermisionEditLXBT(model);
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
@@ -160,9 +168,9 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						+ "		IDNhaCungCap = CONVERT(uniqueidentifier, ? ),\r\n"
 						+ "		IDCongTrinh = CONVERT(uniqueidentifier, ? ),\r\n"
 						+ "		MacBeTong = CONVERT(uniqueidentifier, ? ),\r\n"
-//						+ "		IDHopDong = CONVERT(uniqueidentifier, ? ),\r\n" 
+						// + " IDHopDong = CONVERT(uniqueidentifier, ? ),\r\n"
 						+ "		HangMuc = ?,\r\n" + "		HinhThucBom = CONVERT(uniqueidentifier, ? ),\r\n"
-//						+ "		IDHopDongBom = ?,\r\n" 
+						// + " IDHopDongBom = ?,\r\n"
 						+ "		KLThucXuat = ?,\r\n" + "		KLKhachHang = ?,\r\n" + "		CuLyVanChuyen = ?,\r\n"
 						+ "		TrangThai = ?,\r\n" + "		TrangThaiText = ?,\r\n" + "		MoTa = ?,\r\n"
 						+ "		KLDaXuat = ?,\r\n" + "		KLDaBan = ?,\r\n"
@@ -175,10 +183,10 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhaCungCap());
 				lstParams.add(model.getIDCongTrinh());
 				lstParams.add(model.getMacBeTong());
-//				lstParams.add(model.getIDHopDong());
+				// lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getHinhThucBom());
-//				lstParams.add(model.getIDHopDongBom());
+				// lstParams.add(model.getIDHopDongBom());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
 				lstParams.add(model.getCuLyVanChuyen());
@@ -188,7 +196,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getKLDaXuat());
 				lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-//				lstParams.add(model.getIDChiTietKinhDoanh());
+				// lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getKyThuat());
 				lstParams.add(model.getNguoiThuTien());
 				lstParams.add(model.getID());
@@ -250,15 +258,17 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				res.setMessage(message);
 				return res;
 			}
-			String checkPermission = checkPermisionAction(model.getIDChiNhanh(), model.getNguoiTao(), "1", "1");
-			if (!Utils.isNullOrEmptyObj(checkPermission)) {
-				res.setMessage(checkPermission);
-				return res;
-			}
 
 			String queryStr = "";
 			List<String> lstParams = new ArrayList<>();
 			if (Utils.isNullOrEmpty(model.getID())) {
+				String checkPermission = checkPermisionUserAction(model.getIDChiNhanh(), model.getNguoiTao(),
+						Constants.PERMISSION.ACTION_ADD, Constants.PERMISSION.TAG_LICH_BAN_GACH);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
+
 				checkPermission = checkPermisionAddLichBanGach(model);
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
@@ -291,7 +301,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhomVatLieu());
 				lstParams.add(model.getIDLoaiVatLieu());
 				lstParams.add(model.getIDDonViTinh());
-//				lstParams.add(model.getIDHopDong());
+				// lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
@@ -303,14 +313,21 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getNguoiTao());
 				lstParams.add(model.getMoTa());
 				lstParams.add(model.getTrangThaiHoanThanh());
-//				lstParams.add(model.getKLDaXuat());
-//				lstParams.add(model.getKLDaBan());
+				// lstParams.add(model.getKLDaXuat());
+				// lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-//				lstParams.add(model.getIDChiTietKinhDoanh());
+				// lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getNguoiThuTien());
 			} else {
+				String checkPermission = checkPermisionUserAction(model.getIDChiNhanh(), model.getNguoiTao(),
+						Constants.PERMISSION.ACTION_EDIT, Constants.PERMISSION.TAG_LICH_BAN_GACH);
+				if (!Utils.isNullOrEmptyObj(checkPermission)) {
+					res.setMessage(checkPermission);
+					return res;
+				}
+
 				checkPermission = checkPermisionEditLichBanGach(model);
-				// checkPermission = checkPermisionAction(model.getIDChiNhanh(),
+				// checkPermission = checkPermisionUserAction(model.getIDChiNhanh(),
 				// model.getNguoiTao(), "1", "1");
 				if (!Utils.isNullOrEmptyObj(checkPermission)) {
 					res.setMessage(checkPermission);
@@ -325,14 +342,14 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 						+ "		IDNhomVatLieu = CONVERT(uniqueidentifier, ? ),\r\n"
 						+ "		IDLoaiVatLieu = CONVERT(uniqueidentifier, ? ),\r\n"
 						+ "		IDDonViTinh = CONVERT(uniqueidentifier, ? ),\r\n" +
-//						"		IDHopDong = CONVERT(uniqueidentifier, ? ),\r\n" + 
+						// " IDHopDong = CONVERT(uniqueidentifier, ? ),\r\n" +
 						"		HangMuc = ?,\r\n" + "		KLThucXuat = ?,\r\n" + "		KLKhachHang = ?,\r\n"
 						+ "		CuLyVanChuyen = ?,\r\n" + "		TrangThai = ?,\r\n" + "		TrangThaiText = ?,\r\n" +
-//						"		MoTa = ?,\r\n" + 
-//						"		KLDaXuat = ?,\r\n" + 
-//						"		KLDaBan = ?,\r\n" + 
+						// " MoTa = ?,\r\n" +
+						// " KLDaXuat = ?,\r\n" +
+						// " KLDaBan = ?,\r\n" +
 						"		IDNVKD = CONVERT(uniqueidentifier, ? ),\r\n" +
-//						"		IDChiTietKinhDoanh = ?,\r\n" + 
+						// " IDChiTietKinhDoanh = ?,\r\n" +
 						"		NguoiThuTien = ?\r\n" + "where ID = CONVERT(uniqueidentifier, ? ) ";
 
 				lstParams.add(model.getGioXuat());
@@ -343,18 +360,18 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				lstParams.add(model.getIDNhomVatLieu());
 				lstParams.add(model.getIDLoaiVatLieu());
 				lstParams.add(model.getIDDonViTinh());
-//				lstParams.add(model.getIDHopDong());
+				// lstParams.add(model.getIDHopDong());
 				lstParams.add(model.getHangMuc());
 				lstParams.add(model.getKLThucXuat());
 				lstParams.add(model.getKLKhachHang());
 				lstParams.add(model.getCuLyVanChuyen());
 				lstParams.add(model.getTrangThai());
 				lstParams.add(model.getTrangThaiText());
-//				lstParams.add(model.getMoTa());
-//				lstParams.add(model.getKLDaXuat());
-//				lstParams.add(model.getKLDaBan());
+				// lstParams.add(model.getMoTa());
+				// lstParams.add(model.getKLDaXuat());
+				// lstParams.add(model.getKLDaBan());
 				lstParams.add(model.getIDNVKD());
-//				lstParams.add(model.getIDChiTietKinhDoanh());
+				// lstParams.add(model.getIDChiTietKinhDoanh());
 				lstParams.add(model.getNguoiThuTien());
 				lstParams.add(model.getID());
 			}
@@ -382,7 +399,8 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
-//	{"cuLyVanChuyen":"10","gioXuat":"09:00","idchiNhanh":"0A70374D-C820-406E-AB11-F13CDE69D22B","idchiTietKinhDoanh":"","idcongTrinh":"C34D15FC-142F-4F71-A530-760DD7BBC4A3","idhopDong":1594836004121,"idhopDongBom":1594836004121,"idnhaCungCap":"E6B8C11A-765C-4A44-99C9-B56604CC63D9","idnvkd":"93E83567-8AB2-4FAC-A4A8-0E000D1A5DDA","kldaBan":"10","kldaXuat":"10","klkhachHang":"10","klthucXuat":"10","kyThuat":"123","macBeTong":"B4B9E95F-1A66-4B56-BBF1-54D7B07E188F","ngayThang":"16/07/2020","nguoiTao":"viethau89nd","nguoiThuTien":"abc","trangThai":"1","trangThaiHoanThanh":"Chưa hoàn thành","trangThaiText":"Chờ duyệt"}
+	// {"cuLyVanChuyen":"10","gioXuat":"09:00","idchiNhanh":"0A70374D-C820-406E-AB11-F13CDE69D22B","idchiTietKinhDoanh":"","idcongTrinh":"C34D15FC-142F-4F71-A530-760DD7BBC4A3","idhopDong":1594836004121,"idhopDongBom":1594836004121,"idnhaCungCap":"E6B8C11A-765C-4A44-99C9-B56604CC63D9","idnvkd":"93E83567-8AB2-4FAC-A4A8-0E000D1A5DDA","kldaBan":"10","kldaXuat":"10","klkhachHang":"10","klthucXuat":"10","kyThuat":"123","macBeTong":"B4B9E95F-1A66-4B56-BBF1-54D7B07E188F","ngayThang":"16/07/2020","nguoiTao":"viethau89nd","nguoiThuTien":"abc","trangThai":"1","trangThaiHoanThanh":"Chưa
+	// hoàn thành","trangThaiText":"Chờ duyệt"}
 	public String checkPermisionAddLXBT(TblLichXuatBeTong entity) {
 		String res = "";
 		String queryStr = "SELECT COUNT(IDCongTrinh) \r\n" + "        FROM tblLichXuatBeTong\r\n"
@@ -405,8 +423,8 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				query.setParameter(i + 1, lstParams.get(i));
 			}
 			Integer count = (Integer) query.getSingleResult();
-//			unwrap(org.hibernate.query.Query.class)
-//					.setResultTransformer(Transformers.aliasToBean(String.class)).getResultList();
+			// unwrap(org.hibernate.query.Query.class)
+			// .setResultTransformer(Transformers.aliasToBean(String.class)).getResultList();
 
 			if (count > 0) {
 				return "Không được thiết lập 2 lịch bán bê tông giống nhau trong cùng 1 ngày.";
@@ -557,7 +575,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
 			try (CallableStatement stmt = con
 					.prepareCall("{CALL dbo.sp_LichBanGach_CheckThem( ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)}")) {
-//	              stmt.setString(1, entity.getID());
+				// stmt.setString(1, entity.getID());
 				SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
 				java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
 				stmt.setDate(1, date);
@@ -601,7 +619,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 			try (CallableStatement stmt = con
 					.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)}")) {
 				stmt.setString(1, entity.getID());
-//	              SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+				// SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
 				java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
 				stmt.setDate(2, date);
 				stmt.setString(3, entity.getIDChiNhanh());
@@ -637,11 +655,12 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 	}
 
 	@Override
-	public ResultDTO lichXuatBeTongDelete(TblLichBanGach model) {
+	public ResultDTO lichXuatBeTongDelete(TblLichXuatBeTong model) {
 		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
 		try {
 			String message = "";
-			if (Utils.isNullOrEmpty(model.getID())) {
+			if (Utils.isNullOrEmpty(model.getID()) || Utils.isNullOrEmpty(model.getIDChiNhanh()) 
+					|| Utils.isNullOrEmpty(model.getIDNhaCungCap())) {
 				message = "Input empty";
 				res.setMessage(message);
 				return res;
@@ -653,35 +672,24 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				return res;
 			}
 
-			String queryStr = "";
-			List<String> lstParams = new ArrayList<>();
-			String checkPermission = checkPermisionDelete("TblLichXuatBeTong", model.getID());
+			String checkPermission = checkPermisionUserAction(model.getIDChiNhanh(), model.getNguoiTao(),
+					Constants.PERMISSION.ACTION_DELETE, Constants.PERMISSION.TAG_LICH_XUAT_BE_TONG);
+			if (!Utils.isNullOrEmptyObj(checkPermission)) {
+				res.setMessage(checkPermission);
+				return res;
+			}
+			checkPermission = checkPermisionDelete("LichXuatBeTong", model.getID(), model.getIDChiNhanh(), model.getIDNhaCungCap());
 			if (!Utils.isNullOrEmptyObj(checkPermission)) {
 				res.setMessage(checkPermission);
 				return res;
 			}
 
-			queryStr = "insert into TblLichXuatBeTong (\r\n" + "		ID,\r\n" + "		GioXuat,\r\n"
-					+ "		NgayThang,\r\n" + "		IDChiNhanh,\r\n" + "		IDNhaCungCap,\r\n"
-					+ "		IDCongTrinh,\r\n" + "		MacBeTong,\r\n" + "		IDHopDong,\r\n" + "		HangMuc,\r\n"
-					+ "		HinhThucBom,\r\n" + "		IDHopDongBom,\r\n" + "		KLThucXuat,\r\n"
-					+ "		KLKhachHang,\r\n" + "		CuLyVanChuyen,\r\n" + "		TrangThai,\r\n"
-					+ "		TrangThaiText,\r\n" + "		NguoiDuyet,\r\n" + "		NguoiXoa,\r\n"
-					+ "		NgayTao,\r\n" + "		NguoiTao,\r\n" + "		MoTa,\r\n" + "		TrangThaiHoanThanh,\r\n"
-					+ "		KLDaXuat,\r\n" + "		KLDaBan,\r\n" + "		IDNVKD,\r\n"
-					+ "		IDChiTietKinhDoanh,\r\n" + "		KyThuat,\r\n" + "		NguoiThuTien) \r\n"
-					+ " VALUES ( \r\n" + "		CONVERT(uniqueidentifier,newID()),\r\n" + "		?,\r\n"
-					+ "		convert(datetime,?,103), \n" + "		CONVERT(uniqueidentifier, ? ), \r\n"
-					+ "		CONVERT(uniqueidentifier, ? ), \r\n" + "		CONVERT(uniqueidentifier, ? ), \r\n"
-					+ "		CONVERT(uniqueidentifier, ? ),\r\n" + "		CONVERT(uniqueidentifier,newID()),\r\n"
-					+ "		?,\r\n" + "		CONVERT(uniqueidentifier, ? ),\r\n"
-					+ "		CONVERT(uniqueidentifier,newID()),\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
-					+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		GETDATE(),\r\n"
-					+ "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n" + "		?,\r\n"
-					+ "		CONVERT(uniqueidentifier, ? ),\r\n" + "		CONVERT(uniqueidentifier,newID()),\r\n"
-					+ "		?,\r\n" + "		?) ";
+			String queryStr = "";
+			List<String> lstParams = new ArrayList<>();
 
-			lstParams.add(model.getGioXuat());
+			queryStr = "delete from TblLichXuatBeTong where ID = ? ";
+
+			lstParams.add(model.getID());
 
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
@@ -708,12 +716,66 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 
 	@Override
 	public ResultDTO lichBanGachDelete(TblLichBanGach model) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
+		try {
+			String message = "";
+			if (Utils.isNullOrEmpty(model.getID()) || Utils.isNullOrEmpty(model.getIDChiNhanh()) 
+					|| Utils.isNullOrEmpty(model.getIDNhaCungCap())) {
+				message = "Input empty";
+				res.setMessage(message);
+				return res;
+			}
+
+			if (Utils.isNullOrEmptyObj(model.getNguoiTao())) {
+				message = "user empty";
+				res.setMessage(message);
+				return res;
+			}
+
+			String checkPermission = checkPermisionUserAction(model.getIDChiNhanh(), model.getNguoiTao(),
+					Constants.PERMISSION.ACTION_DELETE, Constants.PERMISSION.TAG_LICH_XUAT_BE_TONG);
+			if (!Utils.isNullOrEmptyObj(checkPermission)) {
+				res.setMessage(checkPermission);
+				return res;
+			}
+			checkPermission = checkPermisionDelete("LichBanGach", model.getID(), model.getIDChiNhanh(), model.getIDNhaCungCap());
+			if (!Utils.isNullOrEmptyObj(checkPermission)) {
+				res.setMessage(checkPermission);
+				return res;
+			}
+
+			String queryStr = "";
+			List<String> lstParams = new ArrayList<>();
+
+			queryStr = "delete from TblLichBanGach where ID = ? ";
+
+			lstParams.add(model.getID());
+
+			Query query = entityManager.createNativeQuery(queryStr);
+			for (int i = 0; i < lstParams.size(); i++) {
+				query.setParameter(i + 1, lstParams.get(i));
+			}
+			int resUpdate = query.executeUpdate();
+			logger.info("update result :  " + resUpdate);
+			if (resUpdate == 1) {
+				message = Constants.ERROR_CODE.SUCCESS;
+				res.setCode(Constants.ERROR_CODE.SUCCESS);
+			} else {
+				res.setCode(String.valueOf(resUpdate));
+			}
+
+			res.setId(String.valueOf(System.currentTimeMillis()));
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("error ", e);
+			res.setMessage(e.getMessage());
+		}
+		return res;
 	}
 
 	@Transactional
-	public String checkPermisionAction(String idChiNhanh, String idUser, String loaiThaoTac, String tag) {
+	public String checkPermisionUserAction(String idChiNhanh, String idUser, String loaiThaoTac, String tag) {
 		String res = "";
 		try {
 			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
@@ -722,8 +784,8 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 				stmt.setString(2, idUser);
 				stmt.setInt(3, Integer.valueOf(loaiThaoTac));
 				stmt.setString(4, tag);
-//				stmt.registerOutParameter(5, Types.NVARCHAR);
-//				stmt.registerOutParameter(6, Types.NVARCHAR);
+				// stmt.registerOutParameter(5, Types.NVARCHAR);
+				// stmt.registerOutParameter(6, Types.NVARCHAR);
 				boolean resultCall = stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -741,10 +803,21 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
-	public String checkPermisionDelete(String type, String id) {
+	public String checkPermisionDelete(String type, String id, String idChiNhanh, String idNhaCungCap) {
 		String res = "";
 		try {
+			String spName = "sp_" + type + "_CheckXoa";
 
+			Connection con = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
+			try (CallableStatement stmt = con.prepareCall("{CALL dbo." + spName + "(?, ?, ?, ?)}")) {
+				stmt.setString(1, id);
+				stmt.setString(2, idChiNhanh);
+				stmt.setString(3, idNhaCungCap);
+				stmt.registerOutParameter(4, Types.NVARCHAR);
+				boolean resultCall = stmt.execute();
+				String error = stmt.getString(4);
+				res = Utils.formatStr(error);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -755,136 +828,163 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 }
 
 //
-//StoredProcedureQuery storedProcedure = entityManager
-//		.createStoredProcedureQuery("dbo.sp_LichBanGach_CheckSua");
+// StoredProcedureQuery storedProcedure = entityManager
+// .createStoredProcedureQuery("dbo.sp_LichBanGach_CheckSua");
 //// set parameters
-////storedProcedure.registerStoredProcedureParameter("ID", String.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("NgayThang", Date.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("IDChiNhanh", String.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("IDCongTrinh", String.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("HangMuc", String.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("IDNVKD", String.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("IDLoaiVatLieu", String.class, ParameterMode.IN);
-////storedProcedure.registerStoredProcedureParameter("IDDonViTinh", String.class, ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("ID", String.class,
+// ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("NgayThang", Date.class,
+// ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("IDChiNhanh",
+// String.class, ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("IDCongTrinh",
+// String.class, ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("HangMuc", String.class,
+// ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("IDNVKD", String.class,
+// ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("IDLoaiVatLieu",
+// String.class, ParameterMode.IN);
+//// storedProcedure.registerStoredProcedureParameter("IDDonViTinh",
+// String.class, ParameterMode.IN);
 ////
-////storedProcedure.registerStoredProcedureParameter("IDHopDong", String.class, ParameterMode.OUT);
-////storedProcedure.registerStoredProcedureParameter("IDHopDongBom", String.class, ParameterMode.OUT);
-////storedProcedure.registerStoredProcedureParameter("IDChiTietKinhDoanh", String.class, ParameterMode.OUT);
-////storedProcedure.registerStoredProcedureParameter("Error", String.class, ParameterMode.OUT);
+//// storedProcedure.registerStoredProcedureParameter("IDHopDong", String.class,
+// ParameterMode.OUT);
+//// storedProcedure.registerStoredProcedureParameter("IDHopDongBom",
+// String.class, ParameterMode.OUT);
+//// storedProcedure.registerStoredProcedureParameter("IDChiTietKinhDoanh",
+// String.class, ParameterMode.OUT);
+//// storedProcedure.registerStoredProcedureParameter("Error", String.class,
+// ParameterMode.OUT);
 //
-//storedProcedure.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(2, Date.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(5, String.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(6, String.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);
-//storedProcedure.registerStoredProcedureParameter(8, String.class, ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(1, String.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(2, Date.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(3, String.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(4, String.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(5, String.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(6, String.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(7, String.class,
+// ParameterMode.IN);
+// storedProcedure.registerStoredProcedureParameter(8, String.class,
+// ParameterMode.IN);
 //
-//storedProcedure.registerStoredProcedureParameter(9, String.class, ParameterMode.OUT);
-//storedProcedure.registerStoredProcedureParameter(10, String.class, ParameterMode.OUT);
-//storedProcedure.registerStoredProcedureParameter(11, String.class, ParameterMode.OUT);
-//storedProcedure.registerStoredProcedureParameter(12, String.class, ParameterMode.OUT);
+// storedProcedure.registerStoredProcedureParameter(9, String.class,
+// ParameterMode.OUT);
+// storedProcedure.registerStoredProcedureParameter(10, String.class,
+// ParameterMode.OUT);
+// storedProcedure.registerStoredProcedureParameter(11, String.class,
+// ParameterMode.OUT);
+// storedProcedure.registerStoredProcedureParameter(12, String.class,
+// ParameterMode.OUT);
 //
-////storedProcedure.setParameter("ID", entity.getID());
-////storedProcedure.setParameter("NgayThang", sp.parse(entity.getNgayThang()));
-////storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
-////storedProcedure.setParameter("IDCongTrinh", entity.getIDCongTrinh());
-////storedProcedure.setParameter("HangMuc", entity.getHangMuc());
-////storedProcedure.setParameter("IDNVKD", entity.getIDNVKD());
-////storedProcedure.setParameter("IDLoaiVatLieu", entity.getIDLoaiVatLieu());
-////storedProcedure.setParameter("IDDonViTinh", entity.getIDDonViTinh());
-//storedProcedure.setParameter(1, entity.getID());
-//storedProcedure.setParameter(2, sp.parse(entity.getNgayThang()));
-//storedProcedure.setParameter(3, entity.getIDChiNhanh());
-//storedProcedure.setParameter(4, entity.getIDCongTrinh());
-//storedProcedure.setParameter(5, entity.getHangMuc());
-//storedProcedure.setParameter(6, entity.getIDNVKD());
-//storedProcedure.setParameter(7, entity.getIDLoaiVatLieu());
-//storedProcedure.setParameter(8, entity.getIDDonViTinh());
-//boolean queryResult = storedProcedure.execute(); // res = storedProcedure.getResultList();
+//// storedProcedure.setParameter("ID", entity.getID());
+//// storedProcedure.setParameter("NgayThang", sp.parse(entity.getNgayThang()));
+//// storedProcedure.setParameter("IDChiNhanh", entity.getIDChiNhanh());
+//// storedProcedure.setParameter("IDCongTrinh", entity.getIDCongTrinh());
+//// storedProcedure.setParameter("HangMuc", entity.getHangMuc());
+//// storedProcedure.setParameter("IDNVKD", entity.getIDNVKD());
+//// storedProcedure.setParameter("IDLoaiVatLieu", entity.getIDLoaiVatLieu());
+//// storedProcedure.setParameter("IDDonViTinh", entity.getIDDonViTinh());
+// storedProcedure.setParameter(1, entity.getID());
+// storedProcedure.setParameter(2, sp.parse(entity.getNgayThang()));
+// storedProcedure.setParameter(3, entity.getIDChiNhanh());
+// storedProcedure.setParameter(4, entity.getIDCongTrinh());
+// storedProcedure.setParameter(5, entity.getHangMuc());
+// storedProcedure.setParameter(6, entity.getIDNVKD());
+// storedProcedure.setParameter(7, entity.getIDLoaiVatLieu());
+// storedProcedure.setParameter(8, entity.getIDDonViTinh());
+// boolean queryResult = storedProcedure.execute(); // res =
+// storedProcedure.getResultList();
 //
-////Object temp = storedProcedure.getOutputParameterValue("@return_value");
-////Object obj = storedProcedure.getOutputParameterValue("Error");
-//Object obj = storedProcedure.getOutputParameterValue(12);
+//// Object temp = storedProcedure.getOutputParameterValue("@return_value");
+//// Object obj = storedProcedure.getOutputParameterValue("Error");
+// Object obj = storedProcedure.getOutputParameterValue(12);
 //// Load all fields in the class (private included)
-////List<Object[]> lst = storedProcedure.getResultList();
+//// List<Object[]> lst = storedProcedure.getResultList();
 //
 //
-//{
-//"id": "39075479-7ACA-4039-AA1B-72920CDB5604",
-//"cuLyVanChuyen": "10",
-//"gioXuat": "09:00:00",
-//"hangMuc": "test",
-//"idchiNhanh": "0A70374D-C820-406E-AB11-F13CDE69D22B",
-//"idchiTietKinhDoanh": "",
-//"idcongTrinh": "2E5F3B72-B60C-46B2-89FA-4BE5857F6D87",
-//"iddonViTinh": "56226266-0CD8-496D-B28C-9CABB1AC0F30",
-//"idhopDong": 1595671495047,
-//"idloaiVatLieu": "E124BBF4-127E-42E6-9EF7-CAB62443D8C1",
-//"idnhaCungCap": "577B63D3-FDA1-4CB5-9CB3-D32466BAE308",
-//"nhomVatLieu": "97CF73BB-E552-4A07-9F8B-5DD5C68F7287",
-//"kldaBan": 0,
-//"kldaXuat": 0,
-//"klkhachHang": "10",
-//"klthucXuat": "10",
-//"moTa": "",
-//"ngayThang": "25/07/2020",
-//"nguoiTao": "viethau89nd",
-//"nguoiThuTien": "test",
-//"trangThai": "1",
-//"trangThaiHoanThanh": "Chưa hoàn thành",
-//"trangThaiText": "Chờ duyệt",
-//"idnhomVatLieu" : "123123"
-//}
+// {
+// "id": "39075479-7ACA-4039-AA1B-72920CDB5604",
+// "cuLyVanChuyen": "10",
+// "gioXuat": "09:00:00",
+// "hangMuc": "test",
+// "idchiNhanh": "0A70374D-C820-406E-AB11-F13CDE69D22B",
+// "idchiTietKinhDoanh": "",
+// "idcongTrinh": "2E5F3B72-B60C-46B2-89FA-4BE5857F6D87",
+// "iddonViTinh": "56226266-0CD8-496D-B28C-9CABB1AC0F30",
+// "idhopDong": 1595671495047,
+// "idloaiVatLieu": "E124BBF4-127E-42E6-9EF7-CAB62443D8C1",
+// "idnhaCungCap": "577B63D3-FDA1-4CB5-9CB3-D32466BAE308",
+// "nhomVatLieu": "97CF73BB-E552-4A07-9F8B-5DD5C68F7287",
+// "kldaBan": 0,
+// "kldaXuat": 0,
+// "klkhachHang": "10",
+// "klthucXuat": "10",
+// "moTa": "",
+// "ngayThang": "25/07/2020",
+// "nguoiTao": "viethau89nd",
+// "nguoiThuTien": "test",
+// "trangThai": "1",
+// "trangThaiHoanThanh": "Chưa hoàn thành",
+// "trangThaiText": "Chờ duyệt",
+// "idnhomVatLieu" : "123123"
+// }
 //
-//try {
-//        MyStoredProc storedProc = new MyStoredProc(entity);
-//        entityManager.unwrap(Session.class).doWork(storedProc);
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//    }
+// try {
+// MyStoredProc storedProc = new MyStoredProc(entity);
+// entityManager.unwrap(Session.class).doWork(storedProc);
+// } catch (Exception e) {
+// e.printStackTrace();
+// }
 //
 //
 //// Session session = entityManager.unwrap(Session.class);
 //// session.doWork(new Work() {
-////     
-////	    @Override
-////	    public void execute(Connection con)  {
-////	        // do something useful
-////	    	
-////	    	try (CallableStatement stmt = 
-////					con.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?1, ?2, ?3,  ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)}")) {
-////	              stmt.setString(1, entity.getID());
-////	              SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
-////	              java.sql.Date date = new java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
-////	              stmt.setDate(2, date) ;
-////	              stmt.setString(3, entity.getIDChiNhanh());
-////	              stmt.setString(4, entity.getIDCongTrinh());
-////	              stmt.setString(5, entity.getHangMuc());
-////	              stmt.setString(6, entity.getIDNVKD());
-////	              stmt.setString(7, entity.getIDLoaiVatLieu());
-////	              stmt.setString(8, entity.getIDDonViTinh());
-////	              stmt.registerOutParameter(9, Types.NVARCHAR);
-////	              stmt.registerOutParameter(10, Types.NVARCHAR);
-////	              stmt.registerOutParameter(11, Types.NVARCHAR);
-////	              stmt.registerOutParameter(12, Types.NVARCHAR);
-////	              stmt.executeUpdate();
-////	              String mensagem = stmt.getString(9);
-////	              String geroubrinde = stmt.getString(10);
-////	              String tea = stmt.getString(11);
-////	              String te = stmt.getString(12);
-////	              if (stmt.wasNull()) {
-////	                  geroubrinde = null;
-////	                  mensagem = null;
-////	              }
-////	          } catch (Exception e) {
-////				// TODO Auto-generated catch block
-////				e.printStackTrace();
-////			}
-////			
-////			 System.out.println(obj.toString());
 ////
-////		
-////	    }
-////	});			
+//// @Override
+//// public void execute(Connection con) {
+//// // do something useful
+////
+//// try (CallableStatement stmt =
+//// con.prepareCall("{CALL dbo.sp_LichBanGach_CheckSua(?1, ?2, ?3, ?4, ?5, ?6,
+// ?7, ?8, ?9, ?10, ?11, ?12)}")) {
+//// stmt.setString(1, entity.getID());
+//// SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy");
+//// java.sql.Date date = new
+// java.sql.Date(sp.parse(entity.getNgayThang()).getTime());
+//// stmt.setDate(2, date) ;
+//// stmt.setString(3, entity.getIDChiNhanh());
+//// stmt.setString(4, entity.getIDCongTrinh());
+//// stmt.setString(5, entity.getHangMuc());
+//// stmt.setString(6, entity.getIDNVKD());
+//// stmt.setString(7, entity.getIDLoaiVatLieu());
+//// stmt.setString(8, entity.getIDDonViTinh());
+//// stmt.registerOutParameter(9, Types.NVARCHAR);
+//// stmt.registerOutParameter(10, Types.NVARCHAR);
+//// stmt.registerOutParameter(11, Types.NVARCHAR);
+//// stmt.registerOutParameter(12, Types.NVARCHAR);
+//// stmt.executeUpdate();
+//// String mensagem = stmt.getString(9);
+//// String geroubrinde = stmt.getString(10);
+//// String tea = stmt.getString(11);
+//// String te = stmt.getString(12);
+//// if (stmt.wasNull()) {
+//// geroubrinde = null;
+//// mensagem = null;
+//// }
+//// } catch (Exception e) {
+//// // TODO Auto-generated catch block
+//// e.printStackTrace();
+//// }
+////
+//// System.out.println(obj.toString());
+////
+////
+//// }
+//// });

@@ -7,6 +7,15 @@ public class Constants {
 		public static String ERROR = "1";
 	}
 	
+	public static interface PERMISSION {
+		public static String ACTION_ADD = "1";
+		public static String ACTION_EDIT = "2";
+		public static String ACTION_DELETE = "3";
+		public static String ACTION_SEACRH = "4";
+		public static String TAG_LICH_BAN_GACH = "frmLichBanGach";
+		public static String TAG_LICH_XUAT_BE_TONG = "frmLichXuatBeTong";
+	}
+	
 	public static interface APPROVE_TYPE {
 		public static String CONTRACT_CONCRETE = "1";//duyet hop dong be tong;
 		public static String CALENDAR_CONCRETE = "2";//duyet lich tron be tong

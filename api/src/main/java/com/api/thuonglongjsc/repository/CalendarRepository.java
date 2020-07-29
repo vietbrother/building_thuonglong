@@ -14,7 +14,7 @@ public interface CalendarRepository {
 
 	public ResultDTO lichBanGachSave(TblLichBanGach model);
 
-	public ResultDTO lichXuatBeTongDelete(TblLichBanGach model);
+	public ResultDTO lichXuatBeTongDelete(TblLichXuatBeTong model);
 
 	public ResultDTO lichBanGachDelete(TblLichBanGach model);
 }
