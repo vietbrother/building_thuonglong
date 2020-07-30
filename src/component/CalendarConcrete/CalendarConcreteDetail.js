@@ -512,7 +512,7 @@ export default class CalendarConcreteDetail extends Component {
             Config.confirm_delete, // <- this part is optional, you can pass an empty string
             [
                 {
-                    text: Config.btnApply, onPress: () => this._actionApprove()
+                    text: Config.btnApply, onPress: () => this._actionDelete()
                 },
                 {
                     text: Config.btnCancel,

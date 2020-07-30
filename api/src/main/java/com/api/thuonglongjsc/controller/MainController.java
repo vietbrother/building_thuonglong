@@ -143,7 +143,7 @@ public class MainController {
 	
 	@PostMapping("/v1/lichbangach/delete")
 	public ResultDTO getLichBanGachDelete(@Valid @RequestBody TblLichBanGach model) {
-		ResultDTO res = calendarRepository.lichBanGachSave(model);
+		ResultDTO res = calendarRepository.lichBanGachDelete(model);
 		return res;
 	}
 }

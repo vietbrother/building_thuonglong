@@ -655,6 +655,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 	}
 
 	@Override
+	@Transactional
 	public ResultDTO lichXuatBeTongDelete(TblLichXuatBeTong model) {
 		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
 		try {
@@ -715,6 +716,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 	}
 
 	@Override
+	@Transactional
 	public ResultDTO lichBanGachDelete(TblLichBanGach model) {
 		ResultDTO res = new ResultDTO(Constants.ERROR_CODE.ERROR, "");
 		try {
@@ -803,6 +805,7 @@ public class CalendarRepositoryImpl implements CalendarRepository {
 		return res;
 	}
 
+	@Transactional
 	public String checkPermisionDelete(String type, String id, String idChiNhanh, String idNhaCungCap) {
 		String res = "";
 		try {

@@ -366,6 +366,7 @@ export default class CalendarBrickAdd extends Component {
         this._loadEmployeeData(item.id, '1');
         this._loadNhomVatLieuData(item.id, '1');
     }
+
     _selectedNhomVatLieu(index, item) {
         this.setState({nhomvatlieuSelected: item});
         this.setState({
@@ -374,6 +375,7 @@ export default class CalendarBrickAdd extends Component {
         });
         this._loadLoaiVatLieuData(item.id, '1');
     }
+
     _selectedLoaiVatLieu(index, item) {
         this.setState({loaivatlieuSelected: item});
         this.setState({
@@ -381,6 +383,7 @@ export default class CalendarBrickAdd extends Component {
         });
         this._loadDonViTinhData(item.id, '1');
     }
+
     _selectedDonViTinh(index, item) {
         this.setState({donvitinhSelected: item});
     }
@@ -388,7 +391,6 @@ export default class CalendarBrickAdd extends Component {
     _selectedEmployee(index, item) {
         this.setState({employeeSelected: item});
     }
-
 
 
     onChangedCategory(value) {
@@ -475,42 +477,45 @@ export default class CalendarBrickAdd extends Component {
                             <CardItem>
                                 <Left>
                                     <Body>
-                                        <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarBrick.exportHour}<Text style={styles.labelRed}> *</Text>
-                                        </Text>
+                                    <Text style={styles.muted}><Icon name="md-calendar"
+                                                                     style={styles.muted}/> {Config.calendarBrick.exportHour}<Text
+                                        style={styles.labelRed}> *</Text>
+                                    </Text>
+                                    <CardItem style={{marginTop: -3}}>
                                         <TouchableOpacity onPress={() => this.setOutTime()}>
                                             <Text style={styles.title}>{this.state.outTime}</Text>
                                         </TouchableOpacity>
-
+                                    </CardItem>
                                     </Body>
                                 </Left>
                                 <Right>
                                     <Body>
-                                        <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarBrick.exportDate}<Text style={styles.labelRed}> *</Text>
-                                        </Text>
-                                        <DatePicker
-                                            defaultDate={new Date()}
-                                            //minimumDate={new Date()}
-                                            //maximumDate={new Date()}
-                                            locale={'en'}
-                                            timeZoneOffsetInMinutes={undefined}
-                                            modalTransparent={false}
-                                            animationType={'fade'}
-                                            androidMode={'default'}
-                                            placeHolderText={this.state.outDate}
-                                            textStyle={{color: 'green'}}
-                                            placeHolderTextStyle={{color: Config.mainColor}}
-                                            onDateChange={(date) => {
-                                                this.setOutDate(date)
-                                            }}
-                                            disabled={false}
-                                            formatChosenDate={(date) => {
-                                                // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
-                                                return moment(date).format('DD/MM/YYYY');
-                                            }}
-                                        >
-                                        </DatePicker>
+                                    <Text style={styles.muted}><Icon name="md-calendar"
+                                                                     style={styles.muted}/> {Config.calendarBrick.exportDate}<Text
+                                        style={styles.labelRed}> *</Text>
+                                    </Text>
+                                    <DatePicker
+                                        defaultDate={new Date()}
+                                        //minimumDate={new Date()}
+                                        //maximumDate={new Date()}
+                                        locale={'en'}
+                                        timeZoneOffsetInMinutes={undefined}
+                                        modalTransparent={false}
+                                        animationType={'fade'}
+                                        androidMode={'default'}
+                                        placeHolderText={this.state.outDate}
+                                        textStyle={{color: 'green'}}
+                                        placeHolderTextStyle={{color: Config.mainColor}}
+                                        onDateChange={(date) => {
+                                            this.setOutDate(date)
+                                        }}
+                                        disabled={false}
+                                        formatChosenDate={(date) => {
+                                            // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                            return moment(date).format('DD/MM/YYYY');
+                                        }}
+                                    >
+                                    </DatePicker>
                                     </Body>
                                 </Right>
                             </CardItem>
@@ -540,7 +545,8 @@ export default class CalendarBrickAdd extends Component {
                                 selectedValue={(index, item) => this._selectedBranch(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.providerName}<Text style={styles.labelRed}> *</Text></Label>
+                                <Label>{Config.calendarBrick.providerName}<Text
+                                    style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.providers}
@@ -692,7 +698,8 @@ export default class CalendarBrickAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.khoiLuongTamTinh}<Text style={styles.labelRed}> *</Text></Label>
+                                <Label>{Config.calendarBrick.khoiLuongTamTinh}<Text
+                                    style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
@@ -766,7 +773,7 @@ export default class CalendarBrickAdd extends Component {
         console.log(this.props.contract);
         if (this.props.contract != null && this.props.contract != undefined) {
             this.setState({
-                calendarId : this.props.contract.id,
+                calendarId: this.props.contract.id,
                 title: Config.calendarBrick.edit,
                 contract: this.props.contract,
                 outDate: moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY'),

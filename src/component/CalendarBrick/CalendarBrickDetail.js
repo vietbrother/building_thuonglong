@@ -477,7 +477,7 @@ export default class CalendarBrickDetail extends Component {
             Config.confirm_delete, // <- this part is optional, you can pass an empty string
             [
                 {
-                    text: Config.btnApply, onPress: () => this._actionApprove()
+                    text: Config.btnApply, onPress: () => this._actionDelete()
                 },
                 {
                     text: Config.btnCancel,
@@ -513,7 +513,7 @@ export default class CalendarBrickDetail extends Component {
             console.log(responseObj);
             if (responseObj != null && responseObj.code == Config.resCode.success) {
                 Utils._alert(Config.successDelete);
-                Actions.calendarConcretes({branchId: this.state.contract.idchiNhanh});
+                Actions.calendarBricks({branchId: this.state.contract.idchiNhanh});
             } else {
                 Utils._alert(Config.err_delete + " : " + responseObj.message);
             }

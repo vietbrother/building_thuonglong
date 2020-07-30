@@ -341,7 +341,9 @@ export default class Login extends Component {
             this.setState({hasError: true, errorText: res.message});
         } else {
             AsyncStorage.setItem('userId', res.data.userName);
-            AsyncStorage.setItem('lastLoginTime', new Date().getTime());
+            var lastLoginTime = new Date().getTime();
+            console.log(lastLoginTime);
+            AsyncStorage.setItem('lastLoginTime', lastLoginTime.toString());
             console.log(res.data.userName);
             Actions.statistic({sessionLoginKey: '123'});
         }

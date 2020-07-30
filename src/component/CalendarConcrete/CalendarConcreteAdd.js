@@ -443,44 +443,46 @@ export default class CalendarConcreteAdd extends Component {
                             <CardItem>
                                 <Left>
                                     <Body>
-                                        <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportHour}<Text style={styles.labelRed}> *</Text>
-                                        </Text>
+                                    <Text style={styles.muted}><Icon name="md-calendar"
+                                                                     style={styles.muted}/> {Config.calendarConcrete.exportHour}<Text
+                                        style={styles.labelRed}> *</Text>
+                                    </Text>
+                                    <CardItem style={{marginTop: -3}}>
                                         <TouchableOpacity onPress={() => this.setOutTime()}>
-                                            <CardItem>
-                                                <Text style={styles.title}>{this.state.outTime}</Text>
-                                            </CardItem>
+                                            <Text style={styles.title}>{this.state.outTime}</Text>
                                         </TouchableOpacity>
+                                    </CardItem>
 
                                     </Body>
                                 </Left>
                                 <Right>
                                     <Body>
-                                        <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate}<Text style={styles.labelRed}> *</Text>
-                                        </Text>
-                                        <DatePicker
-                                            defaultDate={new Date()}
-                                            //minimumDate={new Date()}
-                                            //maximumDate={new Date()}
-                                            locale={'en'}
-                                            timeZoneOffsetInMinutes={undefined}
-                                            modalTransparent={false}
-                                            animationType={'fade'}
-                                            androidMode={'default'}
-                                            placeHolderText={this.state.outDate}
-                                            textStyle={{color: 'green'}}
-                                            placeHolderTextStyle={{color: Config.mainColor}}
-                                            onDateChange={(date) => {
-                                                this.setOutDate(date)
-                                            }}
-                                            disabled={false}
-                                            formatChosenDate={(date) => {
-                                                // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
-                                                return moment(date).format('DD/MM/YYYY');
-                                            }}
-                                        >
-                                        </DatePicker>
+                                    <Text style={styles.muted}><Icon name="md-calendar"
+                                                                     style={styles.muted}/> {Config.calendarConcrete.exportDate}<Text
+                                        style={styles.labelRed}> *</Text>
+                                    </Text>
+                                    <DatePicker
+                                        defaultDate={new Date()}
+                                        //minimumDate={new Date()}
+                                        //maximumDate={new Date()}
+                                        locale={'en'}
+                                        timeZoneOffsetInMinutes={undefined}
+                                        modalTransparent={false}
+                                        animationType={'fade'}
+                                        androidMode={'default'}
+                                        placeHolderText={this.state.outDate}
+                                        textStyle={{color: 'green'}}
+                                        placeHolderTextStyle={{color: Config.mainColor}}
+                                        onDateChange={(date) => {
+                                            this.setOutDate(date)
+                                        }}
+                                        disabled={false}
+                                        formatChosenDate={(date) => {
+                                            // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                            return moment(date).format('DD/MM/YYYY');
+                                        }}
+                                    >
+                                    </DatePicker>
                                     </Body>
                                 </Right>
                             </CardItem>
@@ -510,7 +512,8 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedBranch(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.providerName}<Text style={styles.labelRed}> *</Text></Label>
+                                <Label>{Config.calendarConcrete.providerName}<Text
+                                    style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.providers}
@@ -535,7 +538,8 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.projectName}<Text style={styles.labelRed}> *</Text></Label>
+                                <Label>{Config.calendarConcrete.projectName}<Text
+                                    style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.projects}
@@ -589,7 +593,8 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedEmployee(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.concreteType}<Text style={styles.labelRed}> *</Text></Label>
+                                <Label>{Config.calendarConcrete.concreteType}<Text
+                                    style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.concreteTypes}
@@ -645,7 +650,8 @@ export default class CalendarConcreteAdd extends Component {
                                        value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongKhachHang}<Text style={styles.labelRed}> *</Text></Label>
+                                <Label>{Config.calendarConcrete.khoiLuongKhachHang}<Text
+                                    style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
@@ -738,7 +744,7 @@ export default class CalendarConcreteAdd extends Component {
             };
             var ngayThangTemp = moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY');
             this.setState({
-                calendarId : this.props.contract.id,
+                calendarId: this.props.contract.id,
                 title: Config.calendarConcrete.edit,
                 contract: this.props.contract,
                 outDate: moment(this.props.contract.ngayThang).utcOffset('+07:00').format('DD/MM/YYYY'),

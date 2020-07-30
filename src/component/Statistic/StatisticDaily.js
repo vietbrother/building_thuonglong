@@ -110,17 +110,21 @@ export default class StatisticDaily extends Component {
     async getSessionKey() {
         try {
             let userSessionKeyLogin = await AsyncStorage.getItem('userId');
+            let lastLoginTime = await AsyncStorage.getItem('lastLoginTime');
             console.log("========================= session key " + userSessionKeyLogin);
             this.setState({sessionKey: userSessionKeyLogin});
             console.log("========================= session key " + this.state.sessionKey);
-            if (userSessionKeyLogin == null || userSessionKeyLogin == '') {
+            if (userSessionKeyLogin == null || userSessionKeyLogin == ''
+                || lastLoginTime == null || lastLoginTime == '' || lastLoginTime == undefined) {
                 // We have data!!
                 console.log(userSessionKeyLogin);
                 Actions.login({sessionLoginKey: '123'});
             } else {
-                let lastLoginTime = await AsyncStorage.getItem('lastLoginTime');
                 var currentTime = new Date().getTime();
-                if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined && currentTime > parseInt(lastLoginTime) + Config.sessionTime) {
+                // console.log("========================= lastLoginTime " + lastLoginTime);
+                // console.log("=========================  " + (currentTime - (parseInt(lastLoginTime) + Config.sessionTime)));
+                if (userSessionKeyLogin != lastLoginTime && userSessionKeyLogin != undefined
+                    && currentTime > parseInt(lastLoginTime) + Config.sessionTime) {
                     Actions.login({sessionLoginKey: '123'});
                 }
                 //this._loadData();
