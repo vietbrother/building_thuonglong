@@ -476,7 +476,7 @@ export default class CalendarBrickAdd extends Component {
                                 <Left>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarBrick.exportHour} *
+                                                                         style={styles.muted}/> {Config.calendarBrick.exportHour}<Text style={styles.labelRed}> *</Text>
                                         </Text>
                                         <TouchableOpacity onPress={() => this.setOutTime()}>
                                             <Text style={styles.title}>{this.state.outTime}</Text>
@@ -487,7 +487,7 @@ export default class CalendarBrickAdd extends Component {
                                 <Right>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarBrick.exportDate} *
+                                                                         style={styles.muted}/> {Config.calendarBrick.exportDate}<Text style={styles.labelRed}> *</Text>
                                         </Text>
                                         <DatePicker
                                             defaultDate={new Date()}
@@ -516,7 +516,7 @@ export default class CalendarBrickAdd extends Component {
                             </CardItem>
 
                             <Item>
-                                <Label>{Config.calendarBrick.branch} *</Label>
+                                <Label>{Config.calendarBrick.branch}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.branchs}
@@ -540,7 +540,7 @@ export default class CalendarBrickAdd extends Component {
                                 selectedValue={(index, item) => this._selectedBranch(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.providerName} *</Label>
+                                <Label>{Config.calendarBrick.providerName}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.providers}
@@ -565,7 +565,7 @@ export default class CalendarBrickAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.projectName} *</Label>
+                                <Label>{Config.calendarBrick.projectName}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.projects}
@@ -595,7 +595,7 @@ export default class CalendarBrickAdd extends Component {
                                        value={this.state.category}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.employee} *</Label>
+                                <Label>{Config.calendarBrick.employee}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.employees}
@@ -619,7 +619,7 @@ export default class CalendarBrickAdd extends Component {
                                 selectedValue={(index, item) => this._selectedEmployee(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.nhomVatLieu} *</Label>
+                                <Label>{Config.calendarBrick.nhomVatLieu}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.nhomvatlieus}
@@ -643,7 +643,7 @@ export default class CalendarBrickAdd extends Component {
                                 selectedValue={(index, item) => this._selectedNhomVatLieu(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.loaiVatLieu} *</Label>
+                                <Label>{Config.calendarBrick.loaiVatLieu}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.loaivatlieus}
@@ -667,7 +667,7 @@ export default class CalendarBrickAdd extends Component {
                                 selectedValue={(index, item) => this._selectedLoaiVatLieu(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.unit} *</Label>
+                                <Label>{Config.calendarBrick.unit}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.donvitinhs}
@@ -692,21 +692,21 @@ export default class CalendarBrickAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.khoiLuongTamTinh} *</Label>
+                                <Label>{Config.calendarBrick.khoiLuongTamTinh}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
                                        value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.khoiLuongKhachHang} *</Label>
+                                <Label>{Config.calendarBrick.khoiLuongKhachHang}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
                                        value={this.state.khoiLuongKhachHang}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarBrick.distance} *</Label>
+                                <Label>{Config.calendarBrick.distance}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
@@ -719,7 +719,7 @@ export default class CalendarBrickAdd extends Component {
                                        value={this.state.technical}/>
                             </Item>
                             <Item floatingLabel last>
-                                <Label>{Config.calendarBrick.cashier} *</Label>
+                                <Label>{Config.calendarBrick.cashier}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        onChangeText={value => this.onChangedCashier(value)}
                                        value={this.state.cashier}/>

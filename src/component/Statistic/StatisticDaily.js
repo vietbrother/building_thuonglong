@@ -83,10 +83,12 @@ export default class StatisticDaily extends Component {
 
 
     componentWillMount(): void {
+        this.getSessionKey();
         this._loadBranchData();
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+        this.getSessionKey();
         this.setState({componentKey: new Date().valueOf().toString(), searchText: ''});
         this._loadData();
         this._loadDataBricks();
@@ -103,8 +105,6 @@ export default class StatisticDaily extends Component {
         // var temp = new Date().toISOString().split('T')[0];
         // var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
         // this.setState({currentDate: currentDate});
-
-        this.getSessionKey();
     }
 
     async getSessionKey() {

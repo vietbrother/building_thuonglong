@@ -74,9 +74,13 @@ export default class CalendarConcreteDetail extends Component {
             return (
                 <CardItem>
                     <Left>
-                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}
-                                                                 name='ios-close-circle-outline'/> {Config.btnClose}
+                        {/*<TouchableOpacity active onPress={() => Actions.pop()} transparent>*/}
+                        {/*    <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}*/}
+                        {/*                                         name='ios-close-circle-outline'/> {Config.btnClose}*/}
+                        {/*    </Text>*/}
+                        {/*</TouchableOpacity>*/}
+                        <TouchableOpacity onPress={() => this._preDelete()}>
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-trash-outline'/> {Config.btnDelete}
                             </Text>
                         </TouchableOpacity>
                     </Left>
@@ -97,9 +101,13 @@ export default class CalendarConcreteDetail extends Component {
             return (
                 <CardItem>
                     <Left>
-                        <TouchableOpacity active onPress={() => Actions.pop()} transparent>
-                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}
-                                                                 name='ios-close-circle-outline'/> {Config.btnClose}
+                        {/*<TouchableOpacity active onPress={() => Actions.pop()} transparent>*/}
+                        {/*    <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}*/}
+                        {/*                                         name='ios-close-circle-outline'/> {Config.btnClose}*/}
+                        {/*    </Text>*/}
+                        {/*</TouchableOpacity>*/}
+                        <TouchableOpacity onPress={() => this._preDelete()}>
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-trash-outline'/> {Config.btnDelete}
                             </Text>
                         </TouchableOpacity>
                     </Left>
@@ -113,11 +121,15 @@ export default class CalendarConcreteDetail extends Component {
             return (
                 <CardItem>
                     <Body>
-                    <TouchableOpacity active onPress={() => Actions.pop()} transparent>
-                        <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}
-                                                             name='ios-close-circle-outline'/> {Config.btnClose}
-                        </Text>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity active onPress={() => Actions.pop()} transparent>*/}
+                    {/*    <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]}*/}
+                    {/*                                         name='ios-close-circle-outline'/> {Config.btnClose}*/}
+                    {/*    </Text>*/}
+                    {/*</TouchableOpacity>*/}
+                        <TouchableOpacity onPress={() => this._preDelete()}>
+                            <Text style={styles.btnReject}><Icon style={[styles.icon, styles.labelRed]} name='ios-trash-outline'/> {Config.btnDelete}
+                            </Text>
+                        </TouchableOpacity>
                     </Body>
                 </CardItem>
             );
@@ -494,4 +506,55 @@ export default class CalendarConcreteDetail extends Component {
     }
 
 
+    _preDelete() {
+        Alert.alert(
+            '',
+            Config.confirm_delete, // <- this part is optional, you can pass an empty string
+            [
+                {
+                    text: Config.btnApply, onPress: () => this._actionApprove()
+                },
+                {
+                    text: Config.btnCancel,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+            ],
+            {cancelable: false},
+        );
+    }
+
+    async _actionDelete() {
+        try {
+            this.setState({isLoading: true});
+
+            var param = {
+                id: this.state.contract.id,
+                idchiNhanh: this.state.contract.idchiNhanh,
+                idnhaCungCap: this.state.contract.idnhaCungCap,
+                nguoiTao: this.state.username
+            };
+
+            let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTongDelete, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            this.setState({isLoading: false});
+            console.log(responseObj);
+            if (responseObj != null && responseObj.code == Config.resCode.success) {
+                Utils._alert(Config.successDelete);
+                Actions.calendarConcretes({branchId: this.state.contract.idchiNhanh});
+            } else {
+                Utils._alert(Config.err_delete + " : " + responseObj.message);
+            }
+        } catch (error) {
+            console.error(error);
+            this.setState({isLoading: false});
+        }
+    }
 }

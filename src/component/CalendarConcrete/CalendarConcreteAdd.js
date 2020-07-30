@@ -444,10 +444,12 @@ export default class CalendarConcreteAdd extends Component {
                                 <Left>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportHour} *
+                                                                         style={styles.muted}/> {Config.calendarConcrete.exportHour}<Text style={styles.labelRed}> *</Text>
                                         </Text>
                                         <TouchableOpacity onPress={() => this.setOutTime()}>
-                                            <Text style={styles.title}>{this.state.outTime}</Text>
+                                            <CardItem>
+                                                <Text style={styles.title}>{this.state.outTime}</Text>
+                                            </CardItem>
                                         </TouchableOpacity>
 
                                     </Body>
@@ -455,7 +457,7 @@ export default class CalendarConcreteAdd extends Component {
                                 <Right>
                                     <Body>
                                         <Text style={styles.muted}><Icon name="md-calendar"
-                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate} *
+                                                                         style={styles.muted}/> {Config.calendarConcrete.exportDate}<Text style={styles.labelRed}> *</Text>
                                         </Text>
                                         <DatePicker
                                             defaultDate={new Date()}
@@ -484,7 +486,7 @@ export default class CalendarConcreteAdd extends Component {
                             </CardItem>
 
                             <Item>
-                                <Label>{Config.calendarConcrete.branch} *</Label>
+                                <Label>{Config.calendarConcrete.branch}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.branchs}
@@ -508,7 +510,7 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedBranch(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.providerName} *</Label>
+                                <Label>{Config.calendarConcrete.providerName}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.providers}
@@ -533,7 +535,7 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.projectName} *</Label>
+                                <Label>{Config.calendarConcrete.projectName}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.projects}
@@ -563,7 +565,7 @@ export default class CalendarConcreteAdd extends Component {
                                        value={this.state.category}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.employee} *</Label>
+                                <Label>{Config.calendarConcrete.employee}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.employees}
@@ -587,7 +589,7 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedEmployee(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.concreteType} *</Label>
+                                <Label>{Config.calendarConcrete.concreteType}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.concreteTypes}
@@ -611,7 +613,7 @@ export default class CalendarConcreteAdd extends Component {
                                 selectedValue={(index, item) => this._selectedConcreteType(index, item)}
                             />
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.pumpType} *</Label>
+                                <Label>{Config.calendarConcrete.pumpType}<Text style={styles.labelRed}> *</Text></Label>
                             </Item>
                             <RNPicker
                                 dataSource={this.state.pumpTypes}
@@ -636,21 +638,21 @@ export default class CalendarConcreteAdd extends Component {
                             />
 
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongTamTinh} *</Label>
+                                <Label>{Config.calendarConcrete.khoiLuongTamTinh}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongTamTinh(value)}
                                        value={this.state.khoiLuongTamTinh}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.khoiLuongKhachHang} *</Label>
+                                <Label>{Config.calendarConcrete.khoiLuongKhachHang}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedKhoiLuongKhachHang(value)}
                                        value={this.state.khoiLuongKhachHang}/>
                             </Item>
                             <Item floatingLabel>
-                                <Label>{Config.calendarConcrete.distance} *</Label>
+                                <Label>{Config.calendarConcrete.distance}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{color: Config.mainColor}}
                                        keyboardType="numeric"
                                        onChangeText={value => this.onChangedDistance(value)}
@@ -663,7 +665,7 @@ export default class CalendarConcreteAdd extends Component {
                                        value={this.state.technical}/>
                             </Item>
                             <Item floatingLabel last>
-                                <Label>{Config.calendarConcrete.cashier} *</Label>
+                                <Label>{Config.calendarConcrete.cashier}<Text style={styles.labelRed}> *</Text></Label>
                                 <Input style={{}}
                                        onChangeText={value => this.onChangedCashier(value)}
                                        value={this.state.cashier}/>
@@ -886,12 +888,12 @@ export default class CalendarConcreteAdd extends Component {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.branch});
                 return;
             }
-            if (this.state.projectSelected.name == '' || this.state.projectSelected.name == undefined) {
-                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.projectName});
-                return;
-            }
             if (this.state.providerSelected.name == '' || this.state.providerSelected.name == undefined) {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.providerName});
+                return;
+            }
+            if (this.state.projectSelected.name == '' || this.state.projectSelected.name == undefined) {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.projectName});
                 return;
             }
             if (this.state.concreteTypeSelected.name == '' || this.state.concreteTypeSelected.name == undefined) {

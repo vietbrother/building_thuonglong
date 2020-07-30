@@ -40,6 +40,7 @@ const Config = {
         apiLichXuatBeTongMacBeTong: '/api/cat/v1/lichxuatbetong/macbetong',
         apiLichXuatBeTongEmployee: '/api/cat/v1/lichxuatbetong/employee',
         apiLichXuatBeTongSave: '/api/main/v1/lichxuatbetong/save',
+        apiLichXuatBeTongDelete: '/api/main/v1/lichxuatbetong/delete',
 
         apiLichBanGachNhaCungCap: '/api/cat/v1/lichbangach/nhacungcap',
         apiLichBanGachCongTrinh: '/api/cat/v1/lichbangach/congtrinh',
@@ -48,6 +49,7 @@ const Config = {
         apiLichBanGachDonViTinh: '/api/cat/v1/lichbangach/donvitinh',
         apiLichBanGachEmployee: '/api/cat/v1/lichbangach/employee',
         apiLichBanGachSave: '/api/main/v1/lichbangach/save',
+        apiLichBanGachDelete: '/api/main/v1/lichbangach/delete',
     },
     // sessionTime: 3600*24*7*1000,
     sessionTime: 3600*3*1000,
@@ -433,10 +435,12 @@ const Config = {
     btnHide: 'Ẩn',
     btnAdd: 'Thêm mới',
     btnSearch: 'Tìm kiếm',
+    btnDelete: 'Xóa',
 
     //success
     success: 'Thành công',
     successApprove: 'Phê duyệt thành công',
+    successDelete: 'Xóa thành công',
     successComplete: 'Hoàn thành thành công',
     successCopyToClipboard: 'Đã sao chép thông tin',
     successSave: 'Lưu thành công',
@@ -453,6 +457,7 @@ const Config = {
     err_device_code_not_valid: 'Mã bình phải có 6 hoặc 7 ký tự',
     err_device_code_exist: 'Mã bình đã được nhập',
     err_approve: 'Phê duyệt thất bại',
+    err_delete: 'Xóa thất bại',
     err_complete: 'Hoàn thành thất bại',
     err_no_data: 'Không có dữ liệu',
     err_save: 'Lưu thất bại',
@@ -462,6 +467,7 @@ const Config = {
     confirm_approve: 'Bạn có chắc chắn phê duyệt hợp đồng này?',
     confirm_complete: 'Bạn có chắc chắn hoàn thành lịch này?',
     confirm_save: 'Bạn có chắc chắn lưu thông tin này?',
+    confirm_delete: 'Bạn có chắc chắn muốn xóa lịch này?',
 
     //stage
     stage0KhongXacDinh: '0',
