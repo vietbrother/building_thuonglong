@@ -235,6 +235,14 @@ public class CustomRepositoryImpl implements CustomRepository {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
 		}
+		if (!Utils.isNullOrEmpty(entity.getTuNgay())) {
+			queryStr += " and a.NgayThang >= convert(date, ? , 103) ";
+			lstParams.add(entity.getTuNgay());
+		}
+		if (!Utils.isNullOrEmpty(entity.getDenNgay())) {
+			queryStr += " and a.NgayThang <= convert(date, ? , 103) ";
+			lstParams.add(entity.getDenNgay());
+		}
 		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
@@ -649,6 +657,14 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if (!Utils.isNullOrEmpty(entity.getIDChiNhanh()) && !"BranchIdAll".equals(entity.getIDChiNhanh())) {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
+		}
+		if (!Utils.isNullOrEmpty(entity.getTuNgay())) {
+			queryStr += " and a.NgayThang >= convert(date, ? , 103) ";
+			lstParams.add(entity.getTuNgay());
+		}
+		if (!Utils.isNullOrEmpty(entity.getDenNgay())) {
+			queryStr += " and a.NgayThang <= convert(date, ? , 103) ";
+			lstParams.add(entity.getDenNgay());
 		}
 		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
 			queryStr += " and a.TrangThai = ? ";

@@ -902,6 +902,10 @@ export default class CalendarConcreteAdd extends Component {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.projectName});
                 return;
             }
+            if (this.state.employeeSelected.name == '' || this.state.employeeSelected.name == undefined) {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.employee});
+                return;
+            }
             if (this.state.concreteTypeSelected.name == '' || this.state.concreteTypeSelected.name == undefined) {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.concreteType});
                 return;
@@ -918,6 +922,20 @@ export default class CalendarConcreteAdd extends Component {
                 this.setState({
                     hasError: true,
                     errorText: Config.required + Config.calendarConcrete.khoiLuongKhachHang
+                });
+                return;
+            }
+            if (this.state.distance == '') {
+                this.setState({
+                    hasError: true,
+                    errorText: Config.required + Config.calendarConcrete.distance
+                });
+                return;
+            }
+            if (this.state.cashier == '') {
+                this.setState({
+                    hasError: true,
+                    errorText: Config.required + Config.calendarConcrete.cashier
                 });
                 return;
             }

@@ -893,6 +893,10 @@ export default class CalendarBrickAdd extends Component {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.projectName});
                 return;
             }
+            if (this.state.employeeSelected.name == '' || this.state.employeeSelected.name == undefined) {
+                this.setState({hasError: true, errorText: Config.required + Config.calendarConcrete.employee});
+                return;
+            }
             if (this.state.khoiLuongTamTinh == '') {
                 this.setState({hasError: true, errorText: Config.required + Config.calendarBrick.exportReal});
                 return;
@@ -901,6 +905,20 @@ export default class CalendarBrickAdd extends Component {
                 this.setState({
                     hasError: true,
                     errorText: Config.required + Config.calendarBrick.khoiLuongKhachHang
+                });
+                return;
+            }
+            if (this.state.distance == '') {
+                this.setState({
+                    hasError: true,
+                    errorText: Config.required + Config.calendarConcrete.distance
+                });
+                return;
+            }
+            if (this.state.cashier == '') {
+                this.setState({
+                    hasError: true,
+                    errorText: Config.required + Config.calendarConcrete.cashier
                 });
                 return;
             }

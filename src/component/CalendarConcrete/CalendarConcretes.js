@@ -62,7 +62,9 @@ export default class CalendarConcretes extends Component {
             searchText: '',
             branchSelected: '',
             componentKey: new Date(),
-            copyDate: moment().utcOffset('+07:00').format('DD/MM/YYYY')
+            copyDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),
+            fromDate: moment().subtract(7, 'days').utcOffset('+07:00').format('DD/MM/YYYY'),
+            toDate: moment().utcOffset('+07:00').format('DD/MM/YYYY')
         };
     }
 
@@ -140,7 +142,7 @@ export default class CalendarConcretes extends Component {
         this._switchState(type, [], true);
         let items = [];
         try {
-            var param = {idchiNhanh: branchId, idTrangThai: type};
+            var param = {idchiNhanh: branchId, idTrangThai: type, tuNgay: this.state.fromDate, denNgay: this.state.toDate};
             let response = await fetch(global.hostAPI[0] + Config.api.apiLichXuatBeTong, {
                 method: 'POST',
                 headers: {
@@ -157,7 +159,7 @@ export default class CalendarConcretes extends Component {
         }
     }
 
-    _switchState(type, data, status) {
+    async _switchState(type, data, status) {
         if (type == Config.stateCode.approved) {
             this.setState({isSearchingActive: status});
             this.setState({contractsActive: data});
@@ -181,8 +183,8 @@ export default class CalendarConcretes extends Component {
                 contentMsgDetail += index + '.' +
                     '   👉 ⏰ Giờ trộn: ' + Utils._viewValue(item.gioXuat) + '\n' +
                     '   ✔ Tên KH: ' + Utils._viewValue(item.tenNhaCungCap) + '\n' +
-                    '   ✔ Điện thoại: '+ Utils._viewValue(item.soDienThoai) + '\n' +
-                    '   ✔ Địa chỉ: '+ Utils._viewValue(item.diaChi) + '\n' +
+                    '   ✔ Điện thoại: ' + Utils._viewValue(item.soDienThoai) + '\n' +
+                    '   ✔ Địa chỉ: ' + Utils._viewValue(item.diaChi) + '\n' +
                     '   ✔ Công trình: ' + Utils._viewValue(item.tenCongTrinh) + '\n' +
                     '   ✔ Mác bê tông: ' + Utils._viewValue(item.tenMacBeTong) + '\n' +
                     // '   ✔ Độ sụt : ' + Utils._viewValue(item.tenDoSut) + '\n' +
@@ -194,7 +196,7 @@ export default class CalendarConcretes extends Component {
                 ;
             }
         }
-        if(contentMsgDetail == '' || contentMsgDetail == null){
+        if (contentMsgDetail == '' || contentMsgDetail == null) {
             Toast.show({
                 text: Config.err_no_data,
                 position: 'bottom',
@@ -225,6 +227,41 @@ export default class CalendarConcretes extends Component {
         console.log('select date ' + newDate);
     }
 
+    setFromDate(newDate) {
+        //alert(newDate);
+        let toDate = moment(this.state.toDate, 'DD MM YYYY').toDate().getTime();
+        if(moment(newDate).utcOffset('+07:00').toDate().getTime() > toDate){
+            Utils._alert(Config.err_from_to_date);
+            return;
+        }
+        if(moment(newDate).utcOffset('+07:00').utcOffset('+07:00').toDate().getTime() + (3600*1000*24*7)
+            < toDate){
+            Utils._alert(Config.err_from_to_date_max);
+            return;
+        }
+        this.setState({fromDate: moment(newDate).format('DD/MM/YYYY')});
+        console.log('select date ' + newDate);
+        this.search(this.state.branchSelected, Config.stateCode.wait);
+        this.search(this.state.branchSelected, Config.stateCode.approved);
+    }
+
+    setToDate(newDate) {
+        //alert(newDate);
+        let fromDate = moment(this.state.fromDate, 'DD MM YYYY').toDate().getTime();
+        if(moment(newDate).utcOffset('+07:00').toDate().getTime() < fromDate){
+            Utils._alert(Config.err_from_to_date);
+            return;
+        }
+        if(moment(newDate).utcOffset('+07:00').toDate().getTime() - (3600*1000*24*7) > fromDate){
+            Utils._alert(Config.err_from_to_date_max);
+            return;
+        }
+        this.setState({toDate: moment(newDate).format('DD/MM/YYYY')});
+        console.log('select date ' + newDate);
+        this.search(this.state.branchSelected, Config.stateCode.wait);
+        this.search(this.state.branchSelected, Config.stateCode.approved);
+    }
+
     render() {
         var left = (
             <Left style={{flex: 1}}>
@@ -241,6 +278,12 @@ export default class CalendarConcretes extends Component {
                 {/*<Button onPress={() => Actions.cart()} transparent>*/}
                 {/*<Icon name='ios-cart'/>*/}
                 {/*</Button>*/}
+                <Button
+                    transparent
+                    onPress={() => Actions.calendarConcreteAdd({})}
+                >
+                    <Icon name='md-add'/>
+                </Button>
             </Right>
         );
 
@@ -262,18 +305,120 @@ export default class CalendarConcretes extends Component {
                             // paddingRight: 10
                         }}>
                             {/*<Card>*/}
-                                {/*<CardItem>*/}
-                                    {/*<Picker*/}
-                                        {/*style={styles.branchPicker}*/}
-                                        {/*itemStyle={styles.branchPickerItem}*/}
-                                        {/*selectedValue={this.state.branchSelected}*/}
-                                        {/*onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>*/}
-                                        {/*{this._renderBranch()}*/}
-                                    {/*</Picker>*/}
-                                {/*</CardItem>*/}
+                            {/*<CardItem>*/}
+                            {/*<Picker*/}
+                            {/*style={styles.branchPicker}*/}
+                            {/*itemStyle={styles.branchPickerItem}*/}
+                            {/*selectedValue={this.state.branchSelected}*/}
+                            {/*onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>*/}
+                            {/*{this._renderBranch()}*/}
+                            {/*</Picker>*/}
+                            {/*</CardItem>*/}
                             {/*</Card>*/}
-                            <Grid>
-                                <Col size={3} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>
+                            {/*<Grid>*/}
+                            {/*<Col size={3} style={{textAlign: 'center', padding: 5, paddingLeft: 10}}>*/}
+                            {/*<Picker*/}
+                            {/*style={styles.branchPicker}*/}
+                            {/*itemStyle={styles.branchPickerItem}*/}
+                            {/*selectedValue={this.state.branchSelected}*/}
+                            {/*onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>*/}
+                            {/*{this._renderBranch()}*/}
+                            {/*</Picker>*/}
+                            {/*</Col>*/}
+                            {/*<Col size={2} style={{textAlign: 'center', padding: 5}}>*/}
+                            {/*<TouchableOpacity*/}
+                            {/*style={styles.btnApprove}*/}
+                            {/*onPress={() => Actions.calendarConcreteAdd({})}*/}
+                            {/*activeOpacity={0.9}*/}
+                            {/*>*/}
+                            {/*<Text style={styles.titleApprove}><Icon style={styles.titleApprove}*/}
+                            {/*name='md-add'/> {Config.btnAdd}*/}
+                            {/*</Text>*/}
+                            {/*</TouchableOpacity>*/}
+                            {/*</Col>*/}
+                            {/*</Grid>*/}
+                            <CardItem>
+                                <Left>
+                                    <Body>
+                                    <Text style={styles.muted}><Icon name="md-calendar"
+                                                                     style={styles.muted}/> {Config.common.fromDate}
+                                    </Text>
+                                    <DatePicker
+                                        defaultDate={moment().subtract(7, 'days').toDate()}
+                                        //minimumDate={new Date()}
+                                        //maximumDate={new Date()}
+                                        locale={'en'}
+                                        timeZoneOffsetInMinutes={undefined}
+                                        modalTransparent={false}
+                                        animationType={'fade'}
+                                        androidMode={'default'}
+                                        placeHolderText={moment().subtract(7, 'days').utcOffset('+07:00').format('DD/MM/YYYY')}
+                                        textStyle={{color: 'green'}}
+                                        placeHolderTextStyle={{color: Config.mainColor}}
+                                        onDateChange={(date) => {
+                                            this.setFromDate(date)
+                                        }}
+                                        disabled={false}
+                                        formatChosenDate={(date) => {
+                                            // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                            return moment(date).format('DD/MM/YYYY');
+                                        }}
+                                    >
+                                    </DatePicker>
+                                    </Body>
+                                </Left>
+                                <Right>
+                                    <Body>
+                                    <Text style={styles.muted}><Icon name="md-calendar"
+                                                                     style={styles.muted}/> {Config.common.toDate}
+                                    </Text>
+                                    <DatePicker
+                                        defaultDate={moment().toDate()}
+                                        //minimumDate={new Date()}
+                                        //maximumDate={new Date()}
+                                        locale={'en'}
+                                        timeZoneOffsetInMinutes={undefined}
+                                        modalTransparent={false}
+                                        animationType={'fade'}
+                                        androidMode={'default'}
+                                        placeHolderText={moment().utcOffset('+07:00').format('DD/MM/YYYY')}
+                                        textStyle={{color: 'green'}}
+                                        placeHolderTextStyle={{color: Config.mainColor}}
+                                        onDateChange={(date) => {
+                                            this.setToDate(date)
+                                        }}
+                                        disabled={false}
+                                        formatChosenDate={(date) => {
+                                            // return Utils.formatDate(new Date(date.getTime() + 1000*60*60*24).toISOString().split('T')[0]);
+                                            return moment(date).format('DD/MM/YYYY');
+                                        }}
+                                    >
+                                    </DatePicker>
+                                    </Body>
+                                </Right>
+                            </CardItem>
+                            {/*<Card>*/}
+                            {/*<CardItem style={{marginTop: -20}}>*/}
+                                {/*<Body>*/}
+                                {/*/!*<Text style={styles.muted}><Icon name="cube"*!/*/}
+                                                                 {/*/!*style={styles.muted}/> {Config.calendarConcrete.branch}*!/*/}
+                                {/*/!*</Text>*!/*/}
+                                {/*<Picker*/}
+                                    {/*style={styles.branchPicker}*/}
+                                    {/*itemStyle={styles.branchPickerItem}*/}
+                                    {/*selectedValue={this.state.branchSelected}*/}
+                                    {/*onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>*/}
+                                    {/*{this._renderBranch()}*/}
+                                {/*</Picker>*/}
+                                {/*</Body>*/}
+                            {/*</CardItem>*/}
+                            <Grid style={{marginTop: -20}}>
+                                <Col size={2} style={{textAlign: 'center', paddingTop: 5, paddingLeft: 25, marginTop: 15}}>
+                                    <Text style={styles.muted}><Icon name="cube"
+                                                                     style={styles.muted}/> {Config.calendarConcrete.branch}
+                                    </Text>
+                                </Col>
+                                <Col size={4} style={{textAlign: 'center', padding: 5}}>
                                     <Picker
                                         style={styles.branchPicker}
                                         itemStyle={styles.branchPickerItem}
@@ -282,18 +427,8 @@ export default class CalendarConcretes extends Component {
                                         {this._renderBranch()}
                                     </Picker>
                                 </Col>
-                                <Col size={2} style={{textAlign: 'center', padding: 5}}>
-                                    <TouchableOpacity
-                                        style={styles.btnApprove}
-                                        onPress={() => Actions.calendarConcreteAdd({})}
-                                        activeOpacity={0.9}
-                                    >
-                                        <Text style={styles.titleApprove}><Icon style={styles.titleApprove}
-                                                                                name='md-add'/> {Config.btnAdd}
-                                        </Text>
-                                    </TouchableOpacity>
-                                </Col>
                             </Grid>
+
                             <Tabs tabBarUnderlineStyle={styles.tabActive}>
                                 <Tab heading={
                                     <TabHeading style={styles.tabHeading}>
@@ -320,6 +455,11 @@ export default class CalendarConcretes extends Component {
                                             style={{width: '100%'}}
                                             data={this.state.contracts}
                                             renderItem={({item}) => this._renderItemResult(item)}
+                                            keyExtractor={item => item.id}
+                                            removeClippedSubviews={true}
+                                            maxToRenderPerBatch={5}
+                                            updateCellsBatchingPeriod={100}
+                                            initialNumToRender={5}
                                         />
                                     </View>
                                 </Tab>

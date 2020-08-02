@@ -461,6 +461,8 @@ const Config = {
     err_complete: 'Hoàn thành thất bại',
     err_no_data: 'Không có dữ liệu',
     err_save: 'Lưu thất bại',
+    err_from_to_date : 'Từ ngày phải nhỏ hơn đến ngày',
+    err_from_to_date_max : 'Khoảng thời gian tìm kiếm không quá 7 ngày',
 
     //confirm
     confirm_title: 'Thông báo',

@@ -56,6 +56,9 @@ https://aboutreact.com/react-native-get-current-date-time/
 https://stackoverflow.com/questions/51040637/datepicker-nativebase-format-of-the-picked-date
 https://github.com/vishaldhanotiya/react-native-modal-picker
 
+https://kipalog.com/posts/Mot-so-thu-thuat-toi-uu-ung-dung-React-Native-nen-biet
+https://viblo.asia/p/mot-vai-tips-su-dung-flatlist-de-cai-tien-performance-trong-react-native-gAm5yBwAKdb
+
 ## Documentation
 
 Updating the codebase will require changes to the `.js` files in the [src/](./src/) folder. Individual pages can be edited by editing the `.js` files in [src/page/](./src/page/). Re-usable components can be edited by editing the `.js` files in [src/component/](./src/component/).

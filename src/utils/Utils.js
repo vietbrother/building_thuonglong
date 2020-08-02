@@ -34,6 +34,13 @@ const Utils = {
             return '';
         }
     },
+    _renderDdMmYyyy_YyyyMmDd(date) {
+        if (date != null && date != undefined) {
+            return date.substring(6,10) + '-' + date.substring(3,5) + '-' + date.substring(0,2);
+        } else {
+            return '';
+        }
+    },
     formatDate(date) {
         //console.log(date);
         var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
