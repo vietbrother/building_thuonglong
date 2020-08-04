@@ -66,7 +66,7 @@ export default class CalendarConcreteItem extends Component {
 
     componentDidMount(): void {
         this.setState({contract: this.props.contract});
-        console.log(this.props.contract);
+        // console.log(this.props.contract);
     }
 
     render() {
@@ -96,7 +96,7 @@ export default class CalendarConcreteItem extends Component {
     _renderDateFormat(date) {
         if (date != null && date != undefined) {
             var dateStr = date.substring(0, 10);
-            console.log(date);
+            // console.log(date);
             dateStr = dateStr.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, function (match, y, m, d) {
                 return d + '/' + m + '/' + y;
             });

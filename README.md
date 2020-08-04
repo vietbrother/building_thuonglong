@@ -58,6 +58,7 @@ https://github.com/vishaldhanotiya/react-native-modal-picker
 
 https://kipalog.com/posts/Mot-so-thu-thuat-toi-uu-ung-dung-React-Native-nen-biet
 https://viblo.asia/p/mot-vai-tips-su-dung-flatlist-de-cai-tien-performance-trong-react-native-gAm5yBwAKdb
+https://medium.com/sanjagh/how-to-optimize-your-react-native-flatlist-946490c8c49b
 
 ## Documentation
 

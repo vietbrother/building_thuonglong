@@ -391,4 +391,11 @@ export default StyleSheet.create({
         padding : 5,
         borderColor: '#d2d6de'
     },
+    font18: {
+        fontSize: 18
+    },
+    detailItem : {
+        paddingTop : 10,
+        paddingBottom : 10,
+    }
 });

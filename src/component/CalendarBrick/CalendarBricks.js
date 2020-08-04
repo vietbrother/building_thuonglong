@@ -238,17 +238,17 @@ export default class CalendarBricks extends Component {
     setFromDate(newDate) {
         //alert(newDate);
         let toDate = moment(this.state.toDate, 'DD MM YYYY').toDate().getTime();
-        if (moment(newDate).utcOffset('+07:00').toDate().getTime() > toDate) {
+        this.setState({fromDate: moment(newDate).format('DD/MM/YYYY')});
+        console.log('select date ' + newDate);
+        if (moment(newDate).toDate().getTime() > toDate) {
             Utils._alert(Config.err_from_to_date);
             return;
         }
-        if (moment(newDate).utcOffset('+07:00').utcOffset('+07:00').toDate().getTime() + (3600 * 1000 * 24 * 7)
+        if (moment(newDate).utcOffset('+07:00').toDate().getTime() + (3600 * 1000 * 24 * 7)
             < toDate) {
             Utils._alert(Config.err_from_to_date_max);
             return;
         }
-        this.setState({fromDate: moment(newDate).format('DD/MM/YYYY')});
-        console.log('select date ' + newDate);
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);
     }
@@ -256,16 +256,16 @@ export default class CalendarBricks extends Component {
     setToDate(newDate) {
         //alert(newDate);
         let fromDate = moment(this.state.fromDate, 'DD MM YYYY').toDate().getTime();
-        if (moment(newDate).utcOffset('+07:00').toDate().getTime() < fromDate) {
+        this.setState({toDate: moment(newDate).format('DD/MM/YYYY')});
+        console.log('select date ' + newDate);
+        if (moment(newDate).toDate().getTime() < fromDate) {
             Utils._alert(Config.err_from_to_date);
             return;
         }
-        if (moment(newDate).utcOffset('+07:00').toDate().getTime() - (3600 * 1000 * 24 * 7) > fromDate) {
+        if (moment(newDate).toDate().getTime() - (3600 * 1000 * 24 * 7) > fromDate) {
             Utils._alert(Config.err_from_to_date_max);
             return;
         }
-        this.setState({toDate: moment(newDate).format('DD/MM/YYYY')});
-        console.log('select date ' + newDate);
         this.search(this.state.branchSelected, Config.stateCode.wait);
         this.search(this.state.branchSelected, Config.stateCode.approved);
     }
