@@ -371,7 +371,8 @@ const Config = {
         toDate: 'Đến ngày',
         createDate: 'Ngày tạo',
         date: 'Ngày tháng',
-        copyDate: 'Ngày sao chép'
+        copyDate: 'Ngày sao chép',
+        showDetail: 'Xem chi tiết'
     },
     state: {
         name: 'Trạng thái',

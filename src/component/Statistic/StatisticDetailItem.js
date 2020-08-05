@@ -46,37 +46,15 @@ export default class StatisticDetailItem extends Component {
         super(props);
 
         this.state = {
-            contracts: [],
-            summaryData: [],
-            summaryLabel: [],
-            summaryColors: [Config.mainColor, '#d31977', '#508f11', '#5d14a8', '#a85d14'],
-            contractsActive: [],
-            branchs: [],
             // isLoading: true,
             isSearching: false,
             error: null,
-            sessionKey: null,
-
-            extractedText: "",
-            searchText: '',
-            branchSelected: '',
-            componentKey: new Date().valueOf().toString(),
-
-            fundTotalIn: 0,
-            fundTotalOut: 0,
-            fundCollection: 0,
-            fundPay: 0,
-            concreateOut: 0,
-            concreateMixed: 0,
-            concretePlan: 0,
+            dataDetailList: [],
+            fund: [],
+            concretes: [],
             bricks: [],
             bricksManufacture: [],
             materialIn: [],
-
-            // currentDate: new Date().toISOString().split('T')[0],
-            currentDate: moment().utcOffset('+07:00').format('DD/MM/YYYY'),
-            isSearchingBricks: false,
-            chosenDate: moment().utcOffset('+07:00').format('DD/MM/YYYY')
         };
     }
 
@@ -85,10 +63,8 @@ export default class StatisticDetailItem extends Component {
         this.setState({
             branchSelected: this.props.branchSelected,
             currentDate: this.props.currentDate,
-
         });
         this._loadData();
-        this._loadDataBricks();
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
@@ -98,31 +74,28 @@ export default class StatisticDetailItem extends Component {
     }
 
     componentDidMount() {
-        var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        var startDate = firstDay.toISOString().split('T')[0];
-        var endDate = lastDay.toISOString().split('T')[0];
-
     }
 
+    _loadData() {
+        let dataDetailType = this.state.dataDetailType;
+        if (dataDetailType == 'fund') {
+            this._loadDataFunds();
+        } else if (dataDetailType == 'concretes') {
+            this._loadDataConcretes();
+        } else if (dataDetailType == 'bricks') {
+            this._loadDataBricks();
+        } else if (dataDetailType == 'bricksManufacture') {
+            this._loadDataBricks();
+        } else if (dataDetailType == 'materialIn') {
+            this._loadDataBricks();
+        }
+    }
 
-    async _loadData(branchId) {
+    async _loadDataFunds() {
         this.setState({isSearching: true});
-        this.setState({
-            fundTotalIn: 0,
-            fundTotalOut: 0,
-            fundCollection: 0,
-            fundPay: 0,
-            concreateOut: 0,
-            concreateMixed: 0,
-            concretePlan: 0
-        });
+        this.setState({fund: []});
+        let fund = [];
         try {
-            //var temp = new Date().toISOString().split('T')[0];
-            //var currentDate = temp.substring(8, 10) + '/' + temp.substring(5, 7) + '/' + temp.substring(0, 4);
-
-            // var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
             var currentDate = this.state.currentDate;
             console.log(currentDate);
             var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
@@ -137,24 +110,75 @@ export default class StatisticDetailItem extends Component {
             });
             var responseObj = await response.json();
             console.log(responseObj);
-            this.setState({isSearching: false});
-            this.setState({
-                fundTotalIn: responseObj[0].tongThu,
-                fundTotalOut: responseObj[0].tongChi,
-                fundCollection: responseObj[0].congNoThu,
-                fundPay: responseObj[0].congNoTra,
-                concreateOut: responseObj[0].klbeTongBan,
-                concreateMixed: responseObj[0].klbeTongDaTron,
-                concretePlan: responseObj[0].klbeTongDuKien
-            });
+            if (responseObj != null && responseObj.length > 0) {
+                fund.push({
+                    name: Config.statisticDaily.fundTotalIn,
+                    value: Utils.numberWithCommas(responseObj[0].tongThu)
+                });
+                fund.push({
+                    name: Config.statisticDaily.fundTotalOut,
+                    value: Utils.numberWithCommas(responseObj[0].tongChi)
+                });
+                fund.push({
+                    name: Config.statisticDaily.fundLiabilitiesCollection,
+                    value: Utils.numberWithCommas(responseObj[0].congNoThu)
+                });
+                fund.push({
+                    name: Config.statisticDaily.fundLiabilitiesPay,
+                    value: Utils.numberWithCommas(responseObj[0].congNoTra)
+                });
+            }
         } catch (e) {
             console.log(e);
-            this.setState({isSearching: false});
         }
+        this.setState({isSearching: false});
+        this.setState({fund: fund});
+    }
+
+    async _loadDataConcretes(branchId) {
+        this.setState({isSearching: true});
+        this.setState({concretes: []});
+        let concretes = [];
+        try {
+            var currentDate = this.state.currentDate;
+            console.log(currentDate);
+            var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
+            console.log(param);
+            let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(param)
+            });
+            var responseObj = await response.json();
+            console.log(responseObj);
+
+            if (responseObj != null && responseObj.length > 0) {
+                concretes.push({
+                    name: Config.statisticDaily.concreteOut,
+                    value: Utils.numberWithCommas(responseObj[0].klbeTongBan)
+                });
+                concretes.push({
+                    name: Config.statisticDaily.concreteMix,
+                    value: Utils.numberWithCommas(responseObj[0].klbeTongDaTron)
+                });
+                concretes.push({
+                    name: Config.statisticDaily.concretePlan,
+                    value: Utils.numberWithCommas(responseObj[0].klbeTongDuKien)
+                });
+
+            }
+        } catch (e) {
+            console.log(e);
+        }
+        this.setState({isSearching: false});
+        this.setState({concretes: concretes});
     }
 
     async _loadDataBricks(branchId) {
-        this.setState({isSearchingBricks: true});
+        this.setState({isSearching: true});
         var bricks = [];
         var bricksManufacture = [];
         var materialIn = [];
@@ -178,7 +202,6 @@ export default class StatisticDetailItem extends Component {
             });
             var responseObj = await response.json();
             console.log(responseObj);
-            this.setState({isSearchingBricks: false});
             if (responseObj != null && responseObj.length > 0) {
                 for (var i = 0; i < responseObj.length; i++) {
                     if (responseObj[i].type == 'BanGach') {
@@ -190,46 +213,49 @@ export default class StatisticDetailItem extends Component {
                     }
                 }
             }
-            this.setState({
-                bricks: bricks,
-                bricksManufacture: bricksManufacture,
-                materialIn: materialIn
-            });
+
         } catch (e) {
             console.log(e);
-            this.setState({isSearchingBricks: false});
         }
+        this.setState({isSearching: false});
+        this.setState({
+            bricks: bricks,
+            bricksManufacture: bricksManufacture,
+            materialIn: materialIn
+        });
     }
 
-    _renderItemResult(item) {
-        var key = new Date().valueOf().toString();
-        return (
-            <Card transparent>
-                <CardItem style={[styles.detailItem]}>
-                    <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
-                        {Utils.numberWithCommas(item.value)} {Config.statisticDaily.brickUnit}
-                    </Text>
-                </CardItem>
-                <CardItem bordered style={[styles.detailItem]}>
-                    <Text style={styles.titleUnder}>{item.name}</Text>
-                </CardItem>
-            </Card>
-        );
-    }
 
-    _renderItemMaterialInResult(item) {
-        return (
-            <Card transparent>
-                <CardItem style={[styles.detailItem]}>
-                    <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
-                        {Utils.numberWithCommas(item.value)}
-                    </Text>
-                </CardItem>
-                <CardItem  style={[styles.detailItem]} bordered>
-                    <Text style={styles.titleUnder}>{item.name}</Text>
-                </CardItem>
-            </Card>
-        );
+    _renderMainContent() {
+        let dataDetailType = this.state.dataDetailType;
+        if (dataDetailType == 'fund') {
+            return (
+                <StatisticDetailList dataDetailList={this.state.fund}
+                                     dataDetailType={dataDetailType}></StatisticDetailList>
+            );
+        } else if (dataDetailType == 'concretes') {
+            return (
+                <StatisticDetailList dataDetailList={this.state.concretes}
+                                     dataDetailType={dataDetailType}></StatisticDetailList>
+            );
+        } else if (dataDetailType == 'bricks') {
+            return (
+                <StatisticDetailList dataDetailList={this.state.bricks}
+                                     dataDetailType={dataDetailType}></StatisticDetailList>
+            );
+        } else if (dataDetailType == 'bricksManufacture') {
+            return (
+                <StatisticDetailList dataDetailList={this.state.brickManufacture}
+                                     dataDetailType={dataDetailType}></StatisticDetailList>
+            );
+        } else if (dataDetailType == 'materialIn') {
+            return (
+                <StatisticDetailList dataDetailList={this.state.materialIn}
+                                     dataDetailType={dataDetailType}></StatisticDetailList>
+            );
+        } else {
+            return [];
+        }
     }
 
 
@@ -264,120 +290,16 @@ export default class StatisticDetailItem extends Component {
                         </Text>
                     </Body>
                 </CardItem>
-
-
-                <List style={{backgroundColor: 'white', marginTop: 20, marginBottom: 20}}>
-                    <ListItem itemDivider>
-                        <Text style={styles.labelHeader}>{Config.statisticDaily.fund}</Text>
-                    </ListItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelSuccess, styles.font18]}>
-                            {Utils.numberWithCommas(this.state.fundTotalIn)}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.fundTotalIn}</Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelRed, styles.font18]}>
-                            {Utils.numberWithCommas(this.state.fundTotalOut)}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.fundTotalOut}</Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelSuccess, styles.font18]}>
-                            {Utils.numberWithCommas(this.state.fundCollection)}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.fundLiabilitiesCollection}</Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelRed, styles.font18]}>
-                            {' ' + Utils.numberWithCommas(this.state.fundPay)}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.fundLiabilitiesPay}</Text>
-                    </CardItem>
-
-
-                    <ListItem itemDivider>
-                        <Text style={styles.labelHeader}>{Config.statisticDaily.concrete}</Text>
-                    </ListItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
-                            {Utils.numberWithCommas(this.state.concreateOut)} {Config.statisticDaily.concreteUnit}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.concreteOut}</Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
-                            {Utils.numberWithCommas(this.state.concreateMixed)} {Config.statisticDaily.concreteUnit}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
-                            {Utils.numberWithCommas(this.state.concretePlan)} {Config.statisticDaily.concreteUnit}
-                        </Text>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Text style={styles.titleUnder}>{Config.statisticDaily.concretePlan}</Text>
-                    </CardItem>
-
-
-                    <ListItem itemDivider>
-                        <Text style={styles.labelHeader}>{Config.statisticDaily.brick}</Text>
-                    </ListItem>
-
-                    {this.state.isSearching ?
-                        <View style={styles.loadingActivity}>
-                            <ActivityIndicator
-                                animating={this.state.isSearchingBricks}
-                                color={Config.mainColor}
-                                size="large"
-                            />
-                        </View>
-                        : <Text></Text>}
-                    <FlatList
-                        key={'statisticDailyBricksId'}
-                        style={{width: '100%'}}
-                        data={this.state.bricks}
-                        renderItem={({item}) => this._renderItemResult(item)}
-                    />
-
-                    {this.state.bricksManufacture.length > 0 ?
-                        <ListItem itemDivider>
-                            <Text style={styles.labelHeader}>{Config.statisticDaily.brickManufacture}</Text>
-                        </ListItem>
-                        : <Text></Text>}
-                    <FlatList
-                        key={'statisticDailyBricksManufactureId'}
-                        style={{width: '100%'}}
-                        data={this.state.bricksManufacture}
-                        renderItem={({item}) => this._renderItemResult(item)}
-                    />
-
-                    <ListItem itemDivider>
-                        <Text style={styles.labelHeader}>{Config.statisticDaily.materialIn}</Text>
-                    </ListItem>
-                    <FlatList
-                        key={'statisticDailyMaterialInId'}
-                        style={{width: '100%'}}
-                        data={this.state.materialIn}
-                        renderItem={({item}) => this._renderItemMaterialInResult(item)}
-                    />
-                    <Text style={styles.labelHeader}></Text>
-
-                </List>
-
+                {this.state.isSearching ?
+                    <View style={styles.loadingActivity}>
+                        <ActivityIndicator
+                            animating={this.state.isSearchingBricks}
+                            color={Config.mainColor}
+                            size="large"
+                        />
+                    </View>
+                    : <Text></Text>}
+                {this._renderMainContent()}
             </View>
         );
 

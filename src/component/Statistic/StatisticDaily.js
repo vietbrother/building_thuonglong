@@ -61,6 +61,7 @@ export default class StatisticDaily extends Component {
             extractedText: "",
             searchText: '',
             branchSelected: '',
+            branchSelectedId: '',
             componentKey: new Date().valueOf().toString(),
 
             fundTotalIn: 0,
@@ -284,7 +285,8 @@ export default class StatisticDaily extends Component {
             this.setState({isSearching: false});
             this.setState({branchs: responseObj});
             if (responseObj != null && responseObj.length > 0) {
-                this.setState({branchSelected: responseObj[0].id});
+                this.setState({branchSelected: responseObj[0]});
+                this.setState({branchSelectedId: responseObj[0].id});
             }
             this._actionSelectBranch(responseObj[0].id);
         } catch (e) {
@@ -304,32 +306,49 @@ export default class StatisticDaily extends Component {
 
     _actionSelectBranch(itemValue) {
         console.log("+++++++++++++++++++++++ " + itemValue);
-        this.setState({branchSelected: itemValue});
-        console.log(this.state.branchSelected);
+        this.setState({branchSelectedId: itemValue});
+        console.log(this.state.branchSelectedId);
+        let branchItem = this.state.branchs.find(branch => branch.id === itemValue);
+        this.setState({branchSelected: branchItem});
         this._loadData(itemValue);
         this._loadDataBricks(itemValue);
     }
 
     setDate(newDate) {
-        //alert(newDate);
         // this.setState({currentDate: new Date(newDate.getTime() + 1000*60*60*24)});
         this.setState({currentDate: moment(newDate).format('DD/MM/YYYY')});
         console.log('select date ' + newDate);
-        console.log('select branch ' + this.state.branchSelected);
-        this._loadData(this.state.branchSelected);
-        this._loadDataBricks(this.state.branchSelected);
+        console.log('select branch ' + this.state.branchSelectedId);
+        this._loadData(this.state.branchSelectedId);
+        this._loadDataBricks(this.state.branchSelectedId);
     }
 
-    formatDate(date) {
-        var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-        console.log('formatDate ' + nDate);
-        return nDate;
+    // formatDate(date) {
+    //     var nDate = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+    //     console.log('formatDate ' + nDate);
+    //     return nDate;
+    // }
+
+    _renderShowDetail() {
+        return (
+
+            <TouchableOpacity
+                onPress={() => Actions.statisticDetail({
+                    branchSelected: this.state.branchSelected,
+                    currentDate: this.state.currentDate
+                })}
+                activeOpacity={0.9}
+            >
+                <Item>
+                    <Text>{Config.common.showDetail} </Text>
+                    <Icon name="ios-arrow-forward"/>
+                </Item>
+            </TouchableOpacity>
+
+        );
     }
 
     render() {
-        //var data = this.state.summaryData;
-
-
         var left = (
             <Left style={{flex: 1}}>
                 <Button onPress={() => this._sideMenuDrawer.open()} transparent>
@@ -395,7 +414,7 @@ export default class StatisticDaily extends Component {
                                 <Picker
                                     style={[styles.branchPicker]}
                                     itemStyle={styles.branchPickerItem}
-                                    selectedValue={this.state.branchSelected}
+                                    selectedValue={this.state.branchSelectedId}
                                     onValueChange={(itemValue, itemIndex) => this._actionSelectBranch(itemValue)}>
                                     {this._renderBranch()}
                                 </Picker>
@@ -421,18 +440,13 @@ export default class StatisticDaily extends Component {
                         </View>
 
 
-                        {/*<View style={styles.boxItem}>*/}
-                        {/*<View style={styles.box}>*/}
-                        {/*<CardItem style={styles.boxContent}>*/}
-                        {/*<Text style={[styles.boxTitle, styles.labelSuccess]}>10,000,000,000,000</Text>*/}
-                        {/*</CardItem>*/}
-                        {/*<CardItem>*/}
-                        {/*<Text style={styles.titleUnder}>12312313</Text>*/}
-                        {/*</CardItem>*/}
-                        {/*</View>*/}
-                        {/*</View>*/}
                         <View style={[styles.boxItem, styles.subHeader]}>
                             <View style={styles.box}>
+                                <CardItem>
+                                    <Right>
+                                        {this._renderShowDetail()}
+                                    </Right>
+                                </CardItem>
                                 <CardItem style={styles.boxContent}>
                                     <Text style={[styles.boxTitle, styles.labelRed]}>
                                         <Icon name="ios-share-outline"
@@ -472,40 +486,14 @@ export default class StatisticDaily extends Component {
                             </View>
                         </View>
 
-                        {/*<Grid style={{marginTop: 10}}>*/}
-                        {/*<Col style={styles.subColItemLeft}>*/}
-                        {/*<View style={styles.box}>*/}
-                        {/*<CardItem>*/}
-                        {/*<Text>*/}
-                        {/*<Icon note name="ios-card-outline" style={[styles.m_r_5]}/>*/}
-                        {/*{Config.statisticDaily.fundLiabilitiesCollection}*/}
-                        {/*</Text>*/}
-                        {/*</CardItem>*/}
-                        {/*<CardItem>*/}
-                        {/*<Text*/}
-                        {/*style={[styles.boxTitle, styles.labelSuccess]}>{Utils.numberWithCommas(Utils._nFormatter(1000000000000, 2))}</Text>*/}
-                        {/*</CardItem>*/}
-                        {/*</View>*/}
-                        {/*</Col>*/}
-                        {/*<Col style={styles.subColItemRight}>*/}
-                        {/*<View style={styles.box}>*/}
-                        {/*<CardItem>*/}
-                        {/*<Text>*/}
-                        {/*<Icon note name="ios-card-outline" style={[styles.m_r_5]}/>*/}
-                        {/*{Config.statisticDaily.fundLiabilitiesPay}*/}
-                        {/*</Text>*/}
-                        {/*</CardItem>*/}
-                        {/*<CardItem>*/}
-                        {/*<Text*/}
-                        {/*style={[styles.boxTitle, styles.labelRed]}>{Utils.numberWithCommas(Utils._nFormatter(1000000000000, 2))}</Text>*/}
-                        {/*</CardItem>*/}
-                        {/*</View>*/}
-                        {/*</Col>*/}
-                        {/*</Grid>*/}
-
                         <List style={{backgroundColor: 'white', marginTop: 20, marginBottom: 20}}>
                             <ListItem itemDivider>
-                                <Text style={styles.labelHeader}>{Config.statisticDaily.concrete}</Text>
+                                <Left>
+                                    <Text style={styles.labelHeader}>{Config.statisticDaily.concrete}</Text>
+                                </Left>
+                                <Right>
+                                    {this._renderShowDetail()}
+                                </Right>
                             </ListItem>
                             <CardItem>
                                 <Text style={[styles.boxTitleSecond, styles.labelMain]}>
@@ -524,13 +512,6 @@ export default class StatisticDaily extends Component {
                                 <Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>
                             </CardItem>
 
-                            {/*<CardItem>*/}
-                            {/*<Text*/}
-                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.concreteUnit}</Text>*/}
-                            {/*</CardItem>*/}
-                            {/*<CardItem bordered>*/}
-                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>*/}
-                            {/*</CardItem>*/}
 
                             <CardItem>
                                 <Text style={[styles.boxTitleSecond, styles.labelMain]}>
@@ -541,34 +522,14 @@ export default class StatisticDaily extends Component {
                                 <Text style={styles.titleUnder}>{Config.statisticDaily.concretePlan}</Text>
                             </CardItem>
 
-                            {/*<ListItem>*/}
-                            {/*<View style={{padding: 5}}>*/}
-                            {/*<CardItem>*/}
-                            {/*<Text style={[styles.boxTitleSecond, styles.labelSuccess]}>100000 {Config.statisticDaily.concreteUnit}</Text>*/}
-                            {/*</CardItem>*/}
-                            {/*<CardItem>*/}
-                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.concreteOut}</Text>*/}
-                            {/*</CardItem>*/}
-                            {/*</View>*/}
-                            {/*</ListItem>*/}
-                            {/*<ListItem>*/}
-                            {/*<Left>*/}
-                            {/*<Text>{Config.statisticDaily.concreteOut}</Text>*/}
-                            {/*</Left>*/}
-                            {/*<Right>*/}
-                            {/*<Text style={styles.labelValue}>10000m3</Text>*/}
-                            {/*</Right>*/}
-                            {/*</ListItem>*/}
-                            {/*<ListItem>*/}
-                            {/*<Left>*/}
-                            {/*<Text><Icon note name="ios-speedometer-outline" style={styles.iconMedium}/>{Config.statisticDaily.concreteOut}</Text>*/}
-                            {/*</Left>*/}
-                            {/*<Right>*/}
-                            {/*<Text style={styles.labelValue}>10000m3</Text>*/}
-                            {/*</Right>*/}
-                            {/*</ListItem>*/}
+
                             <ListItem itemDivider>
-                                <Text style={styles.labelHeader}>{Config.statisticDaily.brick}</Text>
+                                <Left>
+                                    <Text style={styles.labelHeader}>{Config.statisticDaily.brick}</Text>
+                                </Left>
+                                <Right>
+                                    {this._renderShowDetail()}
+                                </Right>
                             </ListItem>
 
                             {this.state.isSearching ?
@@ -589,7 +550,12 @@ export default class StatisticDaily extends Component {
 
                             {this.state.bricksManufacture.length > 0 ?
                                 <ListItem itemDivider>
-                                    <Text style={styles.labelHeader}>{Config.statisticDaily.brickManufacture}</Text>
+                                    <Left>
+                                        <Text style={styles.labelHeader}>{Config.statisticDaily.brickManufacture}</Text>
+                                    </Left>
+                                    <Right>
+                                        {this._renderShowDetail()}
+                                    </Right>
                                 </ListItem>
                                 : <Text></Text>}
                             <FlatList
@@ -600,7 +566,12 @@ export default class StatisticDaily extends Component {
                             />
 
                             <ListItem itemDivider>
-                                <Text style={styles.labelHeader}>{Config.statisticDaily.materialIn}</Text>
+                                <Left>
+                                    <Text style={styles.labelHeader}>{Config.statisticDaily.materialIn}</Text>
+                                </Left>
+                                <Right>
+                                    {this._renderShowDetail()}
+                                </Right>
                             </ListItem>
                             <FlatList
                                 key={'statisticDailyMaterialInId'}
@@ -609,29 +580,6 @@ export default class StatisticDaily extends Component {
                                 renderItem={({item}) => this._renderItemMaterialInResult(item)}
                             />
                             <Text style={styles.labelHeader}></Text>
-                            {/*<CardItem>*/}
-                            {/*<Text*/}
-                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
-                            {/*</CardItem>*/}
-                            {/*<CardItem bordered>*/}
-                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo2040}</Text>*/}
-                            {/*</CardItem>*/}
-
-                            {/*<CardItem>*/}
-                            {/*<Text*/}
-                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
-                            {/*</CardItem>*/}
-                            {/*<CardItem bordered>*/}
-                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo3030}</Text>*/}
-                            {/*</CardItem>*/}
-
-                            {/*<CardItem>*/}
-                            {/*<Text*/}
-                            {/*style={[styles.boxTitleSecond, styles.labelMain]}>{Utils.numberWithCommas(100000)} {Config.statisticDaily.brickUnit}</Text>*/}
-                            {/*</CardItem>*/}
-                            {/*<CardItem bordered>*/}
-                            {/*<Text style={styles.titleUnder}>{Config.statisticDaily.brickTazo5020}</Text>*/}
-                            {/*</CardItem>*/}
                         </List>
 
                     </Content>
@@ -642,4 +590,3 @@ export default class StatisticDaily extends Component {
     }
 
 }
-

@@ -12,17 +12,7 @@ import {
     Button,
     Left,
     Right,
-    Icon,
-    Picker,
-    Item,
-    Grid,
-    Col,
-    Toast,
-    Text as NBText,
-    List, ListItem,
-    Card, CardItem,
-    DatePicker,
-    Body, Input, H3
+    Icon
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 
@@ -35,7 +25,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
-import ContractConcretesItem from "../ContractConcrete/ContractConcretes";
 
 export default class StatisticDetail extends Component {
 
@@ -48,25 +37,46 @@ export default class StatisticDetail extends Component {
             branchs: [],
             username: '',
             currentDate: '',
+            branchSelected: '',
         };
     }
 
     //E:\MyWorks\Project\20200303_stock_app\github\building_thuonglong\node_modules\native-base\src\basic\Icon\NBIcons.json
-
     componentWillMount() {
         this.setState({
-            branchs: this.props.branchs,
+            branchSelected: this.props.branchSelected,
             currentDate: this.props.currentDate,
         });
+        this._loadBranchData();
     }
 
-    async componentDidMount() {
-        console.log(this.props.contract);
-        let username = await AsyncStorage.getItem('userId');
-        this.setState({
-            username: username,
-        });
-        console.log(this.state.username);
+    componentDidMount() {
+    }
+
+    async _loadBranchData() {
+        let branchs = [];
+        if(this.props.branchSelected.id != ""){
+            branchs.push(this.props.branchSelected);
+            this.setState({branchs: branchs});
+            return;
+        }
+        this.setState({isSearching: true});
+        this.setState({branchs: []});
+        try {
+            var param = {};
+            let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*'
+                }
+            });
+            var responseObj = await response.json();
+            this.setState({branchs: responseObj});
+            this.setState({isSearching: false});
+        } catch (e) {
+            console.log(e);
+            this.setState({isSearching: false});
+        }
     }
 
     _renderMainContent() {
@@ -114,6 +124,15 @@ export default class StatisticDetail extends Component {
                     paddingHorizontal: 10,
                     backgroundColor: '#f3f9ff'
                 }}>
+                    {this.state.isSearching ?
+                        <View style={styles.loadingActivity}>
+                            <ActivityIndicator
+                                animating={this.state.isSearching}
+                                color={Config.mainColor}
+                                size="large"
+                            />
+                        </View>
+                        : <Text></Text>}
                     {this._renderMainContent()}
 
                 </Content>
