@@ -76,6 +76,7 @@ import CalendarBricks from "./component/CalendarBrick/CalendarBricks";
 import CalendarBrickDetail from "./component/CalendarBrick/CalendarBrickDetail";
 import CalendarConcreteAdd from "./component/CalendarConcrete/CalendarConcreteAdd";
 import CalendarBrickAdd from "./component/CalendarBrick/CalendarBrickAdd";
+import StatisticDetail from "./component/Statistic/StatisticDetail";
 
 export default class Main extends Component {
 
@@ -262,6 +263,7 @@ export default class Main extends Component {
 
                         <Scene key="bill" component={Bill} modal hideNavBar/>
                         <Scene initial type="reset"  key="statistic" component={Statistic} hideNavBar/>
+                        <Scene key="statisticDetail" component={StatisticDetail} hideNavBar/>
 
                         <Scene key="manualScannerList" component={ManualScannerList} hideNavBar/>
                         <Scene key="stockInList" component={StockInList} hideNavBar/>

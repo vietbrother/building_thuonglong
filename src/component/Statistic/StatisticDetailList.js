@@ -48,6 +48,7 @@ export default class StatisticDetailList extends Component {
         this.setState({
             dataDetailList: this.props.dataDetailList,
             dataDetailType: this.props.dataDetailType,
+            branchSelected: this.props.branchSelected,
         });
     }
 
@@ -97,15 +98,6 @@ export default class StatisticDetailList extends Component {
 
         return (
             <View style={styles.main}>
-                <CardItem header>
-                    <Body>
-                        <Text style={styles.titleBranch}>
-                            <Icon active name="cube"
-                                  style={styles.titleBranch}/> {this.state.branchSelected.tenChiNhanh}
-                        </Text>
-                    </Body>
-                </CardItem>
-
                 <List style={{backgroundColor: 'white', marginTop: 20, marginBottom: 20}}>
                     {this.state.isSearching ?
                         <View style={styles.loadingActivity}>
@@ -119,7 +111,7 @@ export default class StatisticDetailList extends Component {
                     <FlatList
                         key={'statisticDetailListId'}
                         style={{width: '100%'}}
-                        data={this.state.dataDetailList}
+                        data={this.props.dataDetailList}
                         renderItem={({item}) => this._renderItemResult(item)}
                     />
 

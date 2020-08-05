@@ -37,7 +37,7 @@ import Colors from "../../Colors";
 import Config from "../../Config";
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
-import moment from 'moment';
+import StatisticDetailList from "./StatisticDetailList";
 
 
 export default class StatisticDetailItem extends Component {
@@ -49,6 +49,7 @@ export default class StatisticDetailItem extends Component {
             // isLoading: true,
             isSearching: false,
             error: null,
+            dataDetailType: '',
             dataDetailList: [],
             fund: [],
             concretes: [],
@@ -63,14 +64,23 @@ export default class StatisticDetailItem extends Component {
         this.setState({
             branchSelected: this.props.branchSelected,
             currentDate: this.props.currentDate,
+            dataDetailType: this.props.dataDetailType,
         });
+        // console.log("==================================");
+        // console.log(this.props.branchSelected);
+        // console.log(this.props.currentDate);
+        // console.log(this.props.dataDetailType);
         this._loadData();
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        this.getSessionKey();
         this.setState({componentKey: new Date().valueOf().toString(), searchText: ''});
-
+        this.setState({
+            branchSelected: this.props.branchSelected,
+            currentDate: this.props.currentDate,
+            dataDetailType: this.props.dataDetailType,
+        });
+        this._loadData();
     }
 
     componentDidMount() {
@@ -78,6 +88,7 @@ export default class StatisticDetailItem extends Component {
 
     _loadData() {
         let dataDetailType = this.state.dataDetailType;
+        // console.log(dataDetailType);
         if (dataDetailType == 'fund') {
             this._loadDataFunds();
         } else if (dataDetailType == 'concretes') {
@@ -96,10 +107,8 @@ export default class StatisticDetailItem extends Component {
         this.setState({fund: []});
         let fund = [];
         try {
-            var currentDate = this.state.currentDate;
-            console.log(currentDate);
+            var currentDate = this.props.currentDate;
             var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
-            console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
                 method: 'POST',
                 headers: {
@@ -109,7 +118,6 @@ export default class StatisticDetailItem extends Component {
                 body: JSON.stringify(param)
             });
             var responseObj = await response.json();
-            console.log(responseObj);
             if (responseObj != null && responseObj.length > 0) {
                 fund.push({
                     name: Config.statisticDaily.fundTotalIn,
@@ -140,8 +148,7 @@ export default class StatisticDetailItem extends Component {
         this.setState({concretes: []});
         let concretes = [];
         try {
-            var currentDate = this.state.currentDate;
-            console.log(currentDate);
+            var currentDate = this.props.currentDate;
             var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
             console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
@@ -158,15 +165,15 @@ export default class StatisticDetailItem extends Component {
             if (responseObj != null && responseObj.length > 0) {
                 concretes.push({
                     name: Config.statisticDaily.concreteOut,
-                    value: Utils.numberWithCommas(responseObj[0].klbeTongBan)
+                    value: responseObj[0].klbeTongBan
                 });
                 concretes.push({
                     name: Config.statisticDaily.concreteMix,
-                    value: Utils.numberWithCommas(responseObj[0].klbeTongDaTron)
+                    value: responseObj[0].klbeTongDaTron
                 });
                 concretes.push({
                     name: Config.statisticDaily.concretePlan,
-                    value: Utils.numberWithCommas(responseObj[0].klbeTongDuKien)
+                    value: responseObj[0].klbeTongDuKien
                 });
 
             }
@@ -188,10 +195,9 @@ export default class StatisticDetailItem extends Component {
             materialIn: materialIn,
         });
         try {
-            var currentDate = this.state.currentDate;
-            console.log(currentDate);
+            var currentDate = this.props.currentDate;
             var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
-            console.log(param);
+            // console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticBricks, {
                 method: 'POST',
                 headers: {
@@ -201,7 +207,7 @@ export default class StatisticDetailItem extends Component {
                 body: JSON.stringify(param)
             });
             var responseObj = await response.json();
-            console.log(responseObj);
+            // console.log(responseObj);
             if (responseObj != null && responseObj.length > 0) {
                 for (var i = 0; i < responseObj.length; i++) {
                     if (responseObj[i].type == 'BanGach') {
@@ -231,26 +237,31 @@ export default class StatisticDetailItem extends Component {
         if (dataDetailType == 'fund') {
             return (
                 <StatisticDetailList dataDetailList={this.state.fund}
+                                     branchSelected={this.state.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'concretes') {
             return (
                 <StatisticDetailList dataDetailList={this.state.concretes}
+                                     branchSelected={this.state.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'bricks') {
             return (
                 <StatisticDetailList dataDetailList={this.state.bricks}
+                                     branchSelected={this.state.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'bricksManufacture') {
             return (
                 <StatisticDetailList dataDetailList={this.state.brickManufacture}
+                                     branchSelected={this.state.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'materialIn') {
             return (
                 <StatisticDetailList dataDetailList={this.state.materialIn}
+                                     branchSelected={this.state.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else {

@@ -60,7 +60,7 @@ export default class StatisticDaily extends Component {
 
             extractedText: "",
             searchText: '',
-            branchSelected: '',
+            branchSelected: {},
             branchSelectedId: '',
             componentKey: new Date().valueOf().toString(),
 
@@ -272,7 +272,7 @@ export default class StatisticDaily extends Component {
 
     async _loadBranchData() {
         this.setState({isSearching: true});
-        this.setState({contracts: []});
+        this.setState({branchs: []});
         try {
             var param = {};
             let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
@@ -288,6 +288,7 @@ export default class StatisticDaily extends Component {
                 this.setState({branchSelected: responseObj[0]});
                 this.setState({branchSelectedId: responseObj[0].id});
             }
+            console.log(this.state.branchSelected);
             this._actionSelectBranch(responseObj[0].id);
         } catch (e) {
             console.log(e);
@@ -329,21 +330,20 @@ export default class StatisticDaily extends Component {
     //     return nDate;
     // }
 
-    _renderShowDetail() {
+    _renderShowDetail(type) {
         return (
 
-            <TouchableOpacity
+
+            <Button
+                transparent
                 onPress={() => Actions.statisticDetail({
                     branchSelected: this.state.branchSelected,
-                    currentDate: this.state.currentDate
+                    currentDate: this.state.currentDate,
+                    dataDetailType: type
                 })}
-                activeOpacity={0.9}
             >
-                <Item>
-                    <Text>{Config.common.showDetail} </Text>
-                    <Icon name="ios-arrow-forward"/>
-                </Item>
-            </TouchableOpacity>
+                <Icon name="ios-arrow-forward"/>
+            </Button>
 
         );
     }
@@ -444,7 +444,7 @@ export default class StatisticDaily extends Component {
                             <View style={styles.box}>
                                 <CardItem>
                                     <Right>
-                                        {this._renderShowDetail()}
+                                        {this._renderShowDetail('fund')}
                                     </Right>
                                 </CardItem>
                                 <CardItem style={styles.boxContent}>
@@ -492,7 +492,7 @@ export default class StatisticDaily extends Component {
                                     <Text style={styles.labelHeader}>{Config.statisticDaily.concrete}</Text>
                                 </Left>
                                 <Right>
-                                    {this._renderShowDetail()}
+                                    {this._renderShowDetail('concretes')}
                                 </Right>
                             </ListItem>
                             <CardItem>
@@ -528,7 +528,7 @@ export default class StatisticDaily extends Component {
                                     <Text style={styles.labelHeader}>{Config.statisticDaily.brick}</Text>
                                 </Left>
                                 <Right>
-                                    {this._renderShowDetail()}
+                                    {this._renderShowDetail('bricks')}
                                 </Right>
                             </ListItem>
 
@@ -554,7 +554,7 @@ export default class StatisticDaily extends Component {
                                         <Text style={styles.labelHeader}>{Config.statisticDaily.brickManufacture}</Text>
                                     </Left>
                                     <Right>
-                                        {this._renderShowDetail()}
+                                        {this._renderShowDetail('bricksManufacture')}
                                     </Right>
                                 </ListItem>
                                 : <Text></Text>}
@@ -570,7 +570,7 @@ export default class StatisticDaily extends Component {
                                     <Text style={styles.labelHeader}>{Config.statisticDaily.materialIn}</Text>
                                 </Left>
                                 <Right>
-                                    {this._renderShowDetail()}
+                                    {this._renderShowDetail('materialIn')}
                                 </Right>
                             </ListItem>
                             <FlatList

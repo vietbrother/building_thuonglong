@@ -4,7 +4,9 @@
 
 // React native and others libraries imports
 import React, {Component} from 'react';
-import {Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage, Alert} from 'react-native';
+import {Image, Dimensions, TouchableWithoutFeedback,
+    ActivityIndicator,
+    TouchableOpacity, AsyncStorage, Alert} from 'react-native';
 import {
     View,
     Container,
@@ -25,6 +27,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import styles from '../../styles/ContractStyles';
 import Utils from "../../utils/Utils";
+import StatisticDetailItem from "./StatisticDetailItem";
 
 export default class StatisticDetail extends Component {
 
@@ -38,6 +41,7 @@ export default class StatisticDetail extends Component {
             username: '',
             currentDate: '',
             branchSelected: '',
+            dataDetailType: '',
         };
     }
 
@@ -46,6 +50,7 @@ export default class StatisticDetail extends Component {
         this.setState({
             branchSelected: this.props.branchSelected,
             currentDate: this.props.currentDate,
+            dataDetailType: this.props.dataDetailType,
         });
         this._loadBranchData();
     }
@@ -55,27 +60,28 @@ export default class StatisticDetail extends Component {
 
     async _loadBranchData() {
         let branchs = [];
-        if(this.props.branchSelected.id != ""){
+        if (this.props.branchSelected.id != "BranchIdAll") {
             branchs.push(this.props.branchSelected);
             this.setState({branchs: branchs});
-            return;
-        }
-        this.setState({isSearching: true});
-        this.setState({branchs: []});
-        try {
-            var param = {};
-            let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
-                method: 'GET',
-                headers: {
-                    'Accept': '*/*'
-                }
-            });
-            var responseObj = await response.json();
-            this.setState({branchs: responseObj});
-            this.setState({isSearching: false});
-        } catch (e) {
-            console.log(e);
-            this.setState({isSearching: false});
+        } else {
+
+            this.setState({isSearching: true});
+            this.setState({branchs: []});
+            try {
+                var param = {};
+                let response = await fetch(global.hostAPI[0] + Config.api.apiListBranch, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': '*/*'
+                    }
+                });
+                var responseObj = await response.json();
+                this.setState({branchs: responseObj.slice(1)});
+                this.setState({isSearching: false});
+            } catch (e) {
+                console.log(e);
+                this.setState({isSearching: false});
+            }
         }
     }
 
@@ -84,7 +90,9 @@ export default class StatisticDetail extends Component {
         for (var i = 0; i < this.state.branchs.length; i++) {
             var branchItem = this.state.branchs[i];
             items.push(
-                <StatisticDetailItem key={branchItem.id} branchSelected={branchItem}
+                <StatisticDetailItem key={branchItem.id}
+                                     branchSelected={branchItem}
+                                     dataDetailType={this.state.dataDetailType}
                                      currentDate={this.state.currentDate}></StatisticDetailItem>
             );
         }
