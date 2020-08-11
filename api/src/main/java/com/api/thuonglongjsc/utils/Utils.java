@@ -3,8 +3,15 @@ package com.api.thuonglongjsc.utils;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +36,23 @@ public class Utils {
 			}
 
 			digest = sb.toString();
+			
+//			MessageDigest md = MessageDigest.getInstance("MD5");
+//			Charset UTF_8 = StandardCharsets.UTF_8;
+//			byte[] md5InBytes = md.digest(message.getBytes(UTF_8));
+//			StringBuilder sb = new StringBuilder();
+//	        for (byte b : md5InBytes) {
+//	            sb.append(String.format("%02x", b));
+//	        }
+//	        digest = sb.toString();
+//	        System.out.println(sb.toString());
+	        
+//			MessageDigest md = MessageDigest.getInstance("MD5");
+//		    md.update(message.getBytes());
+//		    byte[] hash = md.digest();
+//		    digest = DatatypeConverter
+//		      .printHexBinary(hash).toUpperCase();
 
-		} catch (UnsupportedEncodingException ex) {
-			logger.error("error: ", ex);
 		} catch (NoSuchAlgorithmException ex) {
 			logger.error("error: ", ex);
 		} catch (Exception ex) {

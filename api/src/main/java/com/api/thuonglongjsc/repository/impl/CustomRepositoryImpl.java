@@ -79,8 +79,8 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 			Query query = entityManager.createNativeQuery(
 					"select * from tblUserAccount p where p.UserName = ? and p.Password = ?", TblUserAccount.class);
-			query.setParameter(1, username.toLowerCase().trim()).setParameter(2,
-					Utils.md5Genarate(password.toLowerCase().trim()));
+			query.setParameter(1, username.trim()).setParameter(2,
+					Utils.md5Genarate(password.trim()));
 			List<TblUserAccount> users = query.getResultList();
 			if (users == null || users.isEmpty() || users.size() == 0) {
 				message = "Tên đăng nhập hoặc mật khẩu không đúng";
