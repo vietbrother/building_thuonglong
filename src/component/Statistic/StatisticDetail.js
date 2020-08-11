@@ -54,12 +54,21 @@ export default class StatisticDetail extends Component {
         });
         this._loadBranchData();
     }
+    componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+        this.setState({
+            branchSelected: this.props.branchSelected,
+            currentDate: this.props.currentDate,
+            dataDetailType: this.props.dataDetailType,
+        });
+        this._loadBranchData();
+    }
 
     componentDidMount() {
     }
 
     async _loadBranchData() {
         let branchs = [];
+        // console.log(this.props.branchSelected);
         if (this.props.branchSelected.id != "BranchIdAll") {
             branchs.push(this.props.branchSelected);
             this.setState({branchs: branchs});
@@ -118,7 +127,7 @@ export default class StatisticDetail extends Component {
             </Right>
         );
         return (
-            <Container style={{backgroundColor: '#fdfdfd'}}>
+            <Container style={{backgroundColor: 'white'}}>
                 <Spinner
                     //visibility of Overlay Loading Spinner
                     visible={this.state.isLoading}
@@ -130,8 +139,9 @@ export default class StatisticDetail extends Component {
                 <Navbar left={left} right={right} title={Config.statisticDaily.detail}/>
                 <Content contentContainerStyle={{
                     paddingHorizontal: 10,
-                    backgroundColor: '#f3f9ff'
+                    backgroundColor: '#white'
                 }}>
+                    {this._renderMainContent()}
                     {this.state.isSearching ?
                         <View style={styles.loadingActivity}>
                             <ActivityIndicator
@@ -141,7 +151,6 @@ export default class StatisticDetail extends Component {
                             />
                         </View>
                         : <Text></Text>}
-                    {this._renderMainContent()}
 
                 </Content>
 

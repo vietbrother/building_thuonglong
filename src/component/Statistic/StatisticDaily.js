@@ -156,7 +156,7 @@ export default class StatisticDaily extends Component {
             // var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
             var currentDate = this.state.currentDate;
             console.log(currentDate);
-            var param = {ngayThang: currentDate, idchiNhanh: branchId};
+            var param = {ngayThang: currentDate, idchiNhanh: branchId, username: this.state.sessionKey};
             console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
                 method: 'POST',
@@ -201,7 +201,7 @@ export default class StatisticDaily extends Component {
             // var currentDate = this.formatDate(this.state.currentDate.toISOString().split('T')[0]);
             var currentDate = this.state.currentDate;
             console.log(currentDate);
-            var param = {ngayThang: currentDate, idchiNhanh: branchId};
+            var param = {ngayThang: currentDate, idchiNhanh: branchId, username: this.state.sessionKey};
             console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticBricks, {
                 method: 'POST',
@@ -259,7 +259,7 @@ export default class StatisticDaily extends Component {
             <Card transparent>
                 <CardItem>
                     <Text style={[styles.boxTitleSecond, styles.labelMain]}>
-                        {Utils.numberWithCommas(item.value)}
+                        {Utils.numberWithCommas(item.value)} {item.unit}
                     </Text>
                 </CardItem>
                 <CardItem bordered>
@@ -442,11 +442,6 @@ export default class StatisticDaily extends Component {
 
                         <View style={[styles.boxItem, styles.subHeader]}>
                             <View style={styles.box}>
-                                <CardItem>
-                                    <Right>
-                                        {this._renderShowDetail('fund')}
-                                    </Right>
-                                </CardItem>
                                 <CardItem style={styles.boxContent}>
                                     <Text style={[styles.boxTitle, styles.labelRed]}>
                                         <Icon name="ios-share-outline"
@@ -478,13 +473,29 @@ export default class StatisticDaily extends Component {
                                         {' ' + Utils.numberWithCommas(this.state.fundPay)}
                                     </Text>
                                 </CardItem>
-                                <CardItem style={{paddingBottom: 20}}>
+                                <CardItem bordered>
                                     <Text style={styles.titleUnder}>
                                         {Config.statisticDaily.fundLiabilitiesPay}
                                     </Text>
                                 </CardItem>
+                                <CardItem>
+                                    <Left/>
+                                    <Body>
+                                    <TouchableOpacity
+                                        onPress={() => Actions.statisticDetail({
+                                            branchSelected: this.state.branchSelected,
+                                            currentDate: this.state.currentDate,
+                                            dataDetailType: 'fund'
+                                        })}
+                                    >
+                                        <Icon style={{textAlign: 'center', alignSelf: 'stretch'}}
+                                              name="ios-arrow-forward"/>
+                                    </TouchableOpacity>
+                                    </Body>
+                                </CardItem>
                             </View>
                         </View>
+
 
                         <List style={{backgroundColor: 'white', marginTop: 20, marginBottom: 20}}>
                             <ListItem itemDivider>
@@ -508,8 +519,12 @@ export default class StatisticDaily extends Component {
                                     {Utils.numberWithCommas(this.state.concreateMixed)} {Config.statisticDaily.concreteUnit}
                                 </Text>
                             </CardItem>
+                            <Text style={{color: '#5c6566',
+                                fontSize: 16,
+                                width: '100%',
+                                textAlign: 'center', alignSelf: 'stretch'
+                                }}>{Config.statisticDaily.concreteMix}</Text>
                             <CardItem bordered>
-                                <Text style={styles.titleUnder}>{Config.statisticDaily.concreteMix}</Text>
                             </CardItem>
 
 
@@ -528,7 +543,8 @@ export default class StatisticDaily extends Component {
                                     <Text style={styles.labelHeader}>{Config.statisticDaily.brick}</Text>
                                 </Left>
                                 <Right>
-                                    {this._renderShowDetail('bricks')}
+                                    {this.state.bricks == null || this.state.bricks.length == 0 ?
+                                        <Text></Text> : this._renderShowDetail('bricks')}
                                 </Right>
                             </ListItem>
 
@@ -570,7 +586,9 @@ export default class StatisticDaily extends Component {
                                     <Text style={styles.labelHeader}>{Config.statisticDaily.materialIn}</Text>
                                 </Left>
                                 <Right>
-                                    {this._renderShowDetail('materialIn')}
+                                    {this.state.materialIn == null || this.state.materialIn.length == 0 ?
+                                        <Text></Text> :
+                                        this._renderShowDetail('materialIn')}
                                 </Right>
                             </ListItem>
                             <FlatList

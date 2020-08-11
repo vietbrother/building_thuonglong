@@ -200,14 +200,14 @@ export default StyleSheet.create({
     boxTitle: {
         width: '100%',
         fontWeight: 'bold',
-        fontSize: 36,
+        fontSize: 32,
         marginTop: 10,
         textAlign: 'center', alignSelf: 'stretch'
     },
     boxTitleSecond: {
         width: '100%',
         fontWeight: 'bold',
-        fontSize: 26,
+        fontSize: 24,
         //marginTop: 10,
         textAlign: 'center', alignSelf: 'stretch'
     },
@@ -395,7 +395,7 @@ export default StyleSheet.create({
         fontSize: 18
     },
     detailItem : {
-        paddingTop : 10,
-        paddingBottom : 10,
+        // marginTop : 10,
+        // marginBottom : 10,
     }
 });

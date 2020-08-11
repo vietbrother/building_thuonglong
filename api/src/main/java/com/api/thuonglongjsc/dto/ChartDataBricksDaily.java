@@ -9,16 +9,18 @@ public class ChartDataBricksDaily {
 	private String name;
 	private Double value;
 	private String type;
+	private String unit;
 
 	public ChartDataBricksDaily() {
 		super();
 	}
 
-	public ChartDataBricksDaily(String name, Double value, String type) {
+	public ChartDataBricksDaily(String name, Double value, String type, String unit) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.type = type;
+		this.unit = unit;
 	}
 
 	public String getName() {
@@ -45,9 +47,17 @@ public class ChartDataBricksDaily {
 		this.type = type;
 	}
 
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	@Override
 	public String toString() {
-		return "ChartDataDailyBricks [name=" + name + ", value=" + value + ", type=" + type + "]";
+		return "ChartDataBricksDaily [name=" + name + ", value=" + value + ", type=" + type + ", unit=" + unit + "]";
 	}
 
 }
