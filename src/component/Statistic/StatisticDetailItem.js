@@ -87,7 +87,7 @@ export default class StatisticDetailItem extends Component {
     }
 
     _loadData() {
-        let dataDetailType = this.state.dataDetailType;
+        let dataDetailType = this.props.dataDetailType;
         // console.log(dataDetailType);
         if (dataDetailType == 'fund') {
             this._loadDataFunds();
@@ -108,7 +108,7 @@ export default class StatisticDetailItem extends Component {
         let fund = [];
         try {
             var currentDate = this.props.currentDate;
-            var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
+            var param = {ngayThang: currentDate, idchiNhanh: this.props.branchSelected.id};
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
                 method: 'POST',
                 headers: {
@@ -121,19 +121,19 @@ export default class StatisticDetailItem extends Component {
             if (responseObj != null && responseObj.length > 0) {
                 fund.push({
                     name: Config.statisticDaily.fundTotalIn,
-                    value: Utils.numberWithCommas(responseObj[0].tongThu)
+                    value: responseObj[0].tongThu
                 });
                 fund.push({
                     name: Config.statisticDaily.fundTotalOut,
-                    value: Utils.numberWithCommas(responseObj[0].tongChi)
+                    value: responseObj[0].tongChi
                 });
                 fund.push({
                     name: Config.statisticDaily.fundLiabilitiesCollection,
-                    value: Utils.numberWithCommas(responseObj[0].congNoThu)
+                    value: responseObj[0].congNoThu
                 });
                 fund.push({
                     name: Config.statisticDaily.fundLiabilitiesPay,
-                    value: Utils.numberWithCommas(responseObj[0].congNoTra)
+                    value: responseObj[0].congNoTra
                 });
             }
         } catch (e) {
@@ -149,7 +149,7 @@ export default class StatisticDetailItem extends Component {
         let concretes = [];
         try {
             var currentDate = this.props.currentDate;
-            var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
+            var param = {ngayThang: currentDate, idchiNhanh: this.props.branchSelected.id};
             console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticDaily, {
                 method: 'POST',
@@ -196,7 +196,7 @@ export default class StatisticDetailItem extends Component {
         });
         try {
             var currentDate = this.props.currentDate;
-            var param = {ngayThang: currentDate, idchiNhanh: this.state.branchSelected.id};
+            var param = {ngayThang: currentDate, idchiNhanh: this.props.branchSelected.id};
             // console.log(param);
             let response = await fetch(global.hostAPI[0] + Config.api.apiStatisticBricks, {
                 method: 'POST',
@@ -237,31 +237,31 @@ export default class StatisticDetailItem extends Component {
         if (dataDetailType == 'fund') {
             return (
                 <StatisticDetailList dataDetailList={this.state.fund}
-                                     branchSelected={this.state.branchSelected}
+                                     branchSelected={this.props.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'concretes') {
             return (
                 <StatisticDetailList dataDetailList={this.state.concretes}
-                                     branchSelected={this.state.branchSelected}
+                                     branchSelected={this.props.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'bricks') {
             return (
                 <StatisticDetailList dataDetailList={this.state.bricks}
-                                     branchSelected={this.state.branchSelected}
+                                     branchSelected={this.props.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'bricksManufacture') {
             return (
                 <StatisticDetailList dataDetailList={this.state.brickManufacture}
-                                     branchSelected={this.state.branchSelected}
+                                     branchSelected={this.props.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else if (dataDetailType == 'materialIn') {
             return (
                 <StatisticDetailList dataDetailList={this.state.materialIn}
-                                     branchSelected={this.state.branchSelected}
+                                     branchSelected={this.props.branchSelected}
                                      dataDetailType={dataDetailType}></StatisticDetailList>
             );
         } else {
@@ -292,15 +292,16 @@ export default class StatisticDetailItem extends Component {
 
         return (
 
-            <View style={styles.main}>
-                <CardItem header>
+            <View style={{flex: 1}}>
+                <CardItem header bordered>
                     <Body>
                         <Text style={styles.titleBranch}>
                             <Icon active name="cube"
-                                  style={styles.titleBranch}/> {this.state.branchSelected.tenChiNhanh}
+                                  style={styles.titleBranch}/> {this.props.branchSelected.tenChiNhanh}
                         </Text>
                     </Body>
                 </CardItem>
+                {this._renderMainContent()}
                 {this.state.isSearching ?
                     <View style={styles.loadingActivity}>
                         <ActivityIndicator
@@ -310,7 +311,6 @@ export default class StatisticDetailItem extends Component {
                         />
                     </View>
                     : <Text></Text>}
-                {this._renderMainContent()}
             </View>
         );
 

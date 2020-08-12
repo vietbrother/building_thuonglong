@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, {Component} from 'react';
-import {Container, View, Left, Right, Button, Icon, Item, Input} from 'native-base';
+import {Container, View, Left, Right, Button, Icon, Item, Input, Footer, FooterTab, CardItem, Body} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 
 // Our custom files and classes import
@@ -151,7 +151,7 @@ export default class Login extends Component {
                     this.login();
                 }
             } else {
-                this.setState({username: fingerprintUser,password: fingerprintPass});
+                this.setState({username: fingerprintUser, password: fingerprintPass});
                 this.login();
             }
 
@@ -233,38 +233,25 @@ export default class Login extends Component {
                         <View style={{alignItems: 'center', width: '100%'}}>
                             <Button onPress={() => this.login()}
                                     style={styles.buttonLogin}>
-                                <Text style={{color: '#fdfdfd', fontSize : 16}}> {Config.btnLogin} </Text>
+                                <Text style={{color: '#fdfdfd', fontSize: 16}}> {Config.btnLogin} </Text>
                             </Button>
                         </View>
                         <View style={styles.container}>
                             {/*<Button onPress={() => this.fingerprintHandler()}*/}
-                                    {/*style={{alignItems: 'center', width: '100%', textAlign: 'center', alignSelf: 'stretch'}}*/}
-                                    {/*transparent>*/}
-                                {/*<Text style={{color: Config.mainColor, fontSize : 16}}>*/}
-                                    {/*<Icon active name='ios-finger-print-outline' style={{color: Config.mainColor, fontSize : 20}}/>*/}
-                                    {/*{' Đăng nhập bằng vân tay'}*/}
-                                {/*</Text>*/}
+                            {/*style={{alignItems: 'center', width: '100%', textAlign: 'center', alignSelf: 'stretch'}}*/}
+                            {/*transparent>*/}
+                            {/*<Text style={{color: Config.mainColor, fontSize : 16}}>*/}
+                            {/*<Icon active name='ios-finger-print-outline' style={{color: Config.mainColor, fontSize : 20}}/>*/}
+                            {/*{' Đăng nhập bằng vân tay'}*/}
+                            {/*</Text>*/}
                             {/*</Button>*/}
                             <TouchableHighlight onPress={() => this.fingerprintHandler()}>
-                                <Text style={{color: Config.mainColor, fontSize : 16}}>
-                                    <Icon active name='ios-finger-print-outline' style={{color: Config.mainColor, fontSize : 20}}/>
+                                <Text style={{color: Config.mainColor, fontSize: 16}}>
+                                    <Icon active name='ios-finger-print-outline'
+                                          style={{color: Config.mainColor, fontSize: 20}}/>
                                     {' Đăng nhập bằng vân tay'}
                                 </Text>
                             </TouchableHighlight>
-                        </View>
-                        <View style={{alignItems: 'flex-end',textAlign: 'center', alignSelf: 'stretch', width: '100%', paddingTop: 100}}>
-                            <Button
-                                onPress={() => this.setState({showAdvancedSettings: !this.state.showAdvancedSettings})}
-                                transparent>
-                                <Icon active name='ios-settings' style={{color: "#687373"}}/>
-                            </Button>
-                            {this.state.showAdvancedSettings ?
-                                <Item>
-                                    <Input placeholder='Nhập thông tin server'
-                                           onChangeText={(text) => this.setState({newIpAddress: text})}
-                                           placeholderTextColor="#687373"/>
-                                </Item>
-                                : <Text></Text>}
                         </View>
                         {/*<View style={{alignItems: 'center', width: '100%'}}>*/}
                         {/*<Button onPress={() => Actions.signup()}*/}
@@ -277,7 +264,36 @@ export default class Login extends Component {
                         {/*    quyền thuộc về {Config.titleCopyRight}</Text>*/}
                     </View>
                 </ScrollView>
+                <View style={{
+                    alignItems: 'flex-end',
+                    textAlign: 'center',
+                    alignSelf: 'stretch',
+                    width: '100%',
+                    // paddingTop: 100,
+                    paddingLeft: 50,
+                    paddingRight: 50
+                }}>
 
+                    {this.state.showAdvancedSettings ?
+                        <Item>
+                            <Input placeholder='Nhập thông tin server'
+                                   onChangeText={(text) => this.setState({newIpAddress: text})}
+                                   placeholderTextColor="#687373"/>
+                        </Item>
+                        : <Text></Text>}
+                </View>
+                {/*<Footer style={{backgroundColor: 'transparent'}}>*/}
+                    {/*<FooterTab style={{backgroundColor: 'transparent'}}>*/}
+                        {/*<Left/>*/}
+                        {/*<Right>*/}
+                            {/*<Button*/}
+                                {/*onPress={() => this.setState({showAdvancedSettings: !this.state.showAdvancedSettings})}*/}
+                                {/*transparent>*/}
+                                {/*<Icon active name='ios-settings' style={{color: "#687373"}}/>*/}
+                            {/*</Button>*/}
+                        {/*</Right>*/}
+                    {/*</FooterTab>*/}
+                {/*</Footer>*/}
             </Container>
         );
     }
@@ -356,7 +372,7 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop : 20
+        marginTop: 20
     },
     buttonLogin: {
         // backgroundColor: '#c40521',

@@ -39,7 +39,7 @@ export default class StatisticDetailList extends Component {
         super(props);
 
         this.state = {
-            dataDetailList : []
+            dataDetailList: []
         };
     }
 
@@ -64,7 +64,7 @@ export default class StatisticDetailList extends Component {
 
     _renderItemResult(item) {
         let type = this.state.dataDetailType;
-        if(type == 'bricks'){
+        if (type == 'bricks') {
             return (
                 <Card transparent>
                     <CardItem style={[styles.detailItem]}>
@@ -72,7 +72,33 @@ export default class StatisticDetailList extends Component {
                             {Utils.numberWithCommas(item.value)} {Config.statisticDaily.brickUnit}
                         </Text>
                     </CardItem>
-                    <CardItem  style={[styles.detailItem]} bordered>
+                    <CardItem style={[styles.detailItem]} bordered>
+                        <Text style={styles.titleUnder}>{item.name}</Text>
+                    </CardItem>
+                </Card>
+            );
+        } else if (type == 'concretes') {
+            return (
+                <Card transparent>
+                    <CardItem style={[styles.detailItem]}>
+                        <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
+                            {Utils.numberWithCommas(item.value)} {Config.statisticDaily.concreteUnit}
+                        </Text>
+                    </CardItem>
+                    <CardItem style={[styles.detailItem]} bordered>
+                        <Text style={styles.titleUnder}>{item.name}</Text>
+                    </CardItem>
+                </Card>
+            );
+        } else if (type == 'materialIn') {
+            return (
+                <Card transparent>
+                    <CardItem style={[styles.detailItem]}>
+                        <Text style={[styles.boxTitleSecond, styles.labelMain, styles.font18]}>
+                            {Utils.numberWithCommas(item.value)} {item.unit}
+                        </Text>
+                    </CardItem>
+                    <CardItem style={[styles.detailItem]} bordered>
                         <Text style={styles.titleUnder}>{item.name}</Text>
                     </CardItem>
                 </Card>
@@ -85,7 +111,7 @@ export default class StatisticDetailList extends Component {
                             {Utils.numberWithCommas(item.value)}
                         </Text>
                     </CardItem>
-                    <CardItem  style={[styles.detailItem]} bordered>
+                    <CardItem style={[styles.detailItem]} bordered>
                         <Text style={styles.titleUnder}>{item.name}</Text>
                     </CardItem>
                 </Card>
@@ -97,27 +123,25 @@ export default class StatisticDetailList extends Component {
     render() {
 
         return (
-            <View style={styles.main}>
-                <List style={{backgroundColor: 'white', marginTop: 20, marginBottom: 20}}>
-                    {this.state.isSearching ?
-                        <View style={styles.loadingActivity}>
-                            <ActivityIndicator
-                                animating={this.state.isSearchingBricks}
-                                color={Config.mainColor}
-                                size="large"
-                            />
-                        </View>
-                        : <Text></Text>}
-                    <FlatList
-                        key={'statisticDetailListId'}
-                        style={{width: '100%'}}
-                        data={this.props.dataDetailList}
-                        renderItem={({item}) => this._renderItemResult(item)}
-                    />
+            <List style={{marginBottom: 20}}>
+                {this.state.isSearching ?
+                    <View style={styles.loadingActivity}>
+                        <ActivityIndicator
+                            animating={this.state.isSearchingBricks}
+                            color={Config.mainColor}
+                            size="large"
+                        />
+                    </View>
+                    : <Text></Text>}
+                <FlatList
+                    key={'statisticDetailListId'}
+                    style={{width: '100%'}}
+                    data={this.props.dataDetailList}
+                    renderItem={({item}) => this._renderItemResult(item)}
+                />
 
-                </List>
+            </List>
 
-            </View>
         );
 
     }

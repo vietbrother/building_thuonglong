@@ -251,21 +251,21 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 			lstParams.add(entity.getNgayThang());//table b
 			lstParams.add(entity.getNgayThang());// table c
 		}
-		String queryStr = "SELECT b.TenLoaiVatLieu as name, \r\n" + 
+		String queryStr = "SELECT b.TenLoaiVatLieu as name, 'Viên' as unit,  \r\n" + 
 				"               ISNULL(SUM(a.SoLuong), 0) as value, 'tblGachTerrazo' as type\r\n" + 
 				"        FROM tblGachTerrazo AS a\r\n" + 
 				"             JOIN tblLoaiVatLieu AS b ON a.LoaiGach = b.ID\r\n" + 
 				"  		where 1=1 " + condition + 
 				"        GROUP BY b.TenLoaiVatLieu \r\n";
 		queryStr += " UNION ALL \r\n";
-		queryStr += "SELECT b.TenLoaiVatLieu as name, \r\n" + 
+		queryStr += "SELECT b.TenLoaiVatLieu as name,  'Viên' as unit, \r\n" + 
 				"               ISNULL(SUM(a.SoLuong), 0) as value, 'tblGachMenBong' as type\r\n" + 
 				"        FROM tblGachMenBong AS a\r\n" + 
 				"             JOIN tblLoaiVatLieu AS b ON a.LoaiGach = b.ID\r\n" + 
 				"  		where 1=1 " + condition + 
 				"        GROUP BY b.TenLoaiVatLieu \r\n";
 		queryStr += " UNION ALL \r\n";
-		queryStr += "SELECT b.TenLoaiVatLieu as name, \r\n" + 
+		queryStr += "SELECT b.TenLoaiVatLieu as name,  'Viên' as unit, \r\n" + 
 				"               ISNULL(SUM(a.SoLuong), 0) as value, 'tblGachXayDung' as type\r\n" + 
 				"        FROM tblGachXayDung AS a\r\n" + 
 				"             JOIN tblLoaiVatLieu AS b ON a.LoaiGach = b.ID\r\n" + 
@@ -277,7 +277,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 //		}
 		
 		queryStr += " UNION ALL \r\n";
-		queryStr += "   SELECT c.TenLoaiVatLieu as name,   \r\n" + 
+		queryStr += "   SELECT c.TenLoaiVatLieu as name, 'Viên' as unit,  \r\n" + 
 				"           ISNULL(SUM(b.SoLuongNhan), 0) as value , 'BanGach' as type \r\n" + 
 				"        FROM tblBanGach AS a  \r\n" + 
 				"             JOIN tblBanGach_ChiTiet AS b ON a.ID = b.IDBan  \r\n" + 
@@ -295,10 +295,11 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 		
 		
 		queryStr += " UNION ALL \r\n";
-		queryStr += " SELECT b.TenLoaiVatLieu as name,     \r\n" + 
+		queryStr += " SELECT b.TenLoaiVatLieu as name, c.TenDonViTinh as unit,    \r\n" + 
 				"               ISNULL(SUM(a.KLMua), 0)  as value , 'NKVL' as type   \r\n" + 
 				"        FROM tblNhapKhoVatLieu AS a    \r\n" + 
 				"    join tblLoaiVatLieu as b on b.ID = a.IDLoaiVatLieu  \r\n" + 
+				"    join tblDonViTinh as c on c.ID = a.IDDonViTinh  \r\n" + 
 				"        WHERE 1 = 1  \r\n" ;
 		if (!Utils.isNullOrEmpty(entity.getNgayThang())) {
 			queryStr += " AND CONVERT(DATETIME, CONVERT(DATE, a.NgayThang)) = convert(date, ? , 103) ";
@@ -309,7 +310,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
 			lstParams.add(entity.getIDChiNhanh());
 		}	
 		queryStr += "	and Loai = 1 \r\n" +
-				"  GROUP BY b.TenLoaiVatLieu  ";
+				"  GROUP BY b.TenLoaiVatLieu, c.TenDonViTinh ";
 		try {
 			Query query = entityManager.createNativeQuery(queryStr);
 			for (int i = 0; i < lstParams.size(); i++) {
