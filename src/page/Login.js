@@ -151,7 +151,12 @@ export default class Login extends Component {
                     this.login();
                 }
             } else {
-                this.setState({username: fingerprintUser, password: fingerprintPass});
+                if ((user == null || user == '' || pass == '' || pass == '')) {
+                    this.setState({username: fingerprintUser, password: fingerprintPass});
+                } else {
+                    await AsyncStorage.setItem('fingerprintUser', user);
+                    await AsyncStorage.setItem('fingerprintPass', pass);
+                }
                 this.login();
             }
 
