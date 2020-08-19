@@ -93,6 +93,14 @@ public class BricksRepositoryImpl implements BricksRepository {
 			queryStr += " and a.IDChiNhanh = ? ";
 			lstParams.add(entity.getIDChiNhanh());
 		}
+		if (!Utils.isNullOrEmpty(entity.getTuNgay())) {
+			queryStr += " and a.NgayThang >= convert(date, ? , 103) ";
+			lstParams.add(entity.getTuNgay());
+		}
+		if (!Utils.isNullOrEmpty(entity.getDenNgay())) {
+			queryStr += " and a.NgayThang <= convert(date, ? , 103) ";
+			lstParams.add(entity.getDenNgay());
+		}
 		if (!Utils.isNullOrEmpty(entity.getIdTrangThai())) {
 			queryStr += " and a.TrangThai = ? ";
 			lstParams.add(entity.getIdTrangThai());
