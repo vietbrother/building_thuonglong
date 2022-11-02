@@ -15,7 +15,7 @@
     "native-base": "2.7.2",
     "oauth-1.0a": "^2.2.2",
     "react": "16.4.1",
-    "react-native": "0.55.4",
+    "react-native": "0.70.4",
     "react-native-camera": "2.9.0",
     "react-native-chart-kit": "^5.5.0",
     "react-native-charts-wrapper": "^0.5.7",
